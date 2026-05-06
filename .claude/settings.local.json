@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer create-project *)",
+      "Bash(php --version)",
+      "Bash(find / -name \"composer.phar\")",
+      "Read(//usr/bin/**)",
+      "Read(//usr/local/bin/**)",
+      "Bash(apt list *)",
+      "Bash(dpkg -l)",
+      "Bash(sudo apt-get *)",
+      "Bash(sudo -S apt-get update -y)",
+      "Bash(curl -sS https://getcomposer.org/installer)",
+      "Bash(php -- --install-dir=/usr/local/bin --filename=composer)",
+      "Bash(snap list *)",
+      "Bash(sudo -S apt-get update -qq)",
+      "Bash(php -m)",
+      "Bash(composer --version)",
+      "Bash(composer require *)",
+      "Bash(php artisan *)",
+      "Bash(npm --version)",
+      "Bash(curl -fsSL https://fnm.vercel.app/install)",
+      "Bash(bash)",
+      "Bash(python3 *)",
+      "Bash(npm run *)",
+      "Bash(export PATH=\"/home/candra/.local/share/fnm/node-versions/v24.15.0/installation/bin:$PATH\")",
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(curl *)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(awk '{print $1, $2, $11}')",
+      "Bash(disown)",
+      "Bash(php *)",
+      "Bash(pkill -f \"node.*vite\")",
+      "Bash(nohup npm *)",
+      "Read(//tmp/**)",
+      "Bash(echo \"PID=$!\")",
+      "Bash(/home/candra/.local/share/fnm/node-versions/v24.15.0/installation/bin/npm install *)",
+      "Bash(npm install *)",
+      "Bash(echo \"PID: $!\")"
+    ]
+  }
+}
