@@ -1,0 +1,41 @@
+# Backend
+backend/vendor/
+backend/.env
+backend/storage/*.key
+backend/public/storage
+backend/public/hot
+backend/public/build
+backend/.phpunit.result.cache
+backend/.phpunit.cache
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.env
+frontend/*.local
+
+# Android (Capacitor)
+frontend/android/.gradle/
+frontend/android/app/build/
+frontend/android/build/
+frontend/android/local.properties
+frontend/.env.production
+frontend/.env.bak
+frontend/.env.android
+
+# Common
+.DS_Store
+Thumbs.db
+*.log
+
+# Storage uploads (tidak di-track di git)
+backend/storage/app/public/order-photos/
+
+# APK binary — di-copy langsung ke server saat deploy, tidak masuk git
+frontend/public/*.apk
+backend/public/zasaqu.apk
+releases/
+
+# Build artifacts web — di-generate ulang saat deploy, tidak perlu di git
+backend/public/assets/

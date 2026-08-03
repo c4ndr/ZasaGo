@@ -1,0 +1,84 @@
+import { useEffect, useState, useRef, useCallback } from 'react'
+import { useLocation } from 'react-router-dom'
+import { Capacitor } from '@capacitor/core'
+import echo from '../services/echo'
+import api from '../services/api'
+
+function playChatSound() {
+  if (Capacitor.isNativePlatform()) return
+  try {
+    const ctx  = new (window.AudioContext || window.webkitAudioContext)()
+    const gain = ctx.createGain()
+    gain.connect(ctx.destination)
+    // Nada pendek "ting" — khas notifikasi chat
+    [[1047, 0], [1319, 0.12]].forEach(([freq, when]) => {
+      const osc = ctx.createOscillator()
+      osc.connect(gain); osc.type = 'sine'; osc.frequency.value = freq
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + when)
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + when + 0.25)
+      osc.start(ctx.currentTime + when); osc.stop(ctx.currentTime + when + 0.28)
+    })
+    if (ctx.state === 'suspended') ctx.resume()
+  } catch {}
+}
+
+// orderIds: array string/number ID order aktif
+export default function useOrderChatBadges(orderIds) {
+  const [unread, setUnread] = useState({})   // { [orderId]: true }
+  const roomMap    = useRef({})              // { [orderId]: roomId }
+  // Ref berisi Map roomId → cleanup fn; diisi async tapi dibaca sync saat unmount
+  const channelMap = useRef({})             // { [roomId]: cleanup fn }
+  const location   = useLocation()
+  const locRef     = useRef(location.pathname)
+
+  useEffect(() => { locRef.current = location.pathname }, [location.pathname])
+
+  // Bersihkan badge saat user masuk halaman chat
+  useEffect(() => {
+    const match = locRef.current.match(/orders\/(\d+)\/chat/)
+    if (match) markRead(match[1])
+  }, [location.pathname]) // eslint-disable-line
+
+  useEffect(() => {
+    if (!orderIds?.length) return
+    let cancelled = false
+
+    orderIds.forEach(orderId => {
+      if (roomMap.current[orderId]) return // sudah subscribe
+
+      api.get(`/chat/orders/${orderId}`)
+        .then(res => {
+          if (cancelled) return
+          const roomId = res.data.room?.id
+          if (!roomId || channelMap.current[roomId]) return
+          roomMap.current[orderId] = roomId
+
+          const ch = echo.private(`chat.${roomId}`)
+          ch.listen('.message.new', () => {
+            const path = locRef.current
+            const onThisChat = path.includes(`/orders/${orderId}/chat`) ||
+                               path.includes(`/mitra/orders/${orderId}/chat`)
+            if (!onThisChat) {
+              playChatSound()
+              setUnread(prev => ({ ...prev, [String(orderId)]: true }))
+            }
+          })
+          channelMap.current[roomId] = () => echo.leave(`chat.${roomId}`)
+        })
+        .catch(() => {})
+    })
+
+    return () => {
+      cancelled = true
+      Object.values(channelMap.current).forEach(fn => fn())
+      channelMap.current = {}
+      roomMap.current    = {}
+    }
+  }, [orderIds?.join?.(',')]) // eslint-disable-line
+
+  const markRead = useCallback((orderId) => {
+    setUnread(prev => { const n = { ...prev }; delete n[String(orderId)]; return n })
+  }, [])
+
+  return { unread, markRead }
+}

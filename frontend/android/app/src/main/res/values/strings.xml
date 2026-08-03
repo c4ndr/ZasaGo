@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ZasaQu</string>
+    <string name="title_activity_main">ZasaQu</string>
+    <string name="package_name">com.zasaqu.com</string>
+    <string name="custom_url_scheme">com.zasaqu.com</string>
+</resources>
