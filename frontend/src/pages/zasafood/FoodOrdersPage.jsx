@@ -72,10 +72,11 @@ function FoodRatingModal({ order, onClose, onDone }) {
         {error && <p style={{ fontSize: 13, color: '#EF4444', marginBottom: 12 }}>{error}</p>}
 
         <button onClick={submit} disabled={loading} style={{
-          width: '100%', padding: '14px', borderRadius: 14,
-          background: '#F97316', color: '#fff',
+          width: '100%', padding: '14px', borderRadius: 999,
+          background: 'var(--k-primary)', color: '#fff',
           fontSize: 15, fontWeight: 800, border: 'none', cursor: loading ? 'default' : 'pointer',
           opacity: loading ? 0.7 : 1,
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
         }}>{loading ? 'Mengirim...' : 'Kirim Ulasan'}</button>
       </div>
     </div>
@@ -122,7 +123,7 @@ function MiniProgress({ status }) {
       {[0,1,2,3,4].map(i => (
         <div key={i} style={{
           flex: 1, height: 3, borderRadius: 2,
-          background: i <= idx ? sm.color : '#E5E7EB',
+          background: i <= idx ? sm.color : 'var(--k-border)',
           transition: 'background 0.4s',
         }} />
       ))}
@@ -138,7 +139,7 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
 
   return (
     <div onClick={() => onTrack(order.id)} style={{
-      borderRadius: 16, background: '#fff',
+      borderRadius: 16, background: 'var(--k-card)',
       border: `1.5px solid ${sm.border}`,
       overflow: 'hidden', cursor: 'pointer',
       boxShadow: order.status === 'delivered'
@@ -159,7 +160,7 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
           )}
           <span style={{ fontSize: 13, fontWeight: 700, color: sm.color }}>{sm.icon} {sm.label}</span>
         </div>
-        <span style={{ fontSize: 11, color: '#9CA3AF' }}>{fmtDate(order.created_at)}</span>
+        <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>{fmtDate(order.created_at)}</span>
       </div>
 
       {/* ── Progress bar mini (hanya saat aktif) ── */}
@@ -170,16 +171,16 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
       )}
 
       {/* ── Info warung ── */}
-      <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid #F3F4F6' }}>
+      <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid var(--k-border)' }}>
         <div style={{
           width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-          background: 'linear-gradient(135deg, rgba(249,115,22,0.15), rgba(249,115,22,0.05))',
-          border: '1.5px solid rgba(249,115,22,0.2)',
+          background: 'var(--k-input)',
+          border: '1.5px solid var(--k-border)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
         }}>🏪</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontWeight: 700, fontSize: 14, color: '#111827' }}>{order.merchant?.name}</p>
-          <p style={{ fontSize: 11, color: '#9CA3AF', fontFamily: 'monospace', marginTop: 1 }}>{order.order_number}</p>
+          <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)' }}>{order.merchant?.name}</p>
+          <p style={{ fontSize: 11, color: 'var(--k-muted)', fontFamily: 'monospace', marginTop: 1 }}>{order.order_number}</p>
         </div>
         <span style={{
           fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 20,
@@ -189,27 +190,27 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
       </div>
 
       {/* ── Daftar item ── */}
-      <div style={{ padding: '10px 14px', borderBottom: '1px solid #F3F4F6' }}>
+      <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--k-border)' }}>
         {order.items?.slice(0, 3).map(i => (
-          <div key={i.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 5, color: '#374151' }}>
+          <div key={i.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 5, color: 'var(--k-text)' }}>
             <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: 8 }}>
               {i.item_name}
-              <span style={{ color: '#9CA3AF', marginLeft: 4 }}>×{i.quantity}</span>
+              <span style={{ color: 'var(--k-muted)', marginLeft: 4 }}>×{i.quantity}</span>
             </span>
             <span style={{ fontWeight: 500, flexShrink: 0 }}>{fmtRp(i.item_price * i.quantity)}</span>
           </div>
         ))}
         {(order.items?.length ?? 0) > 3 && (
-          <p style={{ fontSize: 12, color: '#9CA3AF', marginTop: 2 }}>+{order.items.length - 3} item lainnya</p>
+          <p style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 2 }}>+{order.items.length - 3} item lainnya</p>
         )}
       </div>
 
       {/* ── Ringkasan biaya ── */}
-      <div style={{ padding: '10px 14px', borderBottom: '1px solid #F3F4F6' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#6B7280', marginBottom: 3 }}>
+      <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--k-border)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--k-muted)', marginBottom: 3 }}>
           <span>Subtotal</span><span>{fmtRp(order.subtotal)}</span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#6B7280', marginBottom: 6 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--k-muted)', marginBottom: 6 }}>
           <span>Ongkos kirim</span><span>{fmtRp(order.delivery_fee)}</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 800, color: '#F97316' }}>
@@ -224,8 +225,8 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
         {isDone && (
           <button onClick={e => { e.stopPropagation(); onReorder(order) }} style={{
             flex: 1, padding: '10px', borderRadius: 10,
-            border: '1.5px solid #E5E7EB', background: '#fff',
-            fontSize: 13, fontWeight: 600, color: '#374151', cursor: 'pointer',
+            border: '1.5px solid var(--k-border)', background: 'var(--k-card)',
+            fontSize: 13, fontWeight: 600, color: 'var(--k-text)', cursor: 'pointer',
           }}>Pesan Lagi</button>
         )}
 
@@ -233,7 +234,7 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
         {isLive && order.status !== 'delivered' && (
           <button onClick={e => { e.stopPropagation(); onTrack(order.id) }} style={{
             flex: 2, padding: '10px', borderRadius: 10, border: 'none',
-            background: '#F97316', color: '#fff',
+            background: 'var(--k-primary)', color: '#fff',
             fontSize: 13, fontWeight: 700, cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
           }}>📍 Lacak Pesanan</button>
@@ -243,7 +244,7 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
         {order.status === 'delivered' && (
           <button onClick={e => { e.stopPropagation(); onConfirm(order.id) }} disabled={confirming === order.id} style={{
             flex: 2, padding: '10px', borderRadius: 10, border: 'none',
-            background: confirming === order.id ? '#9CA3AF' : '#00C896',
+            background: confirming === order.id ? 'var(--k-muted)' : '#00C896',
             color: '#fff', fontSize: 13, fontWeight: 700,
             cursor: confirming === order.id ? 'not-allowed' : 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
@@ -256,9 +257,9 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
         <button onClick={e => { e.stopPropagation(); onTrack(order.id) }} style={{
           flex: isDone ? 1 : 0,
           padding: isDone ? '10px' : '10px 14px',
-          borderRadius: 10, border: '1.5px solid #E5E7EB',
-          background: '#fff', fontSize: 13, fontWeight: 600,
-          color: '#374151', cursor: 'pointer',
+          borderRadius: 10, border: '1.5px solid var(--k-border)',
+          background: 'var(--k-card)', fontSize: 13, fontWeight: 600,
+          color: 'var(--k-text)', cursor: 'pointer',
         }}>{isDone ? 'Detail' : '›'}</button>
 
       </div>
@@ -268,14 +269,14 @@ function OrderCard({ order, onTrack, onConfirm, onReorder, onRate, confirming, i
         <div style={{ padding: '0 14px 12px' }}>
           <button onClick={e => { e.stopPropagation(); onRate(order) }} style={{
             width: '100%', padding: '10px', borderRadius: 10, border: 'none',
-            background: 'rgba(249,115,22,0.08)', color: '#F97316',
+            background: 'var(--k-primary-bg)', color: 'var(--k-primary)',
             fontSize: 13, fontWeight: 700, cursor: 'pointer',
           }}>⭐ Beri Ulasan</button>
         </div>
       )}
       {order.status === 'completed' && isRated && (
         <div style={{ padding: '0 14px 12px' }}>
-          <p style={{ fontSize: 12, color: '#9CA3AF', textAlign: 'center' }}>✓ Sudah diulasi</p>
+          <p style={{ fontSize: 12, color: 'var(--k-muted)', textAlign: 'center' }}>✓ Sudah diulasi</p>
         </div>
       )}
 
@@ -370,7 +371,7 @@ export default function FoodOrdersPage() {
   const hasMore = meta && page < meta.last_page
 
   return (
-    <div style={{ minHeight: '100dvh', background: '#F9FAFB', paddingBottom: 88 }}>
+    <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 88 }}>
       <style>{`@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }`}</style>
 
       {/* Toast */}
@@ -385,15 +386,15 @@ export default function FoodOrdersPage() {
       )}
 
       {/* Header */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #E5E7EB', padding: '20px 16px 0', position: 'sticky', top: 0, zIndex: 50 }}>
-        <p style={{ fontWeight: 800, fontSize: 18, color: '#111827', marginBottom: 14 }}>Pesanan Saya</p>
+      <div style={{ background: 'var(--k-card)', borderBottom: '1px solid var(--k-border)', padding: '20px 16px 0', position: 'sticky', top: 0, zIndex: 50 }}>
+        <p style={{ fontWeight: 800, fontSize: 18, color: 'var(--k-text)', marginBottom: 14 }}>Pesanan Saya</p>
         <div style={{ display: 'flex', gap: 0 }}>
           {[['active','Aktif'],['history','Riwayat']].map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)} style={{
               flex: 1, padding: '10px', border: 'none', cursor: 'pointer',
               background: 'transparent', fontWeight: tab === k ? 700 : 500,
-              fontSize: 14, color: tab === k ? '#F97316' : '#9CA3AF',
-              borderBottom: tab === k ? '2.5px solid #F97316' : '2.5px solid transparent',
+              fontSize: 14, color: tab === k ? 'var(--k-primary)' : 'var(--k-muted)',
+              borderBottom: tab === k ? '2.5px solid var(--k-primary)' : '2.5px solid transparent',
               transition: 'all 0.2s',
             }}>{l}</button>
           ))}
@@ -402,15 +403,15 @@ export default function FoodOrdersPage() {
 
       <div style={{ padding: '14px 14px' }}>
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: '#9CA3AF' }}>
+          <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--k-muted)' }}>
             <div style={{ width: 28, height: 28, border: '3px solid #F97316', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 12px' }} />
             <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
             <p style={{ fontSize: 13 }}>Memuat pesanan...</p>
           </div>
         ) : orders.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: '#9CA3AF' }}>
+          <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--k-muted)' }}>
             <div style={{ fontSize: 56, marginBottom: 14 }}>🍽️</div>
-            <p style={{ fontWeight: 600, color: '#374151', marginBottom: 6 }}>
+            <p style={{ fontWeight: 600, color: 'var(--k-text)', marginBottom: 6 }}>
               {tab === 'active' ? 'Tidak ada pesanan aktif' : 'Belum ada riwayat pesanan'}
             </p>
             <p style={{ fontSize: 13 }}>
@@ -437,8 +438,8 @@ export default function FoodOrdersPage() {
             {tab === 'history' && hasMore && (
               <button onClick={handleLoadMore} disabled={loadMore} style={{
                 display: 'block', width: '100%', marginTop: 14, padding: '12px',
-                borderRadius: 12, border: '1.5px solid #E5E7EB',
-                background: '#fff', color: '#6B7280',
+                borderRadius: 12, border: '1.5px solid var(--k-border)',
+                background: 'var(--k-card)', color: 'var(--k-muted)',
                 fontSize: 13, fontWeight: 600, cursor: loadMore ? 'default' : 'pointer',
               }}>{loadMore ? 'Memuat...' : 'Muat Lebih'}</button>
             )}

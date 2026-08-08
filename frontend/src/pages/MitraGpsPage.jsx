@@ -6,6 +6,7 @@ import LocationSearch from '../components/LocationSearch'
 import MapSatToggle from '../components/MapSatToggle'
 import api from '../services/api'
 import { isNative, requestGeolocationPermission } from '../utils/nativePlatform'
+import { SVC, svcShadow } from '../utils/svcTheme'
 
 // ── Format koordinat ──────────────────────────────────────────────────────────
 function fmtCoord(v) { return v?.toFixed(6) ?? '—' }
@@ -539,8 +540,8 @@ export default function MitraGpsPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{
               padding: '4px 10px', borderRadius: 100,
-              background: 'rgba(79,70,229,0.12)', border: '1px solid rgba(79,70,229,0.25)',
-              fontSize: 11, fontWeight: 800, color: '#818CF8',
+              background: SVC.jastip.bg, border: 'none',
+              fontSize: 11, fontWeight: 800, color: SVC.jastip.fg,
             }}>⚡ JastipQu</span>
             {loadingSession && (
               <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>Memuat...</span>
@@ -573,9 +574,10 @@ export default function MitraGpsPage() {
                       onClick={() => { setShowOpenForm(true); setOpenSessionError('') }}
                       style={{
                         width: '100%', padding: '13px', borderRadius: 14, border: 'none',
-                        background: 'rgba(79,70,229,0.85)', color: '#fff',
+                        background: SVC.jastip.bg, color: SVC.jastip.fg,
                         fontWeight: 700, fontSize: 14, cursor: 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                        boxShadow: svcShadow(SVC.jastip.rgb),
                       }}
                     >
                       ⚡ Buka Sesi JastipQu
@@ -660,8 +662,8 @@ export default function MitraGpsPage() {
                           disabled={openingSession}
                           style={{
                             flex: 2, padding: '12px', borderRadius: 12, border: 'none',
-                            background: openingSession ? 'var(--k-border)' : 'rgba(79,70,229,0.85)',
-                            color: openingSession ? 'var(--k-muted)' : '#fff',
+                            background: openingSession ? 'var(--k-border)' : SVC.jastip.bg,
+                            color: openingSession ? 'var(--k-muted)' : SVC.jastip.fg,
                             fontWeight: 700, fontSize: 13,
                             cursor: openingSession ? 'not-allowed' : 'pointer',
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -686,7 +688,7 @@ export default function MitraGpsPage() {
 
                   {/* Info sesi */}
                   <div style={{
-                    background: 'rgba(79,70,229,0.08)', border: '1px solid rgba(79,70,229,0.25)',
+                    background: SVC.jastip.bg, border: 'none',
                     borderRadius: 16, padding: '14px 16px',
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>

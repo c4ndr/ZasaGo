@@ -1,11 +1,12 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const SERVICES = [
-  { emoji: '🛵', name: 'ZasaRide', tagline: 'Ojek & Antar',       desc: 'Antar jemput & perjalanan ekspres ke seluruh area layanan.',   color: '#F97316', bg: 'rgba(249,115,22,0.12)', route: '/ride' },
-  { emoji: '🍔', name: 'ZasaFood', tagline: 'Pesan Makanan',      desc: 'Ratusan menu dari warung dan restoran lokal favoritmu.',        color: '#EF4444', bg: 'rgba(239,68,68,0.12)',  route: '/food' },
-  { emoji: '🛒', name: 'ZasaMart', tagline: 'Belanja Lokal',      desc: 'Produk kebutuhan dari pedagang lokal yang terpercaya.',         color: '#10B981', bg: 'rgba(16,185,129,0.12)', route: '/mart' },
-  { emoji: '🏠', name: 'ZasaHome', tagline: 'Jasa Rumah',         desc: 'Cleaning, laundry, pijat, tukang — semua bisa dipesan.',        color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)', route: '/home' },
+  { emoji: '🛵', name: 'ZasaRide', tagline: 'Ojek & Antar',       desc: 'Antar jemput & perjalanan ekspres ke seluruh area layanan.',   svc: 'zasaride', route: '/ride' },
+  { emoji: '🍔', name: 'ZasaFood', tagline: 'Pesan Makanan',      desc: 'Ratusan menu dari warung dan restoran lokal favoritmu.',        svc: 'zasafood', route: '/food' },
+  { emoji: '🛒', name: 'ZasaMart', tagline: 'Belanja Lokal',      desc: 'Produk kebutuhan dari pedagang lokal yang terpercaya.',         svc: 'zasashop', route: '/mart' },
+  { emoji: '🏠', name: 'ZasaHome', tagline: 'Jasa Rumah',         desc: 'Cleaning, laundry, pijat, tukang — semua bisa dipesan.',        svc: 'zasahome', route: '/home' },
 ]
 
 const STEPS = [
@@ -126,16 +127,22 @@ export default function LandingPage() {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          {SERVICES.map(s => (
-            <button key={s.name} onClick={() => navigate(s.route)}
-              style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, border: '1px solid rgba(255,255,255,0.08)', padding: '20px 16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s' }}>
-              <div style={{ width: 52, height: 52, borderRadius: 16, background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, marginBottom: 12 }}>{s.emoji}</div>
-              <p style={{ fontSize: 15, fontWeight: 900, color: '#fff', margin: '0 0 3px' }}>{s.name}</p>
-              <p style={{ fontSize: 11, fontWeight: 700, color: s.color, margin: '0 0 6px', letterSpacing: '0.03em' }}>{s.tagline}</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0, lineHeight: 1.5 }}>{s.desc}</p>
-              <p style={{ fontSize: 11, color: s.color, margin: '8px 0 0', fontWeight: 700 }}>Lihat →</p>
-            </button>
-          ))}
+          {SERVICES.map(s => {
+            const { bg, fg, rgb } = SVC[s.svc]
+            return (
+              <button key={s.name} onClick={() => navigate(s.route)}
+                style={{ background: bg, borderRadius: 20, border: 'none', padding: '20px 16px', textAlign: 'left', cursor: 'pointer',
+                  transition: 'transform 0.15s, box-shadow 0.15s', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(rgb) }}>
+                <Gloss />
+                <div style={{ position: 'relative', width: 52, height: 52, borderRadius: 16, background: 'var(--k-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, marginBottom: 12,
+                  boxShadow: `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)` }}>{s.emoji}</div>
+                <p style={{ position: 'relative', fontSize: 15, fontWeight: 900, color: fg, margin: '0 0 3px' }}>{s.name}</p>
+                <p style={{ position: 'relative', fontSize: 11, fontWeight: 700, color: fg, opacity: 0.85, margin: '0 0 6px', letterSpacing: '0.03em' }}>{s.tagline}</p>
+                <p style={{ position: 'relative', fontSize: 12, color: fg, opacity: 0.72, margin: 0, lineHeight: 1.5 }}>{s.desc}</p>
+                <p style={{ position: 'relative', fontSize: 11, color: fg, margin: '8px 0 0', fontWeight: 700 }}>Lihat →</p>
+              </button>
+            )
+          })}
         </div>
 
         <button onClick={() => navigate('/layanan')}

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api, { storageUrl } from '../../services/api'
 import useAdminAlert from '../../hooks/useAdminAlert'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const STORAGE_URL  = null // digantikan storageUrl() dari api.js
@@ -398,31 +399,35 @@ export default function AdminTopUpPage() {
       )}
 
       {/* Banner aktifkan — selalu tampil agar admin bisa klik untuk unlock audio */}
-      <div style={{ marginBottom: 16, padding: '11px 16px', borderRadius: 14,
-        background: notifStatus === 'granted' ? 'rgba(0,200,150,0.07)' : 'rgba(246,173,85,0.08)',
-        border: `1px solid ${notifStatus === 'granted' ? 'rgba(0,200,150,0.2)' : 'rgba(246,173,85,0.3)'}`,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 20 }}>{notifStatus === 'granted' ? '🔔' : '🔕'}</span>
-          <div>
-            <p style={{ fontSize: 13, fontWeight: 700,
-              color: notifStatus === 'granted' ? '#00C896' : '#F6AD55', marginBottom: 1 }}>
-              {notifStatus === 'granted' ? 'Notifikasi aktif' : 'Aktifkan Suara & Notifikasi'}
-            </p>
-            <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>
-              {notifStatus === 'granted'
-                ? 'Klik "Tes Suara" tiap buka halaman ini untuk memastikan audio siap'
-                : 'Klik Aktifkan agar berbunyi saat ada deposit baru'}
-            </p>
+      <div style={{ marginBottom: 16, padding: '11px 16px', borderRadius: 16,
+        background: SVC.wallet.bg, position: 'relative', overflow: 'hidden',
+        boxShadow: svcShadow(SVC.wallet.rgb) }}>
+        <Gloss />
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 20 }}>{notifStatus === 'granted' ? '🔔' : '🔕'}</span>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 700, color: SVC.wallet.fg, marginBottom: 1 }}>
+                {notifStatus === 'granted' ? 'Notifikasi aktif' : 'Aktifkan Suara & Notifikasi'}
+              </p>
+              <p style={{ fontSize: 11, color: SVC.wallet.fg, opacity: 0.72 }}>
+                {notifStatus === 'granted'
+                  ? 'Klik "Tes Suara" tiap buka halaman ini untuk memastikan audio siap'
+                  : 'Klik Aktifkan agar berbunyi saat ada deposit baru'}
+              </p>
+            </div>
           </div>
+          <button onClick={activate}
+            style={{ padding: '7px 16px', borderRadius: 999, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+              border: 'none', flexShrink: 0, whiteSpace: 'nowrap',
+              background: notifStatus === 'granted' ? 'var(--k-surface)' : 'var(--k-primary)',
+              color: notifStatus === 'granted' ? SVC.wallet.fg : '#fff',
+              boxShadow: notifStatus === 'granted'
+                ? '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)'
+                : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
+            {notifStatus === 'granted' ? '🔊 Tes Suara' : 'Aktifkan'}
+          </button>
         </div>
-        <button onClick={activate}
-          style={{ padding: '7px 16px', borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: 'pointer',
-            border: 'none', flexShrink: 0, whiteSpace: 'nowrap',
-            background: notifStatus === 'granted' ? 'rgba(0,200,150,0.15)' : '#F6AD55',
-            color: notifStatus === 'granted' ? '#00C896' : '#0C0C16' }}>
-          {notifStatus === 'granted' ? '🔊 Tes Suara' : 'Aktifkan'}
-        </button>
       </div>
 
       {/* Sub-header */}

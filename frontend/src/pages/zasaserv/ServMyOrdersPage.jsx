@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const STATUS_LABEL = {
   pending:     { label: 'Menunggu',   color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
@@ -65,7 +66,7 @@ function ServRatingModal({ order, onClose, onDone }) {
 
         {error && <p style={{ color: '#EF4444', fontSize: 12, marginBottom: 10 }}>{error}</p>}
 
-        <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '13px', borderRadius: 12, border: 'none', background: loading ? 'var(--k-border)' : '#059669', color: '#fff', fontWeight: 700, fontSize: 15, cursor: loading ? 'default' : 'pointer' }}>
+        <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '13px', borderRadius: 999, border: 'none', background: loading ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 15, cursor: loading ? 'default' : 'pointer', boxShadow: loading ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           {loading ? 'Mengirim...' : 'Kirim Ulasan'}
         </button>
       </div>
@@ -97,21 +98,24 @@ export default function ServMyOrdersPage() {
         />
       )}
 
-      <div style={{ background: 'linear-gradient(135deg,#064e3b,#059669)', padding: '52px 16px 20px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', borderRadius: 20, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12 }}>← Kembali</button>
-        <div style={{ fontWeight: 800, fontSize: 20, color: '#fff' }}>Pesanan Servis Saya</div>
+      <div style={{ background: SVC.zasaserv.bg, padding: '52px 16px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasaserv.fg, borderRadius: 999, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12, boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>← Kembali</button>
+          <div style={{ fontWeight: 800, fontSize: 20, color: SVC.zasaserv.fg }}>Pesanan Servis Saya</div>
+        </div>
       </div>
 
       <div style={{ padding: 16 }}>
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} style={{ height: 100, borderRadius: 16, marginBottom: 12, background: 'var(--k-card)' }} />
+            <div key={i} style={{ height: 100, borderRadius: 18, marginBottom: 12, background: 'var(--k-card)' }} />
           ))
         ) : orders.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--k-muted)' }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>🔧</div>
             <div>Belum ada pesanan servis</div>
-            <button onClick={() => navigate('/serv')} style={{ marginTop: 16, padding: '10px 24px', background: '#059669', color: '#fff', border: 'none', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }}>
+            <button onClick={() => navigate('/serv')} style={{ marginTop: 16, padding: '10px 24px', background: 'var(--k-primary)', color: '#fff', border: 'none', borderRadius: 999, fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               Cari Teknisi
             </button>
           </div>
@@ -120,7 +124,7 @@ export default function ServMyOrdersPage() {
           const canRate = order.status === 'completed' && !order.rated_at
           return (
             <div key={order.id}
-              style={{ background: 'var(--k-card)', borderRadius: 16, padding: 16, marginBottom: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginBottom: 12, boxShadow: 'var(--k-shadow), var(--k-inset-hi)' }}>
               <div onClick={() => navigate(`/serv/orders/${order.id}`)} style={{ cursor: 'pointer' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                   <div>
@@ -137,7 +141,7 @@ export default function ServMyOrdersPage() {
 
               {canRate && (
                 <button onClick={() => setRatingModal(order)}
-                  style={{ marginTop: 12, width: '100%', padding: '9px', borderRadius: 10, border: '1.5px solid #059669', background: 'rgba(5,150,105,0.07)', color: '#059669', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+                  style={{ marginTop: 12, width: '100%', padding: '9px', borderRadius: 999, border: `1.5px solid rgba(${SVC.zasaserv.rgb},0.4)`, background: `rgba(${SVC.zasaserv.rgb},0.1)`, color: SVC.zasaserv.fg, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
                   ⭐ Beri Ulasan
                 </button>
               )}

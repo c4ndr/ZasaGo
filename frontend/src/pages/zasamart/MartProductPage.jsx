@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../services/api'
 import useMartCartCount from '../../hooks/useMartCartCount'
+import { SVC } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -73,7 +74,7 @@ export default function MartProductPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', background: 'var(--k-surface)' }}>
         <button onClick={() => navigate(-1)} style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, width: 36, height: 36, cursor: 'pointer', fontSize: 18, color: 'var(--k-text)' }}>←</button>
         <p style={{ fontWeight: 800, color: 'var(--k-text)', fontSize: 15, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Detail Produk</p>
-        <button onClick={() => navigate('/mart/cart')} style={{ position: 'relative', background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, padding: '6px 14px', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#6366F1' }}>
+        <button onClick={() => navigate('/mart/cart')} style={{ position: 'relative', background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, padding: '6px 14px', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: SVC.zasashop.fg }}>
           🛒 Keranjang
           {cartCount > 0 && (
             <span style={{ position: 'absolute', top: -6, right: -6, background: '#EF4444', color: '#fff', fontSize: 9, fontWeight: 900, minWidth: 17, height: 17, borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--k-surface)', padding: '0 3px', lineHeight: 1 }}>
@@ -102,7 +103,7 @@ export default function MartProductPage() {
             <div style={{ position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 6 }}>
               {images.map((_, i) => (
                 <div key={i} onClick={() => setImgIdx(i)}
-                  style={{ width: imgIdx === i ? 20 : 7, height: 7, borderRadius: 4, background: imgIdx === i ? '#6366F1' : 'rgba(255,255,255,0.75)', transition: 'width 0.2s, background 0.2s', cursor: 'pointer' }} />
+                  style={{ width: imgIdx === i ? 20 : 7, height: 7, borderRadius: 4, background: imgIdx === i ? SVC.zasashop.fg : 'rgba(255,255,255,0.75)', transition: 'width 0.2s, background 0.2s', cursor: 'pointer' }} />
               ))}
             </div>
           )}
@@ -118,7 +119,7 @@ export default function MartProductPage() {
           <div style={{ display: 'flex', gap: 8, padding: '10px 16px', overflowX: 'auto' }}>
             {images.map((img, i) => (
               <img key={i} src={`${STORAGE}/${img}`} alt="" onClick={() => setImgIdx(i)}
-                style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', cursor: 'pointer', border: imgIdx === i ? '2px solid #6366F1' : '2px solid transparent', flexShrink: 0 }} />
+                style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', cursor: 'pointer', border: imgIdx === i ? `2px solid ${SVC.zasashop.fg}` : '2px solid transparent', flexShrink: 0 }} />
             ))}
           </div>
         )}
@@ -128,7 +129,7 @@ export default function MartProductPage() {
       <div style={{ padding: '16px 18px' }}>
         <p style={{ fontSize: 18, fontWeight: 800, color: 'var(--k-text)', lineHeight: 1.3, marginBottom: 8 }}>{product.name}</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-          <p style={{ fontSize: 22, fontWeight: 900, color: '#6366F1' }}>{fmtRp(product.price)}</p>
+          <p style={{ fontSize: 22, fontWeight: 900, color: SVC.zasashop.fg }}>{fmtRp(product.price)}</p>
           {product.compare_price > product.price && (
             <p style={{ fontSize: 14, color: 'var(--k-muted)', textDecoration: 'line-through' }}>{fmtRp(product.compare_price)}</p>
           )}
@@ -150,7 +151,7 @@ export default function MartProductPage() {
           {product.seller?.logo_path
             ? <img src={`${STORAGE}/${product.seller.logo_path}`} alt=""
                 style={{ width: 40, height: 40, borderRadius: 10, objectFit: 'cover', flexShrink: 0 }} />
-            : <div style={{ width: 40, height: 40, borderRadius: 10, background: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏪</div>
+            : <div style={{ width: 40, height: 40, borderRadius: 10, background: SVC.zasashop.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏪</div>
           }
           <div>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{product.seller?.name}</p>
@@ -199,7 +200,7 @@ export default function MartProductPage() {
                 style={{ background: 'none', border: 'none', fontSize: 18, color: 'var(--k-text)', cursor: 'pointer', padding: '0 2px' }}>+</button>
             </div>
             <button onClick={addToCart} disabled={adding}
-              style={{ flex: 1, padding: '11px 8px', borderRadius: 12, border: '2px solid #6366F1', background: 'transparent', color: '#6366F1', fontWeight: 700, fontSize: 12, cursor: 'pointer', opacity: adding ? 0.6 : 1 }}>
+              style={{ flex: 1, padding: '11px 8px', borderRadius: 999, border: 'none', background: 'var(--k-surface)', color: SVC.zasashop.fg, fontWeight: 700, fontSize: 12, cursor: 'pointer', opacity: adding ? 0.6 : 1, boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.18), inset 0 1px 0 rgba(255,255,255,0.7)` }}>
               🛒 Keranjang
             </button>
             <button onClick={async () => {
@@ -207,7 +208,7 @@ export default function MartProductPage() {
               await addToCart()
               navigate('/mart/cart')
             }} disabled={adding}
-              style={{ flex: 1.3, padding: '11px 8px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 800, fontSize: 12, cursor: 'pointer', opacity: adding ? 0.7 : 1 }}>
+              style={{ flex: 1.3, padding: '11px 8px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 12, cursor: 'pointer', opacity: adding ? 0.7 : 1, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               ⚡ Beli Langsung
             </button>
           </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
@@ -179,19 +180,23 @@ function UserDetailDrawer({ userId, onClose, onStatusChange }) {
             )}
 
             {/* Saldo & Tambah Saldo */}
-            <div style={{ background: 'linear-gradient(135deg,#005C44,#00A87D)', borderRadius: 16, padding: '18px 20px' }}>
-              <p style={{ color: 'rgba(12,12,22,0.6)', fontSize: 11, fontWeight: 700, marginBottom: 4, letterSpacing: '0.08em' }}>SALDO WALLET</p>
-              <p style={{ color: '#0C0C16', fontSize: 26, fontWeight: 900, marginBottom: 12 }}>{fmtRp(user.wallet?.balance)}</p>
+            <div style={{ background: SVC.wallet.bg, borderRadius: 20, padding: '18px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+              <Gloss />
+              <div style={{ position: 'relative' }}>
+                <p style={{ color: SVC.wallet.fg, opacity: 0.75, fontSize: 11, fontWeight: 700, marginBottom: 4, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Saldo Wallet</p>
+                <p style={{ color: SVC.wallet.fg, fontSize: 26, fontWeight: 900, marginBottom: 12 }}>{fmtRp(user.wallet?.balance)}</p>
 
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input type="number" value={addBal} onChange={e => setAddBal(e.target.value)} placeholder="Nominal (min. 1.000)"
-                  style={{ flex: 1, padding: '10px 12px', borderRadius: 10, border: 'none', background: 'rgba(12,12,22,0.15)', color: '#0C0C16', fontSize: 13, outline: 'none' }} />
-                <button onClick={handleAddBalance} disabled={acting || !addBal || Number(addBal) < 1000}
-                  style={{ padding: '10px 16px', borderRadius: 10, border: 'none', background: '#0C0C16', color: '#00C896', fontWeight: 800, fontSize: 13, cursor: 'pointer', opacity: acting ? 0.6 : 1 }}>
-                  + Tambah
-                </button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input type="number" value={addBal} onChange={e => setAddBal(e.target.value)} placeholder="Nominal (min. 1.000)"
+                    style={{ flex: 1, padding: '10px 12px', borderRadius: 10, border: 'none', background: 'var(--k-surface)', color: 'var(--k-text)', fontSize: 13, outline: 'none' }} />
+                  <button onClick={handleAddBalance} disabled={acting || !addBal || Number(addBal) < 1000}
+                    style={{ padding: '10px 16px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer', opacity: acting ? 0.6 : 1,
+                      boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
+                    + Tambah
+                  </button>
+                </div>
+                {addMsg && <p style={{ fontSize: 12, color: SVC.wallet.fg, marginTop: 8, fontWeight: 600 }}>{addMsg}</p>}
               </div>
-              {addMsg && <p style={{ fontSize: 12, color: '#0C0C16', marginTop: 8, fontWeight: 600 }}>{addMsg}</p>}
             </div>
 
             {/* Kelola Status */}

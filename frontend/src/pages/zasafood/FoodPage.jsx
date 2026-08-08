@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import api, { storageUrl } from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 function fmtRating(r) { return r > 0 ? r.toFixed(1) : '—' }
 
@@ -75,23 +76,26 @@ export default function FoodPage() {
       }}>
         {/* Hero banner */}
         <div style={{
-          background: 'linear-gradient(135deg, #FFF4EE 0%, #FFFBF5 100%)',
+          background: SVC.zasafood.bg,
           padding: '20px 20px 16px',
           position: 'relative', overflow: 'hidden',
+          boxShadow: svcShadow(SVC.zasafood.rgb, true),
         }}>
-          <div style={{ position:'absolute', right:-10, top:-8, fontSize:90, opacity:0.09, transform:'rotate(10deg)', pointerEvents:'none' }}>🍱</div>
-          <div style={{ position:'absolute', right:64, bottom:-14, fontSize:60, opacity:0.07, transform:'rotate(-8deg)', pointerEvents:'none' }}>🍜</div>
-          <div style={{ position:'absolute', left:-14, bottom:-14, width:72, height:72, borderRadius:'50%', background:'rgba(249,115,22,0.08)', pointerEvents:'none' }} />
+          <Gloss />
+          <div style={{ position:'absolute', right:-10, top:-8, fontSize:90, opacity:0.12, transform:'rotate(10deg)', pointerEvents:'none' }}>🍱</div>
+          <div style={{ position:'absolute', right:64, bottom:-14, fontSize:60, opacity:0.1, transform:'rotate(-8deg)', pointerEvents:'none' }}>🍜</div>
+          <div style={{ position:'absolute', left:-14, bottom:-14, width:72, height:72, borderRadius:'50%', background:'rgba(255,255,255,0.14)', pointerEvents:'none' }} />
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14, position:'relative', zIndex:1 }}>
             <div style={{
               width: 44, height: 44, borderRadius: 14,
-              background: 'rgba(249,115,22,0.12)',
+              background: 'var(--k-surface)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24,
+              boxShadow: `0 3px 8px rgba(${SVC.zasafood.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasafood.rgb},0.4)`,
             }}>🍜</div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: 18, color: 'var(--k-text)' }}>ZasaFood</div>
-              <div style={{ fontSize: 12, color: 'var(--k-sub)' }}>Pesan dari warung lokal favoritmu</div>
+              <div style={{ fontWeight: 800, fontSize: 18, color: SVC.zasafood.fg }}>ZasaFood</div>
+              <div style={{ fontSize: 12, color: SVC.zasafood.fg, opacity: 0.75 }}>Pesan dari warung lokal favoritmu</div>
             </div>
           </div>
 
@@ -100,7 +104,7 @@ export default function FoodPage() {
             onChange={e => setSearch(e.target.value)}
             style={{
               width: '100%', padding: '11px 16px', borderRadius: 14, fontSize: 14, boxSizing: 'border-box',
-              border: '1.5px solid var(--k-border)', background: 'var(--k-surface)', color: 'var(--k-text)',
+              border: 'none', background: 'var(--k-surface)', color: 'var(--k-text)',
               outline: 'none', position: 'relative', zIndex: 1,
             }}
           />
@@ -125,23 +129,25 @@ export default function FoodPage() {
         {autoJoinSession && (
           <div style={{
             marginBottom: 16, padding: '14px 16px', borderRadius: 16,
-            background: 'linear-gradient(135deg, #16A34A 0%, #15803D 100%)',
+            background: SVC.jastip.bg, position: 'relative', overflow: 'hidden',
+            boxShadow: svcShadow(SVC.jastip.rgb),
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Gloss />
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 26 }}>🛵</span>
               <div>
-                <div style={{ fontWeight: 800, fontSize: 14, color: '#fff' }}>
+                <div style={{ fontWeight: 800, fontSize: 14, color: SVC.jastip.fg }}>
                   Pilih warung untuk sesi {autoJoinSession.mitra?.name ?? 'mitra'}
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)' }}>
+                <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.8 }}>
                   Ongkir akan digabung — tekan warung untuk memesan
                 </div>
               </div>
             </div>
             <button
               onClick={() => navigate('/food', { replace: true })}
-              style={{ background: 'none', border: 'none', color: '#fff', fontSize: 22, cursor: 'pointer', padding: 4 }}
+              style={{ position: 'relative', background: 'none', border: 'none', color: SVC.jastip.fg, fontSize: 22, cursor: 'pointer', padding: 4 }}
             >✕</button>
           </div>
         )}
@@ -152,22 +158,24 @@ export default function FoodPage() {
             onClick={() => navigate('/food/jastip/sessions')}
             style={{
               marginBottom: 16, padding: '14px 16px', borderRadius: 16, cursor: 'pointer',
-              background: 'linear-gradient(135deg, #F97316 0%, #FF4500 100%)',
+              background: SVC.jastip.bg, position: 'relative', overflow: 'hidden',
+              boxShadow: svcShadow(SVC.jastip.rgb),
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Gloss />
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 26 }}>🛵</span>
               <div>
-                <div style={{ fontWeight: 800, fontSize: 14, color: '#fff' }}>
+                <div style={{ fontWeight: 800, fontSize: 14, color: SVC.jastip.fg }}>
                   Sesi Hemat Ongkir Tersedia!
                 </div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)' }}>
+                <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.8 }}>
                   {activeSessions.length} mitra siap, bayar 1 ongkir untuk multi warung
                 </div>
               </div>
             </div>
-            <span style={{ color: '#fff', fontSize: 20 }}>›</span>
+            <span style={{ position: 'relative', color: SVC.jastip.fg, fontSize: 20 }}>›</span>
           </div>
         )}
 
@@ -183,13 +191,9 @@ export default function FoodPage() {
             {merchants.map(m => (
               <div key={m.id} onClick={() => navigate(`/food/merchants/${m.id}`, { state: autoJoinSession ? { autoJoinSession } : undefined })} style={{
                 borderRadius: 18, overflow: 'hidden',
-                background: merchantsInSession.has(m.id)
-                  ? 'linear-gradient(145deg, #FFF4EE 0%, #fff 60%)'
-                  : m.is_open
-                    ? 'var(--k-card)'
-                    : 'var(--k-card)',
+                background: 'var(--k-card)',
                 border: merchantsInSession.has(m.id)
-                  ? '2px solid #F97316'
+                  ? `2px solid ${SVC.jastip.fg}`
                   : '1px solid var(--k-border)',
                 cursor: 'pointer',
                 boxShadow: m.is_open ? 'var(--k-shadow)' : 'none',
@@ -216,7 +220,7 @@ export default function FoodPage() {
                     <span style={{
                       position: 'absolute', top: 10, left: 10,
                       padding: '4px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-                      background: '#F97316', color: '#fff',
+                      background: `rgb(${SVC.jastip.rgb})`, color: '#fff',
                     }}>🛵 Ada di sesi</span>
                   )}
                 </div>
@@ -248,7 +252,7 @@ export default function FoodPage() {
                       <span style={{ fontSize: 12, color: 'var(--k-sub)' }}>🍽️ {m.menu_items_count} menu</span>
                     </div>
                     {merchantsInSession.has(m.id) && (
-                      <div style={{ marginTop: 4, fontSize: 11, fontWeight: 700, color: '#F97316' }}>
+                      <div style={{ marginTop: 4, fontSize: 11, fontWeight: 700, color: SVC.jastip.fg }}>
                         ✓ Hemat ongkir tersedia — gabung sesi mitra
                       </div>
                     )}

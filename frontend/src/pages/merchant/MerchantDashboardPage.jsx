@@ -5,6 +5,7 @@ import api, { storageUrl } from '../../services/api'
 import echo from '../../services/echo'
 import { useAuth } from '../../context/AuthContext'
 import { playNewOrderChime, setupChimeUnlock } from '../../utils/systemNotif'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 function fmtRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -76,15 +77,18 @@ export default function MerchantDashboardPage() {
 
         {/* ── Kartu toko + toggle buka/tutup ── */}
         <div style={{
-          borderRadius: 18, background: 'var(--k-card)', border: '1.5px solid var(--k-border)',
-          overflow: 'hidden',
+          borderRadius: 20, background: SVC.zasafood.bg,
+          position: 'relative', overflow: 'hidden',
+          boxShadow: svcShadow(SVC.zasafood.rgb, true),
         }}>
+          <Gloss />
           {/* Banner / header */}
-          <div style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.15), rgba(249,115,22,0.05))', padding: '20px 20px 16px', display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ position: 'relative', padding: '20px 20px 16px', display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{
               width: 64, height: 64, borderRadius: 16, flexShrink: 0, overflow: 'hidden',
-              background: 'var(--k-input)', border: '2.5px solid rgba(249,115,22,0.3)',
+              background: 'var(--k-surface)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28,
+              boxShadow: `0 3px 8px rgba(${SVC.zasafood.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasafood.rgb},0.4)`,
             }}>
               {merchant?.logo_path
                 ? <img src={storageUrl(merchant.logo_path)} alt="logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -92,7 +96,7 @@ export default function MerchantDashboardPage() {
               }
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 800, fontSize: 17, color: 'var(--k-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{merchant?.name}</div>
+              <div style={{ fontWeight: 800, fontSize: 17, color: 'var(--k-zasafood-fg)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{merchant?.name}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 5 }}>
                 <span style={{
                   padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
@@ -105,17 +109,17 @@ export default function MerchantDashboardPage() {
           {/* Toggle buka/tutup */}
           {merchant?.status === 'active' && (
             <button onClick={handleToggle} disabled={toggling} style={{
-              width: '100%', padding: '16px 20px', border: 'none', cursor: toggling ? 'default' : 'pointer',
+              position: 'relative', width: '100%', padding: '16px 20px', border: 'none', cursor: toggling ? 'default' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              background: merchant?.is_open ? 'rgba(0,200,150,0.08)' : 'rgba(245,101,101,0.08)',
-              borderTop: '1px solid var(--k-border)',
+              background: merchant?.is_open ? 'rgba(0,200,150,0.1)' : 'rgba(245,101,101,0.1)',
+              borderTop: `1px solid rgba(${SVC.zasafood.rgb},0.18)`,
               transition: 'background 0.3s',
             }}>
               <div style={{ textAlign: 'left' }}>
                 <div style={{ fontWeight: 800, fontSize: 15, color: merchant?.is_open ? '#027A48' : '#DC2626' }}>
                   {merchant?.is_open ? '🟢 Toko Sedang Buka' : '🔴 Toko Sedang Tutup'}
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--k-sub)', marginTop: 2 }}>
+                <div style={{ fontSize: 12, color: 'var(--k-zasafood-fg)', opacity: 0.75, marginTop: 2 }}>
                   {merchant?.is_open ? 'Pelanggan dapat memesan sekarang' : 'Tap untuk buka toko'}
                 </div>
               </div>
@@ -163,17 +167,23 @@ export default function MerchantDashboardPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {[
                 { emoji: '📦', label: 'Order', value: stats.orders_today, color: '#3B82F6' },
-                { emoji: '💰', label: 'Omzet', value: fmtRp(stats.revenue_today), color: '#00C896' },
+                { emoji: '💰', label: 'Omzet', value: fmtRp(stats.revenue_today), highlight: true },
                 { emoji: '⏳', label: 'Menunggu', value: stats.pending_orders, color: '#F59E0B', warn: stats.pending_orders > 0 },
                 { emoji: '⭐', label: 'Rating', value: stats.average_rating > 0 ? `${stats.average_rating}/5` : '—', color: '#F59E0B' },
-              ].map(({ emoji, label, value, color, warn }) => (
-                <div key={label} style={{
+              ].map(({ emoji, label, value, color, warn, highlight }) => (
+                <div key={label} style={highlight ? {
+                  padding: '16px', borderRadius: 14, background: SVC.zasafood.bg,
+                  position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasafood.rgb),
+                } : {
                   padding: '16px', borderRadius: 14, background: 'var(--k-card)',
                   border: `1.5px solid ${warn ? '#F59E0B55' : 'var(--k-border)'}`,
                 }}>
-                  <div style={{ fontSize: 22, marginBottom: 6 }}>{emoji}</div>
-                  <div style={{ fontSize: 11, color: 'var(--k-sub)', marginBottom: 3 }}>{label}</div>
-                  <div style={{ fontWeight: 800, fontSize: 18, color }}>{value}</div>
+                  {highlight && <Gloss />}
+                  <div style={highlight ? { position: 'relative' } : undefined}>
+                    <div style={{ fontSize: 22, marginBottom: 6 }}>{emoji}</div>
+                    <div style={{ fontSize: 11, marginBottom: 3, color: highlight ? 'var(--k-zasafood-fg)' : 'var(--k-sub)', opacity: highlight ? 0.75 : 1 }}>{label}</div>
+                    <div style={{ fontWeight: 800, fontSize: 18, color: highlight ? 'var(--k-zasafood-fg)' : color, textShadow: highlight ? '0 1px 0 rgba(255,255,255,0.4)' : undefined }}>{value}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -182,12 +192,20 @@ export default function MerchantDashboardPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {[
                 { emoji: '🛎️', label: 'Total Order', value: stats.total_orders },
-                { emoji: '💵', label: 'Total Omzet', value: fmtRp(stats.total_revenue), color: '#00C896' },
-              ].map(({ emoji, label, value, color }) => (
-                <div key={label} style={{ padding: '16px', borderRadius: 14, background: 'var(--k-card)', border: '1.5px solid var(--k-border)' }}>
-                  <div style={{ fontSize: 22, marginBottom: 6 }}>{emoji}</div>
-                  <div style={{ fontSize: 11, color: 'var(--k-sub)', marginBottom: 3 }}>{label}</div>
-                  <div style={{ fontWeight: 800, fontSize: 18, color: color || 'var(--k-text)' }}>{value}</div>
+                { emoji: '💵', label: 'Total Omzet', value: fmtRp(stats.total_revenue), highlight: true },
+              ].map(({ emoji, label, value, color, highlight }) => (
+                <div key={label} style={highlight ? {
+                  padding: '16px', borderRadius: 14, background: SVC.zasafood.bg,
+                  position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasafood.rgb),
+                } : {
+                  padding: '16px', borderRadius: 14, background: 'var(--k-card)', border: '1.5px solid var(--k-border)',
+                }}>
+                  {highlight && <Gloss />}
+                  <div style={highlight ? { position: 'relative' } : undefined}>
+                    <div style={{ fontSize: 22, marginBottom: 6 }}>{emoji}</div>
+                    <div style={{ fontSize: 11, marginBottom: 3, color: highlight ? 'var(--k-zasafood-fg)' : 'var(--k-sub)', opacity: highlight ? 0.75 : 1 }}>{label}</div>
+                    <div style={{ fontWeight: 800, fontSize: 18, color: highlight ? 'var(--k-zasafood-fg)' : (color || 'var(--k-text)'), textShadow: highlight ? '0 1px 0 rgba(255,255,255,0.4)' : undefined }}>{value}</div>
+                  </div>
                 </div>
               ))}
             </div>

@@ -11,6 +11,7 @@ import useActiveOrders from '../hooks/useActiveOrders'
 import useMitraAvailableOrders from '../hooks/useMitraAvailableOrders'
 import { useTheme } from '../hooks/useTheme'
 import useAppInfo from '../hooks/useAppInfo'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const ROLE_LABELS = {
   pelanggan: 'Pelanggan', mitra_motor: 'Mitra Motor',
@@ -21,18 +22,15 @@ const ROLE_LABELS = {
 
 const DEFAULT_BANNERS = [
   {
-    gradient: 'linear-gradient(135deg, #00C896 0%, #00A87D 100%)',
-    emoji: '🎉', title: 'Selamat Datang di ZasaQu!',
+    svc: 'zasago', emoji: '🎉', title: 'Selamat Datang di ZasaQu!',
     subtitle: 'Kirim barang, pesan makanan, semua dalam satu aplikasi.',
   },
   {
-    gradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-    emoji: '🛍️', title: 'Jastip — Titip Beli Barang',
+    svc: 'jastip', emoji: '🛍️', title: 'Jastip — Titip Beli Barang',
     subtitle: 'Titip belanja ke mitra terpercaya, hemat waktu & tenaga.',
   },
   {
-    gradient: 'linear-gradient(135deg, #00C896 0%, #00A87D 100%)',
-    emoji: '🍜', title: 'ZasaFood — Pesan Dari Warung Lokal',
+    svc: 'zasafood', emoji: '🍜', title: 'ZasaFood — Pesan Dari Warung Lokal',
     subtitle: 'Hemat ongkir dengan fitur sesi kuliner bersama.',
   },
 ]
@@ -62,46 +60,38 @@ const IconArrowRight = () => (
   </svg>
 )
 
-/* ── Kartu layanan dengan background tematik ── */
-function ServiceCard({ to, emoji, bgDecor, title, desc, badge, badgeColor, badgeBg, gradient, borderColor, active = true }) {
+/* ── Kartu layanan — warna solid per layanan ── */
+function ServiceCard({ to, emoji, title, desc, badge, badgeActive = true, svc, active = true }) {
+  const { bg, fg, rgb } = svc
   const inner = (
     <div style={{
-      background: gradient,
-      border: `1.5px solid ${borderColor}`,
-      borderRadius: 20, padding: '16px 14px',
+      background: bg,
+      borderRadius: 18, padding: '12px 11px',
       position: 'relative', overflow: 'hidden',
       opacity: active ? 1 : 0.55,
       transition: 'transform 0.15s, box-shadow 0.15s',
       cursor: active ? 'pointer' : 'default',
-      minHeight: 138,
+      minHeight: 101,
+      boxShadow: svcShadow(rgb),
     }}>
-      {/* Ikon dekorasi besar di sudut kanan atas */}
+      <Gloss />
+      {/* Bubble ikon putih timbul */}
       <div style={{
-        position: 'absolute', right: -6, top: -4,
-        fontSize: 72, lineHeight: 1,
-        opacity: 0.13, transform: 'rotate(12deg)',
-        pointerEvents: 'none', userSelect: 'none',
-      }}>{bgDecor || emoji}</div>
-
-      {/* Blob bulat di kiri bawah */}
-      <div style={{
-        position: 'absolute', left: -24, bottom: -24,
-        width: 80, height: 80, borderRadius: '50%',
-        background: borderColor, opacity: 0.25,
-        pointerEvents: 'none',
-      }} />
-
-      {/* Konten */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ fontSize: 28, marginBottom: 8, lineHeight: 1 }}>{emoji}</div>
-        <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--k-text)', marginBottom: 2 }}>{title}</p>
-        <p style={{ fontSize: 11, color: 'var(--k-sub)', marginBottom: 10, lineHeight: 1.4 }}>{desc}</p>
-        <span style={{
-          fontSize: 10, fontWeight: 700, padding: '3px 9px',
-          borderRadius: 100, background: badgeBg, color: badgeColor,
-          letterSpacing: '0.04em',
-        }}>{badge}</span>
-      </div>
+        position: 'relative', width: 32, height: 32, borderRadius: 11,
+        background: 'var(--k-surface)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 16, marginBottom: 7,
+        boxShadow: `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`,
+      }}>{emoji}</div>
+      <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: fg, marginBottom: 2 }}>{title}</p>
+      <p style={{ position: 'relative', fontSize: 9.5, color: fg, opacity: 0.72, marginBottom: 7, lineHeight: 1.3 }}>{desc}</p>
+      <span style={{
+        position: 'relative', fontSize: 8.5, fontWeight: 700, padding: '2px 7px',
+        borderRadius: 100,
+        background: badgeActive ? 'var(--k-primary)' : 'rgba(255,255,255,0.55)',
+        color: badgeActive ? '#fff' : fg,
+        letterSpacing: '0.04em',
+      }}>{badge}</span>
     </div>
   )
 
@@ -110,26 +100,27 @@ function ServiceCard({ to, emoji, bgDecor, title, desc, badge, badgeColor, badge
 }
 
 /* ── Kartu aksi utama (besar) ── */
-function MainCard({ to, emoji, bgDecor, title, desc, gradient, borderColor }) {
+function MainCard({ to, emoji, title, desc, svc }) {
+  const { bg, fg, rgb } = svc
   return (
     <Link to={to} style={{ textDecoration: 'none', flex: 1 }}>
       <div style={{
-        background: gradient, border: `1.5px solid ${borderColor}`,
-        borderRadius: 20, padding: '18px 16px',
+        background: bg,
+        borderRadius: 18, padding: '13px 13px',
         position: 'relative', overflow: 'hidden',
         transition: 'transform 0.15s',
+        boxShadow: svcShadow(rgb, true),
       }}>
+        <Gloss />
         <div style={{
-          position: 'absolute', right: -10, top: -10,
-          fontSize: 68, lineHeight: 1, opacity: 0.1,
-          transform: 'rotate(-10deg)',
-          pointerEvents: 'none', userSelect: 'none',
-        }}>{bgDecor || emoji}</div>
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <span style={{ fontSize: 28 }}>{emoji}</span>
-          <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--k-text)', marginTop: 10, marginBottom: 4 }}>{title}</p>
-          <p style={{ fontSize: 11, color: 'var(--k-sub)', lineHeight: 1.4 }}>{desc}</p>
-        </div>
+          position: 'relative', width: 38, height: 38, borderRadius: 13,
+          background: 'var(--k-surface)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 19,
+          boxShadow: `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`,
+        }}>{emoji}</div>
+        <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: fg, marginTop: 8, marginBottom: 3 }}>{title}</p>
+        <p style={{ position: 'relative', fontSize: 9.5, color: fg, opacity: 0.72, lineHeight: 1.3 }}>{desc}</p>
       </div>
     </Link>
   )
@@ -205,17 +196,7 @@ export default function DashboardPage() {
       <style>{`@keyframes dashPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}`}</style>
 
       {/* ── Header ─────────────────────────────────── */}
-      <div style={{
-        background: 'var(--k-header-bg)',
-        borderBottom: '1px solid var(--k-border)',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* Dekorasi blob */}
-        <div style={{ position:'absolute', right:-32, top:-32, width:140, height:140, borderRadius:'50%', background:'var(--k-header-blob1)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', left:-24, bottom:-28, width:110, height:110, borderRadius:'50%', background:'var(--k-header-blob2)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', right:64, bottom:-20, width:70, height:70, borderRadius:'50%', background:'var(--k-header-blob3)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', right:-10, top:60, fontSize:96, opacity:0.04, transform:'rotate(15deg)', pointerEvents:'none', userSelect:'none', lineHeight:1 }}>🏠</div>
-
+      <div style={{ background: 'var(--k-header-bg)', position: 'relative' }}>
         {/* Strip atas: sapaan + lokasi */}
         <div style={{
           paddingTop: 48, paddingLeft: 20, paddingRight: 20, paddingBottom: 0,
@@ -245,10 +226,11 @@ export default function DashboardPage() {
             <button
               onClick={toggleTheme}
               style={{
-                width: 40, height: 40, borderRadius: 13,
-                background: 'var(--k-input)', border: '1px solid var(--k-border)',
+                width: 40, height: 40, borderRadius: 14,
+                background: 'var(--k-surface)', border: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 cursor: 'pointer', fontSize: 18,
+                boxShadow: 'var(--k-shadow), var(--k-inset-hi)',
               }}
               aria-label="Ganti tema"
             >
@@ -258,10 +240,11 @@ export default function DashboardPage() {
             {/* Notifikasi */}
             <Link to="/notifications" style={{
               position: 'relative',
-              width: 40, height: 40, borderRadius: 13,
-              background: 'var(--k-input)', border: '1px solid var(--k-border)',
+              width: 40, height: 40, borderRadius: 14,
+              background: 'var(--k-surface)', border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               textDecoration: 'none', fontSize: 18,
+              boxShadow: 'var(--k-shadow), var(--k-inset-hi)',
             }}>
               🔔
               {notifCount > 0 && (
@@ -286,7 +269,7 @@ export default function DashboardPage() {
           </h1>
           <span style={{
             display: 'inline-block', padding: '4px 12px', borderRadius: 100,
-            background: 'rgba(0,200,150,0.10)', color: 'var(--k-primary)',
+            background: 'var(--k-zasago-bg)', color: 'var(--k-zasago-fg)',
             fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
           }}>
             {ROLE_LABELS[user?.role]}
@@ -309,26 +292,33 @@ export default function DashboardPage() {
         >
           {/* Slide aktif */}
           {promos.map((b, i) => {
+            const svc = b.svc ? SVC[b.svc] : null
+            const isCustom = !!b.gradient /* promo dari admin API, pola lama tetap dihormati */
+            const bgStyle = b.gradient || svc?.bg || 'var(--k-zasago-bg)'
+            const fgColor = isCustom ? '#fff' : (svc?.fg || 'var(--k-text)')
             const slideContent = (
               <div key={b.id ?? i} style={{
                 display: i === bannerIdx ? 'flex' : 'none',
-                background: b.gradient || '#1a1a2e',
+                background: bgStyle,
                 padding: '18px 20px',
                 alignItems: 'center', gap: 14,
                 minHeight: 88,
-                position: 'relative', overflow: 'hidden',
+                boxShadow: !isCustom && svc ? svcShadow(svc.rgb) : undefined,
               }}>
-                <div style={{ position: 'absolute', right: -20, top: -20, width: 110, height: 110, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', right: 40, bottom: -30, width: 70, height: 70, borderRadius: '50%', background: 'rgba(255,255,255,0.07)', pointerEvents: 'none' }} />
-
                 {(b.image_data_url || b.image_path) ? (
-                  <img src={b.image_data_url || `${STORAGE_URL}/${b.image_path}`} alt="" style={{ width: 52, height: 52, borderRadius: 10, objectFit: 'cover', flexShrink: 0, position: 'relative', zIndex: 1 }} />
+                  <img src={b.image_data_url || `${STORAGE_URL}/${b.image_path}`} alt="" style={{ width: 52, height: 52, borderRadius: 14, objectFit: 'cover', flexShrink: 0 }} />
                 ) : (
-                  <span style={{ fontSize: 36, flexShrink: 0, position: 'relative', zIndex: 1 }}>{b.emoji ?? '🎉'}</span>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: 16, flexShrink: 0,
+                    background: isCustom ? 'rgba(255,255,255,0.22)' : 'var(--k-surface)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 26,
+                    boxShadow: !isCustom && svc ? `0 3px 8px rgba(${svc.rgb},0.25)` : undefined,
+                  }}>{b.emoji ?? '🎉'}</div>
                 )}
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ fontWeight: 800, fontSize: 14, color: '#fff', marginBottom: 3 }}>{b.title}</div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.82)', lineHeight: 1.4 }}>{b.subtitle ?? b.description ?? b.desc}</div>
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 14, color: fgColor, marginBottom: 3 }}>{b.title}</div>
+                  <div style={{ fontSize: 12, color: fgColor, opacity: isCustom ? 0.82 : 0.75, lineHeight: 1.4 }}>{b.subtitle ?? b.description ?? b.desc}</div>
                 </div>
               </div>
             )
@@ -344,18 +334,23 @@ export default function DashboardPage() {
               position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)',
               display: 'flex', gap: 5, zIndex: 2,
             }}>
-              {promos.map((_, i) => (
-                <span
-                  key={i}
-                  onClick={() => setBannerIdx(i)}
-                  style={{
-                    width: i === bannerIdx ? 18 : 6, height: 6, borderRadius: 3,
-                    background: i === bannerIdx ? '#fff' : 'rgba(255,255,255,0.45)',
-                    transition: 'width 0.25s ease, background 0.25s',
-                    cursor: 'pointer',
-                  }}
-                />
-              ))}
+              {promos.map((_, i) => {
+                const dotDark = !promos[bannerIdx]?.gradient
+                return (
+                  <span
+                    key={i}
+                    onClick={() => setBannerIdx(i)}
+                    style={{
+                      width: i === bannerIdx ? 18 : 6, height: 6, borderRadius: 3,
+                      background: i === bannerIdx
+                        ? (dotDark ? 'var(--k-text)' : '#fff')
+                        : (dotDark ? 'rgba(30,34,51,0.25)' : 'rgba(255,255,255,0.45)'),
+                      transition: 'width 0.25s ease, background 0.25s',
+                      cursor: 'pointer',
+                    }}
+                  />
+                )
+              })}
             </div>
           )}
         </div>
@@ -365,70 +360,54 @@ export default function DashboardPage() {
 
         {/* ── Kartu Saldo ──────────────────────────── */}
         <div style={{
-          borderRadius: 24,
-          background: 'linear-gradient(135deg, #00C896 0%, #00A87D 55%, #007D5E 100%)',
-          padding: '24px 24px 20px',
+          borderRadius: 22,
+          background: 'var(--k-wallet-bg)',
+          padding: '18px 18px 16px',
+          marginBottom: 13,
           position: 'relative', overflow: 'hidden',
-          marginBottom: 16,
-          boxShadow: '0 8px 24px rgba(0,200,150,0.30)',
+          boxShadow: svcShadow(SVC.wallet.rgb, true),
         }}>
-          {/* Dekorasi lingkaran */}
-          <div style={{
-            position: 'absolute', right: -40, top: -40,
-            width: 160, height: 160, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.08)', pointerEvents: 'none',
-          }} />
-          <div style={{
-            position: 'absolute', right: 30, bottom: -50,
-            width: 120, height: 120, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.06)', pointerEvents: 'none',
-          }} />
-          <div style={{
-            position: 'absolute', left: -20, top: -20,
-            width: 90, height: 90, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.04)', pointerEvents: 'none',
-          }} />
-
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 11, fontWeight: 700,
-              letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
-              Saldo Tersedia
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+          <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.8, fontSize: 10, fontWeight: 700,
+            letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 7 }}>
+            Saldo Tersedia
+          </p>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
+            <span style={{ color: 'var(--k-wallet-fg)', opacity: 0.75, fontSize: 16, fontWeight: 600 }}>Rp</span>
+            <span style={{ color: 'var(--k-wallet-fg)', fontSize: 32, fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em' }}>
+              {formatRp(walletData?.available ?? user?.wallet?.balance)}
+            </span>
+          </div>
+          {(walletData?.locked_balance ?? user?.wallet?.locked_balance) > 0 && (
+            <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.65, fontSize: 11, marginBottom: 4 }}>
+              🔒 Terkunci: Rp {formatRp(walletData?.locked_balance ?? user?.wallet?.locked_balance)}
             </p>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
-              <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, fontWeight: 600 }}>Rp</span>
-              <span style={{ color: '#fff', fontSize: 36, fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em' }}>
-                {formatRp(walletData?.available ?? user?.wallet?.balance)}
-              </span>
-            </div>
-            {(walletData?.locked_balance ?? user?.wallet?.locked_balance) > 0 && (
-              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12, marginBottom: 4 }}>
-                🔒 Terkunci: Rp {formatRp(walletData?.locked_balance ?? user?.wallet?.locked_balance)}
-              </p>
-            )}
+          )}
 
-            {/* Quick actions */}
-            <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-              <Link to="/topup" style={{
-                flex: 1, textAlign: 'center', padding: '10px 8px',
-                background: 'rgba(255,255,255,0.22)', borderRadius: 12,
-                color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none',
-                backdropFilter: 'blur(8px)',
-              }}>Top Up</Link>
-              {isMitra && (
-                <Link to="/withdraw" style={{
-                  flex: 1, textAlign: 'center', padding: '10px 8px',
-                  background: 'rgba(255,255,255,0.12)', borderRadius: 12,
-                  color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none',
-                  border: '1px solid rgba(255,255,255,0.25)',
-                }}>Withdraw</Link>
-              )}
-              <Link to="/wallet" style={{
-                flex: 1, textAlign: 'center', padding: '10px 8px',
-                background: 'rgba(255,255,255,0.12)', borderRadius: 12,
-                color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none',
-                border: '1px solid rgba(255,255,255,0.25)',
-              }}>Riwayat</Link>
-            </div>
+          {/* Quick actions */}
+          <div style={{ display: 'flex', gap: 9, marginTop: 18 }}>
+            <Link to="/topup" style={{
+              flex: 1, textAlign: 'center', padding: '9px 7px',
+              background: 'var(--k-primary)', borderRadius: 999,
+              color: '#fff', fontWeight: 700, fontSize: 12, textDecoration: 'none',
+              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+            }}>Top Up</Link>
+            {isMitra && (
+              <Link to="/withdraw" style={{
+                flex: 1, textAlign: 'center', padding: '9px 7px',
+                background: 'var(--k-surface)', borderRadius: 999,
+                color: 'var(--k-wallet-fg)', fontWeight: 700, fontSize: 12, textDecoration: 'none',
+                boxShadow: '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)',
+              }}>Withdraw</Link>
+            )}
+            <Link to="/wallet" style={{
+              flex: 1, textAlign: 'center', padding: '9px 7px',
+              background: 'var(--k-surface)', borderRadius: 999,
+              color: 'var(--k-wallet-fg)', fontWeight: 700, fontSize: 12, textDecoration: 'none',
+              boxShadow: '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)',
+            }}>Riwayat</Link>
+          </div>
           </div>
         </div>
 
@@ -446,39 +425,39 @@ export default function DashboardPage() {
             {/* Shortcut ke masing-masing halaman mitra */}
             <div style={{ display: 'flex', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
               <Link to="/mitra/orders" style={{ flex: 1, minWidth: 80, textDecoration: 'none' }}>
-                <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '12px 10px', textAlign: 'center' }}>
+                <div style={{ background: 'var(--k-zasago-bg)', borderRadius: 14, padding: '11px 9px', textAlign: 'center', boxShadow: svcShadow(SVC.zasago.rgb) }}>
                   <div style={{ fontSize: 22, marginBottom: 4 }}>🛵</div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: '#1D4ED8' }}>ZasaGo</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-zasago-fg)' }}>ZasaGo</p>
                 </div>
               </Link>
               {feat.zasafood !== false && (
                 <Link to="/mitra/food/orders" style={{ flex: 1, minWidth: 80, textDecoration: 'none' }}>
-                  <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '12px 10px', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--k-zasafood-bg)', borderRadius: 14, padding: '11px 9px', textAlign: 'center', boxShadow: svcShadow(SVC.zasafood.rgb) }}>
                     <div style={{ fontSize: 22, marginBottom: 4 }}>🍜</div>
-                    <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-primary)' }}>ZasaFood</p>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-zasafood-fg)' }}>ZasaFood</p>
                   </div>
                 </Link>
               )}
               {feat.zasamart !== false && (
                 <Link to="/mitra/mart/orders" style={{ flex: 1, minWidth: 80, textDecoration: 'none' }}>
-                  <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '12px 10px', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--k-zasashop-bg)', borderRadius: 14, padding: '11px 9px', textAlign: 'center', boxShadow: svcShadow(SVC.zasashop.rgb) }}>
                     <div style={{ fontSize: 22, marginBottom: 4 }}>🛒</div>
-                    <p style={{ fontSize: 11, fontWeight: 700, color: '#7C3AED' }}>ZasaShop</p>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-zasashop-fg)' }}>ZasaShop</p>
                   </div>
                 </Link>
               )}
               {feat.zasaride === true && (
                 <Link to="/mitra/ride" style={{ flex: 1, minWidth: 80, textDecoration: 'none' }}>
-                  <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '12px 10px', textAlign: 'center' }}>
+                  <div style={{ background: 'var(--k-zasaride-bg)', borderRadius: 14, padding: '11px 9px', textAlign: 'center', boxShadow: svcShadow(SVC.zasaride.rgb) }}>
                     <div style={{ fontSize: 22, marginBottom: 4 }}>🚗</div>
-                    <p style={{ fontSize: 11, fontWeight: 700, color: '#059669' }}>ZasaRide</p>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-zasaride-fg)' }}>ZasaRide</p>
                   </div>
                 </Link>
               )}
               <Link to="/mitra/gps" style={{ flex: 1, minWidth: 80, textDecoration: 'none' }}>
-                <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '12px 10px', textAlign: 'center' }}>
+                <div style={{ background: 'var(--k-zasago-bg)', borderRadius: 14, padding: '11px 9px', textAlign: 'center', boxShadow: svcShadow(SVC.zasago.rgb) }}>
                   <div style={{ fontSize: 22, marginBottom: 4 }}>📍</div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: '#059669' }}>GPS</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-zasago-fg)' }}>GPS</p>
                 </div>
               </Link>
             </div>
@@ -495,24 +474,20 @@ export default function DashboardPage() {
               letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
               Menu Utama
             </p>
-            <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
               <MainCard
                 to="/orders/create"
                 emoji="🚀"
-                bgDecor="📦"
                 title="Kirim Sekarang"
                 desc="Buat order pengiriman baru"
-                gradient="linear-gradient(135deg, #EDFAF5 0%, #F5FDFB 100%)"
-                borderColor="rgba(0,200,150,0.20)"
+                svc={SVC.zasago}
               />
               <MainCard
                 to="/orders"
                 emoji="📋"
-                bgDecor="🗂️"
                 title="Order Saya"
                 desc="Lacak status pengiriman"
-                gradient="linear-gradient(135deg, #EBF5FF 0%, #F0F9FF 100%)"
-                borderColor="rgba(59,130,246,0.15)"
+                svc={SVC.zasago}
               />
             </div>
           </>
@@ -525,83 +500,71 @@ export default function DashboardPage() {
               letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
               Layanan ZasaQu
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 8 }}>
 
               {/* Jastip */}
               <ServiceCard
                 to={feat.zasago ? '/jastip' : null}
-                emoji="🛍️" bgDecor="📦"
+                emoji="🛍️"
                 title="Jastip" desc="Titip beli barang"
                 badge={feat.zasago ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasago ? '#059669' : 'var(--k-muted)'}
-                badgeBg={feat.zasago ? 'rgba(0,200,150,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #EBF5FF 0%, #F0FAFB 100%)"
-                borderColor="rgba(59,130,246,0.15)"
+                badgeActive={feat.zasago !== false}
+                svc={SVC.jastip}
                 active={feat.zasago !== false}
               />
 
               {/* ZasaFood */}
               <ServiceCard
                 to={feat.zasafood ? '/food' : null}
-                emoji="🍜" bgDecor="🍱"
+                emoji="🍜"
                 title="ZasaFood" desc="Makanan & minuman"
                 badge={feat.zasafood ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasafood ? 'var(--k-primary)' : 'var(--k-muted)'}
-                badgeBg={feat.zasafood ? 'rgba(0,200,150,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #EDFAF5 0%, #F5FDFB 100%)"
-                borderColor="rgba(0,200,150,0.18)"
+                badgeActive={feat.zasafood !== false}
+                svc={SVC.zasafood}
                 active={feat.zasafood !== false}
               />
 
               {/* ZasaHome */}
               <ServiceCard
                 to={feat.zasahome ? '/home' : null}
-                emoji="🏠" bgDecor="🧺"
+                emoji="🏠"
                 title="ZasaHome" desc="Laundry & jasa rumah"
                 badge={feat.zasahome ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasahome ? '#6366F1' : 'var(--k-muted)'}
-                badgeBg={feat.zasahome ? 'rgba(99,102,241,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #EEF2FF 0%, #F8F7FF 100%)"
-                borderColor="rgba(99,102,241,0.18)"
+                badgeActive={feat.zasahome !== false}
+                svc={SVC.zasahome}
                 active={feat.zasahome !== false}
               />
 
               {/* ZasaShop */}
               <ServiceCard
                 to={feat.zasamart ? '/mart' : null}
-                emoji="🛒" bgDecor="🏪"
+                emoji="🛒"
                 title="ZasaShop" desc="Produk UMKM lokal"
                 badge={feat.zasamart ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasamart ? '#8B5CF6' : 'var(--k-muted)'}
-                badgeBg={feat.zasamart ? 'rgba(139,92,246,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #F5F3FF 0%, #FAF8FF 100%)"
-                borderColor="rgba(139,92,246,0.18)"
+                badgeActive={feat.zasamart !== false}
+                svc={SVC.zasashop}
                 active={feat.zasamart !== false}
               />
 
               {/* ZasaRide */}
               <ServiceCard
                 to={feat.zasaride ? '/ride' : null}
-                emoji="🛵" bgDecor="🗺️"
+                emoji="🛵"
                 title="ZasaRide" desc="Ojek & antar jemput"
                 badge={feat.zasaride ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasaride ? '#059669' : 'var(--k-muted)'}
-                badgeBg={feat.zasaride ? 'rgba(0,200,150,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #F5F3FF 0%, #FAF8FF 100%)"
-                borderColor="rgba(139,92,246,0.12)"
+                badgeActive={feat.zasaride === true}
+                svc={SVC.zasaride}
                 active={feat.zasaride === true}
               />
 
               {/* ZasaServ */}
               <ServiceCard
                 to={feat.zasaserv ? '/serv' : null}
-                emoji="🔧" bgDecor="⚙️"
+                emoji="🔧"
                 title="ZasaServis" desc="Servis & perbaikan"
                 badge={feat.zasaserv ? 'AKTIF' : 'SEGERA'}
-                badgeColor={feat.zasaserv ? '#059669' : 'var(--k-muted)'}
-                badgeBg={feat.zasaserv ? 'rgba(0,200,150,0.12)' : 'var(--k-input)'}
-                gradient="linear-gradient(145deg, #F0FDF4 0%, #F7FFF5 100%)"
-                borderColor="rgba(34,197,94,0.15)"
+                badgeActive={feat.zasaserv === true}
+                svc={SVC.zasaserv}
                 active={feat.zasaserv === true}
               />
             </div>

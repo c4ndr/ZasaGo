@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import api, { storageUrl } from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const SKILL_LV = {
   pemula: 'Pemula', terlatih: 'Terlatih', berpengalaman: 'Berpengalaman',
@@ -56,7 +57,7 @@ export default function ServProviderPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 120 }}>
       {/* Banner */}
-      <div style={{ height: 180, background: provider.banner_path ? `url(${storageUrl(provider.banner_path)}) center/cover` : 'linear-gradient(135deg,#064e3b,#059669)', position: 'relative' }}>
+      <div style={{ height: 180, background: provider.banner_path ? `url(${storageUrl(provider.banner_path)}) center/cover` : SVC.zasaserv.bg, position: 'relative' }}>
         <button onClick={() => navigate(-1)} style={{ position: 'absolute', top: 52, left: 16, background: 'rgba(0,0,0,0.4)', border: 'none', color: '#fff', borderRadius: 20, padding: '6px 14px', fontSize: 13, cursor: 'pointer' }}>
           ← Kembali
         </button>
@@ -64,8 +65,8 @@ export default function ServProviderPage() {
 
       <div style={{ padding: '0 16px' }}>
         {/* Header card */}
-        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginTop: -30, boxShadow: '0 4px 20px rgba(0,0,0,0.08)', display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16, position: 'relative', zIndex: 2 }}>
-          <div style={{ width: 60, height: 60, borderRadius: 14, background: 'linear-gradient(135deg,#064e3b,#059669)', flexShrink: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginTop: -30, boxShadow: 'var(--k-shadow-lg), var(--k-inset-hi)', display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16, position: 'relative', zIndex: 2 }}>
+          <div style={{ width: 60, height: 60, borderRadius: 14, background: SVC.zasaserv.bg, flexShrink: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {provider.logo_path
               ? <img src={storageUrl(provider.logo_path)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               : <span style={{ fontSize: 26 }}>🔧</span>}
@@ -75,7 +76,7 @@ export default function ServProviderPage() {
             <div style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 2 }}>{provider.address}</div>
             <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
               {provider.skill_level && (
-                <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(5,150,105,0.1)', color: '#059669', fontWeight: 600 }}>{SKILL_LV[provider.skill_level]}</span>
+                <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 999, background: `rgba(${SVC.zasaserv.rgb},0.14)`, color: SVC.zasaserv.fg, fontWeight: 600 }}>{SKILL_LV[provider.skill_level]}</span>
               )}
               {provider.experience_years > 0 && (
                 <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'var(--k-input)', color: 'var(--k-muted)', fontWeight: 500 }}>{provider.experience_years}th pengalaman</span>
@@ -104,7 +105,7 @@ export default function ServProviderPage() {
             <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 8 }}>Spesialisasi</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {provider.specializations.map((s, i) => (
-                <span key={i} style={{ fontSize: 11, padding: '4px 10px', borderRadius: 12, background: 'rgba(5,150,105,0.1)', color: '#059669', fontWeight: 600 }}>{s}</span>
+                <span key={i} style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, background: `rgba(${SVC.zasaserv.rgb},0.14)`, color: SVC.zasaserv.fg, fontWeight: 600 }}>{s}</span>
               ))}
             </div>
           </div>
@@ -133,7 +134,7 @@ export default function ServProviderPage() {
         {/* Services */}
         <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 10 }}>Layanan Tersedia</div>
         {(provider.services ?? []).map(sv => (
-          <div key={sv.id} style={{ background: 'var(--k-card)', borderRadius: 14, padding: 14, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div key={sv.id} style={{ background: 'var(--k-card)', borderRadius: 18, padding: 14, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700, fontSize: 14 }}>{sv.name}</div>
               {sv.description && <div style={{ fontSize: 11, color: 'var(--k-muted)', marginTop: 2 }}>{sv.description}</div>}
@@ -146,7 +147,7 @@ export default function ServProviderPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <button onClick={() => changeQty(sv.id, -1)} disabled={!selected[sv.id]} style={{ width: 30, height: 30, borderRadius: '50%', border: 'none', cursor: 'pointer', background: selected[sv.id] ? '#EF4444' : 'var(--k-input)', color: selected[sv.id] ? '#fff' : 'var(--k-muted)', fontWeight: 700, fontSize: 16 }}>−</button>
               <span style={{ fontWeight: 700, fontSize: 15, minWidth: 20, textAlign: 'center' }}>{selected[sv.id] ?? 0}</span>
-              <button onClick={() => changeQty(sv.id, 1)} style={{ width: 30, height: 30, borderRadius: '50%', border: 'none', cursor: 'pointer', background: '#059669', color: '#fff', fontWeight: 700, fontSize: 16 }}>+</button>
+              <button onClick={() => changeQty(sv.id, 1)} style={{ width: 30, height: 30, borderRadius: '50%', border: 'none', cursor: 'pointer', background: SVC.zasaserv.bg, color: SVC.zasaserv.fg, fontWeight: 700, fontSize: 16 }}>+</button>
             </div>
           </div>
         ))}
@@ -159,7 +160,7 @@ export default function ServProviderPage() {
             <div style={{ fontSize: 11, color: 'var(--k-muted)' }}>{totalItems} layanan dipilih</div>
             <div style={{ fontWeight: 800, fontSize: 16, color: '#059669' }}>Rp {totalPrice.toLocaleString('id')}</div>
           </div>
-          <button onClick={handleBooking} disabled={booking} style={{ padding: '12px 24px', background: '#059669', color: '#fff', border: 'none', borderRadius: 14, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+          <button onClick={handleBooking} disabled={booking} style={{ padding: '12px 24px', background: 'var(--k-primary)', color: '#fff', border: 'none', borderRadius: 999, fontWeight: 700, fontSize: 14, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             Pesan Sekarang
           </button>
         </div>

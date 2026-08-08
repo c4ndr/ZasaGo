@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 // ── Rating Modal ──────────────────────────────────────────────────────────────
 function Stars({ score, onChange, size = 26 }) {
@@ -65,10 +66,10 @@ function MartRatingModal({ order, onClose, onDone }) {
         {error && <p style={{ fontSize: 13, color: '#EF4444', marginBottom: 12 }}>{error}</p>}
 
         <button onClick={submit} disabled={loading} style={{
-          width: '100%', padding: '14px', borderRadius: 14,
-          background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff',
+          width: '100%', padding: '14px', borderRadius: 999,
+          background: 'var(--k-primary)', color: '#fff',
           fontSize: 15, fontWeight: 800, border: 'none', cursor: loading ? 'default' : 'pointer',
-          opacity: loading ? 0.7 : 1,
+          opacity: loading ? 0.7 : 1, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
         }}>{loading ? 'Mengirim...' : 'Kirim Ulasan'}</button>
       </div>
     </div>
@@ -153,7 +154,7 @@ export default function MartOrdersPage() {
       <div style={{ display: 'flex', gap: 0, overflowX: 'auto', background: 'var(--k-surface)', borderBottom: '1px solid var(--k-border)', scrollbarWidth: 'none' }}>
         {STATUS_TABS.map(t => (
           <button key={t.value} onClick={() => setTab(t.value)}
-            style={{ padding: '10px 14px', border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: tab === t.value ? 700 : 500, color: tab === t.value ? '#6366F1' : 'var(--k-muted)', borderBottom: tab === t.value ? '2px solid #6366F1' : '2px solid transparent', whiteSpace: 'nowrap', transition: 'all 0.18s' }}>
+            style={{ padding: '10px 14px', border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: tab === t.value ? 700 : 500, color: tab === t.value ? SVC.zasashop.fg : 'var(--k-muted)', borderBottom: tab === t.value ? `2px solid ${SVC.zasashop.fg}` : '2px solid transparent', whiteSpace: 'nowrap', transition: 'all 0.18s' }}>
             {t.label}
           </button>
         ))}
@@ -201,12 +202,12 @@ export default function MartOrdersPage() {
                   )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: order.status === 'completed' ? 10 : 0 }}>
                     <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>{order.items?.length ?? 0} produk</p>
-                    <p style={{ fontSize: 14, fontWeight: 800, color: '#6366F1' }}>{fmtRp(order.total)}</p>
+                    <p style={{ fontSize: 14, fontWeight: 800, color: SVC.zasashop.fg }}>{fmtRp(order.total)}</p>
                   </div>
                   {order.status === 'completed' && !ratedIds.has(order.id) && (
                     <button onClick={e => { e.stopPropagation(); setRatingOrder(order) }} style={{
-                      width: '100%', padding: '9px', borderRadius: 10, border: 'none',
-                      background: 'rgba(99,102,241,0.08)', color: '#6366F1',
+                      width: '100%', padding: '9px', borderRadius: 999, border: 'none',
+                      background: `rgba(${SVC.zasashop.rgb},0.08)`, color: SVC.zasashop.fg,
                       fontSize: 12, fontWeight: 700, cursor: 'pointer',
                     }}>⭐ Beri Ulasan Produk</button>
                   )}

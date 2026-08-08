@@ -135,7 +135,7 @@ function CreateModal({ onClose, onCreated }) {
             </div>
           </div>
 
-          <button type="submit" disabled={loading} style={{ width: '100%', marginTop: 20, padding: 13, borderRadius: 12, border: 'none', cursor: loading ? 'default' : 'pointer', background: loading ? 'var(--k-border)' : '#059669', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+          <button type="submit" disabled={loading} style={{ width: '100%', marginTop: 20, padding: 13, borderRadius: 999, border: 'none', cursor: loading ? 'default' : 'pointer', background: loading ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: loading ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             {loading ? 'Membuat...' : 'Buat Provider'}
           </button>
         </form>
@@ -360,7 +360,7 @@ export default function AdminServProvidersPage() {
             Kelola teknisi: AC, elektronik, listrik, pipa, bangunan, jahit, dll · {total} total
           </p>
         </div>
-        <button onClick={() => setShowCreate(true)} style={{ padding: '10px 20px', borderRadius: 12, border: 'none', cursor: 'pointer', background: '#059669', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>
+        <button onClick={() => setShowCreate(true)} style={{ padding: '10px 20px', borderRadius: 999, border: 'none', cursor: 'pointer', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           + Tambah Provider
         </button>
       </div>

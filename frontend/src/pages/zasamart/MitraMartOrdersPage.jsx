@@ -7,6 +7,7 @@ import MapSatToggle from '../../components/MapSatToggle'
 import BottomNav from '../../components/BottomNav'
 import api from '../../services/api'
 import { useMitraGps } from '../../context/MitraGpsContext'
+import { SVC } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtTime = (d) => new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
@@ -343,14 +344,14 @@ export default function MitraMartOrdersPage() {
           ].map(([k, emoji, l, count]) => (
             <button key={k} onClick={() => setTab(k)} style={{
               flex: 1, padding: '10px 4px 8px', border: 'none', cursor: 'pointer', background: 'transparent',
-              color: tab === k ? '#8B5CF6' : 'var(--k-sub)',
-              borderBottom: tab === k ? '2.5px solid #8B5CF6' : '2.5px solid transparent',
+              color: tab === k ? SVC.zasashop.fg : 'var(--k-sub)',
+              borderBottom: tab === k ? `2.5px solid ${SVC.zasashop.fg}` : '2.5px solid transparent',
               fontWeight: tab === k ? 700 : 400, fontSize: 11,
             }}>
               <div style={{ fontSize: 18, lineHeight: 1, position: 'relative', display: 'inline-block' }}>
                 {emoji}
                 {count > 0 && (
-                  <span style={{ position: 'absolute', top: -5, right: -8, background: k === 'available' ? '#DC2626' : '#8B5CF6', color: '#fff', fontSize: 9, fontWeight: 800, padding: '1px 4px', borderRadius: 20, lineHeight: 1.4, animation: k === 'available' ? 'blink 2s infinite' : 'none' }}>{count}</span>
+                  <span style={{ position: 'absolute', top: -5, right: -8, background: k === 'available' ? '#DC2626' : SVC.zasashop.fg, color: '#fff', fontSize: 9, fontWeight: 800, padding: '1px 4px', borderRadius: 20, lineHeight: 1.4, animation: k === 'available' ? 'blink 2s infinite' : 'none' }}>{count}</span>
                 )}
               </div>
               <div style={{ marginTop: 2 }}>{l}</div>
@@ -374,7 +375,7 @@ export default function MitraMartOrdersPage() {
                   <div style={{ fontSize: 52, marginBottom: 12 }}>🛵</div>
                   <p style={{ fontWeight: 600, color: 'var(--k-text)', marginBottom: 6 }}>Tidak ada pengiriman aktif</p>
                   <p style={{ fontSize: 13, marginBottom: 20 }}>Ambil pesanan dari tab Tersedia.</p>
-                  <button onClick={() => setTab('available')} style={{ padding: '11px 24px', borderRadius: 20, border: 'none', background: '#8B5CF6', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Lihat Tersedia</button>
+                  <button onClick={() => setTab('available')} style={{ padding: '11px 24px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>Lihat Tersedia</button>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -472,7 +473,7 @@ export default function MitraMartOrdersPage() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
                             <div>
                               <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>Pendapatanmu</div>
-                              <div style={{ fontWeight: 900, fontSize: 20, color: '#8B5CF6' }}>{fmtRp(order.shipping_fee ?? 0)}</div>
+                              <div style={{ fontWeight: 900, fontSize: 20, color: SVC.zasashop.fg }}>{fmtRp(order.shipping_fee ?? 0)}</div>
                             </div>
                             <div style={{ textAlign: 'right' }}>
                               <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>Total belanja</div>
@@ -530,9 +531,9 @@ export default function MitraMartOrdersPage() {
                     const showMap = showMapAvail[order.id]
 
                     return (
-                      <div key={order.id} style={{ borderRadius: 16, background: 'var(--k-card)', border: '2px solid rgba(139,92,246,0.3)', overflow: 'hidden' }}>
-                        <div style={{ background: 'rgba(139,92,246,0.06)', padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(139,92,246,0.15)' }}>
-                          <span style={{ fontWeight: 800, fontSize: 13, color: '#8B5CF6' }}>📦 Siap Diambil</span>
+                      <div key={order.id} style={{ borderRadius: 16, background: 'var(--k-card)', border: `2px solid rgba(${SVC.zasashop.rgb},0.3)`, overflow: 'hidden' }}>
+                        <div style={{ background: `rgba(${SVC.zasashop.rgb},0.08)`, padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid rgba(${SVC.zasashop.rgb},0.15)` }}>
+                          <span style={{ fontWeight: 800, fontSize: 13, color: SVC.zasashop.fg }}>📦 Siap Diambil</span>
                           <div style={{ display: 'flex', gap: 6 }}>
                             {isCOD && <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 20, background: 'rgba(220,38,38,0.1)', color: '#DC2626' }}>💵 COD</span>}
                             <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--k-sub)' }}>#{order.order_number}</span>
@@ -587,10 +588,10 @@ export default function MitraMartOrdersPage() {
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div>
                               <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>Pendapatanmu</div>
-                              <div style={{ fontWeight: 800, fontSize: 20, color: '#8B5CF6' }}>{fmtRp(order.shipping_fee ?? 0)}</div>
+                              <div style={{ fontWeight: 800, fontSize: 20, color: SVC.zasashop.fg }}>{fmtRp(order.shipping_fee ?? 0)}</div>
                             </div>
                             <button onClick={() => accept(order.id)} disabled={accepting === order.id || myOrders.length > 0}
-                              style={{ padding: '13px 26px', borderRadius: 12, border: 'none', background: accepting === order.id || myOrders.length > 0 ? 'var(--k-border)' : '#8B5CF6', color: '#fff', fontWeight: 900, fontSize: 15, cursor: accepting === order.id || myOrders.length > 0 ? 'default' : 'pointer', animation: !accepting && myOrders.length === 0 ? 'pulse 1.5s infinite' : 'none' }}>
+                              style={{ padding: '13px 26px', borderRadius: 999, border: 'none', background: accepting === order.id || myOrders.length > 0 ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 900, fontSize: 15, cursor: accepting === order.id || myOrders.length > 0 ? 'default' : 'pointer', animation: !accepting && myOrders.length === 0 ? 'pulse 1.5s infinite' : 'none', boxShadow: accepting === order.id || myOrders.length > 0 ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                               {myOrders.length > 0 ? 'Ada order aktif' : accepting === order.id ? 'Memproses...' : 'Ambil Pesanan'}
                             </button>
                           </div>
@@ -622,7 +623,7 @@ export default function MitraMartOrdersPage() {
                           </div>
                           <div style={{ textAlign: 'right' }}>
                             <span style={{ display: 'block', padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, color: sm.color, background: sm.bg }}>{sm.icon} {sm.label}</span>
-                            {order.status === 'completed' && order.shipping_fee > 0 && <div style={{ fontSize: 13, color: '#8B5CF6', fontWeight: 800, marginTop: 4 }}>+{fmtRp(order.shipping_fee)}</div>}
+                            {order.status === 'completed' && order.shipping_fee > 0 && <div style={{ fontSize: 13, color: SVC.zasashop.fg, fontWeight: 800, marginTop: 4 }}>+{fmtRp(order.shipping_fee)}</div>}
                           </div>
                         </div>
                         <div style={{ fontSize: 12, color: 'var(--k-sub)' }}>📍 {order.delivery_address}</div>

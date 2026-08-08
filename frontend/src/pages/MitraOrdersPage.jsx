@@ -13,6 +13,7 @@ import { isNative } from '../utils/nativePlatform'
 import useOrderChatBadges from '../hooks/useOrderChatBadges'
 import ChatButton from '../components/ChatButton'
 import useRoadRoute from '../hooks/useRoadRoute'
+import { SVC } from '../utils/svcTheme'
 
 // Baca window.isSecureContext saat runtime — menghormati Chrome flags
 function getSecureCtx() { return typeof window !== 'undefined' && window.isSecureContext }
@@ -200,8 +201,8 @@ function AvailableCard({ order, onAccept, loading, blocked, blockedReason }) {
             <p style={{ color: 'var(--k-muted)', fontSize: 11, fontFamily: 'monospace' }}>{order.order_number}</p>
             <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
               {order.is_jastip_enabled && (
-                <span style={{ background: 'rgba(183,148,244,0.12)', color: '#B794F4', fontSize: 10,
-                  fontWeight: 700, padding: '2px 8px', borderRadius: 100, border: '1px solid rgba(183,148,244,0.2)' }}>
+                <span style={{ background: SVC.jastip.bg, color: SVC.jastip.fg, fontSize: 10,
+                  fontWeight: 700, padding: '2px 8px', borderRadius: 100, border: 'none' }}>
                   ⚡ JastipQu
                 </span>
               )}
@@ -568,18 +569,18 @@ function OrderDetailPanel({ order }) {
 
   return (
     <div style={{
-      background: isJastip ? 'rgba(183,148,244,0.06)' : 'var(--k-card2)',
-      border: `1px solid ${isJastip ? 'rgba(183,148,244,0.2)' : 'var(--k-border)'}`,
+      background: isJastip ? SVC.jastip.bg : 'var(--k-card2)',
+      border: isJastip ? 'none' : '1px solid var(--k-border)',
       borderRadius: 14, padding: '12px 14px', marginBottom: 12,
     }}>
       {/* Header panel */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
         <span style={{ fontSize: 14 }}>{isJastip ? '⚡' : '📦'}</span>
-        <p style={{ fontSize: 11, fontWeight: 800, color: isJastip ? '#B794F4' : 'var(--k-sub)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+        <p style={{ fontSize: 11, fontWeight: 800, color: isJastip ? SVC.jastip.fg : 'var(--k-sub)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
           {isJastip ? 'Detail Titipan JastipQu' : 'Detail Pesanan'}
         </p>
         {isJastip && (
-          <span style={{ marginLeft: 'auto', background: 'rgba(183,148,244,0.15)', color: '#B794F4', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 100 }}>
+          <span style={{ marginLeft: 'auto', background: 'rgba(255,255,255,0.35)', color: SVC.jastip.fg, fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 100 }}>
             Jastip
           </span>
         )}
@@ -1033,7 +1034,7 @@ export default function MitraOrdersPage() {
       {/* Header */}
       <div style={{
         padding: '52px 20px 16px',
-        background: 'linear-gradient(180deg, #0F1C22 0%, var(--k-bg) 100%)',
+        background: 'var(--k-bg)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--k-text)' }}>Order Mitra</h1>

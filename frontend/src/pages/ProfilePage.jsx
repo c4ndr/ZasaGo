@@ -8,6 +8,7 @@ import { useTheme } from '../hooks/useTheme'
 import { isNative } from '../utils/nativePlatform'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { compressImage } from '../utils/compressImage'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 // ── Baris notifikasi yang bisa diklik ────────────────────────────────────────
 function NotifRow() {
@@ -309,7 +310,7 @@ export default function ProfilePage() {
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
       {/* Header */}
-      <div style={{ padding: '52px 20px 24px', background: 'linear-gradient(180deg, #0C0C22 0%, var(--k-bg) 100%)', textAlign: 'center' }}>
+      <div style={{ padding: '52px 20px 24px', background: 'var(--k-bg)', textAlign: 'center' }}>
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <Avatar name={user?.name} photoUrl={user?.photo_url} avatarPreset={user?.avatar_preset} size={80} />
           <button
@@ -438,20 +439,26 @@ export default function ProfilePage() {
 
         {/* Wallet */}
         <button onClick={() => navigate('/wallet')} style={{
-          background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 20,
+          background: SVC.wallet.bg, border: 'none', borderRadius: 20,
           padding: '16px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           cursor: 'pointer', textAlign: 'left', width: '100%',
+          position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb),
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 42, height: 42, borderRadius: 13, background: 'rgba(0,200,150,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>💳</div>
+          <Gloss />
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{
+              width: 42, height: 42, borderRadius: 13, background: 'var(--k-surface)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
+              boxShadow: `0 3px 8px rgba(${SVC.wallet.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.wallet.rgb},0.4)`,
+            }}>💳</div>
             <div>
-              <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)', marginBottom: 2 }}>Saldo Wallet</p>
-              <p style={{ fontSize: 18, fontWeight: 900, color: 'var(--k-accent)' }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: SVC.wallet.fg, marginBottom: 2 }}>Saldo Wallet</p>
+              <p style={{ fontSize: 18, fontWeight: 900, color: SVC.wallet.fg, textShadow: '-1px -1px 0 rgba(255,255,255,0.4), 1px 2px 2px rgba(120,70,20,0.3)' }}>
                 Rp {Number(walletBalance ?? user?.wallet?.balance ?? 0).toLocaleString('id-ID')}
               </p>
             </div>
           </div>
-          <span style={{ fontSize: 18, color: 'var(--k-muted)' }}>›</span>
+          <span style={{ position: 'relative', fontSize: 18, color: SVC.wallet.fg, opacity: 0.7 }}>›</span>
         </button>
 
         {/* Pengaturan */}

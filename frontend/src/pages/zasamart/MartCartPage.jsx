@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -102,7 +103,7 @@ export default function MartCartPage() {
           <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--k-text)', marginBottom: 8 }}>Keranjang Kosong</p>
           <p style={{ fontSize: 13, color: 'var(--k-muted)', marginBottom: 24 }}>Belum ada produk yang ditambahkan</p>
           <button onClick={() => navigate('/mart')}
-            style={{ padding: '12px 28px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+            style={{ padding: '12px 28px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             Belanja Sekarang
           </button>
         </div>
@@ -112,11 +113,11 @@ export default function MartCartPage() {
           <div style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 10, background: 'var(--k-surface)', borderBottom: '1px solid var(--k-border)' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
               <input type="checkbox" checked={allChecked} onChange={toggleAll}
-                style={{ width: 18, height: 18, accentColor: '#6366F1', cursor: 'pointer' }} />
+                style={{ width: 18, height: 18, accentColor: SVC.zasashop.fg, cursor: 'pointer' }} />
               <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--k-text)' }}>Pilih Semua ({items.length})</span>
             </label>
             {selected.size > 0 && (
-              <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 700, color: '#6366F1' }}>
+              <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 700, color: SVC.zasashop.fg }}>
                 {selected.size} dipilih
               </span>
             )}
@@ -127,18 +128,18 @@ export default function MartCartPage() {
               const allSellerSelected = sellerItems.every(i => selected.has(i.id))
               const sub = sellerItems.filter(i => selected.has(i.id)).reduce((s, i) => s + (i.product?.price || 0) * i.quantity, 0)
               return (
-                <div key={seller.id} style={{ background: 'var(--k-card)', borderRadius: 16, border: '1px solid var(--k-border)', overflow: 'hidden' }}>
+                <div key={seller.id} style={{ background: 'var(--k-card)', borderRadius: 20, border: '1px solid var(--k-border)', overflow: 'hidden' }}>
                   {/* Seller header */}
                   <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--k-border)', display: 'flex', alignItems: 'center', gap: 10 }}>
                     <input type="checkbox" checked={allSellerSelected} onChange={() => toggleSeller(sellerItems)}
-                      style={{ width: 18, height: 18, accentColor: '#6366F1', cursor: 'pointer', flexShrink: 0 }} />
+                      style={{ width: 18, height: 18, accentColor: SVC.zasashop.fg, cursor: 'pointer', flexShrink: 0 }} />
                     {seller.logo_path
                       ? <img src={`${STORAGE}/${seller.logo_path}`} alt="" style={{ width: 28, height: 28, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />
                       : <span style={{ fontSize: 18, flexShrink: 0 }}>🏪</span>
                     }
                     <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)', flex: 1 }}>{seller.name}</p>
                     <button onClick={() => navigate(`/mart/sellers/${seller.id}`)}
-                      style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                      style={{ background: 'none', border: 'none', color: SVC.zasashop.fg, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
                       Kunjungi
                     </button>
                   </div>
@@ -148,7 +149,7 @@ export default function MartCartPage() {
                     <div key={item.id} style={{ borderBottom: idx < sellerItems.length - 1 ? '1px solid var(--k-border)' : 'none' }}>
                       <div style={{ padding: '12px 14px', display: 'flex', gap: 10 }}>
                         <input type="checkbox" checked={selected.has(item.id)} onChange={() => toggleItem(item.id)}
-                          style={{ width: 18, height: 18, accentColor: '#6366F1', cursor: 'pointer', marginTop: 4, flexShrink: 0 }} />
+                          style={{ width: 18, height: 18, accentColor: SVC.zasashop.fg, cursor: 'pointer', marginTop: 4, flexShrink: 0 }} />
                         <div style={{ width: 64, height: 64, borderRadius: 10, overflow: 'hidden', background: '#f3f4f6', flexShrink: 0 }}>
                           {item.product?.images?.[0]
                             ? <img src={`${STORAGE}/${item.product.images[0]}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -160,7 +161,7 @@ export default function MartCartPage() {
                             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {item.product?.name}
                           </p>
-                          <p style={{ fontSize: 13, fontWeight: 800, color: '#6366F1', marginBottom: 6 }}>{fmtRp(item.product?.price)}</p>
+                          <p style={{ fontSize: 13, fontWeight: 800, color: SVC.zasashop.fg, marginBottom: 6 }}>{fmtRp(item.product?.price)}</p>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--k-bg)', borderRadius: 8, border: '1px solid var(--k-border)', overflow: 'hidden' }}>
                               <button onClick={() => updateQty(item, item.quantity - 1)}
@@ -190,7 +191,7 @@ export default function MartCartPage() {
                               await api.post('/mart/cart', { product_id: item.product_id, quantity: item.quantity, notes: editNotes[item.id] })
                               setItems(prev => prev.map(i => i.id === item.id ? { ...i, notes: editNotes[item.id] } : i))
                               setEditNotes(prev => { const n = { ...prev }; delete n[item.id]; return n })
-                            }} style={{ padding: '6px 10px', borderRadius: 8, border: 'none', background: '#6366F1', color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                            }} style={{ padding: '6px 10px', borderRadius: 8, border: 'none', background: 'var(--k-primary)', color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
                               Simpan
                             </button>
                           </div>
@@ -206,10 +207,10 @@ export default function MartCartPage() {
 
                   {/* Per-toko checkout */}
                   {sub > 0 && (
-                    <div style={{ padding: '10px 14px 14px', borderTop: '1px solid var(--k-border)', background: 'rgba(99,102,241,0.03)' }}>
+                    <div style={{ padding: '10px 14px 14px', borderTop: '1px solid var(--k-border)', background: `rgba(${SVC.zasashop.rgb},0.05)` }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
                         <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>Subtotal yang dipilih</p>
-                        <p style={{ fontSize: 14, fontWeight: 800, color: '#6366F1' }}>{fmtRp(sub)}</p>
+                        <p style={{ fontSize: 14, fontWeight: 800, color: SVC.zasashop.fg }}>{fmtRp(sub)}</p>
                       </div>
                       <button onClick={() => navigate('/mart/checkout', {
                         state: {
@@ -217,7 +218,7 @@ export default function MartCartPage() {
                           cart_item_ids: sellerItems.filter(i => selected.has(i.id)).map(i => i.id),
                         },
                       })}
-                        style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer' }}>
+                        style={{ width: '100%', padding: '12px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                         Checkout dari {seller.name} · {fmtRp(sub)}
                       </button>
                     </div>
@@ -231,14 +232,17 @@ export default function MartCartPage() {
 
       {/* Bottom bar — checkout semua terpilih jika lintas toko */}
       {selectedSellers.length > 1 && totalAll > 0 && (
-        <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 480, background: 'var(--k-surface)', borderTop: '1px solid var(--k-border)', padding: '12px 16px', paddingBottom: 'calc(12px + env(safe-area-inset-bottom,0px))' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-            <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>{selected.size} produk dari {selectedSellers.length} toko</p>
-            <p style={{ fontSize: 15, fontWeight: 900, color: '#6366F1' }}>{fmtRp(totalAll)}</p>
+        <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 480, background: SVC.zasashop.bg, borderRadius: '20px 20px 0 0', padding: '14px 18px', paddingBottom: 'calc(14px + env(safe-area-inset-bottom,0px))', overflow: 'hidden', boxShadow: svcShadow(SVC.zasashop.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              <p style={{ fontSize: 12, color: SVC.zasashop.fg, opacity: 0.75 }}>{selected.size} produk dari {selectedSellers.length} toko</p>
+              <p style={{ fontSize: 17, fontWeight: 900, color: SVC.zasashop.fg }}>{fmtRp(totalAll)}</p>
+            </div>
+            <p style={{ fontSize: 11, color: SVC.zasashop.fg, opacity: 0.65, textAlign: 'center' }}>
+              Checkout per toko menggunakan tombol di atas masing-masing toko
+            </p>
           </div>
-          <p style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 8, textAlign: 'center' }}>
-            Checkout per toko menggunakan tombol di atas masing-masing toko
-          </p>
         </div>
       )}
     </div>

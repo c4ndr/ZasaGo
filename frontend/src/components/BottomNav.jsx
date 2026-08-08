@@ -152,17 +152,17 @@ const IconMart = ({ filled }) => (
 )
 
 const PELANGGAN_ITEMS = (name) => [
-  { to: '/dashboard', Icon: IconHome,   label: 'Beranda',  exact: true },
-  { to: '/orders',    Icon: IconBox,    label: 'ZasaGo'  },
-  { to: '/mart',      Icon: IconMart,   label: 'ZasaShop', centerColor: 'linear-gradient(145deg, #7C3AED 0%, #4F46E5 100%)', centerShadow: 'rgba(124,58,237,0.50)' },
+  { to: '/dashboard', Icon: IconHome,   label: 'Beranda'  , exact: true },
+  { to: '/orders',    Icon: IconBox,    label: 'ZasaGo'   },
+  { to: '/mart',      Icon: IconMart,   label: 'ZasaShop' },
   { to: '/food',      Icon: IconFood,   label: 'ZasaFood' },
   { to: '/profile',   Icon: null,       label: 'Akun',    avatar: true },
 ]
 
 const MITRA_ITEMS = (name) => [
-  { to: '/dashboard',       Icon: IconHome,   label: 'Beranda',    exact: true },
+  { to: '/dashboard',       Icon: IconHome,   label: 'Beranda'    , exact: true },
   { to: '/mitra/aktivitas', Icon: IconBox,    label: 'Aktivitas' },
-  { to: '/mitra/gps',       Icon: IconPin,    label: 'GPS',        isCenter: true, centerColor: 'linear-gradient(145deg, #00C896 0%, #00A87D 100%)', centerShadow: 'rgba(0,200,150,0.50)' },
+  { to: '/mitra/gps',       Icon: IconPin,    label: 'GPS' },
   { to: '/wallet',          Icon: IconWallet, label: 'Penghasilan' },
   { to: '/profile',         Icon: null,       label: 'Akun',       avatar: true },
 ]
@@ -195,26 +195,22 @@ export default function BottomNav() {
 
   const items = isMitra ? filteredMitra : filteredPelanggan
 
-  // Center: item yang di-mark isCenter, atau index tengah sebagai fallback
-  const centerIdx = (() => {
-    const explicit = items.findIndex(i => i.isCenter || i.centerColor)
-    return explicit >= 0 ? explicit : Math.floor(items.length / 2)
-  })()
-
   return (
-    <nav style={{
+    <div style={{
       position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
       width: '100%', maxWidth: 480, zIndex: 50,
-      background: 'var(--k-surface)',
-      boxShadow: '0 -1px 0 var(--k-border), 0 -4px 16px rgba(0,0,0,0.06)',
-      paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+      padding: '0 16px calc(14px + env(safe-area-inset-bottom, 0px))',
+      pointerEvents: 'none',
     }}>
-      <div style={{ display: 'flex', alignItems: 'stretch', height: 62 }}>
-        {items.map(({ to, Icon, label, exact, avatar, centerColor, centerShadow }, idx) => {
-          const isCenter   = idx === centerIdx
-          const cBg        = centerColor  || 'linear-gradient(145deg, #FB923C 0%, #F97316 100%)'
-          const cBgAct     = centerColor  || 'linear-gradient(145deg, #F97316 0%, #C2410C 100%)'
-          const cShadow    = centerShadow || 'rgba(249,115,22,0.50)'
+      <nav style={{
+        pointerEvents: 'auto',
+        background: 'var(--k-primary)',
+        borderRadius: 999,
+        boxShadow: '0 3px 8px rgba(20,28,40,0.3), 0 14px 28px -8px rgba(20,28,40,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
+        display: 'flex', alignItems: 'stretch', height: 64,
+        padding: '0 4px',
+      }}>
+        {items.map(({ to, Icon, label, exact, avatar }) => {
           const badgeNum   = to === '/mart' && cartCount > 0 ? cartCount
             : to === '/dashboard' && notifCount > 0 ? notifCount : 0
           const badgeLabel = badgeNum > 99 ? '99+' : String(badgeNum)
@@ -225,55 +221,19 @@ export default function BottomNav() {
               end={exact}
               style={{ flex: 1, textDecoration: 'none' }}
             >
-              {({ isActive }) => isCenter ? (
-                /* Raised center button */
+              {({ isActive }) => (
                 <div style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center',
-                  justifyContent: 'center', height: '100%', gap: 4,
-                  transform: 'translateY(-12px)',
-                }}>
-                  <div style={{ position: 'relative' }}>
-                    <div style={{
-                      width: 52, height: 52, borderRadius: 16,
-                      background: isActive ? cBgAct : cBg,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      boxShadow: isActive
-                        ? `0 6px 20px ${cShadow}, 0 2px 6px rgba(0,0,0,0.12)`
-                        : `0 4px 14px ${cShadow.replace('0.50', '0.38')}, 0 2px 6px rgba(0,0,0,0.10)`,
-                      border: '3px solid var(--k-surface)',
-                      transition: 'box-shadow 0.2s, background 0.2s',
-                      color: '#fff',
-                    }}>
-                      <Icon filled={true} />
-                    </div>
-                    {badgeNum > 0 && (
-                      <span style={{
-                        position: 'absolute', top: -4, right: -4,
-                        background: '#EF4444', color: '#fff',
-                        fontSize: 9, fontWeight: 900,
-                        minWidth: 17, height: 17, borderRadius: 9,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        border: '2px solid var(--k-surface)', padding: '0 3px', lineHeight: 1,
-                      }}>{badgeLabel}</span>
-                    )}
-                  </div>
-                  <span style={{
-                    fontSize: 10, fontWeight: isActive ? 700 : 600,
-                    color: isActive ? 'var(--k-primary)' : 'var(--k-muted)',
-                    transition: 'color 0.18s', lineHeight: 1,
-                  }}>{label}</span>
-                </div>
-              ) : (
-                /* Regular flat item */
-                <div style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center',
-                  justifyContent: 'center', height: '100%', gap: 4,
+                  justifyContent: 'center', height: '100%', gap: 3,
                 }}>
                   <span style={{
                     position: 'relative',
-                    color: isActive ? 'var(--k-primary)' : 'var(--k-muted)',
-                    transition: 'color 0.18s',
+                    width: 34, height: 34, borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: isActive ? 'var(--k-wallet-bg)' : 'transparent',
+                    color: isActive ? 'var(--k-primary)' : 'rgba(255,255,255,0.55)',
+                    boxShadow: isActive ? '0 3px 8px rgba(0,0,0,0.25)' : 'none',
+                    transition: 'background 0.18s, color 0.18s',
                   }}>
                     {avatar
                       ? <AvatarIcon name={user.name} photoUrl={user.photo_url} avatarPreset={user.avatar_preset} isActive={isActive} />
@@ -286,27 +246,21 @@ export default function BottomNav() {
                         fontSize: 9, fontWeight: 900,
                         minWidth: 16, height: 16, borderRadius: 8,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        border: '1.5px solid var(--k-surface)', padding: '0 2px', lineHeight: 1,
+                        border: '1.5px solid var(--k-primary)', padding: '0 2px', lineHeight: 1,
                       }}>{badgeLabel}</span>
                     )}
                   </span>
                   <span style={{
-                    fontSize: 10, fontWeight: isActive ? 700 : 500,
-                    color: isActive ? 'var(--k-primary)' : 'var(--k-muted)',
+                    fontSize: 9.5, fontWeight: isActive ? 700 : 600,
+                    color: isActive ? '#fff' : 'rgba(255,255,255,0.55)',
                     transition: 'color 0.18s', lineHeight: 1,
                   }}>{label}</span>
-                  <span style={{
-                    height: 3, borderRadius: 3,
-                    width: isActive ? 18 : 0,
-                    background: 'var(--k-primary)',
-                    transition: 'width 0.2s ease',
-                  }} />
                 </div>
               )}
             </NavLink>
           )
         })}
-      </div>
-    </nav>
+      </nav>
+    </div>
   )
 }

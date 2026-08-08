@@ -46,13 +46,13 @@ export default function ForceUpdateScreen() {
           marginTop: 8,
           display: 'block',
           padding: '14px 36px',
-          borderRadius: 16,
-          background: 'linear-gradient(135deg, #00C896, #00A87D)',
+          borderRadius: 999,
+          background: 'var(--k-primary)',
           color: '#fff',
           fontWeight: 800,
           fontSize: 16,
           textDecoration: 'none',
-          boxShadow: '0 4px 20px rgba(0,200,150,0.4)',
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
         }}
       >
         Unduh Sekarang

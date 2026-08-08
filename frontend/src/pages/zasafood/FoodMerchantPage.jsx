@@ -12,14 +12,14 @@ function QtyControl({ qty, onDec, onInc, small = false }) {
     <div style={{ display: 'flex', alignItems: 'center', gap: small ? 6 : 8 }}>
       <button onClick={e => { e.stopPropagation(); onDec() }} style={{
         width: sz, height: sz, borderRadius: '50%', border: 'none', cursor: 'pointer',
-        background: qty > 0 ? 'rgba(249,115,22,0.15)' : 'var(--k-input)',
-        color: '#F97316', fontWeight: 800, fontSize: small ? 16 : 18,
+        background: qty > 0 ? 'var(--k-primary-bg)' : 'var(--k-input)',
+        color: 'var(--k-primary)', fontWeight: 800, fontSize: small ? 16 : 18,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>−</button>
       <span style={{ fontWeight: 700, minWidth: small ? 14 : 18, textAlign: 'center', fontSize: small ? 13 : 15 }}>{qty}</span>
       <button onClick={e => { e.stopPropagation(); onInc() }} style={{
         width: sz, height: sz, borderRadius: '50%', border: 'none', cursor: 'pointer',
-        background: '#F97316', color: '#fff', fontWeight: 800, fontSize: small ? 16 : 18,
+        background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: small ? 16 : 18,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>+</button>
     </div>
@@ -72,10 +72,11 @@ function ItemDetailModal({ item, qty, notes, onClose, onChange }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <QtyControl qty={localQty} onDec={() => setLocalQty(q => Math.max(0, q - 1))} onInc={() => setLocalQty(q => q + 1)} />
             <button onClick={confirm} disabled={localQty === 0} style={{
-              flex: 1, padding: '13px', borderRadius: 12, border: 'none',
-              background: localQty > 0 ? '#F97316' : 'var(--k-border)',
+              flex: 1, padding: '13px', borderRadius: 999, border: 'none',
+              background: localQty > 0 ? 'var(--k-primary)' : 'var(--k-border)',
               color: '#fff', fontWeight: 700, fontSize: 14,
               cursor: localQty > 0 ? 'pointer' : 'default',
+              boxShadow: localQty > 0 ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
             }}>
               {localQty === 0 ? 'Pilih jumlah' : `Tambah ke Keranjang · ${fmtRp(item.price * localQty)}`}
             </button>
@@ -256,8 +257,8 @@ export default function FoodMerchantPage() {
               <button key={cat.id} onClick={() => scrollToCategory(cat.id)} style={{
                 padding: '10px 16px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
                 background: 'transparent', fontSize: 13, fontWeight: activeTab === cat.id ? 700 : 500,
-                color: activeTab === cat.id ? '#F97316' : 'var(--k-sub)',
-                borderBottom: activeTab === cat.id ? '2.5px solid #F97316' : '2.5px solid transparent',
+                color: activeTab === cat.id ? 'var(--k-primary)' : 'var(--k-sub)',
+                borderBottom: activeTab === cat.id ? '2.5px solid var(--k-primary)' : '2.5px solid transparent',
                 transition: 'all 0.15s',
               }}>{cat.name}</button>
             ))}
@@ -295,7 +296,7 @@ export default function FoodMerchantPage() {
                 return (
                   <div key={item.id} onClick={() => openItem(item)} style={{
                     display: 'flex', gap: 12, padding: '12px', borderRadius: 14,
-                    background: 'var(--k-card)', border: qty > 0 ? '1.5px solid #F97316' : '1.5px solid var(--k-border)',
+                    background: 'var(--k-card)', border: qty > 0 ? '1.5px solid var(--k-primary)' : '1.5px solid var(--k-border)',
                     cursor: available ? 'pointer' : 'default',
                     opacity: available ? 1 : 0.5,
                     transition: 'border-color 0.2s',
@@ -314,7 +315,7 @@ export default function FoodMerchantPage() {
                       {qty > 0 && (
                         <div style={{
                           position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%',
-                          background: '#F97316', color: '#fff', fontSize: 11, fontWeight: 800,
+                          background: 'var(--k-primary)', color: '#fff', fontSize: 11, fontWeight: 800,
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                         }}>{qty}</div>
                       )}
@@ -342,7 +343,7 @@ export default function FoodMerchantPage() {
                       ) : qty === 0 ? (
                         <button onClick={e => { e.stopPropagation(); openItem(item) }} style={{
                           width: 32, height: 32, borderRadius: '50%', border: 'none', cursor: 'pointer',
-                          background: '#F97316', color: '#fff', fontWeight: 800, fontSize: 20,
+                          background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 20,
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                         }}>+</button>
                       ) : (
@@ -369,9 +370,10 @@ export default function FoodMerchantPage() {
           background: 'var(--k-card)', borderTop: '1px solid var(--k-border)',
         }}>
           <button onClick={goToCart} style={{
-            width: '100%', padding: '14px 16px', borderRadius: 14, border: 'none',
-            background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 15, cursor: 'pointer',
+            width: '100%', padding: '14px 16px', borderRadius: 999, border: 'none',
+            background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 15, cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>
             <span style={{ background: 'rgba(255,255,255,0.3)', borderRadius: 20, padding: '3px 12px', fontSize: 13, fontWeight: 800 }}>{cartCount}</span>
             <span>Lihat Keranjang</span>

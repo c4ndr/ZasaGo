@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../services/api'
 import useMartCartCount from '../../hooks/useMartCartCount'
+import { SVC } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE  = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -35,7 +36,7 @@ export default function MartSellerPage() {
       <p style={{ fontSize: 48, marginBottom: 12 }}>🏪</p>
       <p style={{ fontWeight: 700, color: 'var(--k-text)', marginBottom: 6 }}>Toko Tidak Ditemukan</p>
       <p style={{ fontSize: 13, color: 'var(--k-muted)', marginBottom: 20 }}>{error || 'Toko tidak tersedia.'}</p>
-      <button onClick={() => navigate('/mart')} style={{ padding: '10px 24px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>
+      <button onClick={() => navigate('/mart')} style={{ padding: '10px 24px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
         Kembali ke ZasaShop
       </button>
     </div>
@@ -52,7 +53,7 @@ export default function MartSellerPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', background: 'var(--k-surface)', borderBottom: '1px solid var(--k-border)' }}>
         <button onClick={() => navigate(-1)} style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, width: 36, height: 36, cursor: 'pointer', fontSize: 18, color: 'var(--k-text)', flexShrink: 0 }}>←</button>
         <p style={{ fontWeight: 800, color: 'var(--k-text)', fontSize: 15, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{seller.name}</p>
-        <button onClick={() => navigate('/mart/cart')} style={{ position: 'relative', background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, padding: '6px 14px', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#6366F1', flexShrink: 0 }}>
+        <button onClick={() => navigate('/mart/cart')} style={{ position: 'relative', background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 10, padding: '6px 14px', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: SVC.zasashop.fg, flexShrink: 0 }}>
           🛒
           {cartCount > 0 && (
             <span style={{ position: 'absolute', top: -6, right: -6, background: '#EF4444', color: '#fff', fontSize: 9, fontWeight: 900, minWidth: 17, height: 17, borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--k-surface)', padding: '0 3px' }}>
@@ -63,10 +64,10 @@ export default function MartSellerPage() {
       </div>
 
       {/* Banner + Logo */}
-      <div style={{ position: 'relative', background: '#1a1a2e', height: 130 }}>
+      <div style={{ position: 'relative', background: SVC.zasashop.bg, height: 130 }}>
         {seller.banner_path
           ? <img src={`${STORAGE}/${seller.banner_path}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          : <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg,#1a1a2e,#312e81)' }} />
+          : <div style={{ width: '100%', height: '100%', background: SVC.zasashop.bg }} />
         }
         {/* Gradient overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55))' }} />
@@ -75,7 +76,7 @@ export default function MartSellerPage() {
       {/* Seller info card */}
       <div style={{ background: 'var(--k-surface)', padding: '0 16px 16px', borderBottom: '1px solid var(--k-border)', position: 'relative', zIndex: 2 }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, marginTop: -28, marginBottom: 12 }}>
-          <div style={{ width: 64, height: 64, borderRadius: 16, overflow: 'hidden', border: '3px solid var(--k-surface)', background: '#6366F1', flexShrink: 0 }}>
+          <div style={{ width: 64, height: 64, borderRadius: 16, overflow: 'hidden', border: '3px solid var(--k-surface)', background: SVC.zasashop.bg, flexShrink: 0 }}>
             {seller.logo_path
               ? <img src={`${STORAGE}/${seller.logo_path}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>🏪</div>
@@ -106,7 +107,7 @@ export default function MartSellerPage() {
         {/* Tombol Chat Penjual */}
         <button
           onClick={() => navigate(`/mart/sellers/${id}/consult`)}
-          style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 16px', borderRadius: 12, border: '1px solid #6366F1', background: 'rgba(99,102,241,0.08)', color: '#6366F1', fontWeight: 700, fontSize: 13, cursor: 'pointer', width: '100%' }}
+          style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 16px', borderRadius: 999, border: 'none', background: `rgba(${SVC.zasashop.rgb},0.1)`, color: SVC.zasashop.fg, fontWeight: 700, fontSize: 13, cursor: 'pointer', width: '100%' }}
         >
           <span style={{ fontSize: 16 }}>💬</span>
           Chat Penjual
@@ -157,7 +158,7 @@ export default function MartSellerPage() {
                     <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--k-text)', lineHeight: 1.3, marginBottom: 6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {product.name}
                     </p>
-                    <p style={{ fontSize: 14, fontWeight: 800, color: '#6366F1', marginBottom: 2 }}>{fmtRp(product.price)}</p>
+                    <p style={{ fontSize: 14, fontWeight: 800, color: SVC.zasashop.fg, marginBottom: 2 }}>{fmtRp(product.price)}</p>
                     {product.compare_price > product.price && (
                       <p style={{ fontSize: 11, color: 'var(--k-muted)', textDecoration: 'line-through' }}>{fmtRp(product.compare_price)}</p>
                     )}

@@ -4,6 +4,7 @@ import api from '../../services/api'
 import LocationSearch from '../../components/LocationSearch'
 import { getCategoryConfig } from '../../utils/homeServiceConfig'
 import { isNative, requestGeolocationPermission } from '../../utils/nativePlatform'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const UNIT_LABEL      = { kg: 'kg', item: 'item', jam: 'jam', sesi: 'sesi' }
 const ADDR_STORAGE_KEY = 'zasahome_last_address'
@@ -131,12 +132,15 @@ export default function HomeCheckoutPage() {
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 40 }}>
-      <div style={{ padding: '52px 20px 20px', background: 'linear-gradient(160deg,#0F1E25 0%,var(--k-bg) 100%)' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: 'var(--k-muted)', fontSize: 14, cursor: 'pointer', marginBottom: 12, padding: 0 }}>
-          ← Kembali
-        </button>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--k-text)' }}>Konfirmasi Pesanan</h1>
-        <p style={{ color: 'var(--k-muted)', fontSize: 13 }}>{provider.name}</p>
+      <div style={{ padding: '52px 20px 20px', background: SVC.zasahome.bg, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasahome.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasahome.fg, borderRadius: 999, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12, boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Kembali
+          </button>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: SVC.zasahome.fg }}>Konfirmasi Pesanan</h1>
+          <p style={{ color: SVC.zasahome.fg, opacity: 0.75, fontSize: 13 }}>{provider.name}</p>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -146,7 +150,7 @@ export default function HomeCheckoutPage() {
 
         {/* Pilihan antar jemput — hanya untuk item_based yang offers_pickup */}
         {!isOnSite && provider.offers_pickup && (
-          <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: 16 }}>
+          <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 18, padding: 16 }}>
             <p style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>Metode Pengambilan</p>
             <div style={{ display: 'flex', gap: 10 }}>
               <PickupOption
@@ -171,7 +175,7 @@ export default function HomeCheckoutPage() {
 
         {/* Waktu kunjungan — hanya untuk on_site */}
         {isOnSite && (
-          <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: 16 }}>
+          <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 18, padding: 16 }}>
             <p style={{ fontWeight: 700, marginBottom: 10, fontSize: 14 }}>{cfg.scheduleLabel ?? 'Waktu Kunjungan'}</p>
             <input
               type="datetime-local"
@@ -179,7 +183,7 @@ export default function HomeCheckoutPage() {
               onChange={e => setScheduledAt(e.target.value)}
               min={new Date(Date.now() + 3600000).toISOString().slice(0,16)}
               style={{ width: '100%', padding: '11px 14px', borderRadius: 10, fontSize: 14, boxSizing: 'border-box',
-                background: 'var(--k-input)', border: `1.5px solid ${scheduledAt ? '#6366F1' : 'var(--k-border)'}`,
+                background: 'var(--k-input)', border: `1.5px solid ${scheduledAt ? SVC.zasahome.fg : 'var(--k-border)'}`,
                 color: 'var(--k-text)', outline: 'none' }}
             />
             {!scheduledAt && (
@@ -189,7 +193,7 @@ export default function HomeCheckoutPage() {
         )}
 
         {/* Alamat — label dari category config */}
-        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: 16 }}>
+        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 18, padding: 16 }}>
           <p style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>
             {isOnSite ? cfg.addressLabel : (pickupType === 'antar_jemput' ? 'Alamat Penjemputan' : 'Alamat Anda (untuk catatan)')}
           </p>
@@ -198,23 +202,23 @@ export default function HomeCheckoutPage() {
           {showAddrSuggestion && (
             <div style={{
               marginBottom: 12, padding: '10px 12px', borderRadius: 12,
-              background: 'rgba(99,102,241,0.07)', border: '1.5px solid rgba(99,102,241,0.25)',
+              background: `rgba(${SVC.zasahome.rgb},0.08)`, border: `1.5px solid rgba(${SVC.zasahome.rgb},0.28)`,
               display: 'flex', alignItems: 'center', gap: 10,
             }}>
               <span style={{ fontSize: 18, flexShrink: 0 }}>📍</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: 11, color: '#6366F1', fontWeight: 700, marginBottom: 2 }}>Gunakan alamat sebelumnya?</p>
+                <p style={{ fontSize: 11, color: SVC.zasahome.fg, fontWeight: 700, marginBottom: 2 }}>Gunakan alamat sebelumnya?</p>
                 <p style={{ fontSize: 12, color: 'var(--k-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {savedAddr.address}
                 </p>
               </div>
               <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
                 <button type="button" onClick={applysavedAddress} style={{
-                  padding: '5px 12px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                  background: '#6366F1', color: '#fff', fontSize: 12, fontWeight: 700,
+                  padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
+                  background: SVC.zasahome.bg, color: SVC.zasahome.fg, fontSize: 12, fontWeight: 700,
                 }}>Pakai</button>
                 <button type="button" onClick={() => setAddrDismissed(true)} style={{
-                  padding: '5px 8px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                  padding: '5px 8px', borderRadius: 999, border: 'none', cursor: 'pointer',
                   background: 'var(--k-input)', color: 'var(--k-muted)', fontSize: 12,
                 }}>✕</button>
               </div>
@@ -224,15 +228,15 @@ export default function HomeCheckoutPage() {
           {/* Tombol GPS */}
           <button type="button" onClick={useCurrentLocation} disabled={gpsLoading}
             style={{
-              width: '100%', marginBottom: 10, padding: '10px', borderRadius: 10,
-              border: '1.5px dashed rgba(99,102,241,0.4)',
-              background: gpsLoading ? 'var(--k-input)' : 'rgba(99,102,241,0.06)',
-              color: gpsLoading ? 'var(--k-muted)' : '#6366F1',
+              width: '100%', marginBottom: 10, padding: '10px', borderRadius: 999,
+              border: `1.5px dashed rgba(${SVC.zasahome.rgb},0.4)`,
+              background: gpsLoading ? 'var(--k-input)' : `rgba(${SVC.zasahome.rgb},0.08)`,
+              color: gpsLoading ? 'var(--k-muted)' : SVC.zasahome.fg,
               fontWeight: 700, fontSize: 13, cursor: gpsLoading ? 'default' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             }}>
             {gpsLoading ? (
-              <><span style={{ width: 14, height: 14, border: '2px solid #6366F1', borderTopColor: 'transparent', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.8s linear infinite' }} /> Mendeteksi lokasi...</>
+              <><span style={{ width: 14, height: 14, border: `2px solid ${SVC.zasahome.fg}`, borderTopColor: 'transparent', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.8s linear infinite' }} /> Mendeteksi lokasi...</>
             ) : (
               <><span style={{ fontSize: 16 }}>📍</span> Gunakan Lokasi Saya Sekarang</>
             )}
@@ -251,7 +255,7 @@ export default function HomeCheckoutPage() {
         </div>
 
         {/* Ringkasan */}
-        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: 16 }}>
+        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 18, padding: 16 }}>
           <p style={{ fontWeight: 700, marginBottom: 12, fontSize: 14 }}>Ringkasan Pesanan</p>
           {items.map((item, i) => (
             <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -281,14 +285,14 @@ export default function HomeCheckoutPage() {
           </div>
 
           {estDone && (
-            <div style={{ marginTop: 10, padding: '8px 12px', borderRadius: 10, background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.2)' }}>
-              <p style={{ fontSize: 12, color: '#6366F1', fontWeight: 600 }}>📅 Estimasi selesai: {estDone}</p>
+            <div style={{ marginTop: 10, padding: '8px 12px', borderRadius: 10, background: `rgba(${SVC.zasahome.rgb},0.1)`, border: `1px solid rgba(${SVC.zasahome.rgb},0.28)` }}>
+              <p style={{ fontSize: 12, color: SVC.zasahome.fg, fontWeight: 600 }}>📅 Estimasi selesai: {estDone}</p>
             </div>
           )}
         </div>
 
         {/* Catatan */}
-        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: 16 }}>
+        <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 18, padding: 16 }}>
           <p style={{ fontWeight: 700, marginBottom: 10, fontSize: 14 }}>Catatan (opsional)</p>
           <textarea
             value={notes} onChange={e => setNotes(e.target.value)}
@@ -300,9 +304,10 @@ export default function HomeCheckoutPage() {
         </div>
 
         <button type="submit" disabled={loading} style={{
-          padding: '14px', borderRadius: 14, border: 'none', cursor: loading ? 'default' : 'pointer',
-          background: loading ? 'var(--k-border)' : 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+          padding: '14px', borderRadius: 999, border: 'none', cursor: loading ? 'default' : 'pointer',
+          background: loading ? 'var(--k-border)' : 'var(--k-primary)',
           color: '#fff', fontWeight: 700, fontSize: 15,
+          boxShadow: loading ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
         }}>
           {loading ? 'Memproses...' : `Pesan • Rp ${totalPrice.toLocaleString('id')}`}
         </button>
@@ -314,18 +319,18 @@ export default function HomeCheckoutPage() {
 function PickupOption({ active, onClick, icon, title, desc, badge }) {
   return (
     <button type="button" onClick={onClick} style={{
-      flex: 1, padding: '12px 10px', borderRadius: 12, cursor: 'pointer', textAlign: 'center',
-      border: active ? '2px solid #6366F1' : '1.5px solid var(--k-border)',
-      background: active ? 'rgba(99,102,241,0.08)' : 'var(--k-input)',
+      flex: 1, padding: '12px 10px', borderRadius: 14, cursor: 'pointer', textAlign: 'center',
+      border: active ? `2px solid ${SVC.zasahome.fg}` : '1.5px solid var(--k-border)',
+      background: active ? `rgba(${SVC.zasahome.rgb},0.1)` : 'var(--k-input)',
     }}>
       <div style={{ fontSize: 22, marginBottom: 4 }}>{icon}</div>
-      <p style={{ fontWeight: 700, fontSize: 13, color: active ? '#6366F1' : 'var(--k-text)', marginBottom: 2 }}>{title}</p>
+      <p style={{ fontWeight: 700, fontSize: 13, color: active ? SVC.zasahome.fg : 'var(--k-text)', marginBottom: 2 }}>{title}</p>
       <p style={{ fontSize: 11, color: 'var(--k-muted)', lineHeight: 1.4 }}>{desc}</p>
       {badge && (
         <span style={{ display: 'inline-block', marginTop: 6, fontSize: 11, fontWeight: 700,
-          padding: '2px 8px', borderRadius: 20,
-          background: active ? 'rgba(99,102,241,0.15)' : 'rgba(160,160,188,0.12)',
-          color: active ? '#6366F1' : 'var(--k-muted)',
+          padding: '2px 8px', borderRadius: 999,
+          background: active ? `rgba(${SVC.zasahome.rgb},0.18)` : 'rgba(160,160,188,0.12)',
+          color: active ? SVC.zasahome.fg : 'var(--k-muted)',
         }}>{badge}</span>
       )}
     </button>

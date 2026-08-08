@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import useGps from '../../hooks/useGps'
 import api from '../../services/api'
 import echo from '../../services/echo'
+import { SVC } from '../../utils/svcTheme'
 
 const fmt = (n) => new Intl.NumberFormat('id-ID').format(n)
 
@@ -86,14 +87,14 @@ function ActiveRideCard({ order, onUpdate }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <div style={{
           width: 44, height: 44, borderRadius: 14, fontSize: 22,
-          background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.25)',
+          background: `rgba(${SVC.zasaride.rgb},0.15)`, border: `1px solid rgba(${SVC.zasaride.rgb},0.3)`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>{info?.emoji || '🚗'}</div>
         <div>
           <p style={{ fontWeight: 800, fontSize: 15, color: 'var(--k-text)' }}>{info?.label || order.status}</p>
           <p style={{ fontSize: 11, color: 'var(--k-muted)', fontFamily: 'monospace' }}>#{order.order_number}</p>
         </div>
-        <p style={{ marginLeft: 'auto', fontSize: 18, fontWeight: 900, color: 'var(--k-accent)' }}>
+        <p style={{ marginLeft: 'auto', fontSize: 18, fontWeight: 900, color: SVC.zasaride.fg }}>
           Rp {fmt(order.fare)}
         </p>
       </div>
@@ -110,13 +111,13 @@ function ActiveRideCard({ order, onUpdate }) {
           return (
             <div key={label} style={{
               display: 'flex', gap: 10, marginBottom: 8, alignItems: 'flex-start',
-              background: isActive ? 'rgba(0,200,150,0.07)' : 'transparent',
+              background: isActive ? `rgba(${SVC.zasaride.rgb},0.08)` : 'transparent',
               borderRadius: 10, padding: isActive ? '8px 10px' : '4px 0',
-              border: isActive ? '1px solid rgba(0,200,150,0.2)' : 'none',
+              border: isActive ? `1px solid rgba(${SVC.zasaride.rgb},0.25)` : 'none',
             }}>
               <span style={{ fontSize: 16, marginTop: 1 }}>{icon}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: 10, color: isActive ? 'var(--k-accent)' : 'var(--k-muted)', fontWeight: 700, textTransform: 'uppercase' }}>{label}</p>
+                <p style={{ fontSize: 10, color: isActive ? SVC.zasaride.fg : 'var(--k-muted)', fontWeight: 700, textTransform: 'uppercase' }}>{label}</p>
                 <p style={{ fontSize: 13, color: 'var(--k-text)', wordBreak: 'break-word' }}>{addr}</p>
               </div>
               <a
@@ -125,13 +126,13 @@ function ActiveRideCard({ order, onUpdate }) {
                 rel="noopener noreferrer"
                 style={{
                   flexShrink: 0,
-                  background: isActive ? 'var(--k-accent)' : 'var(--k-surface)',
-                  color: isActive ? '#0C0C16' : 'var(--k-muted)',
+                  background: isActive ? SVC.zasaride.bg : 'var(--k-surface)',
+                  color: isActive ? SVC.zasaride.fg : 'var(--k-muted)',
                   border: isActive ? 'none' : '1px solid var(--k-border)',
-                  borderRadius: 9, padding: '6px 10px',
+                  borderRadius: 999, padding: '6px 10px',
                   fontSize: 11, fontWeight: 700, textDecoration: 'none',
                   display: 'flex', alignItems: 'center', gap: 4,
-                  boxShadow: isActive ? '0 2px 8px rgba(0,200,150,0.3)' : 'none',
+                  boxShadow: isActive ? `0 2px 8px rgba(${SVC.zasaride.rgb},0.3)` : 'none',
                 }}
               >
                 🗺️ {isActive ? 'Buka Maps' : 'Maps'}
@@ -161,16 +162,16 @@ function ActiveRideCard({ order, onUpdate }) {
           width: 36, height: 36, borderRadius: 10, fontSize: 16, fontWeight: 700,
           background: 'var(--k-surface)', border: '1px solid var(--k-border)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'var(--k-accent)',
+          color: SVC.zasaride.fg,
         }}>{order.customer?.name?.[0]?.toUpperCase()}</div>
         <p style={{ fontSize: 13, fontWeight: 700 }}>{order.customer?.name}</p>
         <button
           onClick={() => navigate(`/ride/mitra/chat/${order.id}`, { state: { otherName: order.customer?.name } })}
           style={{
-            marginLeft: 'auto', background: 'var(--k-glow)',
-            border: '1px solid rgba(0,200,150,0.3)', borderRadius: 10,
+            marginLeft: 'auto', background: `rgba(${SVC.zasaride.rgb},0.12)`,
+            border: `1px solid rgba(${SVC.zasaride.rgb},0.3)`, borderRadius: 999,
             padding: '7px 12px', cursor: 'pointer', fontSize: 12,
-            color: 'var(--k-accent)', fontWeight: 700,
+            color: SVC.zasaride.fg, fontWeight: 700,
           }}
         >💬 Chat</button>
       </div>
@@ -195,8 +196,8 @@ function ActiveRideCard({ order, onUpdate }) {
           ) : (
             <>
               <button onClick={takePhoto} disabled={uploading} style={{
-                width: '100%', padding: '11px', borderRadius: 12,
-                background: '#3B82F6', color: '#fff',
+                width: '100%', padding: '11px', borderRadius: 999,
+                background: 'var(--k-primary)', color: '#fff',
                 border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700,
                 opacity: uploading ? 0.7 : 1,
               }}>
@@ -209,13 +210,13 @@ function ActiveRideCard({ order, onUpdate }) {
 
       {info?.next && (
         <button onClick={updateStatus} disabled={loading || needPhoto} style={{
-          width: '100%', padding: '14px', borderRadius: 16,
-          background: needPhoto ? 'var(--k-card)' : 'var(--k-accent)',
-          color: needPhoto ? 'var(--k-muted)' : '#0C0C16',
+          width: '100%', padding: '14px', borderRadius: 999,
+          background: needPhoto ? 'var(--k-card)' : 'var(--k-primary)',
+          color: needPhoto ? 'var(--k-muted)' : '#fff',
           fontSize: 14, fontWeight: 800,
           border: needPhoto ? '1px solid var(--k-border)' : 'none',
           cursor: needPhoto ? 'not-allowed' : 'pointer',
-          boxShadow: needPhoto ? 'none' : '0 4px 16px rgba(0,200,150,0.35)',
+          boxShadow: needPhoto ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           opacity: loading ? 0.7 : 1,
         }}>
           {loading ? 'Memproses...' : needPhoto ? '📸 Upload foto dulu' : info.nextLabel}
@@ -255,7 +256,7 @@ function AvailableCard({ order, onAccept }) {
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
         <p style={{ fontSize: 12, color: 'var(--k-muted)', fontFamily: 'monospace' }}>#{order.order_number}</p>
-        <p style={{ fontSize: 18, fontWeight: 900, color: 'var(--k-accent)' }}>Rp {fmt(order.fare)}</p>
+        <p style={{ fontSize: 18, fontWeight: 900, color: SVC.zasaride.fg }}>Rp {fmt(order.fare)}</p>
       </div>
       <div style={{ marginBottom: 12 }}>
         {[
@@ -272,10 +273,10 @@ function AvailableCard({ order, onAccept }) {
               <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
                 onClick={e => e.stopPropagation()}
                 style={{
-                  flexShrink: 0, fontSize: 11, color: 'var(--k-accent)',
+                  flexShrink: 0, fontSize: 11, color: SVC.zasaride.fg,
                   textDecoration: 'none', padding: '3px 7px',
-                  background: 'var(--k-glow)', borderRadius: 7,
-                  border: '1px solid rgba(0,200,150,0.2)',
+                  background: `rgba(${SVC.zasaride.rgb},0.12)`, borderRadius: 999,
+                  border: `1px solid rgba(${SVC.zasaride.rgb},0.25)`,
                 }}>
                 🗺️
               </a>
@@ -289,9 +290,10 @@ function AvailableCard({ order, onAccept }) {
           <span style={{ fontSize: 12, color: 'var(--k-muted)' }}>{order.payment_method === 'wallet' ? '💳 Wallet' : '💵 Tunai'}</span>
         </div>
         <button onClick={accept} disabled={loading} style={{
-          background: 'var(--k-accent)', color: '#0C0C16',
-          border: 'none', borderRadius: 12, padding: '9px 18px',
+          background: 'var(--k-primary)', color: '#fff',
+          border: 'none', borderRadius: 999, padding: '9px 18px',
           fontSize: 13, fontWeight: 800, cursor: 'pointer',
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           opacity: loading ? 0.7 : 1,
         }}>
           {loading ? '...' : 'Terima'}
@@ -406,9 +408,9 @@ export default function MitraRidePage() {
         <div style={{ display: 'flex', gap: 6, marginBottom: 16, background: 'var(--k-card)', borderRadius: 14, padding: 4 }}>
           {tabs.map(t => (
             <button key={t.key} onClick={() => setTab(t.key)} style={{
-              flex: 1, padding: '10px 6px', borderRadius: 10, border: 'none', cursor: 'pointer',
-              background: tab === t.key ? 'var(--k-accent)' : 'transparent',
-              color: tab === t.key ? '#0C0C16' : 'var(--k-muted)',
+              flex: 1, padding: '10px 6px', borderRadius: 999, border: 'none', cursor: 'pointer',
+              background: tab === t.key ? SVC.zasaride.bg : 'transparent',
+              color: tab === t.key ? SVC.zasaride.fg : 'var(--k-muted)',
               fontWeight: 700, fontSize: 13, position: 'relative', transition: 'all 0.2s',
             }}>
               {t.label}
@@ -416,8 +418,8 @@ export default function MitraRidePage() {
                 <span style={{
                   position: 'absolute', top: 5, right: 8,
                   minWidth: 16, height: 16, borderRadius: 8,
-                  background: t.badgeColor ?? 'var(--k-accent)',
-                  color: t.badgeColor ? '#fff' : '#0C0C16',
+                  background: t.badgeColor ?? SVC.zasaride.bg,
+                  color: t.badgeColor ? '#fff' : SVC.zasaride.fg,
                   fontSize: 10, fontWeight: 800,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '0 4px',
@@ -442,9 +444,10 @@ export default function MitraRidePage() {
               <p style={{ fontSize: 12, color: 'var(--k-muted)', marginBottom: 20 }}>Terima order dari tab Tersedia</p>
               {available.length > 0 && (
                 <button onClick={() => setTab('available')} style={{
-                  background: 'var(--k-accent)', color: '#0C0C16',
-                  border: 'none', borderRadius: 14, padding: '12px 24px',
+                  background: 'var(--k-primary)', color: '#fff',
+                  border: 'none', borderRadius: 999, padding: '12px 24px',
                   fontSize: 13, fontWeight: 800, cursor: 'pointer',
+                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                 }}>
                   Lihat {available.length} Order Tersedia →
                 </button>

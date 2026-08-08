@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtTime = (d) => new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
@@ -37,19 +38,19 @@ function ActiveCard({ order, onUpdate }) {
   return (
     <div style={{
       background: 'var(--k-card)', border: '1px solid var(--k-border)',
-      borderRadius: 20, padding: '18px 16px', marginBottom: 16,
+      borderRadius: 20, padding: '18px 16px', marginBottom: 16, boxShadow: 'var(--k-shadow), var(--k-inset-hi)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <div style={{
           width: 44, height: 44, borderRadius: 14, fontSize: 22,
-          background: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.25)',
+          background: `rgba(${SVC.zasaserv.rgb},0.14)`, border: `1px solid rgba(${SVC.zasaserv.rgb},0.3)`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}><CategoryIcon category={category} /></div>
         <div style={{ flex: 1 }}>
           <p style={{ fontWeight: 800, fontSize: 15, color: 'var(--k-text)' }}>{info?.label ?? order.status}</p>
           <p style={{ fontSize: 11, color: 'var(--k-muted)', fontFamily: 'monospace' }}>#{order.order_number}</p>
         </div>
-        <p style={{ fontSize: 16, fontWeight: 900, color: '#0EA5E9' }}>{fmtRp(order.provider_income)}</p>
+        <p style={{ fontSize: 16, fontWeight: 900, color: SVC.zasaserv.fg }}>{fmtRp(order.provider_income)}</p>
       </div>
 
       {/* Provider */}
@@ -83,8 +84,8 @@ function ActiveCard({ order, onUpdate }) {
 
       {/* Catatan */}
       {order.notes && (
-        <div style={{ background: 'rgba(14,165,233,0.06)', borderRadius: 10, padding: '8px 12px', marginBottom: 12 }}>
-          <p style={{ fontSize: 11, color: '#0EA5E9', fontWeight: 700, marginBottom: 2 }}>📝 Catatan</p>
+        <div style={{ background: `rgba(${SVC.zasaserv.rgb},0.08)`, borderRadius: 10, padding: '8px 12px', marginBottom: 12 }}>
+          <p style={{ fontSize: 11, color: SVC.zasaserv.fg, fontWeight: 700, marginBottom: 2 }}>📝 Catatan</p>
           <p style={{ fontSize: 12, color: 'var(--k-text)' }}>{order.notes}</p>
         </div>
       )}
@@ -93,8 +94,8 @@ function ActiveCard({ order, onUpdate }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <div style={{
           width: 32, height: 32, borderRadius: 9, fontSize: 14, fontWeight: 700,
-          background: 'rgba(14,165,233,0.1)', border: '1px solid rgba(14,165,233,0.25)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0EA5E9',
+          background: `rgba(${SVC.zasaserv.rgb},0.14)`, border: `1px solid rgba(${SVC.zasaserv.rgb},0.3)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: SVC.zasaserv.fg,
         }}>{order.customer?.name?.[0]?.toUpperCase()}</div>
         <p style={{ fontSize: 13, fontWeight: 700, flex: 1 }}>{order.customer?.name}</p>
         <Link
@@ -106,10 +107,10 @@ function ActiveCard({ order, onUpdate }) {
 
       {info?.next && (
         <button onClick={updateStatus} disabled={loading} style={{
-          width: '100%', padding: '14px', borderRadius: 16,
-          background: '#0EA5E9', color: '#fff',
+          width: '100%', padding: '14px', borderRadius: 999,
+          background: 'var(--k-primary)', color: '#fff',
           fontSize: 14, fontWeight: 800, border: 'none', cursor: 'pointer',
-          boxShadow: '0 4px 16px rgba(14,165,233,0.35)',
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           opacity: loading ? 0.7 : 1,
         }}>
           {loading ? 'Memproses...' : info.nextLabel}
@@ -148,7 +149,7 @@ function AvailableCard({ order, onAccept }) {
             <p style={{ fontSize: 11, color: 'var(--k-muted)', fontFamily: 'monospace' }}>#{order.order_number}</p>
           </div>
         </div>
-        <p style={{ fontSize: 16, fontWeight: 900, color: '#0EA5E9' }}>{fmtRp(order.provider_income)}</p>
+        <p style={{ fontSize: 16, fontWeight: 900, color: SVC.zasaserv.fg }}>{fmtRp(order.provider_income)}</p>
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
@@ -172,9 +173,10 @@ function AvailableCard({ order, onAccept }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>{fmtTime(order.created_at)}</p>
         <button onClick={accept} disabled={loading} style={{
-          background: '#0EA5E9', color: '#fff',
-          border: 'none', borderRadius: 12, padding: '9px 18px',
+          background: 'var(--k-primary)', color: '#fff',
+          border: 'none', borderRadius: 999, padding: '9px 18px',
           fontSize: 13, fontWeight: 800, cursor: 'pointer',
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           opacity: loading ? 0.7 : 1,
         }}>
           {loading ? '...' : 'Terima'}
@@ -258,9 +260,9 @@ export default function MitraServOrdersPage() {
         <div style={{ display: 'flex', gap: 6, marginBottom: 16, background: 'var(--k-card)', borderRadius: 14, padding: 4 }}>
           {tabs.map(t => (
             <button key={t.key} onClick={() => setTab(t.key)} style={{
-              flex: 1, padding: '10px 6px', borderRadius: 10, border: 'none', cursor: 'pointer',
-              background: tab === t.key ? '#0EA5E9' : 'transparent',
-              color: tab === t.key ? '#fff' : 'var(--k-muted)',
+              flex: 1, padding: '10px 6px', borderRadius: 999, border: 'none', cursor: 'pointer',
+              background: tab === t.key ? SVC.zasaserv.bg : 'transparent',
+              color: tab === t.key ? SVC.zasaserv.fg : 'var(--k-muted)',
               fontWeight: 700, fontSize: 13, position: 'relative', transition: 'all 0.2s',
             }}>
               {t.label}
@@ -268,8 +270,8 @@ export default function MitraServOrdersPage() {
                 <span style={{
                   position: 'absolute', top: 5, right: 8,
                   minWidth: 16, height: 16, borderRadius: 8,
-                  background: t.badgeColor ?? '#0EA5E9',
-                  color: '#fff',
+                  background: t.badgeColor ?? SVC.zasaserv.bg,
+                  color: t.badgeColor ? '#fff' : SVC.zasaserv.fg,
                   fontSize: 10, fontWeight: 800,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '0 4px',
@@ -294,9 +296,10 @@ export default function MitraServOrdersPage() {
               <p style={{ fontSize: 12, color: 'var(--k-muted)', marginBottom: 20 }}>Terima order dari tab Tersedia</p>
               {available.length > 0 && (
                 <button onClick={() => setTab('available')} style={{
-                  background: '#0EA5E9', color: '#fff',
-                  border: 'none', borderRadius: 14, padding: '12px 24px',
+                  background: 'var(--k-primary)', color: '#fff',
+                  border: 'none', borderRadius: 999, padding: '12px 24px',
                   fontSize: 13, fontWeight: 800, cursor: 'pointer',
+                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                 }}>
                   Lihat {available.length} Order Tersedia →
                 </button>

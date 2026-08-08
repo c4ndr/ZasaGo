@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SVC } from '../utils/svcTheme'
 
 const fmtRp = (v) => v ? 'Rp ' + Number(v).toLocaleString('id-ID') : null
 
 const MODULE_META = {
-  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: '#1D4ED8', bg: 'rgba(29,78,216,0.10)',  path: '/mitra/orders' },
-  zasafood: { label: 'ZasaFood', emoji: '🍜', color: '#EA580C', bg: 'rgba(234,88,12,0.10)',  path: '/mitra/food/orders' },
-  zasamart: { label: 'ZasaMart', emoji: '🛒', color: '#7C3AED', bg: 'rgba(124,58,237,0.10)', path: '/mitra/mart/orders' },
-  zasaride: { label: 'ZasaRide', emoji: '🚗', color: '#059669', bg: 'rgba(5,150,105,0.10)',  path: '/mitra/ride' },
+  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: SVC.zasago.fg,   bg: SVC.zasago.bg,   path: '/mitra/orders' },
+  zasafood: { label: 'ZasaFood', emoji: '🍜', color: SVC.zasafood.fg, bg: SVC.zasafood.bg, path: '/mitra/food/orders' },
+  zasamart: { label: 'ZasaMart', emoji: '🛒', color: SVC.zasashop.fg, bg: SVC.zasashop.bg, path: '/mitra/mart/orders' },
+  zasaride: { label: 'ZasaRide', emoji: '🚗', color: SVC.zasaride.fg, bg: SVC.zasaride.bg, path: '/mitra/ride' },
 }
 
 function getOrderLabel(order) {

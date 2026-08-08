@@ -4,6 +4,7 @@ import useAppInfo from '../../hooks/useAppInfo'
 import api from '../../services/api'
 import AddressPicker from '../../components/AddressPicker'
 import VoucherInput from '../../components/VoucherInput'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -150,24 +151,24 @@ export default function FoodCartPage() {
           <div style={{ display: 'flex', gap: 10, marginBottom: deliveryMode === 'jastip' ? 14 : 0 }}>
             <button onClick={() => { setDeliveryMode('regular'); setSelectedSession(null) }} style={{
               flex: 1, padding: '12px 8px', borderRadius: 12, cursor: 'pointer', textAlign: 'center',
-              border: `2px solid ${deliveryMode === 'regular' ? '#F97316' : 'var(--k-border)'}`,
-              background: deliveryMode === 'regular' ? 'rgba(249,115,22,0.08)' : 'transparent',
+              border: `2px solid ${deliveryMode === 'regular' ? SVC.zasafood.fg : 'var(--k-border)'}`,
+              background: deliveryMode === 'regular' ? `rgba(${SVC.zasafood.rgb},0.08)` : 'transparent',
             }}>
               <div style={{ fontSize: 22, marginBottom: 4 }}>🚗</div>
-              <div style={{ fontSize: 12, fontWeight: deliveryMode === 'regular' ? 700 : 400, color: deliveryMode === 'regular' ? '#F97316' : 'var(--k-sub)' }}>Kirim Reguler</div>
+              <div style={{ fontSize: 12, fontWeight: deliveryMode === 'regular' ? 700 : 400, color: deliveryMode === 'regular' ? SVC.zasafood.fg : 'var(--k-sub)' }}>Kirim Reguler</div>
               <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>Mitra khusus</div>
             </button>
             <button onClick={() => setDeliveryMode('jastip')} style={{
               flex: 1, padding: '12px 8px', borderRadius: 12, cursor: 'pointer', textAlign: 'center',
-              border: `2px solid ${deliveryMode === 'jastip' ? '#F97316' : 'var(--k-border)'}`,
-              background: deliveryMode === 'jastip' ? 'rgba(249,115,22,0.08)' : 'transparent',
+              border: `2px solid ${deliveryMode === 'jastip' ? SVC.jastip.fg : 'var(--k-border)'}`,
+              background: deliveryMode === 'jastip' ? `rgba(${SVC.jastip.rgb},0.08)` : 'transparent',
               position: 'relative',
             }}>
               {sessions.length > 0 && (
-                <span style={{ position: 'absolute', top: -8, right: -8, background: '#F97316', color: '#fff', borderRadius: 10, fontSize: 10, fontWeight: 700, padding: '2px 7px' }}>{sessions.length}</span>
+                <span style={{ position: 'absolute', top: -8, right: -8, background: `rgb(${SVC.jastip.rgb})`, color: '#fff', borderRadius: 10, fontSize: 10, fontWeight: 700, padding: '2px 7px' }}>{sessions.length}</span>
               )}
               <div style={{ fontSize: 22, marginBottom: 4 }}>🛵</div>
-              <div style={{ fontSize: 12, fontWeight: deliveryMode === 'jastip' ? 700 : 400, color: deliveryMode === 'jastip' ? '#F97316' : 'var(--k-sub)' }}>Hemat Ongkir</div>
+              <div style={{ fontSize: 12, fontWeight: deliveryMode === 'jastip' ? 700 : 400, color: deliveryMode === 'jastip' ? SVC.jastip.fg : 'var(--k-sub)' }}>Hemat Ongkir</div>
               <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>Gabung sesi mitra</div>
             </button>
           </div>
@@ -185,8 +186,8 @@ export default function FoodCartPage() {
                 {sessions.map(s => (
                   <div key={s.id} onClick={() => setSelectedSession(s)} style={{
                     padding: '12px', borderRadius: 10, cursor: 'pointer',
-                    border: `2px solid ${selectedSession?.id === s.id ? '#F97316' : 'var(--k-border)'}`,
-                    background: selectedSession?.id === s.id ? 'rgba(249,115,22,0.06)' : 'var(--k-input)',
+                    border: `2px solid ${selectedSession?.id === s.id ? SVC.jastip.fg : 'var(--k-border)'}`,
+                    background: selectedSession?.id === s.id ? `rgba(${SVC.jastip.rgb},0.08)` : 'var(--k-input)',
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                       <div>
@@ -194,7 +195,7 @@ export default function FoodCartPage() {
                         <div style={{ fontSize: 11, color: 'var(--k-sub)', marginTop: 3 }}>{s.origin_address || '—'} → {s.destination_address || '...'}</div>
                         <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>{s.orders_count}/{s.max_orders} slot</div>
                       </div>
-                      {selectedSession?.id === s.id && <span style={{ color: '#F97316', fontSize: 18, fontWeight: 700 }}>✓</span>}
+                      {selectedSession?.id === s.id && <span style={{ color: SVC.jastip.fg, fontSize: 18, fontWeight: 700 }}>✓</span>}
                     </div>
                   </div>
                 ))}
@@ -210,11 +211,11 @@ export default function FoodCartPage() {
             {[['wallet','💳','Saldo ZasaQu'],['cod','💵','Bayar di Tempat']].filter(([v]) => v !== 'wallet' || walletEnabled).map(([v,e,l]) => (
               <button key={v} onClick={() => setPayMethod(v)} style={{
                 flex: 1, padding: '12px 8px', borderRadius: 12, cursor: 'pointer', textAlign: 'center',
-                border: `2px solid ${payMethod === v ? '#F97316' : 'var(--k-border)'}`,
-                background: payMethod === v ? 'rgba(249,115,22,0.08)' : 'transparent',
+                border: `2px solid ${payMethod === v ? 'var(--k-primary)' : 'var(--k-border)'}`,
+                background: payMethod === v ? 'var(--k-primary-bg)' : 'transparent',
               }}>
                 <div style={{ fontSize: 22, marginBottom: 4 }}>{e}</div>
-                <div style={{ fontSize: 12, fontWeight: payMethod === v ? 700 : 400, color: payMethod === v ? '#F97316' : 'var(--k-sub)' }}>{l}</div>
+                <div style={{ fontSize: 12, fontWeight: payMethod === v ? 700 : 400, color: payMethod === v ? 'var(--k-primary)' : 'var(--k-sub)' }}>{l}</div>
               </button>
             ))}
           </div>
@@ -291,10 +292,11 @@ export default function FoodCartPage() {
           </div>
         )}
         <button onClick={handleOrder} disabled={!isReady} style={{
-          width: '100%', padding: '14px', borderRadius: 14, border: 'none',
-          background: isReady ? '#F97316' : 'var(--k-border)',
+          width: '100%', padding: '14px', borderRadius: 999, border: 'none',
+          background: isReady ? 'var(--k-primary)' : 'var(--k-border)',
           color: '#fff', fontWeight: 700, fontSize: 15,
           cursor: isReady ? 'pointer' : 'default', transition: 'background 0.2s',
+          boxShadow: isReady ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
         }}>
           {submitting ? 'Memproses...'
             : !deliveryInfo?.lat || !deliveryInfo?.lng ? 'Tentukan lokasi dulu'

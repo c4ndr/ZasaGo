@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
 import { STATUS_META as BASE_STATUS_META, FLOW_STEPS, getNextActions, getCategoryConfig } from '../../utils/homeServiceConfig'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const fmtRp   = v => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
@@ -113,16 +114,16 @@ function OrderCard({ order, onUpdateStatus }) {
 
           {/* Customer info */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 12, background: 'var(--k-input)', border: '1px solid var(--k-border)', marginBottom: 12 }}>
-            <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(99,102,241,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
+            <div style={{ width: 38, height: 38, borderRadius: '50%', background: `rgba(${SVC.zasahome.rgb},0.15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)' }}>{order.customer?.name}</p>
                 {isOnSite ? (
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 20, flexShrink: 0, background: 'rgba(99,102,241,0.12)', color: '#6366F1' }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, flexShrink: 0, background: `rgba(${SVC.zasahome.rgb},0.14)`, color: SVC.zasahome.fg }}>
                     {cfg.icon} On-Site
                   </span>
                 ) : (
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 20, flexShrink: 0,
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, flexShrink: 0,
                     background: order.pickup_type === 'antar_jemput' ? 'rgba(59,130,246,0.12)' : 'rgba(160,160,188,0.12)',
                     color: order.pickup_type === 'antar_jemput' ? '#3B82F6' : 'var(--k-muted)' }}>
                     {order.pickup_type === 'antar_jemput' ? '🚚 Antar Jemput' : '🏃 Mandiri'}
@@ -133,7 +134,7 @@ function OrderCard({ order, onUpdateStatus }) {
                 📍 {order.pickup_address}
               </p>
               {order.scheduled_pickup_at && (
-                <p style={{ fontSize: 11, color: '#6366F1', fontWeight: 600, marginTop: 2 }}>
+                <p style={{ fontSize: 11, color: SVC.zasahome.fg, fontWeight: 600, marginTop: 2 }}>
                   🕐 {new Date(order.scheduled_pickup_at).toLocaleString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                 </p>
               )}
@@ -143,7 +144,7 @@ function OrderCard({ order, onUpdateStatus }) {
               {order.status !== 'cancelled' && (
                 <button
                   onClick={() => navigate(`/home/provider/orders/${order.id}/chat`, { state: { otherName: order.customer?.name } })}
-                  style={{ padding: '3px 10px', borderRadius: 8, border: '1px solid rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.08)', color: '#6366F1', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                  style={{ padding: '3px 10px', borderRadius: 999, border: `1px solid rgba(${SVC.zasahome.rgb},0.4)`, background: `rgba(${SVC.zasahome.rgb},0.12)`, color: SVC.zasahome.fg, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
                   💬 Chat
                 </button>
               )}
@@ -180,7 +181,7 @@ function OrderCard({ order, onUpdateStatus }) {
           </div>
 
           {order.notes && (
-            <div style={{ padding: '8px 12px', borderRadius: 10, background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)', fontSize: 12, color: 'var(--k-muted)', marginBottom: 12 }}>
+            <div style={{ padding: '8px 12px', borderRadius: 10, background: `rgba(${SVC.zasahome.rgb},0.08)`, border: `1px solid rgba(${SVC.zasahome.rgb},0.2)`, fontSize: 12, color: 'var(--k-muted)', marginBottom: 12 }}>
               📝 {order.notes}
             </div>
           )}
@@ -191,7 +192,7 @@ function OrderCard({ order, onUpdateStatus }) {
               {actions.map(a => (
                 <button key={a.status} onClick={() => handleAction(a.status)} disabled={busy}
                   style={{
-                    flex: 1, padding: '13px 10px', borderRadius: 12, border: a.danger ? `1.5px solid rgba(245,101,101,0.35)` : 'none',
+                    flex: 1, padding: '13px 10px', borderRadius: 999, border: a.danger ? `1.5px solid rgba(245,101,101,0.35)` : 'none',
                     cursor: busy ? 'default' : 'pointer', fontWeight: 800, fontSize: 13,
                     background: busy ? 'var(--k-border)' : a.danger ? 'rgba(245,101,101,0.08)' : a.color,
                     color: busy ? 'var(--k-muted)' : a.danger ? '#F56565' : '#fff',
@@ -286,28 +287,32 @@ export default function HomeProviderDashboardPage() {
       )}
 
       {/* ── Hero card ── */}
-      <div style={{ background: 'linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%)', padding: '52px 20px 20px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: SVC.zasahome.bg, padding: '52px 20px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasahome.rgb, true) }}>
+        <Gloss />
         {/* decorative circles */}
-        <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
-        <div style={{ position: 'absolute', bottom: -20, left: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
+        <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
+        <div style={{ position: 'absolute', bottom: -20, left: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, position: 'relative' }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <div style={{ width: 48, height: 48, borderRadius: 16, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>
+            <div style={{
+              width: 48, height: 48, borderRadius: 16, background: 'var(--k-surface)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0,
+              boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasahome.rgb},0.4)`,
+            }}>
               {cfg.icon}
             </div>
             <div>
-              <p style={{ fontWeight: 800, fontSize: 16, color: '#fff', lineHeight: 1.2 }}>{provider?.name ?? '...'}</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 2, textTransform: 'capitalize' }}>{provider?.category ?? ''}</p>
+              <p style={{ fontWeight: 800, fontSize: 16, color: SVC.zasahome.fg, lineHeight: 1.2 }}>{provider?.name ?? '...'}</p>
+              <p style={{ fontSize: 12, color: SVC.zasahome.fg, opacity: 0.65, marginTop: 2, textTransform: 'capitalize' }}>{provider?.category ?? ''}</p>
             </div>
           </div>
 
           {provider?.status === 'active' && (
             <button onClick={handleToggleOpen} style={{
-              padding: '8px 16px', borderRadius: 20, border: 'none', cursor: 'pointer', fontWeight: 800, fontSize: 12,
-              background: provider?.is_open ? 'rgba(0,200,150,0.2)' : 'rgba(255,255,255,0.12)',
-              color: provider?.is_open ? '#00C896' : 'rgba(255,255,255,0.7)',
-              backdropFilter: 'blur(4px)',
+              padding: '8px 16px', borderRadius: 999, border: 'none', cursor: 'pointer', fontWeight: 800, fontSize: 12,
+              background: provider?.is_open ? 'rgba(0,200,150,0.22)' : 'rgba(255,255,255,0.3)',
+              color: provider?.is_open ? '#00693F' : SVC.zasahome.fg,
             }}>
               {provider?.is_open ? '● Buka' : '○ Tutup'}
             </button>
@@ -316,13 +321,13 @@ export default function HomeProviderDashboardPage() {
 
         {/* Stats row */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, position: 'relative' }}>
-          <StatCard label="Pendapatan" value={fmtRp(todayIncome)} sub="hari ini" color="#00C896" />
-          <StatCard label="Selesai" value={todayCompleted} sub="hari ini" color="#6366F1" />
-          <StatCard label="Aktif" value={active.length + pending.length} sub="order" color="#F97316" />
+          <StatCard label="Pendapatan" value={fmtRp(todayIncome)} sub="hari ini" />
+          <StatCard label="Selesai" value={todayCompleted} sub="hari ini" />
+          <StatCard label="Aktif" value={active.length + pending.length} sub="order" />
         </div>
 
         {provider?.status === 'pending' && (
-          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 10, background: 'rgba(246,173,85,0.15)', border: '1px solid rgba(246,173,85,0.3)', fontSize: 12, color: '#F6AD55', position: 'relative' }}>
+          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.35)', fontSize: 12, color: SVC.zasahome.fg, fontWeight: 600, position: 'relative' }}>
             ⏳ Akun menunggu persetujuan admin
           </div>
         )}
@@ -436,12 +441,12 @@ export default function HomeProviderDashboardPage() {
   )
 }
 
-function StatCard({ label, value, sub, color }) {
+function StatCard({ label, value, sub }) {
   return (
-    <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 14, padding: '12px 10px', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.1)' }}>
-      <p style={{ fontSize: 18, fontWeight: 800, color: '#fff', lineHeight: 1, marginBottom: 3 }}>{value}</p>
-      <p style={{ fontSize: 10, color: color, fontWeight: 700 }}>{label}</p>
-      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>{sub}</p>
+    <div style={{ background: 'rgba(255,255,255,0.35)', borderRadius: 14, padding: '12px 10px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+      <p style={{ fontSize: 18, fontWeight: 800, color: SVC.zasahome.fg, lineHeight: 1, marginBottom: 3, textShadow: '0 1px 0 rgba(255,255,255,0.4), 0 4px 10px rgba(40,20,60,0.3)' }}>{value}</p>
+      <p style={{ fontSize: 10, color: SVC.zasahome.fg, opacity: 0.85, fontWeight: 700 }}>{label}</p>
+      <p style={{ fontSize: 10, color: SVC.zasahome.fg, opacity: 0.6 }}>{sub}</p>
     </div>
   )
 }

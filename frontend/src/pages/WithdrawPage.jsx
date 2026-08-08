@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 function formatRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -88,7 +89,7 @@ export default function WithdrawPage() {
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 32 }}>
 
       {/* Header */}
-      <div style={{ padding: '52px 20px 28px', background: 'linear-gradient(160deg, #151015 0%, var(--k-bg) 100%)' }}>
+      <div style={{ padding: '52px 20px 28px', background: 'var(--k-bg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <Link to="/wallet" style={{ width: 38, height: 38, borderRadius: 11, background: 'var(--k-card)', border: '1px solid var(--k-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--k-muted)', textDecoration: 'none', fontSize: 18 }}>←</Link>
           <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)', flex: 1 }}>Withdraw</h1>
@@ -104,22 +105,24 @@ export default function WithdrawPage() {
         </div>
 
         {/* Kartu saldo */}
-        <div style={{ borderRadius: 20, background: 'linear-gradient(135deg, #1A0A2E, #0D1F2A)', border: '1px solid rgba(150,120,220,0.2)', padding: '20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(150,120,220,0.06)', pointerEvents: 'none' }} />
-          <p style={{ color: 'var(--k-muted)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Saldo Tersedia</p>
-          <p style={{ fontSize: 30, fontWeight: 900, color: 'var(--k-text)', letterSpacing: '-0.02em', marginBottom: 4 }}>{formatRp(available)}</p>
+        <div style={{ borderRadius: 22, background: SVC.wallet.bg, padding: '20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+          <p style={{ color: SVC.wallet.fg, opacity: 0.8, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Saldo Tersedia</p>
+          <p style={{ fontSize: 30, fontWeight: 900, color: SVC.wallet.fg, letterSpacing: '-0.02em', marginBottom: 4, textShadow: '-1px -1px 0 rgba(255,255,255,0.4), 1px 2px 2px rgba(120,70,20,0.3)' }}>{formatRp(available)}</p>
           {locked > 0 && (
-            <p style={{ color: 'rgba(246,173,85,0.8)', fontSize: 12, marginBottom: 12 }}>🔒 Terkunci: {formatRp(locked)}</p>
+            <p style={{ color: SVC.wallet.fg, opacity: 0.75, fontSize: 12, marginBottom: 12 }}>🔒 Terkunci: {formatRp(locked)}</p>
           )}
           <div style={{ display: 'flex', gap: 16, marginTop: locked > 0 ? 0 : 12 }}>
-            <div style={{ flex: 1, background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '8px 12px' }}>
-              <p style={{ color: 'var(--k-muted)', fontSize: 10, fontWeight: 700, marginBottom: 2 }}>MIN. SISA</p>
-              <p style={{ color: 'var(--k-sub)', fontSize: 13, fontWeight: 700 }}>{formatRp(minLeft)}</p>
+            <div style={{ flex: 1, background: 'rgba(0,0,0,0.12)', borderRadius: 10, padding: '8px 12px' }}>
+              <p style={{ color: SVC.wallet.fg, opacity: 0.7, fontSize: 10, fontWeight: 700, marginBottom: 2 }}>MIN. SISA</p>
+              <p style={{ color: SVC.wallet.fg, fontSize: 13, fontWeight: 700 }}>{formatRp(minLeft)}</p>
             </div>
-            <div style={{ flex: 1, background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '8px 12px' }}>
-              <p style={{ color: 'var(--k-muted)', fontSize: 10, fontWeight: 700, marginBottom: 2 }}>MAKS. TARIK</p>
-              <p style={{ color: 'var(--k-accent)', fontSize: 13, fontWeight: 700 }}>{formatRp(maxAmount)}</p>
+            <div style={{ flex: 1, background: 'rgba(0,0,0,0.12)', borderRadius: 10, padding: '8px 12px' }}>
+              <p style={{ color: SVC.wallet.fg, opacity: 0.7, fontSize: 10, fontWeight: 700, marginBottom: 2 }}>MAKS. TARIK</p>
+              <p style={{ color: SVC.wallet.fg, fontSize: 13, fontWeight: 700 }}>{formatRp(maxAmount)}</p>
             </div>
+          </div>
           </div>
         </div>
       </div>

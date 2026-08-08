@@ -10,6 +10,7 @@ import api from '../../services/api'
 import echo from '../../services/echo'
 import { useAuth } from '../../context/AuthContext'
 import { useMitraGps } from '../../context/MitraGpsContext'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -558,8 +559,8 @@ export default function MitraFoodOrdersPage() {
           ].map(([k, emoji, l, count]) => (
             <button key={k} onClick={() => setTab(k)} style={{
               flex: 1, padding: '10px 4px 8px', border: 'none', cursor: 'pointer', background: 'transparent',
-              color: tab === k ? '#F97316' : 'var(--k-sub)',
-              borderBottom: tab === k ? '2.5px solid #F97316' : '2.5px solid transparent',
+              color: tab === k ? 'var(--k-primary)' : 'var(--k-sub)',
+              borderBottom: tab === k ? '2.5px solid var(--k-primary)' : '2.5px solid transparent',
               fontWeight: tab === k ? 700 : 400, fontSize: 11,
             }}>
               <div style={{ fontSize: 18, lineHeight: 1, position: 'relative', display: 'inline-block' }}>
@@ -592,7 +593,7 @@ export default function MitraFoodOrdersPage() {
                   <div style={{ fontSize: 52, marginBottom: 12 }}>🏍️</div>
                   <p style={{ fontWeight: 600, color: 'var(--k-text)', marginBottom: 6 }}>Tidak ada order aktif</p>
                   <p style={{ fontSize: 13, marginBottom: 20 }}>Cek tab "Order Baru" untuk ambil order.</p>
-                  <button onClick={() => setTab('available')} style={{ padding: '11px 24px', borderRadius: 20, border: 'none', background: '#F97316', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>
+                  <button onClick={() => setTab('available')} style={{ padding: '11px 24px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                     Lihat Order Baru
                   </button>
                 </div>
@@ -874,26 +875,29 @@ export default function MitraFoodOrdersPage() {
             {tab === 'sesi_kuliner' && (
               jastipSession ? (
                 <div>
-                  <div style={{ padding: '16px', borderRadius: 16, background: 'var(--k-card)', border: '2px solid rgba(0,200,150,0.3)', marginBottom: 16, overflow: 'hidden' }}>
+                  <div style={{ padding: '16px', borderRadius: 16, background: SVC.jastip.bg, marginBottom: 16, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.jastip.rgb, true) }}>
+                    <Gloss />
+                    <div style={{ position: 'relative' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                      <div style={{ fontWeight: 800, fontSize: 16 }}>{jastipSession.vehicle_type === 'motor' ? '🛵' : '🚗'} Sesi Aktif</div>
+                      <div style={{ fontWeight: 800, fontSize: 16, color: SVC.jastip.fg }}>{jastipSession.vehicle_type === 'motor' ? '🛵' : '🚗'} Sesi Aktif</div>
                       <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 800, background: 'rgba(0,200,150,0.15)', color: '#027A48' }}>● LIVE</span>
                     </div>
-                    <div style={{ fontSize: 12, color: 'var(--k-sub)', marginBottom: 4 }}>📍 {jastipSession.origin_address}</div>
-                    <div style={{ fontSize: 12, color: 'var(--k-sub)', marginBottom: 12 }}>🎯 {jastipSession.destination_address}</div>
+                    <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.85, marginBottom: 4 }}>📍 {jastipSession.origin_address}</div>
+                    <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.85, marginBottom: 12 }}>🎯 {jastipSession.destination_address}</div>
                     <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-                      <div style={{ flex: 1, textAlign: 'center', padding: '10px', borderRadius: 10, background: 'var(--k-input)' }}>
-                        <div style={{ fontWeight: 800, fontSize: 18 }}>{jastipSession.orders_count}/{jastipSession.max_orders}</div>
+                      <div style={{ flex: 1, textAlign: 'center', padding: '10px', borderRadius: 10, background: 'var(--k-surface)' }}>
+                        <div style={{ fontWeight: 800, fontSize: 18, color: 'var(--k-text)' }}>{jastipSession.orders_count}/{jastipSession.max_orders}</div>
                         <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>slot order</div>
                       </div>
-                      <div style={{ flex: 1, textAlign: 'center', padding: '10px', borderRadius: 10, background: 'var(--k-input)' }}>
-                        <div style={{ fontWeight: 800, fontSize: 18 }}>{jastipSession.corridor_width}m</div>
+                      <div style={{ flex: 1, textAlign: 'center', padding: '10px', borderRadius: 10, background: 'var(--k-surface)' }}>
+                        <div style={{ fontWeight: 800, fontSize: 18, color: 'var(--k-text)' }}>{jastipSession.corridor_width}m</div>
                         <div style={{ fontSize: 11, color: 'var(--k-sub)' }}>koridor</div>
                       </div>
                     </div>
-                    <button onClick={askCloseSession} disabled={closingSession} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(220,38,38,0.08)', color: '#DC2626', fontWeight: 700, fontSize: 14 }}>
+                    <button onClick={askCloseSession} disabled={closingSession} style={{ width: '100%', padding: '11px', borderRadius: 999, border: 'none', cursor: 'pointer', background: 'rgba(220,38,38,0.12)', color: '#DC2626', fontWeight: 700, fontSize: 14 }}>
                       {closingSession ? 'Menutup...' : '🔴 Tutup Sesi'}
                     </button>
+                    </div>
                   </div>
 
                   {merchantGroups.length === 0 ? (
@@ -966,9 +970,12 @@ export default function MitraFoodOrdersPage() {
                 </div>
               ) : (
                 <div>
-                  <div style={{ padding: '14px 16px', borderRadius: 14, marginBottom: 18, background: 'rgba(249,115,22,0.07)', border: '1px solid rgba(249,115,22,0.2)' }}>
-                    <div style={{ fontWeight: 700, fontSize: 13, color: '#F97316', marginBottom: 4 }}>💡 Apa itu Sesi Kuliner?</div>
-                    <div style={{ fontSize: 12, color: 'var(--k-sub)', lineHeight: 1.6 }}>Buka sesi dengan rute tertentu. Pelanggan bisa memesan dari warung-warung dalam koridor rute kamu, berbagi ongkir bersama.</div>
+                  <div style={{ padding: '14px 16px', borderRadius: 14, marginBottom: 18, background: SVC.jastip.bg, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.jastip.rgb) }}>
+                    <Gloss />
+                    <div style={{ position: 'relative' }}>
+                    <div style={{ fontWeight: 700, fontSize: 13, color: SVC.jastip.fg, marginBottom: 4 }}>💡 Apa itu Sesi Kuliner?</div>
+                    <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.85, lineHeight: 1.6 }}>Buka sesi dengan rute tertentu. Pelanggan bisa memesan dari warung-warung dalam koridor rute kamu, berbagi ongkir bersama.</div>
+                    </div>
                   </div>
                   <div style={{ padding: '20px', borderRadius: 16, background: 'var(--k-card)', border: '1.5px solid var(--k-border)', display: 'flex', flexDirection: 'column', gap: 14 }}>
                     <div style={{ fontWeight: 800, fontSize: 16 }}>🚀 Buka Sesi Kuliner</div>
@@ -1009,7 +1016,7 @@ export default function MitraFoodOrdersPage() {
                         </select>
                       </div>
                     </div>
-                    <button onClick={handleStartSession} disabled={startingSession} style={{ padding: '14px', borderRadius: 12, border: 'none', cursor: 'pointer', background: startingSession ? 'var(--k-border)' : '#F97316', color: '#fff', fontWeight: 800, fontSize: 15 }}>
+                    <button onClick={handleStartSession} disabled={startingSession} style={{ padding: '14px', borderRadius: 999, border: 'none', cursor: 'pointer', background: startingSession ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 15, boxShadow: startingSession ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                       {startingSession ? 'Memulai sesi...' : '🚀 Mulai Sesi Kuliner'}
                     </button>
                   </div>

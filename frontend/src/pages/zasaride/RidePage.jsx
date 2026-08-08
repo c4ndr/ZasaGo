@@ -6,6 +6,7 @@ import useAppInfo from '../../hooks/useAppInfo'
 import api from '../../services/api'
 import echo from '../../services/echo'
 import LocationSearch from '../../components/LocationSearch'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmt = (n) => new Intl.NumberFormat('id-ID').format(n)
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -88,7 +89,7 @@ function SavedPlaces({ onSelect, onSave, currentDest }) {
         </p>
         {currentDest?.lat && !adding && (
           <button onClick={() => setAdding(true)} style={{
-            fontSize: 11, color: 'var(--k-accent)', background: 'none',
+            fontSize: 11, color: SVC.zasaride.fg, background: 'none',
             border: 'none', cursor: 'pointer', fontWeight: 700,
           }}>+ Simpan tujuan ini</button>
         )}
@@ -150,10 +151,10 @@ function SavedPlaces({ onSelect, onSave, currentDest }) {
               color: 'var(--k-muted)', cursor: 'pointer', fontSize: 13,
             }}>Batal</button>
             <button onClick={save} disabled={saving || !newName.trim()} style={{
-              flex: 2, padding: '9px', borderRadius: 10,
-              background: 'var(--k-accent)', color: '#0C0C16',
+              flex: 2, padding: '9px', borderRadius: 999,
+              background: 'var(--k-primary)', color: '#fff',
               border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700,
-              opacity: saving ? 0.7 : 1,
+              opacity: saving ? 0.7 : 1, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>{saving ? 'Menyimpan...' : 'Simpan Lokasi'}</button>
           </div>
         </div>
@@ -502,9 +503,9 @@ export default function RidePage() {
           <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>Perjalanan cepat & terpercaya</p>
         </div>
         <Link to="/ride/orders" style={{
-          fontSize: 12, color: 'var(--k-accent)', textDecoration: 'none', fontWeight: 700,
-          background: 'var(--k-glow)', padding: '6px 12px', borderRadius: 10,
-          border: '1px solid rgba(0,200,150,0.25)',
+          fontSize: 12, color: SVC.zasaride.fg, textDecoration: 'none', fontWeight: 700,
+          background: `rgba(${SVC.zasaride.rgb},0.14)`, padding: '6px 12px', borderRadius: 999,
+          border: `1px solid rgba(${SVC.zasaride.rgb},0.3)`,
         }}>Riwayat</Link>
       </nav>
 
@@ -529,10 +530,10 @@ export default function RidePage() {
                   { type: 'mobil', emoji: '🚗', label: 'Mobil', sub: 'Lebih nyaman' },
                 ].map(v => (
                   <button key={v.type} onClick={() => setVehicle(v.type)} style={{
-                    background: vehicleType === v.type ? 'var(--k-glow)' : 'var(--k-card)',
-                    border: `1.5px solid ${vehicleType === v.type ? 'var(--k-accent)' : 'var(--k-border)'}`,
+                    background: vehicleType === v.type ? `rgba(${SVC.zasaride.rgb},0.12)` : 'var(--k-card)',
+                    border: `1.5px solid ${vehicleType === v.type ? SVC.zasaride.fg : 'var(--k-border)'}`,
                     borderRadius: 14, padding: '12px', cursor: 'pointer', textAlign: 'left',
-                    boxShadow: vehicleType === v.type ? '0 0 0 3px var(--k-glow)' : 'none',
+                    boxShadow: vehicleType === v.type ? `0 0 0 3px rgba(${SVC.zasaride.rgb},0.15)` : 'none',
                   }}>
                     <div style={{ fontSize: 24, marginBottom: 4 }}>{v.emoji}</div>
                     <p style={{ fontWeight: 800, fontSize: 14 }}>{v.label}</p>
@@ -607,9 +608,9 @@ export default function RidePage() {
                 />
               </div>
               <button onClick={getMyLocation} style={{
-                background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.3)',
-                borderRadius: 10, padding: '8px 14px', cursor: 'pointer',
-                fontSize: 12, color: 'var(--k-accent)', fontWeight: 700, marginBottom: 18,
+                background: `rgba(${SVC.zasaride.rgb},0.12)`, border: `1px solid rgba(${SVC.zasaride.rgb},0.3)`,
+                borderRadius: 999, padding: '8px 14px', cursor: 'pointer',
+                fontSize: 12, color: SVC.zasaride.fg, fontWeight: 700, marginBottom: 18,
               }}>📍 Gunakan lokasi saya sekarang</button>
 
               {/* Tujuan */}
@@ -640,10 +641,10 @@ export default function RidePage() {
                 onClick={handleEstimate}
                 disabled={loading || !pickupCoord || !destCoord}
                 style={{
-                  width: '100%', padding: '15px', borderRadius: 16,
-                  background: 'var(--k-accent)', color: '#0C0C16',
+                  width: '100%', padding: '15px', borderRadius: 999,
+                  background: 'var(--k-primary)', color: '#fff',
                   fontSize: 15, fontWeight: 800, border: 'none', cursor: 'pointer',
-                  boxShadow: '0 4px 16px rgba(0,200,150,0.35)',
+                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                   opacity: loading || !pickupCoord || !destCoord ? 0.6 : 1,
                 }}
               >{loading ? 'Menghitung...' : 'Lihat Estimasi Harga →'}</button>
@@ -671,18 +672,21 @@ export default function RidePage() {
 
               {/* Kartu estimasi */}
               <div style={{
-                background: 'var(--k-card)', border: '1px solid var(--k-border)',
+                background: SVC.zasaride.bg, position: 'relative', overflow: 'hidden',
                 borderRadius: 20, padding: '20px 18px', marginBottom: 18,
+                boxShadow: svcShadow(SVC.zasaride.rgb, true),
               }}>
-                <p style={{ fontSize: 12, color: 'var(--k-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: 4 }}>Estimasi Ongkos</p>
+                <Gloss />
+                <div style={{ position: 'relative' }}>
+                <p style={{ fontSize: 12, color: SVC.zasaride.fg, opacity: 0.75, fontWeight: 700, textTransform: 'uppercase', marginBottom: 4 }}>Estimasi Ongkos</p>
                 {promoInfo ? (
                   <div style={{ marginBottom: 16 }}>
-                    <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--k-muted)', textDecoration: 'line-through' }}>Rp {fmt(estimate.fare)}</p>
-                    <p style={{ fontSize: 34, fontWeight: 900, color: 'var(--k-accent)' }}>Rp {fmt(Math.max(0, estimate.fare - promoInfo.discount_amount))}</p>
-                    <p style={{ fontSize: 12, color: 'var(--k-accent)', marginTop: 2 }}>Hemat Rp {fmt(promoInfo.discount_amount)}</p>
+                    <p style={{ fontSize: 20, fontWeight: 700, color: SVC.zasaride.fg, opacity: 0.55, textDecoration: 'line-through' }}>Rp {fmt(estimate.fare)}</p>
+                    <p style={{ fontSize: 34, fontWeight: 900, color: SVC.zasaride.fg, textShadow: '0 1px 0 rgba(255,255,255,0.5), 0 2px 3px rgba(0,0,0,0.12)' }}>Rp {fmt(Math.max(0, estimate.fare - promoInfo.discount_amount))}</p>
+                    <p style={{ fontSize: 12, color: SVC.zasaride.fg, marginTop: 2 }}>Hemat Rp {fmt(promoInfo.discount_amount)}</p>
                   </div>
                 ) : (
-                  <p style={{ fontSize: 34, fontWeight: 900, color: 'var(--k-accent)', marginBottom: 16 }}>Rp {fmt(estimate.fare)}</p>
+                  <p style={{ fontSize: 34, fontWeight: 900, color: SVC.zasaride.fg, marginBottom: 16, textShadow: '0 1px 0 rgba(255,255,255,0.5), 0 2px 3px rgba(0,0,0,0.12)' }}>Rp {fmt(estimate.fare)}</p>
                 )}
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
@@ -693,19 +697,20 @@ export default function RidePage() {
                     { label: 'Minimum', value: `Rp ${fmt(estimate.minimum_fare)}` },
                   ].map(({ label, value }) => (
                     <div key={label}>
-                      <p style={{ fontSize: 10, color: 'var(--k-muted)', fontWeight: 700 }}>{label}</p>
-                      <p style={{ fontSize: 13, fontWeight: 700 }}>{value}</p>
+                      <p style={{ fontSize: 10, color: SVC.zasaride.fg, opacity: 0.65, fontWeight: 700 }}>{label}</p>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: SVC.zasaride.fg }}>{value}</p>
                     </div>
                   ))}
                 </div>
 
-                <div style={{ borderTop: '1px solid var(--k-border)', paddingTop: 12 }}>
+                <div style={{ borderTop: `1px solid rgba(${SVC.zasaride.rgb},0.25)`, paddingTop: 12 }}>
                   <div style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
-                    <span>📍</span><p style={{ fontSize: 13 }}>{pickup}</p>
+                    <span>📍</span><p style={{ fontSize: 13, color: SVC.zasaride.fg }}>{pickup}</p>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
-                    <span>🏁</span><p style={{ fontSize: 13 }}>{dest}</p>
+                    <span>🏁</span><p style={{ fontSize: 13, color: SVC.zasaride.fg }}>{dest}</p>
                   </div>
+                </div>
                 </div>
               </div>
 
@@ -717,8 +722,8 @@ export default function RidePage() {
                   { method: 'wallet', emoji: '💳', label: 'Wallet',       sub: 'Bayar otomatis saat selesai' },
                 ].filter(v => v.method !== 'wallet' || walletEnabled).map(v => (
                   <button key={v.method} onClick={() => setPayMethod(v.method)} style={{
-                    background: payMethod === v.method ? 'var(--k-glow)' : 'var(--k-card)',
-                    border: `1.5px solid ${payMethod === v.method ? 'var(--k-accent)' : 'var(--k-border)'}`,
+                    background: payMethod === v.method ? `rgba(${SVC.zasaride.rgb},0.12)` : 'var(--k-card)',
+                    border: `1.5px solid ${payMethod === v.method ? SVC.zasaride.fg : 'var(--k-border)'}`,
                     borderRadius: 14, padding: '12px', cursor: 'pointer', textAlign: 'left',
                   }}>
                     <div style={{ fontSize: 18, marginBottom: 4 }}>{v.emoji}</div>
@@ -737,14 +742,14 @@ export default function RidePage() {
                   placeholder="Masukkan kode promo"
                   style={{
                     flex: 1, background: 'var(--k-card)', color: 'var(--k-text)',
-                    border: `1.5px solid ${promoInfo ? 'var(--k-accent)' : promoErr ? '#EF4444' : 'var(--k-border)'}`,
+                    border: `1.5px solid ${promoInfo ? SVC.zasaride.fg : promoErr ? '#EF4444' : 'var(--k-border)'}`,
                     borderRadius: 14, padding: '12px 14px', fontSize: 13, outline: 'none',
                     fontFamily: 'inherit',
                   }}
                 />
                 <button onClick={handleValidatePromo} disabled={promoLoading || !promoCode.trim()} style={{
-                  padding: '12px 16px', borderRadius: 14, fontWeight: 700, fontSize: 13,
-                  background: 'var(--k-accent)', color: '#0C0C16', border: 'none',
+                  padding: '12px 16px', borderRadius: 999, fontWeight: 700, fontSize: 13,
+                  background: 'var(--k-primary)', color: '#fff', border: 'none',
                   cursor: promoCode.trim() ? 'pointer' : 'not-allowed',
                   opacity: promoLoading || !promoCode.trim() ? 0.6 : 1,
                 }}>{promoLoading ? '...' : 'Pakai'}</button>
@@ -780,10 +785,10 @@ export default function RidePage() {
                   color: 'var(--k-text)', fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 }}>← Kembali</button>
                 <button onClick={handleBook} disabled={loading} style={{
-                  flex: 2, padding: '14px', borderRadius: 16,
-                  background: 'var(--k-accent)', color: '#0C0C16',
+                  flex: 2, padding: '14px', borderRadius: 999,
+                  background: 'var(--k-primary)', color: '#fff',
                   fontSize: 15, fontWeight: 800, border: 'none', cursor: 'pointer',
-                  boxShadow: '0 4px 16px rgba(0,200,150,0.35)',
+                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                   opacity: loading ? 0.7 : 1,
                 }}>{loading ? 'Memesan...' : '🚀 Pesan Sekarang'}</button>
               </div>

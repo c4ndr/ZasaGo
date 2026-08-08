@@ -82,9 +82,9 @@ export default function LoginPage() {
             <button key={m.id}
               onClick={() => { setMethod(m.id); setStep(1); setError('') }}
               style={{ flex: 1, padding: '12px 0', fontSize: 14, fontWeight: 700, borderRadius: 12, border: 'none', cursor: 'pointer', transition: 'all .25s',
-                background: method === m.id ? 'linear-gradient(135deg,#6366F1,#8B5CF6)' : 'transparent',
+                background: method === m.id ? 'var(--k-primary)' : 'transparent',
                 color: method === m.id ? '#fff' : 'var(--k-muted)',
-                boxShadow: method === m.id ? '0 4px 14px rgba(99,102,241,0.35)' : 'none',
+                boxShadow: method === m.id ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
               }}>
               {m.label}
             </button>
@@ -158,15 +158,15 @@ export default function LoginPage() {
             <button type="button" onClick={handleSendOtp}
               disabled={loading || !form.phone}
               style={{ padding: '16px', borderRadius: 16, fontSize: 15, fontWeight: 800, border: 'none', cursor: 'pointer', marginTop: 6,
-                background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff',
-                boxShadow: '0 8px 24px rgba(99,102,241,0.4)', opacity: (loading || !form.phone) ? 0.55 : 1 }}>
+                background: 'var(--k-primary)', color: '#fff',
+                boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)', opacity: (loading || !form.phone) ? 0.55 : 1 }}>
               {loading ? 'Mengirim...' : 'Kirim Kode OTP'}
             </button>
           ) : (
             <button type="submit" disabled={loading}
               style={{ padding: '16px', borderRadius: 16, fontSize: 15, fontWeight: 800, border: 'none', cursor: 'pointer', marginTop: 6,
-                background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff',
-                boxShadow: '0 8px 24px rgba(99,102,241,0.4)', opacity: loading ? 0.65 : 1 }}>
+                background: 'var(--k-primary)', color: '#fff',
+                boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)', opacity: loading ? 0.65 : 1 }}>
               {loading ? 'Memproses...' : 'Masuk Sekarang →'}
             </button>
           )}

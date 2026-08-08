@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const NAV = [
   { to: '/seller',          emoji: '📊', label: 'Dashboard', exact: true },
@@ -16,10 +17,14 @@ export default function MartSellerLayout({ children, title }) {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', display: 'flex', flexDirection: 'column' }}>
       {/* Top bar */}
-      <div style={{ background: 'linear-gradient(135deg,#4F46E5,#7C3AED)', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 12, position: 'sticky', top: 0, zIndex: 50 }}>
-        <span style={{ fontSize: 22 }}>🏪</span>
-        <p style={{ color: '#fff', fontWeight: 800, fontSize: 15, flex: 1 }}>{title || 'ZasaShop Seller'}</p>
-        <button onClick={logout} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 8, padding: '6px 12px', color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Keluar</button>
+      <div style={{
+        background: SVC.zasashop.bg, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 12,
+        position: 'sticky', top: 0, zIndex: 50, overflow: 'hidden', boxShadow: svcShadow(SVC.zasashop.rgb),
+      }}>
+        <Gloss />
+        <span style={{ position: 'relative', fontSize: 22 }}>🏪</span>
+        <p style={{ position: 'relative', color: SVC.zasashop.fg, fontWeight: 800, fontSize: 15, flex: 1 }}>{title || 'ZasaShop Seller'}</p>
+        <button onClick={logout} style={{ position: 'relative', background: 'rgba(255,255,255,0.35)', border: 'none', borderRadius: 8, padding: '6px 12px', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Keluar</button>
       </div>
 
       {/* Content */}
@@ -34,8 +39,8 @@ export default function MartSellerLayout({ children, title }) {
             {({ isActive }) => (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, paddingBottom: 10, gap: 2 }}>
                 <span style={{ fontSize: 20 }}>{emoji}</span>
-                <span style={{ fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? '#6366F1' : 'var(--k-muted)', transition: 'color 0.18s' }}>{label}</span>
-                <span style={{ height: 3, borderRadius: 3, width: isActive ? 20 : 0, background: '#6366F1', transition: 'width 0.2s ease', marginTop: 1 }} />
+                <span style={{ fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? SVC.zasashop.fg : 'var(--k-muted)', transition: 'color 0.18s' }}>{label}</span>
+                <span style={{ height: 3, borderRadius: 3, width: isActive ? 20 : 0, background: SVC.zasashop.fg, transition: 'width 0.2s ease', marginTop: 1 }} />
               </div>
             )}
           </NavLink>

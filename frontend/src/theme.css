@@ -1,14 +1,19 @@
-/* ===== ZASAQU LIGHT THEME — override Tailwind ===== */
+/* ===== ZASAQU WARM THEME — override Tailwind ===== */
 
-/* Backgrounds */
-div[class*="min-h-screen"] { background-color: var(--k-bg) !important; }
+/* Backgrounds (soft-UI, tanpa blur) */
+div[class*="min-h-screen"] { background: var(--k-bg) !important; }
 nav[class*="bg-white"], header[class*="bg-white"], aside[class*="bg-white"] {
-  background-color: var(--k-surface) !important;
+  background: var(--k-surface) !important;
   border-color: var(--k-border) !important;
 }
-div[class*="bg-white"]    { background-color: var(--k-card)  !important; color: var(--k-text) !important; }
-div[class*="bg-gray-50"]  { background-color: var(--k-card2) !important; }
-div[class*="bg-gray-100"] { background-color: var(--k-input) !important; }
+div[class*="bg-white"] {
+  background: var(--k-card) !important;
+  color: var(--k-text) !important;
+  border-color: var(--k-border) !important;
+  box-shadow: var(--k-shadow), var(--k-inset-hi);
+}
+div[class*="bg-gray-50"]  { background: var(--k-card2) !important; }
+div[class*="bg-gray-100"] { background: var(--k-input) !important; }
 
 /* Text */
 [class*="text-gray-900"], h1, h2, h3, h4, h5, h6 { color: var(--k-text) !important; }
@@ -28,23 +33,23 @@ select option { background-color: var(--k-surface); color: var(--k-text); }
 [class*="border-gray-100"], [class*="border-gray-200"] { border-color: var(--k-border) !important; }
 [class*="divide-gray-50"] > * + *                      { border-color: var(--k-border) !important; }
 
-/* Accent: blue → brand primary */
+/* Accent: blue → brand primary (navy) */
 [class*="bg-blue-600"], [class*="bg-blue-500"]   { background-color: var(--k-primary) !important; }
 [class*="text-blue-600"], [class*="text-blue-700"] { color: var(--k-primary) !important; }
 [class*="hover:bg-blue-700"]:hover               { background-color: var(--k-primary2) !important; }
-[class*="bg-blue-50"]                            { background-color: var(--k-primary-bg) !important; border-color: rgba(249,115,22,0.2) !important; }
+[class*="bg-blue-50"]                            { background-color: var(--k-primary-bg) !important; border-color: rgba(40,55,75,0.2) !important; }
 [class*="border-blue-500"]                       { border-color: var(--k-primary) !important; }
 [class*="accent-blue-600"]                       { accent-color: var(--k-primary) !important; }
 
 /* Status */
-[class*="bg-green-50"]                            { background-color: rgba(0,200,150,0.08) !important; }
-[class*="text-green-600"], [class*="text-green-700"] { color: #059669 !important; }
-[class*="bg-red-50"]                              { background-color: rgba(239,68,68,0.08) !important; }
+[class*="bg-green-50"]                            { background-color: rgba(46,125,91,0.08) !important; }
+[class*="text-green-600"], [class*="text-green-700"] { color: var(--k-accent) !important; }
+[class*="bg-red-50"]                              { background-color: rgba(192,67,92,0.08) !important; }
 [class*="text-red-600"], [class*="text-red-500"]  { color: var(--k-danger) !important; }
-[class*="bg-yellow-50"]                           { background-color: rgba(245,158,11,0.08) !important; }
-[class*="text-yellow-700"], [class*="text-yellow-800"] { color: #D97706 !important; }
-[class*="bg-purple-50"]                           { background-color: rgba(139,92,246,0.08) !important; }
-[class*="text-purple-700"]                        { color: #7C3AED !important; }
+[class*="bg-yellow-50"]                           { background-color: rgba(184,134,11,0.08) !important; }
+[class*="text-yellow-700"], [class*="text-yellow-800"] { color: var(--k-warn) !important; }
+[class*="bg-purple-50"]                           { background-color: rgba(94,63,140,0.08) !important; }
+[class*="text-purple-700"]                        { color: #5E3F8C !important; }
 
 /* Toggle/tab */
 [class*="shadow-sm"][class*="bg-white"] { background-color: var(--k-input) !important; color: var(--k-text) !important; }

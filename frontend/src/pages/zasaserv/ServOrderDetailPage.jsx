@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api from '../../services/api'
 import ReportComplaintModal from '../../components/ReportComplaintModal'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const COMPLAINT_WINDOW_HOURS = 24
 
@@ -46,9 +47,10 @@ function ServRatingModal({ order, onClose, onDone }) {
         />
         {error && <p style={{ fontSize: 13, color: '#EF4444', marginTop: 8 }}>{error}</p>}
         <button onClick={submit} disabled={loading} style={{
-          marginTop: 18, width: '100%', padding: '14px', borderRadius: 14,
-          background: '#059669', color: '#fff', fontSize: 15, fontWeight: 800,
+          marginTop: 18, width: '100%', padding: '14px', borderRadius: 999,
+          background: 'var(--k-primary)', color: '#fff', fontSize: 15, fontWeight: 800,
           border: 'none', cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1,
+          boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
         }}>{loading ? 'Mengirim...' : 'Kirim Rating'}</button>
       </div>
     </div>
@@ -130,15 +132,18 @@ export default function ServOrderDetailPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg,#064e3b,#059669)', padding: '52px 16px 20px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', borderRadius: 20, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12 }}>← Kembali</button>
-        <div style={{ fontWeight: 800, fontSize: 18, color: '#fff' }}>Detail Pesanan</div>
-        <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12, marginTop: 2 }}>{order.order_number}</div>
+      <div style={{ background: SVC.zasaserv.bg, padding: '52px 16px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasaserv.fg, borderRadius: 999, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12, boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>← Kembali</button>
+          <div style={{ fontWeight: 800, fontSize: 18, color: SVC.zasaserv.fg }}>Detail Pesanan</div>
+          <div style={{ color: SVC.zasaserv.fg, opacity: 0.7, fontSize: 12, marginTop: 2 }}>{order.order_number}</div>
+        </div>
       </div>
 
       <div style={{ padding: 16 }}>
         {/* Status */}
-        <div style={{ background: 'var(--k-card)', borderRadius: 16, padding: 16, marginBottom: 14 }}>
+        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginBottom: 14 }}>
           <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 10 }}>Status Pesanan</div>
           <div style={{ fontSize: 14, fontWeight: 700, color: STATUS_COLOR[order.status] ?? '#059669', marginBottom: 14 }}>
             {STATUS_LABEL[order.status] ?? order.status}
@@ -166,7 +171,7 @@ export default function ServOrderDetailPage() {
         </div>
 
         {/* Provider */}
-        <div style={{ background: 'var(--k-card)', borderRadius: 16, padding: 16, marginBottom: 14 }}>
+        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginBottom: 14 }}>
           <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 8 }}>Teknisi</div>
           <div style={{ fontWeight: 700, fontSize: 15 }}>{order.provider?.name}</div>
           <div style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 2 }}>{order.provider?.address}</div>
@@ -178,8 +183,8 @@ export default function ServOrderDetailPage() {
               onClick={() => navigate(`/serv/orders/${id}/chat`, { state: { otherName: order.provider?.name } })}
               style={{
                 display: 'block', width: '100%', marginTop: 12, padding: '10px',
-                borderRadius: 12, border: '1.5px solid rgba(5,150,105,0.4)',
-                background: 'rgba(5,150,105,0.06)', color: '#059669',
+                borderRadius: 999, border: `1.5px solid rgba(${SVC.zasaserv.rgb},0.4)`,
+                background: `rgba(${SVC.zasaserv.rgb},0.1)`, color: SVC.zasaserv.fg,
                 fontWeight: 700, fontSize: 13, cursor: 'pointer',
               }}>
               💬 Hubungi Teknisi via Chat
@@ -188,7 +193,7 @@ export default function ServOrderDetailPage() {
         </div>
 
         {/* Alamat */}
-        <div style={{ background: 'var(--k-card)', borderRadius: 16, padding: 16, marginBottom: 14 }}>
+        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginBottom: 14 }}>
           <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6 }}>Lokasi Servis</div>
           <div style={{ fontSize: 13 }}>{order.address}</div>
           {order.scheduled_at && (
@@ -200,7 +205,7 @@ export default function ServOrderDetailPage() {
         </div>
 
         {/* Items */}
-        <div style={{ background: 'var(--k-card)', borderRadius: 16, padding: 16, marginBottom: 14 }}>
+        <div style={{ background: 'var(--k-card)', borderRadius: 18, padding: 16, marginBottom: 14 }}>
           <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 10 }}>Rincian Layanan</div>
           {order.items?.map(item => (
             <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -222,8 +227,8 @@ export default function ServOrderDetailPage() {
         {/* Rating — hanya untuk completed */}
         {order.status === 'completed' && !isRated && (
           <button onClick={() => setShowRating(true)} style={{
-            width: '100%', padding: 14, borderRadius: 14, border: 'none',
-            background: 'rgba(5,150,105,0.1)', color: '#059669',
+            width: '100%', padding: 14, borderRadius: 999, border: 'none',
+            background: `rgba(${SVC.zasaserv.rgb},0.12)`, color: SVC.zasaserv.fg,
             fontSize: 14, fontWeight: 700, cursor: 'pointer', marginBottom: 14,
           }}>⭐ Beri Rating Teknisi</button>
         )}

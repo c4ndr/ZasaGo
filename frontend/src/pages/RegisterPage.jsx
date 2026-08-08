@@ -3,6 +3,7 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
 import MerchantLocationPicker from '../components/MerchantLocationPicker'
+import { SVC, svcShadow } from '../utils/svcTheme'
 
 const SERV_CATEGORIES = [
   { value: 'ac',         label: 'AC & Pendingin' },
@@ -31,12 +32,12 @@ const SHOP_CATEGORIES = [
 ]
 
 const MITRA_TYPES = [
-  { value: 'mitra_motor',   emoji: '🏍️', label: 'Mitra Motor',        desc: 'ZasaGo, ZasaRide & pengiriman dengan motor',   grad: 'linear-gradient(135deg,#F59E0B,#EF4444)' },
-  { value: 'mitra_mobil',   emoji: '🚗', label: 'Mitra Mobil',        desc: 'ZasaGo, ZasaRide & pengiriman kapasitas besar', grad: 'linear-gradient(135deg,#3B82F6,#06B6D4)' },
-  { value: 'merchant',      emoji: '🏪', label: 'Merchant Makanan',   desc: 'Buka warung / restoran online',        grad: 'linear-gradient(135deg,#EF4444,#F97316)' },
-  { value: 'home_provider', emoji: '🏠', label: 'Provider Rumahan',   desc: 'Laundry, pijat, cleaning, tukang',     grad: 'linear-gradient(135deg,#8B5CF6,#6366F1)' },
-  { value: 'seller',        emoji: '🛒', label: 'Seller ZasaShop',    desc: 'Jual produk lokal di ZasaShop',        grad: 'linear-gradient(135deg,#10B981,#3B82F6)' },
-  { value: 'serv_provider', emoji: '🔧', label: 'Teknisi ZasaServis', desc: 'Tawarkan jasa servis & perbaikan',     grad: 'linear-gradient(135deg,#0EA5E9,#0284C7)' },
+  { value: 'mitra_motor',   emoji: '🏍️', label: 'Mitra Motor',        desc: 'ZasaGo, ZasaRide & pengiriman dengan motor',   svc: 'zasago' },
+  { value: 'mitra_mobil',   emoji: '🚗', label: 'Mitra Mobil',        desc: 'ZasaGo, ZasaRide & pengiriman kapasitas besar', svc: 'zasago' },
+  { value: 'merchant',      emoji: '🏪', label: 'Merchant Makanan',   desc: 'Buka warung / restoran online',        svc: 'zasafood' },
+  { value: 'home_provider', emoji: '🏠', label: 'Provider Rumahan',   desc: 'Laundry, pijat, cleaning, tukang',     svc: 'zasahome' },
+  { value: 'seller',        emoji: '🛒', label: 'Seller ZasaShop',    desc: 'Jual produk lokal di ZasaShop',        svc: 'zasashop' },
+  { value: 'serv_provider', emoji: '🔧', label: 'Teknisi ZasaServis', desc: 'Tawarkan jasa servis & perbaikan',     svc: 'zasaserv' },
 ]
 
 const EMPTY_FORM = {
@@ -182,7 +183,8 @@ export default function RegisterPage() {
           {MITRA_TYPES.map(t => (
             <button key={t.value} onClick={() => setMitraRole(t.value)} style={{ width: '100%', border: 'none', padding: 0, cursor: 'pointer', background: 'none', borderRadius: 20, textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '18px 18px', background: 'var(--k-card)', borderRadius: 20, border: '1.5px solid var(--k-border)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)', transition: 'all .2s' }}>
-                <div style={{ width: 52, height: 52, background: t.grad, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0, boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}>
+                <div style={{ width: 52, height: 52, background: 'var(--k-surface)', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0,
+                  boxShadow: `0 3px 8px rgba(${SVC[t.svc].rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC[t.svc].rgb},0.4)` }}>
                   {t.emoji}
                 </div>
                 <div style={{ flex: 1 }}>
@@ -213,7 +215,7 @@ export default function RegisterPage() {
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}`}</style>
 
       {/* Header */}
-      <div style={{ background: accountType === 'pelanggan' ? 'linear-gradient(135deg,#1e1b4b,#312e81,#4c1d95)' : (mitraInfo?.grad ? mitraInfo.grad.replace('135deg', '160deg') : 'linear-gradient(135deg,#1c1917,#292524,#4c1d95)'), padding: '52px 24px 28px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: accountType === 'pelanggan' ? 'linear-gradient(135deg,#1e1b4b,#312e81,#4c1d95)' : 'linear-gradient(160deg,#1c1917,#292524,#4c1d95)', padding: '52px 24px 28px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
         <button onClick={handleBack} style={{ background: 'rgba(255,255,255,0.12)', border: 'none', color: '#fff', fontSize: 13, cursor: 'pointer', marginBottom: 18, padding: '7px 16px', borderRadius: 20 }}>
           ← Kembali
@@ -244,9 +246,9 @@ export default function RegisterPage() {
             <button key={m.id}
               onClick={() => { setMethod(m.id); setStep(1); setError('') }}
               style={{ flex: 1, padding: '12px 0', fontSize: 14, fontWeight: 700, borderRadius: 10, border: 'none', cursor: 'pointer', transition: 'all .25s',
-                background: method === m.id ? 'linear-gradient(135deg,#6366F1,#8B5CF6)' : 'transparent',
+                background: method === m.id ? 'var(--k-primary)' : 'transparent',
                 color: method === m.id ? '#fff' : 'var(--k-muted)',
-                boxShadow: method === m.id ? '0 4px 14px rgba(99,102,241,0.3)' : 'none',
+                boxShadow: method === m.id ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
               }}>
               {m.label}
             </button>
@@ -282,7 +284,7 @@ export default function RegisterPage() {
                 placeholder="000000" style={{ textAlign: 'center', letterSpacing: '0.5em', fontSize: 24, fontFamily: 'monospace' }} />
             </div>
             <button className="btn-primary" onClick={handleSubmit} disabled={loading || form.otp.length !== 6}
-              style={{ background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', border: 'none', borderRadius: 16, padding: '16px', fontSize: 15, fontWeight: 800, boxShadow: '0 8px 24px rgba(99,102,241,0.35)' }}>
+              style={{ background: 'var(--k-primary)', border: 'none', borderRadius: 16, padding: '16px', fontSize: 15, fontWeight: 800, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               {loading ? 'Mendaftar...' : 'Verifikasi & Daftar'}
             </button>
             <button type="button" onClick={handleSendOtp}
@@ -533,8 +535,8 @@ export default function RegisterPage() {
 
             <button type="submit" disabled={loading}
               style={{ padding: '16px', borderRadius: 16, fontSize: 15, fontWeight: 800, border: 'none', cursor: 'pointer',
-                background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff',
-                boxShadow: '0 8px 24px rgba(99,102,241,0.35)', opacity: loading ? 0.7 : 1 }}>
+                background: 'var(--k-primary)', color: '#fff',
+                boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)', opacity: loading ? 0.7 : 1 }}>
               {loading ? 'Memproses...' : method === 'email' ? 'Daftar Sekarang →' : 'Kirim Kode OTP →'}
             </button>
           </form>

@@ -121,8 +121,9 @@ function CreateMerchantModal({ onClose, onCreated }) {
           {inp('owner_phone', 'Nomor HP pemilik (opsional)', 'tel', false)}
 
           <button type="submit" disabled={loading} style={{
-            width: '100%', padding: '13px', borderRadius: 12, border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
-            background: '#00C896', color: '#0C0C16', fontWeight: 800, fontSize: 14,
+            width: '100%', padding: '13px', borderRadius: 999, border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
+            background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 14,
+            boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             opacity: loading ? 0.6 : 1, marginTop: 4,
           }}>
             {loading ? 'Membuat...' : '+ Tambah Merchant'}

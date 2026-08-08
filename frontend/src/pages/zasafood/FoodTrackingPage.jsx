@@ -249,7 +249,7 @@ export default function FoodTrackingPage() {
       <div style={{ fontSize: 48 }}>📡</div>
       <p style={{ fontWeight: 700, color: 'var(--k-text)', textAlign: 'center' }}>Gagal memuat pesanan</p>
       <p style={{ fontSize: 13, color: 'var(--k-muted)', textAlign: 'center' }}>Periksa koneksi internet lalu coba lagi</p>
-      <button onClick={loadOrder} style={{ padding: '12px 28px', borderRadius: 12, border: 'none', background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>Coba Lagi</button>
+      <button onClick={loadOrder} style={{ padding: '12px 28px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>Coba Lagi</button>
       <button onClick={() => navigate('/food/orders')} style={{ padding: '10px 24px', borderRadius: 12, border: '1px solid var(--k-border)', background: 'transparent', color: 'var(--k-sub)', fontSize: 13, cursor: 'pointer' }}>Kembali ke Daftar</button>
     </div>
   )
@@ -421,7 +421,7 @@ export default function FoodTrackingPage() {
           {/* Info mitra */}
           {order.mitra && ['mitra_on_pickup','picked_up','on_delivery','delivered'].includes(order.status) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 14, background: 'rgba(249,115,22,0.12)', border: '1.5px solid rgba(249,115,22,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🏍️</div>
+              <div style={{ width: 44, height: 44, borderRadius: 14, background: 'var(--k-input)', border: '1.5px solid var(--k-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🏍️</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{order.mitra?.name ?? 'Mitra'}</p>
                 <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>{order.mitra?.role === 'mitra_motor' ? 'Motor' : 'Mobil'} · Mitra Delivery</p>
@@ -505,7 +505,7 @@ export default function FoodTrackingPage() {
               <p style={{ fontSize: 12, color: 'var(--k-muted)', marginBottom: 16 }}>Bantu warung dan mitra kami berkembang</p>
               <StarRow label={`🏪 ${order.merchant?.name ?? 'Warung'}`} value={rating.merchant_score} onChange={s => setRating(r => ({ ...r, merchant_score: s }))} />
               {order.mitra_id && <StarRow label="🏍️ Mitra Delivery" value={rating.mitra_score} onChange={s => setRating(r => ({ ...r, mitra_score: s }))} />}
-              <button onClick={handleRate} style={{ width: '100%', marginTop: 4, padding: '14px', borderRadius: 14, border: 'none', background: rating.merchant_score ? '#F97316' : 'var(--k-card2)', color: rating.merchant_score ? '#fff' : 'var(--k-muted)', fontWeight: 700, fontSize: 14, cursor: rating.merchant_score ? 'pointer' : 'not-allowed' }}>Kirim Rating ⭐</button>
+              <button onClick={handleRate} style={{ width: '100%', marginTop: 4, padding: '14px', borderRadius: 999, border: 'none', background: rating.merchant_score ? 'var(--k-primary)' : 'var(--k-card2)', color: rating.merchant_score ? '#fff' : 'var(--k-muted)', fontWeight: 700, fontSize: 14, cursor: rating.merchant_score ? 'pointer' : 'not-allowed', boxShadow: rating.merchant_score ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none' }}>Kirim Rating ⭐</button>
             </div>
           )}
 

@@ -244,9 +244,9 @@ export default function SellerProductsPage() {
           />
           <button onClick={openAdd} style={{
             padding: '11px 18px', borderRadius: 12, border: 'none',
-            background: 'linear-gradient(135deg,#6366F1,#7C3AED)',
+            background: 'var(--k-primary)',
             color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap',
-            boxShadow: '0 4px 12px rgba(99,102,241,0.4)',
+            boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>+ Tambah</button>
         </div>
 
@@ -261,7 +261,7 @@ export default function SellerProductsPage() {
             <p style={{ fontSize: 48, marginBottom: 10 }}>🛍️</p>
             <p style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, color: 'var(--k-text)' }}>Belum ada produk</p>
             <p style={{ fontSize: 13, marginBottom: 20 }}>Tambahkan produk pertamamu untuk mulai berjualan</p>
-            <button onClick={openAdd} style={{ padding: '12px 28px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 14, boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }}>
+            <button onClick={openAdd} style={{ padding: '12px 28px', borderRadius: 12, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 14, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               + Tambah Produk
             </button>
           </div>
@@ -493,10 +493,10 @@ export default function SellerProductsPage() {
                 }}>Batal</button>
                 <button onClick={save} disabled={saving} style={{
                   flex: 2, padding: '14px', borderRadius: 12, border: 'none',
-                  background: saving ? 'var(--k-border)' : 'linear-gradient(135deg,#6366F1,#7C3AED)',
+                  background: saving ? 'var(--k-border)' : 'var(--k-primary)',
                   color: '#fff', fontWeight: 800, fontSize: 14,
                   cursor: saving ? 'not-allowed' : 'pointer',
-                  boxShadow: saving ? 'none' : '0 4px 14px rgba(99,102,241,0.4)',
+                  boxShadow: saving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                 }}>
                   {saving ? '⏳ Menyimpan...' : '💾 Simpan Produk'}
                 </button>

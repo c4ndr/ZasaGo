@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import BottomNav from '../components/BottomNav'
 import useAppInfo from '../hooks/useAppInfo'
 import api from '../services/api'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const TYPE_LABELS = {
   topup:               'Top Up',
@@ -180,42 +181,42 @@ export default function WalletPage() {
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
       {/* Header */}
-      <div style={{ padding: '52px 20px 20px', background: 'linear-gradient(180deg, #0F1C22 0%, var(--k-bg) 100%)' }}>
+      <div style={{ padding: '52px 20px 20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-          <Link to="/dashboard" style={{ width: 40, height: 40, borderRadius: 12, background: 'var(--k-card)', border: '1px solid var(--k-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--k-muted)', textDecoration: 'none', fontSize: 18 }}>←</Link>
+          <Link to="/dashboard" style={{ width: 40, height: 40, borderRadius: 14, background: 'var(--k-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--k-text)', textDecoration: 'none', fontSize: 18, boxShadow: 'var(--k-shadow), var(--k-inset-hi)' }}>←</Link>
           <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Wallet</h1>
         </div>
 
         {/* Balance Card */}
-        <div style={{ borderRadius: 24, background: 'linear-gradient(135deg, #005C44 0%, #00A87D 50%, #00C896 100%)', padding: '24px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.06)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', left: -30, bottom: -30, width: 80, height: 80, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
-
-          <p style={{ color: 'rgba(12,12,22,0.65)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>Saldo Tersedia</p>
-          <p style={{ color: '#0C0C16', fontSize: 34, fontWeight: 900, letterSpacing: '-0.02em', marginBottom: 4 }}>
+        <div style={{ borderRadius: 22, background: 'var(--k-wallet-bg)', padding: '20px 18px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+          <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.8, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 7 }}>Saldo Tersedia</p>
+          <p style={{ color: 'var(--k-wallet-fg)', fontSize: 30, fontWeight: 900, letterSpacing: '-0.02em', marginBottom: 4 }}>
             {fmtRp(summary?.available ?? 0)}
           </p>
           {(summary?.locked_balance ?? 0) > 0 && (
-            <p style={{ color: 'rgba(12,12,22,0.55)', fontSize: 12 }}>🔒 Terkunci: {fmtRp(summary.locked_balance)}</p>
+            <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.65, fontSize: 11 }}>🔒 Terkunci: {fmtRp(summary.locked_balance)}</p>
           )}
 
           {(!walletEnabled && !isMitra) ? (
-            <div style={{ marginTop: 16, padding: '10px 14px', borderRadius: 12, background: 'rgba(12,12,22,0.25)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 16 }}>🔒</span>
-              <p style={{ fontSize: 12, color: 'rgba(12,12,22,0.75)', fontWeight: 600 }}>Top up sementara tidak tersedia</p>
+            <div style={{ marginTop: 14, padding: '9px 13px', borderRadius: 11, background: 'rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 15 }}>🔒</span>
+              <p style={{ fontSize: 11, color: 'var(--k-wallet-fg)', fontWeight: 600 }}>Top up sementara tidak tersedia</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-              <Link to="/topup" style={{ flex: 1, display: 'block', textDecoration: 'none', padding: '11px 8px', borderRadius: 14, textAlign: 'center', background: 'rgba(12,12,22,0.2)', color: '#0C0C16', fontSize: 13, fontWeight: 700 }}>
+            <div style={{ display: 'flex', gap: 9, marginTop: 18 }}>
+              <Link to="/topup" style={{ flex: 1, display: 'block', textDecoration: 'none', padding: '10px 7px', borderRadius: 999, textAlign: 'center', background: 'var(--k-primary)', color: '#fff', fontSize: 12, fontWeight: 700, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                 ⬇ Top Up
               </Link>
               {isMitra && (
-                <Link to="/withdraw" style={{ flex: 1, display: 'block', textDecoration: 'none', padding: '11px 8px', borderRadius: 14, textAlign: 'center', background: 'rgba(12,12,22,0.2)', color: '#0C0C16', fontSize: 13, fontWeight: 700 }}>
+                <Link to="/withdraw" style={{ flex: 1, display: 'block', textDecoration: 'none', padding: '10px 7px', borderRadius: 999, textAlign: 'center', background: 'var(--k-surface)', color: 'var(--k-wallet-fg)', fontSize: 12, fontWeight: 700, boxShadow: '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)' }}>
                   ⬆ Withdraw
                 </Link>
               )}
             </div>
           )}
+          </div>
         </div>
       </div>
 

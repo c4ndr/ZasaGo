@@ -1,78 +1,150 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Backgrounds ────────────────────────────── */
-  --k-bg:        #F4F6F9;
-  --k-surface:   #FFFFFF;
-  --k-card:      #FFFFFF;
-  --k-card2:     #F4F6F9;
-  --k-input:     #EEF0F5;
+  /* ── Backgrounds (soft-UI hangat, tanpa blur) ── */
+  --k-bg:        #F1EBDF;
+  --k-surface:   #FAF6EE;
+  --k-card:      #FAF6EE;
+  --k-card2:     #F3EDE0;
+  --k-input:     #EFE7D6;
 
   /* ── Borders ────────────────────────────────── */
-  --k-border:    #E4E6EC;
-  --k-border2:   #D0D3DD;
+  --k-border:    rgba(40,44,60,0.08);
+  --k-border2:   rgba(40,44,60,0.14);
 
-  /* ── Brand green ───────────────────────────── */
-  --k-primary:   #00C896;
-  --k-primary2:  #00A87D;
-  --k-primary-bg: rgba(0,200,150,0.10);
+  /* ── Neumorphic shadow (hangat, lembut, "tergeletak")
+     Kombinasi [kontak tipis] + [ambient menyebar] bikin
+     kartu kelihatan mengambang; --k-inset-hi menambah
+     garis sorot atas tipis untuk kesan timbul. Dipakai
+     bareng: `box-shadow: var(--k-shadow), var(--k-inset-hi)`. */
+  --k-shadow:    0 2px 4px rgba(60,50,35,0.06), 0 10px 22px -8px rgba(60,50,35,0.16);
+  --k-shadow-lg: 0 4px 10px rgba(60,50,35,0.10), 0 20px 40px -12px rgba(60,50,35,0.22);
+  --k-inset-hi:  inset 0 1px 0 rgba(255,255,255,0.6);
 
-  /* ── Accent green (sukses / konfirmasi) ─────── */
-  --k-accent:    #00C896;
-  --k-accent2:   #00A87D;
-  --k-glow:      rgba(0,200,150,0.15);
+  /* ── Primary action (navy — tombol utama & bottom nav) */
+  --k-primary:   #28374B;
+  --k-primary2:  #1D2939;
+  --k-primary-bg: rgba(40,55,75,0.08);
+
+  /* ── Accent sukses (dipakai di luar kartu berwarna) ── */
+  --k-accent:    #2E7D5B;
+  --k-accent2:   #235F45;
+  --k-glow:      rgba(40,55,75,0.15);
 
   /* ── Teks ───────────────────────────────────── */
-  --k-text:      #1A1A2E;
-  --k-sub:       #6B7280;
-  --k-muted:     #9CA3AF;
+  --k-text:      #1E2233;
+  --k-sub:       #5B6472;
+  --k-muted:     #948B7D;
 
   /* ── Status ─────────────────────────────────── */
-  --k-danger:    #EF4444;
-  --k-warn:      #F59E0B;
-  --k-info:      #3B82F6;
-
-  /* ── Elevasi ────────────────────────────────── */
-  --k-shadow:    0 2px 8px rgba(0,0,0,0.07);
-  --k-shadow-lg: 0 8px 28px rgba(0,0,0,0.12);
+  --k-danger:    #C0435C;
+  --k-warn:      #B8860B;
+  --k-info:      #2A5F82;
 
   /* ── Header dashboard ───────────────────────── */
-  --k-header-bg: linear-gradient(150deg, #7EDEC2 0%, #A8EDD9 55%, #D8F9F1 100%);
-  --k-header-blob1: rgba(0,200,150,0.25);
-  --k-header-blob2: rgba(0,200,150,0.18);
-  --k-header-blob3: rgba(0,168,125,0.18);
+  --k-header-bg: #F1EBDF;
+
+  /* ── Palet per layanan — dipakai KONSISTEN di
+     seluruh halaman modul terkait (header, kartu,
+     tombol, badge), bukan cuma di grid Dashboard. ── */
+  --k-zasago-bg:   #91C7EA; --k-zasago-fg:   #1B4865;
+  --k-zasafood-bg: #9EDBBB; --k-zasafood-fg: #216146;
+  --k-jastip-bg:   #EFADC6; --k-jastip-fg:   #832C4F;
+  --k-zasashop-bg: #F4B67E; --k-zasashop-fg: #824707;
+  --k-zasahome-bg: #C3A9E8; --k-zasahome-fg: #482E6F;
+  --k-zasaride-bg: #8FD7DB; --k-zasaride-fg: #165659;
+  --k-zasaserv-bg: #E9CF75; --k-zasaserv-fg: #6C520F;
+  --k-wallet-bg:   #E39E5E; --k-wallet-fg:   #623A18;
 }
 
-/* ── Dark theme ──────────────────────────────── */
+/* ── Dark theme (langit malam berbintang) ──────── */
 [data-theme="dark"] {
-  --k-bg:        #0F1117;
-  --k-surface:   #1A1D25;
-  --k-card:      #1E2130;
-  --k-card2:     #252837;
-  --k-input:     #2A2D3E;
-  --k-border:    #2E3248;
-  --k-border2:   #3A3F58;
-  --k-text:      #F1F2F6;
-  --k-sub:       #9CA3AF;
-  --k-muted:     #6B7280;
-  --k-shadow:    0 2px 8px rgba(0,0,0,0.30);
-  --k-shadow-lg: 0 8px 28px rgba(0,0,0,0.50);
-  --k-header-bg: linear-gradient(150deg, #0D1F1A 0%, #0F1E1B 55%, #0F1117 100%);
-  --k-header-blob1: rgba(0,200,150,0.12);
-  --k-header-blob2: rgba(0,200,150,0.08);
-  --k-header-blob3: rgba(0,168,125,0.08);
+  /* Starfield: 22 titik bintang (ukuran & opasitas
+     acak) di atas gradient biru malam yang dalam.
+     Dipasang di --k-bg supaya otomatis muncul di
+     html/body/#root (semua pakai `background: var(--k-bg)`). */
+  --k-bg:
+    radial-gradient(1.6px 1.6px at 7% 15%, rgba(255,255,255,0.9), transparent 100%),
+    radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.55), transparent 100%),
+    radial-gradient(1.3px 1.3px at 24% 8%, rgba(255,255,255,0.8), transparent 100%),
+    radial-gradient(1px 1px at 33% 62%, rgba(255,255,255,0.45), transparent 100%),
+    radial-gradient(1.8px 1.8px at 42% 30%, rgba(255,255,255,0.95), transparent 100%),
+    radial-gradient(1px 1px at 51% 75%, rgba(255,255,255,0.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 60% 18%, rgba(255,255,255,0.7), transparent 100%),
+    radial-gradient(1px 1px at 68% 50%, rgba(255,255,255,0.4), transparent 100%),
+    radial-gradient(1.6px 1.6px at 77% 12%, rgba(255,255,255,0.85), transparent 100%),
+    radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.55), transparent 100%),
+    radial-gradient(1.3px 1.3px at 92% 65%, rgba(255,255,255,0.75), transparent 100%),
+    radial-gradient(1px 1px at 12% 82%, rgba(255,255,255,0.5), transparent 100%),
+    radial-gradient(1.5px 1.5px at 29% 90%, rgba(255,255,255,0.7), transparent 100%),
+    radial-gradient(1px 1px at 46% 95%, rgba(255,255,255,0.4), transparent 100%),
+    radial-gradient(1.2px 1.2px at 55% 5%, rgba(255,255,255,0.6), transparent 100%),
+    radial-gradient(1px 1px at 64% 88%, rgba(255,255,255,0.45), transparent 100%),
+    radial-gradient(1.7px 1.7px at 73% 72%, rgba(255,255,255,0.9), transparent 100%),
+    radial-gradient(1px 1px at 81% 85%, rgba(255,255,255,0.5), transparent 100%),
+    radial-gradient(1.3px 1.3px at 90% 22%, rgba(255,255,255,0.65), transparent 100%),
+    radial-gradient(1px 1px at 5% 60%, rgba(255,255,255,0.4), transparent 100%),
+    radial-gradient(1.4px 1.4px at 38% 40%, rgba(255,255,255,0.6), transparent 100%),
+    radial-gradient(1px 1px at 95% 50%, rgba(255,255,255,0.45), transparent 100%),
+    linear-gradient(160deg, #070914 0%, #0F1730 45%, #171B3A 100%);
+  --k-surface:   #1B2138;
+  --k-card:      #1B2138;
+  --k-card2:     #212945;
+  --k-input:     #232C4A;
+  --k-border:    rgba(255,255,255,0.08);
+  --k-border2:   rgba(255,255,255,0.14);
+  --k-shadow:    0 2px 4px rgba(0,0,0,0.3), 0 12px 26px -8px rgba(0,0,0,0.45);
+  --k-shadow-lg: 0 4px 10px rgba(0,0,0,0.35), 0 22px 44px -12px rgba(0,0,0,0.55);
+  --k-inset-hi:  inset 0 1px 0 rgba(255,255,255,0.06);
+  --k-primary:   #4A6280;
+  --k-primary2:  #3A4E68;
+  --k-primary-bg: rgba(120,150,180,0.12);
+  --k-accent:    #4FAE82;
+  --k-accent2:   #3D8A67;
+  --k-glow:      rgba(120,150,180,0.2);
+  --k-text:      #F1ECE3;
+  --k-sub:       #B7AD9E;
+  --k-muted:     #8A7F70;
+  --k-danger:    #E17690;
+  --k-warn:      #E0B84A;
+  --k-info:      #6FA8CE;
+  --k-header-bg: #0F1730;
+
+  /* Palet servis versi gelap — tint gelap dari hue yang sama */
+  --k-zasago-bg:   #234255; --k-zasago-fg:   #9CC9E8;
+  --k-zasafood-bg: #223B2E; --k-zasafood-fg: #9BD9B9;
+  --k-jastip-bg:   #3F2530; --k-jastip-fg:   #F0A8C0;
+  --k-zasashop-bg: #3E2C1A; --k-zasashop-fg: #F0BE8A;
+  --k-zasahome-bg: #302640; --k-zasahome-fg: #CBB0E8;
+  --k-zasaride-bg: #1E3A3B; --k-zasaride-fg: #9BD8DA;
+  --k-zasaserv-bg: #3A311A; --k-zasaserv-fg: #E4CC80;
+  --k-wallet-bg:   #3E2A18; --k-wallet-fg:   #E0AD79;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   background: var(--k-bg);
+  background-attachment: fixed; /* bintang gak melar/scroll di halaman panjang */
   /* Cegah layout shift saat keyboard virtual muncul/hilang di Android Chrome */
   height: 100%;
 }
 
+/* ── Judul: emboss tipis biar kerasa timbul ──── */
+h1, h2, h3 {
+  text-shadow: -0.5px -0.5px 0 rgba(255,255,255,0.5), 0.5px 1.5px 2px rgba(60,50,35,0.15);
+}
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3 {
+  text-shadow: -0.5px -0.5px 0 rgba(255,255,255,0.05), 0.5px 1.5px 2px rgba(0,0,0,0.4);
+}
+
+/* ── Gloss: garis kilat diagonal cuma di light mode
+   — di dark mode mengganggu di atas langit malam. */
+[data-theme="dark"] .gloss-streak { display: none; }
+
 body {
   background: var(--k-bg);
+  background-attachment: fixed;
   color: var(--k-text);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -86,18 +158,20 @@ body {
 
 #root {
   background: var(--k-bg);
+  background-attachment: fixed;
   min-height: 100vh;
   min-height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
 }
 
-/* ── Komponen global ─────────────────────────── */
+/* ── Komponen global (soft-UI) ────────────────── */
 .card {
   background: var(--k-card);
-  border-radius: 16px;
+  border: 1px solid var(--k-border);
+  border-radius: 22px;
   padding: 20px;
-  box-shadow: var(--k-shadow);
+  box-shadow: var(--k-shadow), var(--k-inset-hi);
 }
 
 .btn-primary {
@@ -107,15 +181,16 @@ body {
   color: #FFFFFF;
   font-weight: 700;
   font-size: 15px;
-  border-radius: 14px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
-  transition: background 0.18s, transform 0.12s, opacity 0.2s;
+  transition: filter 0.18s, transform 0.12s, opacity 0.2s;
   letter-spacing: 0.01em;
+  box-shadow: 0 3px 8px rgba(30,40,55,0.35), 0 12px 24px -8px rgba(30,40,55,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
 }
-.btn-primary:hover   { background: var(--k-primary2); }
+.btn-primary:hover   { filter: brightness(1.12); }
 .btn-primary:active  { transform: scale(0.98); }
-.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
 
 .btn-secondary {
   width: 100%;
@@ -124,23 +199,25 @@ body {
   color: var(--k-text);
   font-weight: 600;
   font-size: 15px;
-  border-radius: 14px;
-  border: 1.5px solid var(--k-border);
+  border-radius: 999px;
+  border: 1px solid var(--k-border);
   cursor: pointer;
   transition: border-color 0.18s, background 0.18s;
+  box-shadow: 0 2px 6px rgba(60,50,35,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
 }
 .btn-secondary:hover { border-color: var(--k-primary); }
 
 .input-field {
   width: 100%;
   background: var(--k-input);
-  border: 1.5px solid var(--k-border);
+  border: 1px solid var(--k-border);
   color: var(--k-text);
   padding: 14px 16px;
-  border-radius: 14px;
+  border-radius: 16px;
   font-size: 15px;
   outline: none;
   transition: border-color 0.18s, box-shadow 0.18s;
+  box-shadow: inset 0 1px 3px rgba(60,50,35,0.08);
 }
 .input-field:focus {
   border-color: var(--k-primary);
@@ -160,9 +237,9 @@ body {
 
 .error-box {
   padding: 12px 16px;
-  background: rgba(239,68,68,0.07);
-  border: 1px solid rgba(239,68,68,0.18);
-  color: #EF4444;
+  background: rgba(192,67,92,0.08);
+  border: 1px solid rgba(192,67,92,0.2);
+  color: var(--k-danger);
   border-radius: 12px;
   font-size: 14px;
   line-height: 1.55;
@@ -217,11 +294,11 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]) {
   font-weight: 700;
   letter-spacing: 0.03em;
 }
-.badge-green  { background: rgba(0,200,150,0.12);  color: #059669; }
-.badge-yellow { background: rgba(245,158,11,0.12); color: #D97706; }
-.badge-red    { background: rgba(239,68,68,0.12);  color: #EF4444; }
-.badge-blue   { background: rgba(59,130,246,0.12); color: #3B82F6; }
-.badge-gray   { background: rgba(107,114,128,0.10); color: #6B7280; }
+.badge-green  { background: rgba(46,125,91,0.12);  color: #2E7D5B; }
+.badge-yellow { background: rgba(184,134,11,0.12); color: #B8860B; }
+.badge-red    { background: rgba(192,67,92,0.12);  color: #C0435C; }
+.badge-blue   { background: rgba(42,95,130,0.12);  color: #2A5F82; }
+.badge-gray   { background: rgba(91,100,114,0.10); color: #5B6472; }
 
 /* ── Utility ─────────────────────────────────── */
 .bg-k-bg      { background-color: var(--k-bg); }

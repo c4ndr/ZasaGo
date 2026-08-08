@@ -145,7 +145,7 @@ export default function SellerSettingsPage() {
       <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--k-muted)' }}>
         <p style={{ fontSize: 32, marginBottom: 8 }}>⚠️</p>
         <p style={{ fontWeight: 600 }}>Profil toko tidak ditemukan.</p>
-        <button onClick={load} style={{ marginTop: 16, padding: '10px 24px', borderRadius: 10, border: 'none', background: '#6366F1', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Coba Lagi</button>
+        <button onClick={load} style={{ marginTop: 16, padding: '10px 24px', borderRadius: 10, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>Coba Lagi</button>
       </div>
     </MartSellerLayout>
   )
@@ -187,7 +187,7 @@ export default function SellerSettingsPage() {
         <div style={{ borderRadius: 14, overflow: 'hidden', background: 'var(--k-card)', border: '1px solid var(--k-border)' }}>
           <div
             onClick={() => !uplBanner && (isNative ? pickAndUploadNative('banner', setUplBanner, setPrevBanner) : bannerRef.current?.click())}
-            style={{ position: 'relative', height: 120, background: '#1a1a2e', cursor: uplBanner ? 'not-allowed' : 'pointer' }}
+            style={{ position: 'relative', height: 120, background: 'var(--k-input)', cursor: uplBanner ? 'not-allowed' : 'pointer' }}
           >
             {bannerSrc
               ? <img src={bannerSrc} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -259,8 +259,9 @@ export default function SellerSettingsPage() {
 
           <button onClick={save} disabled={saving} style={{
             padding: '13px', borderRadius: 12, border: 'none',
-            background: saving ? 'var(--k-border)' : 'linear-gradient(135deg,#6366F1,#7C3AED)',
+            background: saving ? 'var(--k-border)' : 'var(--k-primary)',
             color: '#fff', fontWeight: 800, fontSize: 14, cursor: saving ? 'default' : 'pointer',
+            boxShadow: saving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>
             {saving ? 'Menyimpan...' : 'Simpan Pengaturan'}
           </button>

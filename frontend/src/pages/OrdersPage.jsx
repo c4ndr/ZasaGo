@@ -11,6 +11,7 @@ import echo from '../services/echo'
 import { requestNotifPermission, showOrderStatusNotif } from '../utils/systemNotif'
 import useOrderChatBadges from '../hooks/useOrderChatBadges'
 import ChatButton from '../components/ChatButton'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const PHOTO_LABELS = { pickup: 'Tiba di Pickup', packing: 'Barang Dikemas', delivery: 'Sampai Tujuan' }
 const STORAGE_URL  = ''  // URL relatif — Vite proxy /storage → backend:8000
@@ -749,22 +750,23 @@ export default function OrdersPage() {
       }}>
         {/* Hero banner ZasaGo */}
         <div style={{
-          background: 'linear-gradient(135deg, #EBF5FF 0%, #F0FBFF 100%)',
-          border: '1.5px solid rgba(59,130,246,0.15)',
+          background: SVC.zasago.bg,
           borderRadius: 20, padding: '16px 18px',
           position: 'relative', overflow: 'hidden', marginBottom: 14,
+          boxShadow: svcShadow(SVC.zasago.rgb),
         }}>
-          <div style={{ position:'absolute', right:-10, top:-10, fontSize:80, opacity:0.08, transform:'rotate(10deg)', pointerEvents:'none' }}>🚚</div>
-          <div style={{ position:'absolute', right:52, bottom:-12, fontSize:56, opacity:0.07, transform:'rotate(-8deg)', pointerEvents:'none' }}>📦</div>
-          <div style={{ position:'absolute', left:-16, bottom:-16, width:70, height:70, borderRadius:'50%', background:'rgba(59,130,246,0.08)', pointerEvents:'none' }} />
+          <Gloss />
+          <div style={{ position:'absolute', right:-10, top:-10, fontSize:80, opacity:0.1, transform:'rotate(10deg)', pointerEvents:'none' }}>🚚</div>
+          <div style={{ position:'absolute', right:52, bottom:-12, fontSize:56, opacity:0.08, transform:'rotate(-8deg)', pointerEvents:'none' }}>📦</div>
           <div style={{ position:'relative', zIndex:1 }}>
-            <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)', marginBottom: 4 }}>📦 Order Saya</h1>
-            <p style={{ fontSize: 12, color: 'var(--k-sub)', marginBottom: 14 }}>Lacak semua pengiriman kamu</p>
+            <h1 style={{ fontSize: 20, fontWeight: 800, color: SVC.zasago.fg, marginBottom: 4 }}>📦 Order Saya</h1>
+            <p style={{ fontSize: 12, color: SVC.zasago.fg, opacity: 0.75, marginBottom: 14 }}>Lacak semua pengiriman kamu</p>
             <Link to="/orders/create" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               background: 'var(--k-primary)', color: '#fff',
               fontSize: 13, fontWeight: 800, padding: '9px 18px',
               borderRadius: 12, textDecoration: 'none',
+              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>+ Buat Order Baru</Link>
           </div>
         </div>
@@ -798,20 +800,21 @@ export default function OrdersPage() {
           active.length === 0 ? (
             <div style={{
               borderRadius: 20, padding: '40px 20px', textAlign: 'center',
-              background: 'linear-gradient(145deg, #EBF5FF 0%, #F5F9FF 100%)',
-              border: '1.5px solid rgba(59,130,246,0.12)',
+              background: SVC.zasago.bg,
               position: 'relative', overflow: 'hidden',
+              boxShadow: svcShadow(SVC.zasago.rgb),
             }}>
-              <div style={{ position:'absolute', right:-16, top:-16, fontSize:100, opacity:0.06, transform:'rotate(15deg)', pointerEvents:'none' }}>📦</div>
-              <div style={{ position:'absolute', left:-10, bottom:-10, width:80, height:80, borderRadius:'50%', background:'rgba(59,130,246,0.07)', pointerEvents:'none' }} />
+              <Gloss />
+              <div style={{ position:'absolute', right:-16, top:-16, fontSize:100, opacity:0.08, transform:'rotate(15deg)', pointerEvents:'none' }}>📦</div>
               <div style={{ position:'relative', zIndex:1 }}>
                 <p style={{ fontSize: 52, marginBottom: 12 }}>📦</p>
-                <p style={{ color: 'var(--k-text)', fontWeight: 800, fontSize: 16, marginBottom: 6 }}>Belum ada order aktif</p>
-                <p style={{ color: 'var(--k-sub)', fontSize: 13, marginBottom: 20 }}>Yuk, buat order pengiriman pertama kamu</p>
+                <p style={{ color: SVC.zasago.fg, fontWeight: 800, fontSize: 16, marginBottom: 6 }}>Belum ada order aktif</p>
+                <p style={{ color: SVC.zasago.fg, opacity: 0.75, fontSize: 13, marginBottom: 20 }}>Yuk, buat order pengiriman pertama kamu</p>
                 <Link to="/orders/create" style={{
                   display: 'inline-block', padding: '12px 28px',
                   background: 'var(--k-primary)', color: '#fff',
                   fontWeight: 800, fontSize: 14, borderRadius: 14, textDecoration: 'none',
+                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                 }}>🚀 Buat Order</Link>
               </div>
             </div>

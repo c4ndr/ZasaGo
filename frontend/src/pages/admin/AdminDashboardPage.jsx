@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 function formatRp(v) {
   const n = Number(v || 0)
@@ -23,13 +24,13 @@ function todayStr() {
 
 // ── KPI Card ──────────────────────────────────────────────────────────────────
 const KPI_COLORS = {
-  green:  { bg: 'rgba(0,200,150,0.08)',   border: 'rgba(0,200,150,0.22)',   text: '#00C896',  badge: 'rgba(0,200,150,0.15)'  },
-  blue:   { bg: 'rgba(59,130,246,0.08)',  border: 'rgba(59,130,246,0.22)',  text: '#3B82F6',  badge: 'rgba(59,130,246,0.15)' },
-  orange: { bg: 'rgba(249,115,22,0.08)',  border: 'rgba(249,115,22,0.22)',  text: '#F97316',  badge: 'rgba(249,115,22,0.15)' },
-  yellow: { bg: 'rgba(246,173,85,0.10)',  border: 'rgba(246,173,85,0.28)',  text: '#F6AD55',  badge: 'rgba(246,173,85,0.18)' },
-  red:    { bg: 'rgba(245,101,101,0.08)', border: 'rgba(245,101,101,0.25)', text: '#F56565',  badge: 'rgba(245,101,101,0.15)'},
-  purple: { bg: 'rgba(139,92,246,0.08)',  border: 'rgba(139,92,246,0.22)',  text: '#8B5CF6',  badge: 'rgba(139,92,246,0.15)' },
-  gray:   { bg: 'var(--k-card)',          border: 'var(--k-border)',         text: 'var(--k-sub)', badge: 'var(--k-input)'   },
+  green:  { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#00C896',  badge: 'rgba(0,200,150,0.15)'  },
+  blue:   { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#3B82F6',  badge: 'rgba(59,130,246,0.15)' },
+  orange: { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#F97316',  badge: 'rgba(249,115,22,0.15)' },
+  yellow: { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#F6AD55',  badge: 'rgba(246,173,85,0.18)' },
+  red:    { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#F56565',  badge: 'rgba(245,101,101,0.15)'},
+  purple: { bg: 'var(--k-card)', border: 'var(--k-border)', text: '#8B5CF6',  badge: 'rgba(139,92,246,0.15)' },
+  gray:   { bg: 'var(--k-card)', border: 'var(--k-border)', text: 'var(--k-sub)', badge: 'var(--k-input)'   },
 }
 
 function KPICard({ label, value, sub, color = 'gray', link, icon }) {
@@ -65,25 +66,28 @@ function KPICard({ label, value, sub, color = 'gray', link, icon }) {
 }
 
 // ── Module Card ───────────────────────────────────────────────────────────────
-function ModuleCard({ emoji, label, color, orders, commission, link }) {
+function ModuleCard({ emoji, label, svc, orders, commission, link }) {
+  const { bg, fg, rgb } = svc
   return (
     <Link to={link} style={{ textDecoration: 'none' }}>
       <div style={{
-        background: 'var(--k-card)', border: `1px solid var(--k-border)`,
-        borderTop: `3px solid ${color}`, borderRadius: 14,
+        background: bg, borderRadius: 18,
         padding: '14px 16px', cursor: 'pointer',
-        transition: 'transform 0.15s, box-shadow 0.15s',
-      }}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 6px 20px rgba(0,0,0,0.1)` }}
-      onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-          <span style={{ fontSize: 22 }}>{emoji}</span>
-          <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)' }}>{label}</span>
+        position: 'relative', overflow: 'hidden',
+        boxShadow: svcShadow(rgb),
+        transition: 'transform 0.15s',
+      }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 22 }}>{emoji}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: fg }}>{label}</span>
+          </div>
+          <p style={{ fontSize: 22, fontWeight: 900, color: fg, lineHeight: 1, marginBottom: 4 }}>{orders}</p>
+          <p style={{ fontSize: 10, color: fg, opacity: 0.7, marginBottom: 6 }}>order periode ini</p>
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.3)', marginBottom: 6 }} />
+          <p style={{ fontSize: 12, fontWeight: 700, color: fg }}>{commission} komisi</p>
         </div>
-        <p style={{ fontSize: 22, fontWeight: 900, color, lineHeight: 1, marginBottom: 4 }}>{orders}</p>
-        <p style={{ fontSize: 10, color: 'var(--k-muted)', marginBottom: 6 }}>order periode ini</p>
-        <div style={{ height: 1, background: 'var(--k-border)', marginBottom: 6 }} />
-        <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--k-sub)' }}>{commission} komisi</p>
       </div>
     </Link>
   )
@@ -284,38 +288,42 @@ export default function AdminDashboardPage() {
       {/* ── Alert: perlu tindakan ── */}
       {needsAction > 0 && (
         <div style={{
-          marginBottom: 20, padding: '14px 18px', borderRadius: 14,
-          background: 'rgba(246,173,85,0.1)', border: '1.5px solid rgba(246,173,85,0.35)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
+          marginBottom: 20, padding: '14px 18px', borderRadius: 18,
+          background: SVC.wallet.bg, position: 'relative', overflow: 'hidden',
+          boxShadow: svcShadow(SVC.wallet.rgb),
           animation: 'fadeUp 0.3s ease',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(246,173,85,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>⚠️</div>
-            <div>
-              <p style={{ fontWeight: 800, fontSize: 14, color: '#F6AD55', marginBottom: 2 }}>
-                {needsAction} transaksi menunggu tindakan
-              </p>
-              <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>
-                {topupPending > 0 && `${topupPending} top up`}
-                {topupPending > 0 && withdrawPending > 0 && ' · '}
-                {withdrawPending > 0 && `${withdrawPending} withdraw`}
-                {' '}perlu diproses segera
-              </p>
+          <Gloss />
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--k-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0,
+                boxShadow: `0 3px 8px rgba(${SVC.wallet.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.wallet.rgb},0.4)` }}>⚠️</div>
+              <div>
+                <p style={{ fontWeight: 800, fontSize: 14, color: SVC.wallet.fg, marginBottom: 2 }}>
+                  {needsAction} transaksi menunggu tindakan
+                </p>
+                <p style={{ fontSize: 12, color: SVC.wallet.fg, opacity: 0.72 }}>
+                  {topupPending > 0 && `${topupPending} top up`}
+                  {topupPending > 0 && withdrawPending > 0 && ' · '}
+                  {withdrawPending > 0 && `${withdrawPending} withdraw`}
+                  {' '}perlu diproses segera
+                </p>
+              </div>
             </div>
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            {topupPending > 0 && (
-              <Link to="/admin/topup" style={{
-                textDecoration: 'none', padding: '8px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                background: '#F6AD55', color: '#0C0C16',
-              }}>💰 Top Up ({topupPending})</Link>
-            )}
-            {withdrawPending > 0 && (
-              <Link to="/admin/withdraw" style={{
-                textDecoration: 'none', padding: '8px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                background: 'rgba(246,173,85,0.2)', color: '#F6AD55', border: '1px solid rgba(246,173,85,0.4)',
-              }}>💸 Withdraw ({withdrawPending})</Link>
-            )}
+            <div style={{ display: 'flex', gap: 8 }}>
+              {topupPending > 0 && (
+                <Link to="/admin/topup" style={{
+                  textDecoration: 'none', padding: '8px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+                  background: 'var(--k-primary)', color: '#fff', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+                }}>💰 Top Up ({topupPending})</Link>
+              )}
+              {withdrawPending > 0 && (
+                <Link to="/admin/withdraw" style={{
+                  textDecoration: 'none', padding: '8px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+                  background: 'var(--k-surface)', color: SVC.wallet.fg, boxShadow: '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)',
+                }}>💸 Withdraw ({withdrawPending})</Link>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -346,16 +354,16 @@ export default function AdminDashboardPage() {
           <SectionHeader title="Layanan" />
           <div className="dash-mod">
             {[
-              { key: 'zasago', emoji: '🏍️', label: 'ZasaGo',   color: '#00C896', link: '/admin/orders'      },
-              { key: 'food',   emoji: '🍜', label: 'ZasaFood', color: '#F97316', link: '/admin/food/orders' },
-              { key: 'mart',   emoji: '🛒', label: 'ZasaShop', color: '#3B82F6', link: '/admin/mart/orders' },
-              { key: 'home',   emoji: '🏠', label: 'ZasaHome', color: '#8B5CF6', link: '/admin/home/orders' },
-              { key: 'serv',   emoji: '🔧', label: 'ZasaServis', color: '#059669', link: '/admin/serv/orders' },
+              { key: 'zasago', emoji: '🏍️', label: 'ZasaGo',   svc: SVC.zasago,   link: '/admin/orders'      },
+              { key: 'food',   emoji: '🍜', label: 'ZasaFood', svc: SVC.zasafood, link: '/admin/food/orders' },
+              { key: 'mart',   emoji: '🛒', label: 'ZasaShop', svc: SVC.zasashop, link: '/admin/mart/orders' },
+              { key: 'home',   emoji: '🏠', label: 'ZasaHome', svc: SVC.zasahome, link: '/admin/home/orders' },
+              { key: 'serv',   emoji: '🔧', label: 'ZasaServis', svc: SVC.zasaserv, link: '/admin/serv/orders' },
             ].map(m => {
               const mod = moduleMap[m.key]
               return (
                 <ModuleCard key={m.key}
-                  emoji={m.emoji} label={m.label} color={m.color} link={m.link}
+                  emoji={m.emoji} label={m.label} svc={m.svc} link={m.link}
                   orders={mod ? mod.count : '—'}
                   commission={mod ? formatRp(mod.total) : '—'}
                 />
@@ -395,17 +403,20 @@ export default function AdminDashboardPage() {
 
             <div className="dash-action">
               <Link to="/admin/users" style={{ textDecoration: 'none' }}>
-                <div style={{ background: 'rgba(59,130,246,0.07)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: 12, padding: '14px', cursor: 'pointer' }}>
+                <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 14, padding: '14px', cursor: 'pointer' }}>
                   <p style={{ fontSize: 20, marginBottom: 4 }}>👤</p>
                   <p style={{ fontSize: 20, fontWeight: 900, color: '#3B82F6', lineHeight: 1, marginBottom: 3 }}>{stats.users?.mitra ?? 0}</p>
                   <p style={{ fontSize: 10, color: 'var(--k-muted)', fontWeight: 600 }}>Mitra Aktif</p>
                 </div>
               </Link>
               <Link to="/admin/orders" style={{ textDecoration: 'none' }}>
-                <div style={{ background: 'rgba(0,200,150,0.07)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: 12, padding: '14px', cursor: 'pointer' }}>
-                  <p style={{ fontSize: 20, marginBottom: 4 }}>⚡</p>
-                  <p style={{ fontSize: 20, fontWeight: 900, color: '#00C896', lineHeight: 1, marginBottom: 3 }}>{stats.orders?.jastip_total ?? 0}</p>
-                  <p style={{ fontSize: 10, color: 'var(--k-muted)', fontWeight: 600 }}>JastipQu</p>
+                <div style={{ background: SVC.jastip.bg, borderRadius: 14, padding: '14px', cursor: 'pointer', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.jastip.rgb) }}>
+                  <Gloss />
+                  <div style={{ position: 'relative' }}>
+                    <p style={{ fontSize: 20, marginBottom: 4 }}>⚡</p>
+                    <p style={{ fontSize: 20, fontWeight: 900, color: SVC.jastip.fg, lineHeight: 1, marginBottom: 3 }}>{stats.orders?.jastip_total ?? 0}</p>
+                    <p style={{ fontSize: 10, color: SVC.jastip.fg, opacity: 0.72, fontWeight: 600 }}>JastipQu</p>
+                  </div>
                 </div>
               </Link>
             </div>
@@ -438,15 +449,17 @@ export default function AdminDashboardPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {/* Total hero */}
                 <div style={{
-                  background: 'linear-gradient(135deg, rgba(0,200,150,0.12) 0%, rgba(0,200,150,0.04) 100%)',
-                  border: '1.5px solid rgba(0,200,150,0.25)', borderRadius: 18, padding: '22px 24px',
+                  background: SVC.wallet.bg, borderRadius: 20, padding: '22px 24px',
+                  position: 'relative', overflow: 'hidden',
+                  boxShadow: svcShadow(SVC.wallet.rgb, true),
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
                 }}>
-                  <div>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: 'var(--k-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>
+                  <Gloss />
+                  <div style={{ position: 'relative' }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: SVC.wallet.fg, opacity: 0.75, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8 }}>
                       Total Komisi {periodLabel}
                     </p>
-                    <p style={{ fontSize: 32, fontWeight: 900, color: 'var(--k-accent)', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>
+                    <p style={{ fontSize: 32, fontWeight: 900, color: SVC.wallet.fg, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 6 }}>
                       {formatRpFull(commData.grand_total)}
                     </p>
                     {growth && (
@@ -455,7 +468,7 @@ export default function AdminDashboardPage() {
                       </p>
                     )}
                   </div>
-                  <div style={{ fontSize: 48, opacity: 0.4 }}>💰</div>
+                  <div style={{ position: 'relative', fontSize: 48, opacity: 0.5 }}>💰</div>
                 </div>
 
                 {/* Breakdown + Trend side by side */}

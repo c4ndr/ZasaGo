@@ -4,6 +4,7 @@ import useAppInfo from '../../hooks/useAppInfo'
 import api from '../../services/api'
 import AddressPicker from '../../components/AddressPicker'
 import VoucherInput from '../../components/VoucherInput'
+import { SVC } from '../../utils/svcTheme'
 
 const fmtRp = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -83,7 +84,7 @@ export default function MartCheckoutPage() {
     finally { setPlacing(false) }
   }
 
-  const card = { background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', marginBottom: 14, overflow: 'hidden' }
+  const card = { background: 'var(--k-card)', borderRadius: 20, border: '1px solid var(--k-border)', marginBottom: 14, overflow: 'hidden' }
 
   return (
     <div style={{ background: 'var(--k-bg)', minHeight: '100dvh', paddingBottom: 110 }}>
@@ -124,7 +125,7 @@ export default function MartCheckoutPage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--k-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.product?.name}</p>
                 <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>{item.quantity}× · {fmtRp(item.product?.price)}</p>
-                {item.notes && <p style={{ fontSize: 11, color: '#6366F1', fontStyle: 'italic' }}>📝 {item.notes}</p>}
+                {item.notes && <p style={{ fontSize: 11, color: SVC.zasashop.fg, fontStyle: 'italic' }}>📝 {item.notes}</p>}
               </div>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)', alignSelf: 'center', flexShrink: 0 }}>{fmtRp((item.product?.price || 0) * item.quantity)}</p>
             </div>
@@ -144,8 +145,8 @@ export default function MartCheckoutPage() {
             {PAYMENT_METHODS.filter(m => m.key !== 'wallet' || walletEnabled).map(m => (
               <div key={m.key} onClick={() => setPayMethod(m.key)} style={{
                 display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 12, cursor: 'pointer',
-                border: `2px solid ${payMethod === m.key ? '#6366F1' : 'var(--k-border)'}`,
-                background: payMethod === m.key ? 'rgba(99,102,241,0.06)' : 'var(--k-bg)',
+                border: `2px solid ${payMethod === m.key ? SVC.zasashop.fg : 'var(--k-border)'}`,
+                background: payMethod === m.key ? `rgba(${SVC.zasashop.rgb},0.07)` : 'var(--k-bg)',
               }}>
                 <span style={{ fontSize: 22, flexShrink: 0 }}>{m.icon}</span>
                 <div style={{ flex: 1 }}>
@@ -155,8 +156,8 @@ export default function MartCheckoutPage() {
                   </p>
                 </div>
                 <div style={{
-                  width: 20, height: 20, borderRadius: '50%', border: `2px solid ${payMethod === m.key ? '#6366F1' : 'var(--k-border)'}`,
-                  background: payMethod === m.key ? '#6366F1' : 'transparent',
+                  width: 20, height: 20, borderRadius: '50%', border: `2px solid ${payMethod === m.key ? SVC.zasashop.fg : 'var(--k-border)'}`,
+                  background: payMethod === m.key ? SVC.zasashop.fg : 'transparent',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                 }}>
                   {payMethod === m.key && <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff' }} />}
@@ -208,7 +209,7 @@ export default function MartCheckoutPage() {
           )}
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0 0', borderTop: promo.discountAmount > 0 ? 'none' : '1px solid var(--k-border)' }}>
             <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--k-text)' }}>Total</p>
-            <p style={{ fontSize: 18, fontWeight: 900, color: '#6366F1' }}>{fmtRp(total)}</p>
+            <p style={{ fontSize: 18, fontWeight: 900, color: SVC.zasashop.fg, textShadow: '0 1px 0 rgba(255,255,255,0.6), 0 2px 3px rgba(0,0,0,0.12)' }}>{fmtRp(total)}</p>
           </div>
           <p style={{ fontSize: 11, color: 'var(--k-muted)', marginTop: 4 }}>
             Bayar via: {payMethod === 'wallet' ? '💳 Saldo ZasaQu' : '💵 Bayar di Tempat'}
@@ -224,7 +225,7 @@ export default function MartCheckoutPage() {
 
       <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 480, background: 'var(--k-surface)', borderTop: '1px solid var(--k-border)', padding: '12px 16px', paddingBottom: 'calc(12px + env(safe-area-inset-bottom,0px))' }}>
         <button onClick={place} disabled={placing || items.length === 0}
-          style={{ width: '100%', padding: '14px', borderRadius: 14, border: 'none', background: placing ? 'var(--k-muted)' : 'linear-gradient(135deg,#6366F1,#7C3AED)', color: '#fff', fontWeight: 800, fontSize: 15, cursor: placing ? 'default' : 'pointer' }}>
+          style={{ width: '100%', padding: '14px', borderRadius: 999, border: 'none', background: placing ? 'var(--k-muted)' : 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 15, cursor: placing ? 'default' : 'pointer', boxShadow: placing ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           {placing ? 'Memproses...' : `Buat Pesanan · ${fmtRp(total)}${promo.discountAmount > 0 ? ' 🎟' : ''}`}
         </button>
       </div>

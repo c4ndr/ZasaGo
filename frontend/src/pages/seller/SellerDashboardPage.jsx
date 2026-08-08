@@ -5,6 +5,7 @@ import api from '../../services/api'
 import echo from '../../services/echo'
 import { useAuth } from '../../context/AuthContext'
 import { playNewOrderChime, setupChimeUnlock } from '../../utils/systemNotif'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -69,10 +70,8 @@ export default function SellerDashboardPage() {
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 16 }}>
 
         {/* ── Store Hero Card ───────────────────────────────────────────── */}
-        <div style={{ borderRadius: 20, overflow: 'hidden', background: isOpen ? 'linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%)' : 'linear-gradient(135deg,#1F2937 0%,#374151 100%)', position: 'relative' }}>
-          {/* Dekorasi */}
-          <div style={{ position: 'absolute', right: -30, top: -30, width: 150, height: 150, borderRadius: '50%', background: 'rgba(255,255,255,0.06)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', right: 40, bottom: -40, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
+        <div style={{ borderRadius: 20, overflow: 'hidden', background: SVC.zasashop.bg, position: 'relative', boxShadow: svcShadow(SVC.zasashop.rgb, true) }}>
+          <Gloss />
 
           {profile?.banner_path && (
             <img src={`${STORAGE}/${profile.banner_path}`} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.15 }} />
@@ -80,41 +79,51 @@ export default function SellerDashboardPage() {
 
           <div style={{ position: 'relative', padding: '18px 18px 16px' }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 16 }}>
-              <div style={{ width: 52, height: 52, borderRadius: 14, background: 'rgba(255,255,255,0.15)', overflow: 'hidden', flexShrink: 0, border: '2px solid rgba(255,255,255,0.2)' }}>
+              <div style={{
+                width: 52, height: 52, borderRadius: 14, background: 'var(--k-surface)', overflow: 'hidden', flexShrink: 0,
+                boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasashop.rgb},0.4)`,
+              }}>
                 {profile?.logo_path
                   ? <img src={`${STORAGE}/${profile.logo_path}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>🏪</div>
                 }
               </div>
               <div style={{ flex: 1 }}>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: 600 }}>TOKO SAYA</p>
-                <p style={{ color: '#fff', fontSize: 17, fontWeight: 900, lineHeight: 1.2, marginTop: 2 }}>{profile?.name ?? '—'}</p>
+                <p style={{ color: 'var(--k-zasashop-fg)', opacity: 0.75, fontSize: 11, fontWeight: 700 }}>TOKO SAYA</p>
+                <p style={{ color: 'var(--k-zasashop-fg)', fontSize: 17, fontWeight: 900, lineHeight: 1.2, marginTop: 2 }}>{profile?.name ?? '—'}</p>
                 {profile?.average_rating > 0 && (
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, marginTop: 2 }}>⭐ {profile.average_rating.toFixed(1)} · {profile.total_ratings} ulasan</p>
+                  <p style={{ color: 'var(--k-zasashop-fg)', opacity: 0.7, fontSize: 12, marginTop: 2 }}>⭐ {profile.average_rating.toFixed(1)} · {profile.total_ratings} ulasan</p>
                 )}
               </div>
               <button onClick={toggleOpen} disabled={toggling || !isActive}
-                style={{ padding: '10px 16px', borderRadius: 12, border: '2px solid rgba(255,255,255,0.3)', background: isOpen ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 800, fontSize: 13, cursor: isActive ? 'pointer' : 'not-allowed', opacity: !isActive ? 0.5 : 1, flexShrink: 0 }}>
+                style={{
+                  padding: '10px 16px', borderRadius: 12, border: 'none', background: 'var(--k-surface)', color: 'var(--k-zasashop-fg)',
+                  fontWeight: 800, fontSize: 13, cursor: isActive ? 'pointer' : 'not-allowed', opacity: !isActive ? 0.5 : 1, flexShrink: 0,
+                  boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.22), inset 0 1px 0 rgba(255,255,255,0.75)`,
+                }}>
                 {toggling ? '...' : isOpen ? '🟢 Buka' : '🔴 Tutup'}
               </button>
             </div>
 
             {!isActive && (
-              <div style={{ padding: '8px 12px', borderRadius: 10, background: 'rgba(245,158,11,0.2)', border: '1px solid rgba(245,158,11,0.4)' }}>
-                <p style={{ color: '#FCD34D', fontSize: 12, fontWeight: 600 }}>⏳ Toko menunggu verifikasi admin</p>
+              <div style={{ padding: '8px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.35)' }}>
+                <p style={{ color: 'var(--k-zasashop-fg)', fontSize: 12, fontWeight: 600 }}>⏳ Toko menunggu verifikasi admin</p>
               </div>
             )}
 
             {isActive && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
                 {[
-                  { label: 'Pesanan Baru',  value: stats?.pending  ?? '—', color: '#FCD34D' },
-                  { label: 'Dalam Proses',  value: stats?.active   ?? '—', color: '#93C5FD' },
-                  { label: 'Hari ini',      value: stats?.revenue ? fmtRp(stats.revenue) : 'Rp 0', color: '#86EFAC', small: true },
+                  { label: 'Pesanan Baru',  value: stats?.pending  ?? '—' },
+                  { label: 'Dalam Proses',  value: stats?.active   ?? '—' },
+                  { label: 'Hari ini',      value: stats?.revenue ? fmtRp(stats.revenue) : 'Rp 0', small: true },
                 ].map(s => (
-                  <div key={s.label} style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 12, padding: '10px 8px', textAlign: 'center', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <p style={{ fontSize: s.small ? 12 : 22, fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.value}</p>
-                    <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>{s.label}</p>
+                  <div key={s.label} style={{
+                    background: 'var(--k-surface)', borderRadius: 12, padding: '10px 8px', textAlign: 'center',
+                    boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.18), inset 0 1.5px 0 rgba(255,255,255,0.9)`,
+                  }}>
+                    <p style={{ fontSize: s.small ? 12 : 22, fontWeight: 900, color: 'var(--k-zasashop-fg)', lineHeight: 1, textShadow: '0 1px 0 rgba(255,255,255,0.4)' }}>{s.value}</p>
+                    <p style={{ fontSize: 10, color: 'var(--k-zasashop-fg)', opacity: 0.65, marginTop: 3 }}>{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -123,17 +132,20 @@ export default function SellerDashboardPage() {
         </div>
 
         {/* ── Saldo dompet ──────────────────────────────────────────────── */}
-        <div onClick={() => navigate('/seller/wallet')} style={{ borderRadius: 16, padding: '16px 18px', background: 'linear-gradient(135deg,#1E1B4B,#312E81)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11, fontWeight: 600, marginBottom: 3 }}>💰 Saldo Dompet</p>
-            <p style={{ color: '#fff', fontSize: 24, fontWeight: 900, letterSpacing: '-0.5px' }}>
-              {wallet ? fmtRp(wallet.available ?? wallet.balance) : '—'}
-            </p>
-            {wallet?.locked > 0 && <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, marginTop: 2 }}>🔒 Rp {Number(wallet.locked).toLocaleString('id-ID')} dikunci</p>}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 18 }}>›</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', background: 'rgba(255,255,255,0.1)', padding: '3px 8px', borderRadius: 8 }}>Tarik saldo</span>
+        <div onClick={() => navigate('/seller/wallet')} style={{ borderRadius: 20, padding: '16px 18px', background: 'var(--k-wallet-bg)', cursor: 'pointer', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.75, fontSize: 11, fontWeight: 700 }}>💰 Saldo Dompet</p>
+              <p style={{ color: 'var(--k-wallet-fg)', fontSize: 24, fontWeight: 900, letterSpacing: '-0.5px', textShadow: '0 1px 0 rgba(255,255,255,0.4)' }}>
+                {wallet ? fmtRp(wallet.available ?? wallet.balance) : '—'}
+              </p>
+              {wallet?.locked > 0 && <p style={{ color: 'var(--k-wallet-fg)', opacity: 0.65, fontSize: 11, marginTop: 2 }}>🔒 Rp {Number(wallet.locked).toLocaleString('id-ID')} dikunci</p>}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
+              <span style={{ color: 'var(--k-wallet-fg)', opacity: 0.5, fontSize: 18 }}>›</span>
+              <span style={{ fontSize: 11, color: 'var(--k-wallet-fg)', opacity: 0.75, background: 'rgba(255,255,255,0.35)', padding: '3px 8px', borderRadius: 8, fontWeight: 600 }}>Tarik saldo</span>
+            </div>
           </div>
         </div>
 

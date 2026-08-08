@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
 import api from '../services/api'
+import { SVC, svcShadow } from '../utils/svcTheme'
 
 const fmtRp = (v) => 'Rp ' + Number(v ?? 0).toLocaleString('id-ID')
 
@@ -93,7 +94,7 @@ export default function MitraJastipPage() {
       <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }`}</style>
 
       {/* Header */}
-      <div style={{ padding: '52px 20px 16px', background: 'linear-gradient(180deg, #0F1020 0%, var(--k-bg) 100%)' }}>
+      <div style={{ padding: '52px 20px 16px', background: 'var(--k-bg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--k-text)', marginBottom: 2 }}>⚡ JastipQu</h1>
@@ -248,12 +249,12 @@ export default function MitraJastipPage() {
                       disabled={starting}
                       style={{
                         width: '100%', padding: '18px', borderRadius: 18, border: 'none',
-                        background: starting ? 'var(--k-border)' : 'rgba(79,70,229,0.85)',
-                        color: starting ? 'var(--k-muted)' : '#fff',
+                        background: starting ? 'var(--k-border)' : SVC.jastip.bg,
+                        color: starting ? 'var(--k-muted)' : SVC.jastip.fg,
                         fontWeight: 800, fontSize: 17,
                         cursor: starting ? 'not-allowed' : 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12,
-                        boxShadow: starting ? 'none' : '0 4px 20px rgba(79,70,229,0.4)',
+                        boxShadow: starting ? 'none' : svcShadow(SVC.jastip.rgb, true),
                       }}
                     >
                       {starting

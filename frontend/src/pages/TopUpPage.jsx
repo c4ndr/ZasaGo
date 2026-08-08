@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import useAppInfo from '../hooks/useAppInfo'
 import api from '../services/api'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 function formatRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 const fmtRp = formatRp
@@ -113,7 +114,7 @@ export default function TopUpPage() {
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 32 }}>
 
       {/* Header */}
-      <div style={{ padding: '52px 20px 28px', background: 'linear-gradient(160deg, #0A1F1A 0%, var(--k-bg) 100%)' }}>
+      <div style={{ padding: '52px 20px 28px', background: 'var(--k-bg)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <Link to="/wallet" style={{ width: 38, height: 38, borderRadius: 11, background: 'var(--k-card)', border: '1px solid var(--k-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--k-muted)', textDecoration: 'none', fontSize: 18 }}>←</Link>
           <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)', flex: 1 }}>Top Up Saldo</h1>
@@ -129,12 +130,15 @@ export default function TopUpPage() {
         </div>
 
         {/* Saldo */}
-        <div style={{ background: 'rgba(0,200,150,0.06)', border: '1px solid rgba(0,200,150,0.15)', borderRadius: 18, padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <p style={{ color: 'var(--k-muted)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>Saldo Saat Ini</p>
-            <p style={{ color: 'var(--k-accent)', fontSize: 22, fontWeight: 900 }}>{formatRp(freshBalance ?? user?.wallet?.balance)}</p>
+        <div style={{ background: SVC.wallet.bg, borderRadius: 22, padding: '18px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <p style={{ color: SVC.wallet.fg, opacity: 0.8, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>Saldo Saat Ini</p>
+              <p style={{ color: SVC.wallet.fg, fontSize: 24, fontWeight: 900, textShadow: '-1px -1px 0 rgba(255,255,255,0.4), 1px 2px 2px rgba(120,70,20,0.3)' }}>{formatRp(freshBalance ?? user?.wallet?.balance)}</p>
+            </div>
+            <span style={{ fontSize: 32 }}>💳</span>
           </div>
-          <span style={{ fontSize: 32 }}>💳</span>
         </div>
       </div>
 
@@ -291,11 +295,11 @@ export default function TopUpPage() {
 
             <button type="submit" disabled={!canSubmit} style={{
               width: '100%', padding: '15px', borderRadius: 16, border: 'none',
-              background: 'linear-gradient(135deg, #F6AD55, #DD6B20)',
-              color: '#0C0C16', fontWeight: 800, fontSize: 15,
+              background: 'var(--k-primary)',
+              color: '#fff', fontWeight: 800, fontSize: 15,
               cursor: canSubmit ? 'pointer' : 'not-allowed',
               opacity: canSubmit ? 1 : 0.45,
-              boxShadow: canSubmit ? '0 6px 20px rgba(246,173,85,0.4)' : 'none',
+              boxShadow: canSubmit ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
               transition: 'all 0.2s',
             }}>
               {loading ? 'Mengirim...' : 'Kirim Bukti Transfer 📋'}

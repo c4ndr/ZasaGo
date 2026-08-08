@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
+import { SVC } from '../utils/svcTheme'
 
 const NAV_ITEMS = [
   { to: '/merchant',          emoji: '📊', label: 'Dashboard', exact: true },
@@ -52,8 +53,8 @@ export default function MerchantLayout({ children, title, pendingCount = 0 }) {
             <NavLink key={item.to} to={item.to} end={item.exact} style={({ isActive }) => ({
               display: 'flex', alignItems: 'center', gap: 10,
               padding: '11px 13px', borderRadius: 10, textDecoration: 'none',
-              color: isActive ? '#F97316' : 'var(--k-sub)',
-              background: isActive ? 'rgba(249,115,22,0.1)' : 'transparent',
+              color: isActive ? SVC.zasafood.fg : 'var(--k-sub)',
+              background: isActive ? `rgba(${SVC.zasafood.rgb},0.1)` : 'transparent',
               fontWeight: isActive ? 700 : 500, fontSize: 13,
               position: 'relative',
             })}>
@@ -124,7 +125,7 @@ export default function MerchantLayout({ children, title, pendingCount = 0 }) {
           <NavLink key={item.to} to={item.to} end={item.exact} style={({ isActive }) => ({
             flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', padding: '10px 4px 8px', textDecoration: 'none',
-            color: isActive ? '#F97316' : 'var(--k-sub)', position: 'relative',
+            color: isActive ? SVC.zasafood.fg : 'var(--k-sub)', position: 'relative',
           })}>
             <div style={{ position: 'relative', lineHeight: 1 }}>
               <span style={{ fontSize: 20 }}>{item.emoji}</span>

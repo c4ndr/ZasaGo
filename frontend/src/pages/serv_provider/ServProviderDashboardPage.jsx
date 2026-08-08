@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp   = v => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtTime = d => new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
@@ -110,7 +111,7 @@ function OrderCard({ order, onUpdateStatus }) {
 
           {/* Customer info */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 12, background: 'var(--k-input)', border: '1px solid var(--k-border)', marginBottom: 12 }}>
-            <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(5,150,105,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
+            <div style={{ width: 38, height: 38, borderRadius: '50%', background: `rgba(${SVC.zasaserv.rgb},0.15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)' }}>{order.customer?.name ?? '—'}</p>
               <p style={{ fontSize: 11, color: 'var(--k-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>📍 {order.address}</p>
@@ -121,7 +122,7 @@ function OrderCard({ order, onUpdateStatus }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flexShrink: 0 }}>
               <p style={{ fontSize: 11, color: 'var(--k-muted)', textAlign: 'right' }}>{fmtTime(order.created_at)}</p>
               {(order.lat || order.address) && (
-                <button onClick={openMaps} style={{ padding: '3px 10px', borderRadius: 8, border: '1px solid rgba(5,150,105,0.4)', background: 'rgba(5,150,105,0.08)', color: '#059669', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                <button onClick={openMaps} style={{ padding: '3px 10px', borderRadius: 999, border: `1px solid rgba(${SVC.zasaserv.rgb},0.4)`, background: `rgba(${SVC.zasaserv.rgb},0.12)`, color: SVC.zasaserv.fg, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
                   🗺️ Maps
                 </button>
               )}
@@ -146,7 +147,7 @@ function OrderCard({ order, onUpdateStatus }) {
           </div>
 
           {order.notes && (
-            <div style={{ padding: '8px 12px', borderRadius: 10, background: 'rgba(5,150,105,0.06)', border: '1px solid rgba(5,150,105,0.15)', fontSize: 12, color: 'var(--k-muted)', marginBottom: 12 }}>
+            <div style={{ padding: '8px 12px', borderRadius: 10, background: `rgba(${SVC.zasaserv.rgb},0.08)`, border: `1px solid rgba(${SVC.zasaserv.rgb},0.2)`, fontSize: 12, color: 'var(--k-muted)', marginBottom: 12 }}>
               📝 {order.notes}
             </div>
           )}
@@ -156,20 +157,20 @@ function OrderCard({ order, onUpdateStatus }) {
             <div style={{ display: 'flex', gap: 8 }}>
               {canCancel(order.status) && (
                 <button onClick={() => setShowCancel(true)} disabled={busy}
-                  style={{ flex: 1, padding: '12px 10px', borderRadius: 12, border: '1.5px solid rgba(239,68,68,0.35)', cursor: busy ? 'default' : 'pointer', fontWeight: 700, fontSize: 13, background: 'rgba(239,68,68,0.08)', color: '#EF4444' }}>
+                  style={{ flex: 1, padding: '12px 10px', borderRadius: 999, border: '1.5px solid rgba(239,68,68,0.35)', cursor: busy ? 'default' : 'pointer', fontWeight: 700, fontSize: 13, background: 'rgba(239,68,68,0.08)', color: '#EF4444' }}>
                   Batalkan
                 </button>
               )}
               <button onClick={handleNext} disabled={busy}
-                style={{ flex: 2, padding: '12px 10px', borderRadius: 12, border: 'none', cursor: busy ? 'default' : 'pointer', fontWeight: 800, fontSize: 13, background: busy ? 'var(--k-border)' : '#059669', color: busy ? 'var(--k-muted)' : '#fff', animation: !busy && isPend ? 'pulse 2s infinite' : 'none' }}>
+                style={{ flex: 2, padding: '12px 10px', borderRadius: 999, border: 'none', cursor: busy ? 'default' : 'pointer', fontWeight: 800, fontSize: 13, background: busy ? 'var(--k-border)' : 'var(--k-primary)', color: busy ? 'var(--k-muted)' : '#fff', animation: !busy && isPend ? 'pulse 2s infinite' : 'none', boxShadow: busy ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                 {busy ? '...' : nextLabel(order.status)}
               </button>
             </div>
           )}
 
           {order.status === 'completed' && (
-            <div style={{ padding: '10px 14px', borderRadius: 12, background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.25)', textAlign: 'center' }}>
-              <p style={{ fontSize: 13, fontWeight: 700, color: '#059669' }}>🎉 Selesai! Pendapatan +{fmtRp(order.provider_income)} dikreditkan ke wallet.</p>
+            <div style={{ padding: '10px 14px', borderRadius: 12, background: `rgba(${SVC.zasaserv.rgb},0.1)`, border: `1px solid rgba(${SVC.zasaserv.rgb},0.3)`, textAlign: 'center' }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: SVC.zasaserv.fg }}>🎉 Selesai! Pendapatan +{fmtRp(order.provider_income)} dikreditkan ke wallet.</p>
             </div>
           )}
           {order.status === 'cancelled' && order.cancel_reason && (
@@ -249,21 +250,26 @@ export default function ServProviderDashboardPage() {
       )}
 
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg,#064e3b 0%,#065f46 60%,#047857 100%)', padding: '52px 20px 20px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
-        <div style={{ position: 'absolute', bottom: -20, left: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
+      <div style={{ background: SVC.zasaserv.bg, padding: '52px 20px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
+        <div style={{ position: 'absolute', bottom: -20, left: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.08)' }} />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, position: 'relative' }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <div style={{ width: 48, height: 48, borderRadius: 16, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>🔧</div>
+            <div style={{
+              width: 48, height: 48, borderRadius: 16, background: 'var(--k-surface)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0,
+              boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasaserv.rgb},0.4)`,
+            }}>🔧</div>
             <div>
-              <p style={{ fontWeight: 800, fontSize: 16, color: '#fff', lineHeight: 1.2 }}>{provider?.name ?? '...'}</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 2, textTransform: 'capitalize' }}>{provider?.category ?? ''}</p>
+              <p style={{ fontWeight: 800, fontSize: 16, color: SVC.zasaserv.fg, lineHeight: 1.2 }}>{provider?.name ?? '...'}</p>
+              <p style={{ fontSize: 12, color: SVC.zasaserv.fg, opacity: 0.65, marginTop: 2, textTransform: 'capitalize' }}>{provider?.category ?? ''}</p>
             </div>
           </div>
 
           {provider?.status === 'active' && (
-            <button onClick={handleToggleOpen} style={{ padding: '8px 16px', borderRadius: 20, border: 'none', cursor: 'pointer', fontWeight: 800, fontSize: 12, background: provider?.is_open ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.12)', color: provider?.is_open ? '#4ade80' : 'rgba(255,255,255,0.7)' }}>
+            <button onClick={handleToggleOpen} style={{ padding: '8px 16px', borderRadius: 999, border: 'none', cursor: 'pointer', fontWeight: 800, fontSize: 12, background: provider?.is_open ? 'rgba(34,197,94,0.22)' : 'rgba(255,255,255,0.3)', color: provider?.is_open ? '#166534' : SVC.zasaserv.fg }}>
               {provider?.is_open ? '● Buka' : '○ Tutup'}
             </button>
           )}
@@ -271,20 +277,20 @@ export default function ServProviderDashboardPage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, position: 'relative' }}>
           {[
-            { label: 'Pendapatan', value: fmtRp(todayIncome), sub: 'hari ini', color: '#4ade80' },
-            { label: 'Selesai',    value: todayCompleted,      sub: 'hari ini', color: '#60a5fa' },
-            { label: 'Aktif',      value: active.length + pending.length, sub: 'order', color: '#fb923c' },
+            { label: 'Pendapatan', value: fmtRp(todayIncome), sub: 'hari ini' },
+            { label: 'Selesai',    value: todayCompleted,      sub: 'hari ini' },
+            { label: 'Aktif',      value: active.length + pending.length, sub: 'order' },
           ].map(s => (
-            <div key={s.label} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 14, padding: '12px 10px', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <p style={{ fontSize: 18, fontWeight: 800, color: '#fff', lineHeight: 1, marginBottom: 3 }}>{s.value}</p>
-              <p style={{ fontSize: 10, color: s.color, fontWeight: 700 }}>{s.label}</p>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>{s.sub}</p>
+            <div key={s.label} style={{ background: 'rgba(255,255,255,0.35)', borderRadius: 14, padding: '12px 10px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.6)' }}>
+              <p style={{ fontSize: 18, fontWeight: 800, color: SVC.zasaserv.fg, lineHeight: 1, marginBottom: 3, textShadow: '0 1px 0 rgba(255,255,255,0.4), 0 4px 10px rgba(90,65,10,0.3)' }}>{s.value}</p>
+              <p style={{ fontSize: 10, color: SVC.zasaserv.fg, opacity: 0.85, fontWeight: 700 }}>{s.label}</p>
+              <p style={{ fontSize: 10, color: SVC.zasaserv.fg, opacity: 0.6 }}>{s.sub}</p>
             </div>
           ))}
         </div>
 
         {provider?.status === 'pending' && (
-          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 10, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', fontSize: 12, color: '#fbbf24', position: 'relative' }}>
+          <div style={{ marginTop: 12, padding: '8px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.35)', fontSize: 12, color: SVC.zasaserv.fg, fontWeight: 600, position: 'relative' }}>
             ⏳ Akun menunggu persetujuan admin
           </div>
         )}

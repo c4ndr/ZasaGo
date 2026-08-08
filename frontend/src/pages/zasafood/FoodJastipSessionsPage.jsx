@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api, { storageUrl } from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 function fmtRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -52,7 +53,7 @@ export default function FoodJastipSessionsPage() {
             <button key={v} onClick={() => setVehicleFilter(v)} style={{
               padding: '7px 16px', borderRadius: 20, border: 'none', cursor: 'pointer',
               fontWeight: vehicleFilter === v ? 700 : 400, fontSize: 13,
-              background: vehicleFilter === v ? '#F97316' : 'var(--k-input)',
+              background: vehicleFilter === v ? 'var(--k-primary)' : 'var(--k-input)',
               color: vehicleFilter === v ? '#fff' : 'var(--k-sub)',
             }}>{l}</button>
           ))}
@@ -62,11 +63,15 @@ export default function FoodJastipSessionsPage() {
       {/* Penjelasan */}
       <div style={{
         margin: '16px 16px 0', padding: '14px 16px', borderRadius: 14,
-        background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)',
+        background: SVC.jastip.bg, position: 'relative', overflow: 'hidden',
+        boxShadow: svcShadow(SVC.jastip.rgb),
       }}>
-        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: '#F97316' }}>Bagaimana cara kerjanya?</div>
-        <div style={{ fontSize: 12, color: 'var(--k-sub)', lineHeight: 1.6 }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: SVC.jastip.fg }}>Bagaimana cara kerjanya?</div>
+        <div style={{ fontSize: 12, color: SVC.jastip.fg, opacity: 0.85, lineHeight: 1.6 }}>
           Mitra membuka sesi dengan rute tertentu. Kamu bisa pesan dari warung-warung yang berada di rute tersebut dan berbagi ongkir dengan sesama pembeli.
+        </div>
         </div>
       </div>
 
@@ -81,8 +86,9 @@ export default function FoodJastipSessionsPage() {
               Mitra belum membuka sesi di sekitarmu. Coba lagi nanti atau pesan secara reguler.
             </div>
             <button onClick={() => navigate('/food')} style={{
-              padding: '12px 28px', borderRadius: 12, border: 'none', cursor: 'pointer',
-              background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14,
+              padding: '12px 28px', borderRadius: 999, border: 'none', cursor: 'pointer',
+              background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14,
+              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>Pesan Reguler</button>
           </div>
         ) : (
@@ -110,7 +116,7 @@ function SessionCard({ session: s, navigate }) {
       {/* Header sesi */}
       <div style={{
         padding: '14px 16px',
-        background: 'linear-gradient(135deg, rgba(249,115,22,0.12) 0%, transparent 100%)',
+        background: `linear-gradient(135deg, rgba(${SVC.jastip.rgb},0.14) 0%, transparent 100%)`,
         borderBottom: '1px solid var(--k-border)',
         display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
       }}>
@@ -165,9 +171,10 @@ function SessionCard({ session: s, navigate }) {
           onClick={() => navigate('/food', { state: { autoJoinSession: s } })}
           disabled={slotsLeft === 0}
           style={{
-            padding: '9px 18px', borderRadius: 10, border: 'none', cursor: slotsLeft > 0 ? 'pointer' : 'default',
-            background: slotsLeft > 0 ? '#F97316' : 'var(--k-border)',
+            padding: '9px 18px', borderRadius: 999, border: 'none', cursor: slotsLeft > 0 ? 'pointer' : 'default',
+            background: slotsLeft > 0 ? 'var(--k-primary)' : 'var(--k-border)',
             color: '#fff', fontWeight: 700, fontSize: 13,
+            boxShadow: slotsLeft > 0 ? '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
           }}
         >
           {slotsLeft > 0 ? 'Pilih Warung →' : 'Penuh'}

@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import api, { storageUrl } from '../../services/api'
 import useMartCartCount from '../../hooks/useMartCartCount'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
 
 const BANNERS = [
-  { bg: 'linear-gradient(135deg,#6366F1 0%,#8B5CF6 100%)', emoji: '🛍️', title: 'Produk UMKM Lokal', sub: 'Dukung pengusaha daerahmu', cta: 'Belanja Sekarang' },
-  { bg: 'linear-gradient(135deg,#EC4899 0%,#F43F5E 100%)', emoji: '🔥', title: 'Harga Terbaik Hari Ini', sub: 'Diskon hingga 50% untuk produkmu', cta: 'Lihat Promo' },
-  { bg: 'linear-gradient(135deg,#10B981 0%,#059669 100%)', emoji: '🚀', title: 'Gratis Ongkir Pertama', sub: 'Untuk anggota baru ZasaShop', cta: 'Daftar Sekarang' },
+  { emoji: '🛍️', title: 'Produk UMKM Lokal', sub: 'Dukung pengusaha daerahmu', cta: 'Belanja Sekarang' },
+  { emoji: '🔥', title: 'Harga Terbaik Hari Ini', sub: 'Diskon hingga 50% untuk produkmu', cta: 'Lihat Promo' },
+  { emoji: '🚀', title: 'Gratis Ongkir Pertama', sub: 'Untuk anggota baru ZasaShop', cta: 'Daftar Sekarang' },
 ]
 
 const SORT_OPTIONS = [
@@ -53,7 +54,7 @@ function ProductCard({ product, onClick }) {
           display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           {product.name}
         </p>
-        <p style={{ fontSize: 14, fontWeight: 800, color: '#6366F1', marginBottom: 2 }}>{fmtRp(product.price)}</p>
+        <p style={{ fontSize: 14, fontWeight: 800, color: SVC.zasashop.fg, marginBottom: 2 }}>{fmtRp(product.price)}</p>
         {product.compare_price > product.price && (
           <p style={{ fontSize: 10, color: 'var(--k-muted)', textDecoration: 'line-through', marginBottom: 2 }}>{fmtRp(product.compare_price)}</p>
         )}
@@ -166,7 +167,7 @@ export default function ZasaShopPage() {
             </>
           ) : (
             <>
-              <div style={{ flex: 1, background: 'var(--k-card)', border: '1.5px solid #6366F1', borderRadius: 12, display: 'flex', alignItems: 'center', padding: '0 12px', gap: 8 }}>
+              <div style={{ flex: 1, background: 'var(--k-card)', border: `1.5px solid ${SVC.zasashop.fg}`, borderRadius: 12, display: 'flex', alignItems: 'center', padding: '0 12px', gap: 8 }}>
                 <span style={{ color: 'var(--k-muted)', fontSize: 15 }}>🔍</span>
                 <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)}
                   placeholder="Cari produk UMKM..."
@@ -174,7 +175,7 @@ export default function ZasaShopPage() {
                 {search && <button onClick={() => setSearch('')} style={{ background: 'none', border: 'none', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 16, padding: 0 }}>✕</button>}
               </div>
               <button onClick={() => { setShowSearch(false); setSearch('') }}
-                style={{ background: 'none', border: 'none', color: '#6366F1', fontSize: 13, fontWeight: 700, cursor: 'pointer', padding: '0 4px', whiteSpace: 'nowrap' }}>
+                style={{ background: 'none', border: 'none', color: SVC.zasashop.fg, fontSize: 13, fontWeight: 700, cursor: 'pointer', padding: '0 4px', whiteSpace: 'nowrap' }}>
                 Batal
               </button>
             </>
@@ -184,16 +185,16 @@ export default function ZasaShopPage() {
         {/* Category chips */}
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '0 16px 12px', scrollbarWidth: 'none' }}>
           <button onClick={() => setActiveCat('')} style={{
-            padding: '6px 14px', borderRadius: 100, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-            background: !activecat ? '#6366F1' : 'var(--k-card)',
+            padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
+            background: !activecat ? 'var(--k-primary)' : 'var(--k-card)',
             color: !activecat ? '#fff' : 'var(--k-sub)',
             fontSize: 12, fontWeight: !activecat ? 700 : 500,
             border: !activecat ? 'none' : '1px solid var(--k-border)',
           }}>🛍️ Semua</button>
           {categories.map(c => (
             <button key={c.id} onClick={() => setActiveCat(c.slug)} style={{
-              padding: '6px 14px', borderRadius: 100, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-              background: activecat === c.slug ? '#6366F1' : 'var(--k-card)',
+              padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
+              background: activecat === c.slug ? 'var(--k-primary)' : 'var(--k-card)',
               color: activecat === c.slug ? '#fff' : 'var(--k-sub)',
               fontSize: 12, fontWeight: activecat === c.slug ? 700 : 500,
               border: activecat === c.slug ? 'none' : '1px solid var(--k-border)',
@@ -209,24 +210,29 @@ export default function ZasaShopPage() {
           <div style={{ marginBottom: 18 }}>
             <div style={{
               borderRadius: 18, overflow: 'hidden', position: 'relative', cursor: 'pointer',
-              background: banner.bg, padding: '20px 20px',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              minHeight: 110,
+              background: SVC.zasashop.bg, minHeight: 110,
+              boxShadow: svcShadow(SVC.zasashop.rgb, true),
             }}>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', marginBottom: 4, lineHeight: 1.2 }}>{banner.title}</p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)', marginBottom: 12 }}>{banner.sub}</p>
-                <span style={{ background: 'rgba(255,255,255,0.22)', color: '#fff', fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 20, border: '1px solid rgba(255,255,255,0.3)' }}>
-                  {banner.cta} →
-                </span>
+              <Gloss />
+              <div style={{
+                position: 'relative', padding: '20px 20px', minHeight: 110,
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              }}>
+                <div>
+                  <p style={{ fontSize: 20, fontWeight: 900, color: SVC.zasashop.fg, marginBottom: 4, lineHeight: 1.2 }}>{banner.title}</p>
+                  <p style={{ fontSize: 12, color: SVC.zasashop.fg, opacity: 0.75, marginBottom: 12 }}>{banner.sub}</p>
+                  <span style={{ background: 'var(--k-surface)', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 999, boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.28)` }}>
+                    {banner.cta} →
+                  </span>
+                </div>
+                <span style={{ fontSize: 64, opacity: 0.85, flexShrink: 0 }}>{banner.emoji}</span>
               </div>
-              <span style={{ fontSize: 64, opacity: 0.85, flexShrink: 0 }}>{banner.emoji}</span>
 
               {/* Dot indicator */}
-              <div style={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 5 }}>
+              <div style={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 5, zIndex: 2 }}>
                 {BANNERS.map((_, i) => (
                   <div key={i} onClick={e => { e.stopPropagation(); setBannerIdx(i) }}
-                    style={{ width: bannerIdx === i ? 20 : 6, height: 6, borderRadius: 3, background: bannerIdx === i ? '#fff' : 'rgba(255,255,255,0.45)', transition: 'width 0.25s', cursor: 'pointer' }} />
+                    style={{ width: bannerIdx === i ? 20 : 6, height: 6, borderRadius: 3, background: bannerIdx === i ? SVC.zasashop.fg : `rgba(${SVC.zasashop.rgb},0.35)`, transition: 'width 0.25s', cursor: 'pointer' }} />
                 ))}
               </div>
             </div>

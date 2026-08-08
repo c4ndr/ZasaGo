@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import api from '../../services/api'
 import ReportComplaintModal from '../../components/ReportComplaintModal'
+import { SVC } from '../../utils/svcTheme'
 
 const COMPLAINT_WINDOW_HOURS = 24
 
@@ -105,7 +106,7 @@ export default function MartOrderDetailPage() {
           {order.status !== 'cancelled' && (
             <div style={{ display: 'flex', alignItems: 'center', marginTop: 16, gap: 2 }}>
               {STEPS.map((s, i) => (
-                <div key={s} style={{ flex: 1, height: 4, borderRadius: 2, background: i <= stepIdx ? '#6366F1' : 'var(--k-border)', transition: 'background 0.3s' }} />
+                <div key={s} style={{ flex: 1, height: 4, borderRadius: 2, background: i <= stepIdx ? SVC.zasashop.fg : 'var(--k-border)', transition: 'background 0.3s' }} />
               ))}
             </div>
           )}
@@ -117,7 +118,7 @@ export default function MartOrderDetailPage() {
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
             {order.seller?.logo_path
               ? <img src={`${STORAGE}/${order.seller.logo_path}`} style={{ width: 40, height: 40, borderRadius: 10, objectFit: 'cover' }} />
-              : <div style={{ width: 40, height: 40, borderRadius: 10, background: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏪</div>
+              : <div style={{ width: 40, height: 40, borderRadius: 10, background: SVC.zasashop.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏪</div>
             }
             <div>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{order.seller?.name}</p>
@@ -149,7 +150,7 @@ export default function MartOrderDetailPage() {
         {/* Kurir (mitra) — tampil saat sudah ada mitra dan sedang proses pengiriman */}
         {order.mitra && ['picking_up','on_delivery','delivered'].includes(order.status) && (
           <div style={{ background: 'var(--k-card)', borderRadius: 14, padding: '12px 14px', border: '1px solid var(--k-border)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 14, background: 'rgba(99,102,241,0.1)', border: '1.5px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🛵</div>
+            <div style={{ width: 44, height: 44, borderRadius: 14, background: `rgba(${SVC.zasashop.rgb},0.1)`, border: `1.5px solid rgba(${SVC.zasashop.rgb},0.25)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🛵</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{order.mitra?.name ?? 'Kurir'}</p>
               <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>Kurir ZasaShop</p>
@@ -193,7 +194,7 @@ export default function MartOrderDetailPage() {
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 0' }}>
             <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--k-text)' }}>Total</p>
-            <p style={{ fontSize: 16, fontWeight: 900, color: '#6366F1' }}>{fmtRp(order.total)}</p>
+            <p style={{ fontSize: 16, fontWeight: 900, color: SVC.zasashop.fg }}>{fmtRp(order.total)}</p>
           </div>
         </div>
 
@@ -215,7 +216,7 @@ export default function MartOrderDetailPage() {
         )}
         {canReview && (
           <button onClick={() => setShowReview(true)}
-            style={{ width: '100%', padding: '13px', borderRadius: 12, border: 'none', background: '#6366F1', color: '#fff', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
+            style={{ width: '100%', padding: '13px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 14, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             ⭐ Beri Ulasan
           </button>
         )}
@@ -273,7 +274,7 @@ export default function MartOrderDetailPage() {
               </div>
             ))}
             <button onClick={submitReviews} disabled={acting}
-              style={{ width: '100%', padding: '13px', borderRadius: 12, border: 'none', background: '#6366F1', color: '#fff', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
+              style={{ width: '100%', padding: '13px', borderRadius: 999, border: 'none', background: 'var(--k-primary)', color: '#fff', fontWeight: 800, fontSize: 14, cursor: 'pointer', boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               Kirim Ulasan
             </button>
           </div>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SVC } from '../utils/svcTheme'
 
 const MODULE_META = {
-  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: '#1D4ED8', bg: 'rgba(29,78,216,0.10)',  detailPath: (id) => `/orders/${id}/tracking` },
-  zasafood: { label: 'ZasaFood', emoji: '🍔', color: '#EA580C', bg: 'rgba(234,88,12,0.10)',  detailPath: (id) => `/food/orders/${id}` },
-  zasamart: { label: 'ZasaMart', emoji: '🛒', color: '#7C3AED', bg: 'rgba(124,58,237,0.10)', detailPath: (id) => `/mart/orders/${id}` },
+  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: SVC.zasago.fg,   bg: SVC.zasago.bg,   detailPath: (id) => `/orders/${id}/tracking` },
+  zasafood: { label: 'ZasaFood', emoji: '🍔', color: SVC.zasafood.fg, bg: SVC.zasafood.bg, detailPath: (id) => `/food/orders/${id}` },
+  zasamart: { label: 'ZasaMart', emoji: '🛒', color: SVC.zasashop.fg, bg: SVC.zasashop.bg, detailPath: (id) => `/mart/orders/${id}` },
 }
 
 const STATUS_LABEL = {
@@ -46,9 +47,9 @@ export default function ActiveOrdersCard({ orders }) {
   return (
     <div style={{
       borderRadius: 18, overflow: 'hidden',
-      background: 'var(--k-surface)',
-      border: '1.5px solid rgba(99,102,241,0.25)',
-      boxShadow: '0 4px 20px rgba(99,102,241,0.10)',
+      background: 'var(--k-card)',
+      border: '1px solid var(--k-border)',
+      boxShadow: 'var(--k-shadow), var(--k-inset-hi)',
       marginBottom: 16,
     }}>
       {/* Header */}
