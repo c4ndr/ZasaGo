@@ -12,8 +12,8 @@ const DOC_CONFIG = [
 
 const STATUS_META = {
   pending:  { color: 'var(--k-warn)',   bg: 'rgba(246,173,85,0.15)' },
-  approved: { color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.15)' },
-  rejected: { color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.15)' },
+  approved: { color: 'var(--k-accent)', bg: 'rgba(var(--k-accent-rgb),0.15)' },
+  rejected: { color: 'var(--k-danger)', bg: 'rgba(var(--k-danger-rgb),0.15)' },
 }
 function statusColor(s) { return STATUS_META[s]?.color ?? 'var(--k-sub)' }
 function statusBg(s)    { return STATUS_META[s]?.bg ?? 'rgba(148,139,125,0.12)' }
@@ -60,7 +60,7 @@ function DocCard({ config, doc, onUpload, uploading }) {
             </div>
           )}
           {isRejected && doc?.rejection_reason && (
-            <div style={{ marginTop: 6, fontSize: 12, color: 'var(--k-danger)', background: 'rgba(192,67,92,0.08)', padding: '6px 10px', borderRadius: 8 }}>
+            <div style={{ marginTop: 6, fontSize: 12, color: 'var(--k-danger)', background: 'rgba(var(--k-danger-rgb),0.08)', padding: '6px 10px', borderRadius: 8 }}>
               {doc.rejection_reason}
             </div>
           )}
@@ -192,7 +192,7 @@ export default function MitraOnboardingPage() {
         {anyRejected ? (
           <div style={{
             padding: '14px 18px', borderRadius: 14, marginBottom: 16,
-            background: 'rgba(192,67,92,0.1)', border: '1.5px solid rgba(192,67,92,0.3)',
+            background: 'rgba(var(--k-danger-rgb),0.1)', border: '1.5px solid rgba(var(--k-danger-rgb),0.3)',
           }}>
             <div style={{ fontWeight: 700, color: 'var(--k-danger)', marginBottom: 4 }}>Dokumen Ditolak</div>
             <div style={{ fontSize: 13, color: 'var(--k-sub)' }}>
@@ -202,7 +202,7 @@ export default function MitraOnboardingPage() {
         ) : allUploaded ? (
           <div style={{
             padding: '14px 18px', borderRadius: 14, marginBottom: 16,
-            background: 'rgba(46,125,91,0.1)', border: '1.5px solid rgba(46,125,91,0.3)',
+            background: 'rgba(var(--k-accent-rgb),0.1)', border: '1.5px solid rgba(var(--k-accent-rgb),0.3)',
           }}>
             <div style={{ fontWeight: 700, color: 'var(--k-accent)', marginBottom: 4 }}>Semua Dokumen Terkirim ✓</div>
             <div style={{ fontSize: 13, color: 'var(--k-sub)' }}>

@@ -164,7 +164,7 @@ export default function MerchantSettingsPage() {
             <button onClick={handleToggleOpen} style={{
               padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer',
               fontWeight: 700, fontSize: 13,
-              background: merchant?.is_open ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)',
+              background: merchant?.is_open ? 'rgba(var(--k-danger-rgb),0.12)' : 'rgba(var(--k-accent-rgb),0.12)',
               color: merchant?.is_open ? 'var(--k-danger)' : 'var(--k-accent)',
             }}>
               {merchant?.is_open ? 'Tutup Toko' : 'Buka Toko'}

@@ -45,7 +45,7 @@ export default function VoucherInput({ orderAmount, module, onApply, onClear }) 
 
       {info ? (
         <div style={{
-          background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.3)',
+          background: 'rgba(var(--k-accent-rgb),0.08)', border: '1px solid rgba(var(--k-accent-rgb),0.3)',
           borderRadius: 14, padding: '12px 14px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>

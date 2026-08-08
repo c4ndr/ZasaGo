@@ -20,14 +20,14 @@ const TABS = [
 ]
 
 const STATUS_META = {
-  pending:     { label: 'Menunggu',      color: 'var(--k-warn)', bg: '#FFFBEB', border: 'rgba(184,134,11,0.33)' },
-  confirmed:   { label: 'Dikonfirmasi',  color: 'var(--k-primary)', bg: '#EFF6FF', border: 'rgba(40,55,75,0.33)' },
+  pending:     { label: 'Menunggu',      color: 'var(--k-warn)', bg: '#FFFBEB', border: 'rgba(var(--k-warn-rgb),0.33)' },
+  confirmed:   { label: 'Dikonfirmasi',  color: 'var(--k-primary)', bg: '#EFF6FF', border: 'rgba(var(--k-primary-rgb),0.33)' },
   packed:      { label: 'Dikemas',       color: 'var(--k-primary2)', bg: '#FAF5FF', border: 'rgba(29,41,57,0.33)' },
-  picking_up:  { label: 'Dijemput',      color: 'var(--k-primary)', bg: '#FFF7ED', border: 'rgba(40,55,75,0.33)' },
+  picking_up:  { label: 'Dijemput',      color: 'var(--k-primary)', bg: '#FFF7ED', border: 'rgba(var(--k-primary-rgb),0.33)' },
   on_delivery: { label: 'Dikirim',       color: 'var(--k-primary2)', bg: '#EEF2FF', border: 'rgba(29,41,57,0.33)' },
   delivered:   { label: 'Terkirim',      color: '#10B981', bg: '#ECFDF5', border: '#10B98155' },
   completed:   { label: 'Selesai',       color: '#22C55E', bg: '#F0FDF4', border: '#22C55E55' },
-  cancelled:   { label: 'Dibatalkan',    color: 'var(--k-danger)', bg: '#FEF2F2', border: 'rgba(192,67,92,0.33)' },
+  cancelled:   { label: 'Dibatalkan',    color: 'var(--k-danger)', bg: '#FEF2F2', border: 'rgba(var(--k-danger-rgb),0.33)' },
 }
 
 const FLOW_STEPS = ['Baru', 'Konfirmasi', 'Kemas', 'Kurir', 'Dikirim', 'Selesai']
@@ -229,7 +229,7 @@ export default function SellerOrdersPage() {
                         <p style={{ fontSize: 13, color: 'var(--k-text)', fontWeight: 600, lineHeight: 1.4 }}>{order.delivery_address}</p>
                         {order.customer?.name && <p style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 4 }}>👤 {order.customer.name}</p>}
                         {order.delivery_phone && (
-                          <a href={`tel:${order.delivery_phone}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 6, fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(46,125,91,0.1)', padding: '5px 10px', borderRadius: 8, border: '1px solid rgba(46,125,91,0.2)' }}>
+                          <a href={`tel:${order.delivery_phone}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 6, fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(var(--k-accent-rgb),0.1)', padding: '5px 10px', borderRadius: 8, border: '1px solid rgba(var(--k-accent-rgb),0.2)' }}>
                             📞 {order.delivery_phone}
                           </a>
                         )}
@@ -247,7 +247,7 @@ export default function SellerOrdersPage() {
                               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{order.mitra.name}</p>
                             </div>
                             {order.mitra.phone && (
-                              <a href={`tel:${order.mitra.phone}`} style={{ fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(46,125,91,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(46,125,91,0.2)' }}>
+                              <a href={`tel:${order.mitra.phone}`} style={{ fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(var(--k-accent-rgb),0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(var(--k-accent-rgb),0.2)' }}>
                                 📞 Hubungi
                               </a>
                             )}

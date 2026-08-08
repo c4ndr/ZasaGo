@@ -8,12 +8,12 @@ const COMPLAINT_WINDOW_HOURS = 24
 const fmt = (n) => new Intl.NumberFormat('id-ID').format(n)
 
 const STATUS_BADGE = {
-  pending:   { label: 'Mencari Driver', color: 'var(--k-warn)', bg: 'rgba(184,134,11,0.1)' },
-  accepted:  { label: 'Driver Menuju',  color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)' },
+  pending:   { label: 'Mencari Driver', color: 'var(--k-warn)', bg: 'rgba(var(--k-warn-rgb),0.1)' },
+  accepted:  { label: 'Driver Menuju',  color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.1)' },
   on_pickup: { label: 'Driver Tiba',    color: 'var(--k-primary2)', bg: 'rgba(29,41,57,0.1)' },
-  on_ride:   { label: 'Dalam Perjalanan', color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.1)' },
-  completed: { label: 'Selesai',        color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.1)' },
-  cancelled: { label: 'Dibatalkan',     color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.1)' },
+  on_ride:   { label: 'Dalam Perjalanan', color: 'var(--k-accent)', bg: 'rgba(var(--k-accent-rgb),0.1)' },
+  completed: { label: 'Selesai',        color: 'var(--k-accent)', bg: 'rgba(var(--k-accent-rgb),0.1)' },
+  cancelled: { label: 'Dibatalkan',     color: 'var(--k-danger)', bg: 'rgba(var(--k-danger-rgb),0.1)' },
 }
 
 function RatingModal({ order, onClose, onDone }) {
@@ -128,7 +128,7 @@ function OrderCard({ order, onRate }) {
       {order.status === 'completed' && !order.my_rating && (
         <button onClick={() => onRate(order)} style={{
           marginTop: 12, width: '100%', padding: '10px', borderRadius: 12,
-          background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.25)',
+          background: 'var(--k-glow)', border: '1px solid rgba(var(--k-accent-rgb),0.25)',
           color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
         }}>⭐ Beri Rating</button>
       )}

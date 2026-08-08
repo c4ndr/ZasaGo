@@ -55,6 +55,24 @@
   --k-zasaride-bg: #8FD7DB; --k-zasaride-fg: #165659;
   --k-zasaserv-bg: #E9CF75; --k-zasaserv-fg: #6C520F;
   --k-wallet-bg:   #E39E5E; --k-wallet-fg:   #623A18;
+
+  /* ── Versi "r,g,b" polos dari token di atas, khusus
+     buat dipakai di dalam rgba(var(--k-x-rgb),alpha) —
+     supaya shadow/glow warna ikut berubah pas dark mode,
+     bukan kebawa gelap terus kayak sebelumnya. ── */
+  --k-primary-rgb: 40,55,75;
+  --k-accent-rgb:  46,125,91;
+  --k-danger-rgb:  192,67,92;
+  --k-warn-rgb:    184,134,11;
+  --k-info-rgb:    42,95,130;
+  --k-zasago-rgb:   27,72,101;
+  --k-zasafood-rgb: 33,97,70;
+  --k-jastip-rgb:   131,44,79;
+  --k-zasashop-rgb: 130,71,7;
+  --k-zasahome-rgb: 72,46,111;
+  --k-zasaride-rgb: 22,86,89;
+  --k-zasaserv-rgb: 108,82,15;
+  --k-wallet-rgb:   98,58,24;
 }
 
 /* ── Dark theme (langit malam berbintang) ──────── */
@@ -119,6 +137,22 @@
   --k-zasaride-bg: #1E3A3B; --k-zasaride-fg: #9BD8DA;
   --k-zasaserv-bg: #3A311A; --k-zasaserv-fg: #E4CC80;
   --k-wallet-bg:   #3E2A18; --k-wallet-fg:   #E0AD79;
+
+  /* ── Versi rgb polos untuk dark mode — dipasangkan
+     dengan warna fg yang lebih terang di atas. ── */
+  --k-primary-rgb: 74,98,128;
+  --k-accent-rgb:  79,174,130;
+  --k-danger-rgb:  225,118,144;
+  --k-warn-rgb:    224,184,74;
+  --k-info-rgb:    111,168,206;
+  --k-zasago-rgb:   156,201,232;
+  --k-zasafood-rgb: 155,217,185;
+  --k-jastip-rgb:   240,168,192;
+  --k-zasashop-rgb: 240,190,138;
+  --k-zasahome-rgb: 203,176,232;
+  --k-zasaride-rgb: 155,216,218;
+  --k-zasaserv-rgb: 228,204,128;
+  --k-wallet-rgb:   224,173,121;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -137,10 +171,6 @@ h1, h2, h3 {
 [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3 {
   text-shadow: -0.5px -0.5px 0 rgba(255,255,255,0.05), 0.5px 1.5px 2px rgba(0,0,0,0.4);
 }
-
-/* ── Gloss: garis kilat diagonal cuma di light mode
-   — di dark mode mengganggu di atas langit malam. */
-[data-theme="dark"] .gloss-streak { display: none; }
 
 body {
   background: var(--k-bg);

@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
         </Link>
         <div style={{
           width: 52, height: 52,
-          background: 'rgba(46,125,91,0.15)', border: '1.5px solid var(--k-accent)',
+          background: 'rgba(var(--k-accent-rgb),0.15)', border: '1.5px solid var(--k-accent)',
           borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: 20, fontSize: 24,
         }}>
@@ -141,7 +141,7 @@ export default function ForgotPasswordPage() {
             {demoOtp && (
               <div style={{
                 padding: '10px 14px', borderRadius: 12,
-                background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.3)',
+                background: 'rgba(var(--k-warn-rgb),0.1)', border: '1px solid rgba(var(--k-warn-rgb),0.3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
@@ -153,7 +153,7 @@ export default function ForgotPasswordPage() {
                   </p>
                 </div>
                 <button type="button" onClick={() => setOtp(demoOtp)}
-                  style={{ padding: '6px 12px', borderRadius: 10, fontSize: 12, fontWeight: 700, background: 'rgba(184,134,11,0.2)', color: 'var(--k-warn)', border: 'none', cursor: 'pointer' }}>
+                  style={{ padding: '6px 12px', borderRadius: 10, fontSize: 12, fontWeight: 700, background: 'rgba(var(--k-warn-rgb),0.2)', color: 'var(--k-warn)', border: 'none', cursor: 'pointer' }}>
                   Isi Otomatis
                 </button>
               </div>

@@ -7,9 +7,9 @@ const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: 'numeric',
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
 
 const STATUS_META = {
-  pending:   { label: 'Pending',   color: 'var(--k-warn)', bg: 'rgba(184,134,11,0.12)' },
+  pending:   { label: 'Pending',   color: 'var(--k-warn)', bg: 'rgba(var(--k-warn-rgb),0.12)' },
   active:    { label: 'Aktif',     color: '#22C55E', bg: 'rgba(34,197,94,0.12)' },
-  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.12)' },
+  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(var(--k-danger-rgb),0.12)' },
 }
 
 const EMPTY_CREATE = { name: '', email: '', phone: '', password: '', store_name: '', store_address: '', store_phone: '' }

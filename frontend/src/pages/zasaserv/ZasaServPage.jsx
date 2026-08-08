@@ -81,7 +81,7 @@ export default function ZasaServPage() {
             flexShrink: 0, padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600,
             background: category === c.value ? 'var(--k-accent)' : 'var(--k-card)',
             color: category === c.value ? '#fff' : 'var(--k-text)',
-            boxShadow: category === c.value ? '0 2px 8px rgba(46,125,91,0.3)' : 'none',
+            boxShadow: category === c.value ? '0 2px 8px rgba(var(--k-accent-rgb),0.3)' : 'none',
           }}>
             {c.emoji} {c.label}
           </button>
@@ -120,7 +120,7 @@ export default function ZasaServPage() {
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
                 <div style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 6 }}>{p.address ?? 'Lokasi belum diisi'}</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)', fontWeight: 600 }}>{cat.label}</span>
+                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)', fontWeight: 600 }}>{cat.label}</span>
                   <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(100,100,100,0.1)', color: skill.color, fontWeight: 600 }}>{skill.label}</span>
                   {p.experience_years > 0 && (
                     <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'var(--k-input)', color: 'var(--k-muted)', fontWeight: 500 }}>{p.experience_years}th pengalaman</span>

@@ -211,7 +211,7 @@ export default function JastipPage() {
                 <button key={v.value} onClick={() => setVehicleType(v.value)} style={{
                   flex: 1, padding: '10px 8px', borderRadius: 12,
                   border: vehicleType === v.value ? '2px solid var(--k-accent)' : '1.5px solid var(--k-border)',
-                  background: vehicleType === v.value ? 'rgba(46,125,91,0.08)' : 'var(--k-card)',
+                  background: vehicleType === v.value ? 'rgba(var(--k-accent-rgb),0.08)' : 'var(--k-card)',
                   color: vehicleType === v.value ? 'var(--k-accent)' : 'var(--k-muted)',
                   fontWeight: 700, fontSize: 13, cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
@@ -245,7 +245,7 @@ export default function JastipPage() {
                   disabled={searching || searchingAddr}
                   style={{
                     padding: '12px 14px', borderRadius: 12, border: 'none', cursor: 'pointer',
-                    background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
+                    background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)',
                     fontWeight: 700, fontSize: 13, flexShrink: 0,
                     opacity: searching ? 0.6 : 1,
                   }}
@@ -289,7 +289,7 @@ export default function JastipPage() {
                 return (
                   <div key={sess.id} style={{
                     background: 'var(--k-card)',
-                    border: `1px solid ${isFull ? 'var(--k-border)' : isOnline ? 'rgba(46,125,91,0.35)' : `rgba(${SVC.jastip.rgb},0.25)`}`,
+                    border: `1px solid ${isFull ? 'var(--k-border)' : isOnline ? 'rgba(var(--k-accent-rgb),0.35)' : `rgba(${SVC.jastip.rgb},0.25)`}`,
                     borderRadius: 18, padding: '16px',
                     opacity: isFull ? 0.55 : 1, transition: 'all 0.2s',
                   }}>
@@ -298,7 +298,7 @@ export default function JastipPage() {
                         <div style={{ position: 'relative', flexShrink: 0 }}>
                           <div style={{
                             width: 44, height: 44, borderRadius: 12,
-                            background: isOnline ? 'rgba(46,125,91,0.12)' : `rgba(${SVC.jastip.rgb},0.12)`,
+                            background: isOnline ? 'rgba(var(--k-accent-rgb),0.12)' : `rgba(${SVC.jastip.rgb},0.12)`,
                             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
                           }}>
                             {sess.vehicle_type === 'motor' ? '🏍️' : '🚗'}
@@ -318,8 +318,8 @@ export default function JastipPage() {
                             {isOnline && (
                               <span style={{
                                 padding: '1px 7px', borderRadius: 100, fontSize: 10, fontWeight: 700,
-                                background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
-                                border: '1px solid rgba(46,125,91,0.3)',
+                                background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)',
+                                border: '1px solid rgba(var(--k-accent-rgb),0.3)',
                               }}>GPS Aktif</span>
                             )}
                           </div>
@@ -429,7 +429,7 @@ export default function JastipPage() {
             </div>
 
             {/* ── Lokasi Pickup ── */}
-            <div style={{ background: 'var(--k-card)', border: `1px solid ${pickupLat ? 'rgba(46,125,91,0.3)' : 'var(--k-border)'}`, borderRadius: 18, padding: '16px' }}>
+            <div style={{ background: 'var(--k-card)', border: `1px solid ${pickupLat ? 'rgba(var(--k-accent-rgb),0.3)' : 'var(--k-border)'}`, borderRadius: 18, padding: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   📍 Lokasi Pickup
@@ -464,7 +464,7 @@ export default function JastipPage() {
             </div>
 
             {/* ── Lokasi Tujuan ── */}
-            <div style={{ background: 'var(--k-card)', border: `1px solid ${destLat ? 'rgba(46,125,91,0.3)' : 'var(--k-border)'}`, borderRadius: 18, padding: '16px' }}>
+            <div style={{ background: 'var(--k-card)', border: `1px solid ${destLat ? 'rgba(var(--k-accent-rgb),0.3)' : 'var(--k-border)'}`, borderRadius: 18, padding: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   🏁 Lokasi Tujuan
@@ -543,7 +543,7 @@ export default function JastipPage() {
                   <button key={m.value} type="button" onClick={() => setPayMethod(m.value)} style={{
                     flex: 1, padding: '12px 8px', borderRadius: 14,
                     border: payMethod === m.value ? '2px solid var(--k-accent)' : '1.5px solid var(--k-border)',
-                    background: payMethod === m.value ? 'rgba(46,125,91,0.08)' : 'var(--k-card2)',
+                    background: payMethod === m.value ? 'rgba(var(--k-accent-rgb),0.08)' : 'var(--k-card2)',
                     cursor: 'pointer', transition: 'all 0.2s',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   }}>
@@ -595,7 +595,7 @@ export default function JastipPage() {
             </div>
 
             {submitError && (
-              <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(192,67,92,0.08)', border: '1px solid rgba(192,67,92,0.25)' }}>
+              <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(var(--k-danger-rgb),0.08)', border: '1px solid rgba(var(--k-danger-rgb),0.25)' }}>
                 <p style={{ color: 'var(--k-danger)', fontSize: 13 }}>⚠️ {submitError}</p>
               </div>
             )}

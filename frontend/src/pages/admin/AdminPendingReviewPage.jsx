@@ -155,10 +155,10 @@ function ItemCard({ item, onApprove, onReject }) {
 
       {/* Reject form */}
       {showReject && (
-        <div style={{ marginBottom: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(192,67,92,0.05)', border: '1px solid rgba(192,67,92,0.2)' }}>
+        <div style={{ marginBottom: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(var(--k-danger-rgb),0.05)', border: '1px solid rgba(var(--k-danger-rgb),0.2)' }}>
           <textarea value={reason} onChange={e => setReason(e.target.value)} rows={2}
             placeholder="Tuliskan alasan penolakan..."
-            style={{ width: '100%', padding: '7px 10px', borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 12, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
+            style={{ width: '100%', padding: '7px 10px', borderRadius: 8, border: '1px solid rgba(var(--k-danger-rgb),0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 12, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
           <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
             <button onClick={() => { setShowReject(false); setReason('') }}
               style={{ flex: 1, padding: '7px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>
@@ -176,7 +176,7 @@ function ItemCard({ item, onApprove, onReject }) {
       {!showReject && (
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => setShowReject(true)} disabled={busy}
-            style={{ flex: 1, padding: '8px', borderRadius: 10, border: '1.5px solid rgba(192,67,92,0.3)', background: 'rgba(192,67,92,0.05)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 12, cursor: busy ? 'default' : 'pointer' }}>
+            style={{ flex: 1, padding: '8px', borderRadius: 10, border: '1.5px solid rgba(var(--k-danger-rgb),0.3)', background: 'rgba(var(--k-danger-rgb),0.05)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 12, cursor: busy ? 'default' : 'pointer' }}>
             ✕ Tolak
           </button>
           <button onClick={handleApprove} disabled={busy}
@@ -278,7 +278,7 @@ export default function AdminPendingReviewPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Semua Pending Review</h2>
           {total > 0 && (
-            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(192,67,92,0.3)' }}>
+            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(var(--k-danger-rgb),0.12)', color: 'var(--k-danger)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(var(--k-danger-rgb),0.3)' }}>
               {total} total
             </span>
           )}
@@ -321,7 +321,7 @@ export default function AdminPendingReviewPage() {
               style={{
                 padding: '6px 14px', borderRadius: 20, border: '1.5px solid',
                 borderColor: active ? (mod?.color ?? 'var(--k-danger)') : 'var(--k-border)',
-                background: active ? (mod ? `rgba(${mod.rgb},0.1)` : 'rgba(192,67,92,0.1)') : 'var(--k-card)',
+                background: active ? (mod ? `rgba(${mod.rgb},0.1)` : 'rgba(var(--k-danger-rgb),0.1)') : 'var(--k-card)',
                 color: active ? (mod?.color ?? 'var(--k-danger)') : 'var(--k-muted)',
                 fontWeight: active ? 700 : 500, fontSize: 13, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 6,

@@ -71,7 +71,7 @@ export default function RefundPage() {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Intro */}
-        <div style={{ background: 'rgba(46,125,91,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(46,125,91,0.2)' }}>
+        <div style={{ background: 'rgba(var(--k-accent-rgb),0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(var(--k-accent-rgb),0.2)' }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             ZasaQu berkomitmen memberikan pengalaman belanja dan pengiriman yang memuaskan. Dokumen ini menjelaskan kebijakan pembatalan, refund, dan mekanisme penyelesaian sengketa secara adil dan transparan.
           </p>
@@ -128,7 +128,7 @@ export default function RefundPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {REFUND_STEPS.map(step => (
               <div key={step.num} style={{ background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', padding: '14px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(46,125,91,0.12)', border: '2px solid rgba(46,125,91,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(var(--k-accent-rgb),0.12)', border: '2px solid rgba(var(--k-accent-rgb),0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-accent)' }}>{step.num}</span>
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default function RefundPage() {
         {/* Dispute resolution */}
         <div>
           <p style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-text)', margin: '0 0 12px' }}>⚖️ Penyelesaian Sengketa</p>
-          <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '14px', border: '1px solid rgba(40,55,75,0.2)', marginBottom: 12 }}>
+          <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '14px', border: '1px solid rgba(var(--k-primary-rgb),0.2)', marginBottom: 12 }}>
             <p style={{ fontSize: 12, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
               Sengketa adalah perselisihan antara pengguna (customer, mitra, atau merchant) yang tidak dapat diselesaikan secara mandiri. ZasaQu bertindak sebagai mediator yang tidak memihak.
             </p>
@@ -168,7 +168,7 @@ export default function RefundPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {DISPUTE_STEPS.map(step => (
               <div key={step.num} style={{ background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', padding: '14px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(40,55,75,0.1)', border: '2px solid rgba(40,55,75,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(var(--k-primary-rgb),0.1)', border: '2px solid rgba(var(--k-primary-rgb),0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-primary)' }}>{step.num}</span>
                 </div>
                 <div>

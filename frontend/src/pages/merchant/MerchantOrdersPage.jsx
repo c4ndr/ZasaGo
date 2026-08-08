@@ -76,7 +76,7 @@ function PrepCountdown({ acceptedAt, prepMinutes }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px',
-      borderRadius: 10, background: over ? 'rgba(220,38,38,0.1)' : 'rgba(40,55,75,0.08)',
+      borderRadius: 10, background: over ? 'rgba(220,38,38,0.1)' : 'rgba(var(--k-primary-rgb),0.08)',
       border: `1px solid ${over ? 'var(--k-danger)' : '#DDD6FE'}`, marginBottom: 10,
     }}>
       <span style={{ fontSize: 18 }}>{over ? '⚠️' : '⏱️'}</span>
@@ -324,7 +324,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
               <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)' }}>{order.customer?.name}</span>
               <span style={{
                 fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 20,
-                background: order.payment_method === 'cod' ? `rgba(${SVC.zasafood.rgb},0.1)` : 'rgba(46,125,91,0.1)',
+                background: order.payment_method === 'cod' ? `rgba(${SVC.zasafood.rgb},0.1)` : 'rgba(var(--k-accent-rgb),0.1)',
                 color: order.payment_method === 'cod' ? SVC.zasafood.fg : '#027A48',
               }}>{order.payment_method === 'cod' ? '💵 COD' : '💳 Wallet'}</span>
             </div>
@@ -366,7 +366,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
 
         {/* ── Info mitra (saat sudah assign) ── */}
         {order.mitra && ['mitra_on_pickup','picked_up','on_delivery','delivered'].includes(order.status) && (
-          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: 'rgba(42,95,130,0.07)', border: '1px solid rgba(42,95,130,0.2)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
+          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: 'rgba(var(--k-info-rgb),0.07)', border: '1px solid rgba(var(--k-info-rgb),0.2)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
             <span style={{ fontSize: 18 }}>🏍️</span>
             <div>
               <span style={{ fontWeight: 700, color: 'var(--k-info)' }}>{order.mitra.name}</span>
@@ -502,7 +502,7 @@ export default function MerchantOrdersPage() {
 
         {/* Sync error */}
         {syncError && (
-          <div style={{ padding: '11px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontSize: 13, fontWeight: 600 }}>
+          <div style={{ padding: '11px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(var(--k-danger-rgb),0.1)', color: 'var(--k-danger)', fontSize: 13, fontWeight: 600 }}>
             ⚠ Gagal memuat data. Periksa koneksi.
           </div>
         )}

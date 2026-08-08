@@ -206,7 +206,7 @@ export default function ServProviderSettingsPage() {
             <div style={{ fontWeight: 700, color: statusColor(provider?.status), fontSize: 15 }}>{fmtStatus(provider?.status)}</div>
           </div>
           {provider?.status === 'active' && (
-            <button onClick={handleToggleOpen} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, background: provider?.is_open ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)', color: provider?.is_open ? 'var(--k-danger)' : 'var(--k-accent)' }}>
+            <button onClick={handleToggleOpen} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, background: provider?.is_open ? 'rgba(var(--k-danger-rgb),0.12)' : 'rgba(var(--k-accent-rgb),0.12)', color: provider?.is_open ? 'var(--k-danger)' : 'var(--k-accent)' }}>
               {provider?.is_open ? 'Tutup Usaha' : 'Buka Usaha'}
             </button>
           )}
@@ -336,7 +336,7 @@ export default function ServProviderSettingsPage() {
                   onChange={e => setForm(f => { const certs = [...(f.certificates ?? [])]; certs[i] = e.target.value; return { ...f, certificates: certs } })}
                   style={{ ...inp, flex: 1, marginBottom: 0 }} />
                 <button type="button" onClick={() => setForm(f => ({ ...f, certificates: (f.certificates ?? []).filter((_, j) => j !== i) }))}
-                  style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(192,67,92,0.4)', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', cursor: 'pointer', fontSize: 16 }}>✕</button>
+                  style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(var(--k-danger-rgb),0.4)', background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)', cursor: 'pointer', fontSize: 16 }}>✕</button>
               </div>
             ))}
             {(form.certificates ?? []).length < 10 && (
@@ -352,7 +352,7 @@ export default function ServProviderSettingsPage() {
           </button>
 
           <button type="button" onClick={() => { if (confirm('Keluar dari akun?')) { logout(); navigate('/login') } }}
-            style={{ padding: 12, borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.4)', background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+            style={{ padding: 12, borderRadius: 12, border: '1.5px solid rgba(var(--k-danger-rgb),0.4)', background: 'rgba(var(--k-danger-rgb),0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
             Keluar (Logout)
           </button>
         </form>

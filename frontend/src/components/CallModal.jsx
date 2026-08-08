@@ -34,12 +34,12 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
     }}>
       <style>{`
         @keyframes callPulse {
-          0%,100% { box-shadow: 0 0 0 0 rgba(46,125,91,0.5); }
-          50%      { box-shadow: 0 0 0 20px rgba(46,125,91,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(var(--k-accent-rgb),0.5); }
+          50%      { box-shadow: 0 0 0 20px rgba(var(--k-accent-rgb),0); }
         }
         @keyframes callRing {
-          0%,100% { box-shadow: 0 0 0 0 rgba(40,55,75,0.5); }
-          50%      { box-shadow: 0 0 0 20px rgba(40,55,75,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(var(--k-primary-rgb),0.5); }
+          50%      { box-shadow: 0 0 0 20px rgba(var(--k-primary-rgb),0); }
         }
       `}</style>
 
@@ -107,7 +107,7 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
               background: 'var(--k-accent)',
               border: 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 28, boxShadow: '0 4px 20px rgba(46,125,91,0.5)',
+              fontSize: 28, boxShadow: '0 4px 20px rgba(var(--k-accent-rgb),0.5)',
               touchAction: 'manipulation',
               // Tidak ada animation/transform langsung di tombol — CSS transform menggeser hit area di Android
             }}>
@@ -124,7 +124,7 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
             background: 'var(--k-danger)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 28, boxShadow: '0 4px 20px rgba(192,67,92,0.4)',
+            fontSize: 28, boxShadow: '0 4px 20px rgba(var(--k-danger-rgb),0.4)',
             touchAction: 'manipulation',
           }}>
           📵

@@ -8,17 +8,17 @@ export default function ChatButton({ to, state, hasUnread = false, size = 40 }) 
       width: size, height: size, borderRadius: 13, flexShrink: 0,
       background: hasUnread
         ? 'var(--k-accent)'
-        : 'rgba(46,125,91,0.10)',
-      border: `1.5px solid ${hasUnread ? 'transparent' : 'rgba(46,125,91,0.3)'}`,
-      boxShadow: hasUnread ? '0 4px 16px rgba(46,125,91,0.45)' : '0 2px 8px rgba(0,0,0,0.15)',
+        : 'rgba(var(--k-accent-rgb),0.10)',
+      border: `1.5px solid ${hasUnread ? 'transparent' : 'rgba(var(--k-accent-rgb),0.3)'}`,
+      boxShadow: hasUnread ? '0 4px 16px rgba(var(--k-accent-rgb),0.45)' : '0 2px 8px rgba(0,0,0,0.15)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontSize: size * 0.48, textDecoration: 'none',
       animation: hasUnread ? 'chatPulse 2s infinite' : 'none',
     }}>
       <style>{`
         @keyframes chatPulse {
-          0%,100% { box-shadow: 0 4px 16px rgba(46,125,91,0.45); }
-          50%      { box-shadow: 0 4px 24px rgba(46,125,91,0.75); }
+          0%,100% { box-shadow: 0 4px 16px rgba(var(--k-accent-rgb),0.45); }
+          50%      { box-shadow: 0 4px 24px rgba(var(--k-accent-rgb),0.75); }
         }
       `}</style>
       💬

@@ -7,14 +7,14 @@ function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
 const STATUS_META = {
-  pending:    { label: 'Pending',      color: 'var(--k-warn)',    bg: 'rgba(184,134,11,0.12)'  },
-  confirmed:  { label: 'Dikonfirmasi', color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)'    },
-  picked_up:  { label: 'Dijemput',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
-  processing: { label: 'Diproses',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
-  ready:      { label: 'Siap',         color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.1)'    },
-  delivering: { label: 'Diantar',      color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
-  completed:  { label: 'Selesai',      color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.12)'   },
-  cancelled:  { label: 'Dibatalkan',   color: 'var(--k-danger)',  bg: 'rgba(192,67,92,0.12)'   },
+  pending:    { label: 'Pending',      color: 'var(--k-warn)',    bg: 'rgba(var(--k-warn-rgb),0.12)'  },
+  confirmed:  { label: 'Dikonfirmasi', color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.12)'    },
+  picked_up:  { label: 'Dijemput',     color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.1)'     },
+  processing: { label: 'Diproses',     color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.1)'     },
+  ready:      { label: 'Siap',         color: 'var(--k-accent)',  bg: 'rgba(var(--k-accent-rgb),0.1)'    },
+  delivering: { label: 'Diantar',      color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.1)'     },
+  completed:  { label: 'Selesai',      color: 'var(--k-accent)',  bg: 'rgba(var(--k-accent-rgb),0.12)'   },
+  cancelled:  { label: 'Dibatalkan',   color: 'var(--k-danger)',  bg: 'rgba(var(--k-danger-rgb),0.12)'   },
 }
 
 const STATUS_TABS = [
@@ -77,13 +77,13 @@ function OrderDetail({ order, onCancel, onClose }) {
                 style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', marginBottom: 8 }} />
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={() => setShowCancel(false)} style={{ flex: 1, padding: '10px', borderRadius: 10, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer' }}>Batal</button>
-                <button onClick={handleCancel} disabled={cancelling || !reason.trim()} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontWeight: 700, cursor: 'pointer' }}>
+                <button onClick={handleCancel} disabled={cancelling || !reason.trim()} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: 'rgba(var(--k-danger-rgb),0.1)', color: 'var(--k-danger)', fontWeight: 700, cursor: 'pointer' }}>
                   {cancelling ? 'Membatalkan...' : 'Konfirmasi Batalkan'}
                 </button>
               </div>
             </div>
           ) : (
-            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
               Force Cancel Order
             </button>
           )

@@ -69,7 +69,7 @@ export default function TosPage() {
 
       <div style={{ padding: '16px' }}>
         {/* Intro */}
-        <div style={{ background: 'rgba(46,125,91,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(46,125,91,0.2)', marginBottom: 16 }}>
+        <div style={{ background: 'rgba(var(--k-accent-rgb),0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(var(--k-accent-rgb),0.2)', marginBottom: 16 }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             Dokumen ini mengatur penggunaan platform <strong>ZasaQu</strong> oleh seluruh pengguna termasuk customer, mitra, merchant, pedagang, dan penyedia jasa rumah.
           </p>

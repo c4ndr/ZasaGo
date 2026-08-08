@@ -97,7 +97,7 @@ function OrderDrawer({ order, onClose }) {
         ))}
 
         {order.notes && (
-          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(40,55,75,0.07)', border: '1px solid rgba(40,55,75,0.15)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 16 }}>
+          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(var(--k-primary-rgb),0.07)', border: '1px solid rgba(var(--k-primary-rgb),0.15)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 16 }}>
             📝 {order.notes}
           </div>
         )}
@@ -295,8 +295,8 @@ export default function AdminOrdersPage() {
                 {order.status === 'delivered' && (
                   <button onClick={e => { e.stopPropagation(); forceComplete(order.id) }} disabled={actionId === order.id}
                     style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                      background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)',
-                      border: '1px solid rgba(46,125,91,0.25)', cursor: 'pointer',
+                      background: 'rgba(var(--k-accent-rgb),0.1)', color: 'var(--k-accent)',
+                      border: '1px solid rgba(var(--k-accent-rgb),0.25)', cursor: 'pointer',
                       opacity: actionId === order.id ? 0.5 : 1 }}>
                     ✓ Force Selesai
                   </button>
@@ -304,8 +304,8 @@ export default function AdminOrdersPage() {
                 {!['completed', 'cancelled'].includes(order.status) && (
                   <button onClick={e => { e.stopPropagation(); setShowCancel(showCancel === order.id ? null : order.id); setCancelReason('') }}
                     style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                      background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)',
-                      border: '1px solid rgba(192,67,92,0.2)', cursor: 'pointer' }}>
+                      background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)',
+                      border: '1px solid rgba(var(--k-danger-rgb),0.2)', cursor: 'pointer' }}>
                     ✕ Cancel
                   </button>
                 )}

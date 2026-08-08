@@ -117,7 +117,7 @@ export default function ServCheckoutPage() {
                 { enableHighAccuracy: true, timeout: 10000 }
               )
             }}
-            style={{ marginTop: 10, background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.3)', borderRadius: 10, padding: '8px 14px', cursor: 'pointer', fontSize: 12, color: 'var(--k-accent)', fontWeight: 700 }}
+            style={{ marginTop: 10, background: 'rgba(var(--k-accent-rgb),0.08)', border: '1px solid rgba(var(--k-accent-rgb),0.3)', borderRadius: 10, padding: '8px 14px', cursor: 'pointer', fontSize: 12, color: 'var(--k-accent)', fontWeight: 700 }}
           >
             📍 Gunakan lokasi saya sekarang
           </button>
@@ -146,7 +146,7 @@ export default function ServCheckoutPage() {
           />
         </div>
 
-        {error && <div style={{ background: 'rgba(192,67,92,0.1)', border: '1px solid rgba(192,67,92,0.3)', borderRadius: 12, padding: '10px 14px', color: 'var(--k-danger)', fontSize: 13, marginBottom: 14 }}>{error}</div>}
+        {error && <div style={{ background: 'rgba(var(--k-danger-rgb),0.1)', border: '1px solid rgba(var(--k-danger-rgb),0.3)', borderRadius: 12, padding: '10px 14px', color: 'var(--k-danger)', fontSize: 13, marginBottom: 14 }}>{error}</div>}
       </div>
 
       {/* Bottom bar */}

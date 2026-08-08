@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(var(--k-accent-rgb),0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -159,7 +159,7 @@ export default function CaraKerjaPage() {
 
         {/* Intro banner */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 18, padding: '20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(46,125,91,0.07)' }} />
+          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.07)' }} />
           <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: '0 0 8px' }}>
             {tab === 'customer' ? '6 Langkah Mudah Memesan' : '6 Langkah Jadi Mitra'}
           </p>
@@ -199,7 +199,7 @@ export default function CaraKerjaPage() {
 
         {/* Tips */}
         {tab === 'mitra' && (
-          <div style={{ background: 'rgba(184,134,11,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(184,134,11,0.2)' }}>
+          <div style={{ background: 'rgba(var(--k-warn-rgb),0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(var(--k-warn-rgb),0.2)' }}>
             <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-warn)', margin: '0 0 8px' }}>💡 Tips Mitra Sukses</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {[
@@ -218,7 +218,7 @@ export default function CaraKerjaPage() {
         )}
 
         {tab === 'customer' && (
-          <div style={{ background: 'rgba(46,125,91,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(46,125,91,0.2)' }}>
+          <div style={{ background: 'rgba(var(--k-accent-rgb),0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(var(--k-accent-rgb),0.2)' }}>
             <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-accent)', margin: '0 0 8px' }}>💡 Tips Belanja Nyaman</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {[

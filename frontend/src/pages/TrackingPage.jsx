@@ -185,7 +185,7 @@ function PhotoViewer({ photos, orderId, status }) {
             <AuthedImg
               src={`/orders/${orderId}/photos/delivery`}
               alt="Bukti sampai"
-              style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 12, border: '2px solid rgba(46,125,91,0.35)' }}
+              style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 12, border: '2px solid rgba(var(--k-accent-rgb),0.35)' }}
             />
             <p style={{ fontSize: 11, color: 'var(--k-accent)', fontWeight: 700, textAlign: 'center', marginTop: 4 }}>✓ Paket Sudah Sampai</p>
           </button>
@@ -206,7 +206,7 @@ function PhotoViewer({ photos, orderId, status }) {
                 <div key={stage}>
                   {url ? (
                     <button onClick={() => setPreview(url)} style={{ width: '100%', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}>
-                      <AuthedImg src={url} alt={PHOTO_LABELS[stage]} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10, border: '1px solid rgba(46,125,91,0.2)' }} />
+                      <AuthedImg src={url} alt={PHOTO_LABELS[stage]} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10, border: '1px solid rgba(var(--k-accent-rgb),0.2)' }} />
                     </button>
                   ) : (
                     <div style={{ width: '100%', aspectRatio: '1', background: 'var(--k-card2)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed var(--k-border)' }}>
@@ -253,7 +253,7 @@ function MitraMarkerEl() {
     <div style={{
       width: 44, height: 44, borderRadius: '50%',
       background: 'var(--k-info)', border: '3px solid #fff',
-      boxShadow: '0 4px 14px rgba(42,95,130,.5)',
+      boxShadow: '0 4px 14px rgba(var(--k-info-rgb),.5)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontSize: 20, userSelect: 'none',
     }}>🏍️</div>
@@ -335,7 +335,7 @@ export default function TrackingPage() {
       {shownUpdate && <StatusNotif update={shownUpdate} onDismiss={dismissNotif} />}
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse-gps { 0%,100% { box-shadow: 0 0 0 0 rgba(46,125,91,0.4); } 50% { box-shadow: 0 0 0 8px rgba(46,125,91,0); } }
+        @keyframes pulse-gps { 0%,100% { box-shadow: 0 0 0 0 rgba(var(--k-accent-rgb),0.4); } 50% { box-shadow: 0 0 0 8px rgba(var(--k-accent-rgb),0); } }
       `}</style>
 
       {/* ── Navbar ── */}
@@ -366,8 +366,8 @@ export default function TrackingPage() {
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => setFollow(f => !f)} style={{
             width: 40, height: 40, borderRadius: 12,
-            background: follow ? 'rgba(46,125,91,0.2)' : 'rgba(25,25,39,0.92)',
-            border: `1px solid ${follow ? 'rgba(46,125,91,0.4)' : 'rgba(37,37,56,0.8)'}`,
+            background: follow ? 'rgba(var(--k-accent-rgb),0.2)' : 'rgba(25,25,39,0.92)',
+            border: `1px solid ${follow ? 'rgba(var(--k-accent-rgb),0.4)' : 'rgba(37,37,56,0.8)'}`,
             backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', fontSize: 18, color: follow ? 'var(--k-accent)' : 'var(--k-muted)',
@@ -377,7 +377,7 @@ export default function TrackingPage() {
             <Link
               to={`/orders/${id}/chat`}
               state={{ otherName: order.mitra?.name }}
-              style={{ width: 40, height: 40, borderRadius: 12, background: 'var(--k-accent)', boxShadow: '0 4px 16px rgba(46,125,91,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontSize: 20 }}
+              style={{ width: 40, height: 40, borderRadius: 12, background: 'var(--k-accent)', boxShadow: '0 4px 16px rgba(var(--k-accent-rgb),0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontSize: 20 }}
             >💬</Link>
           )}
         </div>
@@ -389,7 +389,7 @@ export default function TrackingPage() {
         zIndex: 1000, display: 'flex', alignItems: 'center', gap: 8,
         padding: '7px 16px', borderRadius: 100, whiteSpace: 'nowrap',
         background: 'rgba(25,25,39,0.92)',
-        border: `1px solid ${gpsActive ? 'rgba(46,125,91,0.35)' : mitraLocation ? 'rgba(184,134,11,0.35)' : 'rgba(37,37,56,0.8)'}`,
+        border: `1px solid ${gpsActive ? 'rgba(var(--k-accent-rgb),0.35)' : mitraLocation ? 'rgba(var(--k-warn-rgb),0.35)' : 'rgba(37,37,56,0.8)'}`,
         backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
       }}>
         <div style={{
@@ -408,8 +408,8 @@ export default function TrackingPage() {
             <div key={i} style={{
               display: 'flex', alignItems: 'flex-start', gap: 10,
               padding: '10px 14px', borderRadius: 14,
-              background: n.type === 'gps_lost' ? 'rgba(184,134,11,0.15)' : 'rgba(46,125,91,0.12)',
-              border: `1px solid ${n.type === 'gps_lost' ? 'rgba(184,134,11,0.35)' : 'rgba(46,125,91,0.3)'}`,
+              background: n.type === 'gps_lost' ? 'rgba(var(--k-warn-rgb),0.15)' : 'rgba(var(--k-accent-rgb),0.12)',
+              border: `1px solid ${n.type === 'gps_lost' ? 'rgba(var(--k-warn-rgb),0.35)' : 'rgba(var(--k-accent-rgb),0.3)'}`,
               backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
             }}>
               <span style={{ flexShrink: 0, fontSize: 15 }}>{n.type === 'gps_lost' ? '⚠️' : '📦'}</span>
@@ -460,7 +460,7 @@ export default function TrackingPage() {
           <div style={{
             position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)',
             zIndex: 4, padding: '10px 16px', borderRadius: 14, whiteSpace: 'nowrap',
-            background: 'rgba(25,25,39,0.92)', border: '1px solid rgba(184,134,11,0.3)',
+            background: 'rgba(25,25,39,0.92)', border: '1px solid rgba(var(--k-warn-rgb),0.3)',
             backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'none',
           }}>
@@ -504,7 +504,7 @@ export default function TrackingPage() {
                       <div style={{
                         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
                         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
-                        background: isDoneStep ? 'var(--k-accent)' : isActive ? 'rgba(46,125,91,0.2)' : 'var(--k-card2)',
+                        background: isDoneStep ? 'var(--k-accent)' : isActive ? 'rgba(var(--k-accent-rgb),0.2)' : 'var(--k-card2)',
                         border: `2px solid ${isDoneStep ? 'var(--k-accent)' : isActive ? 'var(--k-accent)' : 'var(--k-border)'}`,
                         transition: 'all 0.3s',
                       }}>
@@ -524,7 +524,7 @@ export default function TrackingPage() {
           )}
 
           {isCancelled && (
-            <div style={{ background: 'rgba(192,67,92,0.08)', border: '1px solid rgba(192,67,92,0.2)', borderRadius: 14, padding: '12px 14px', marginBottom: 14, color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>
+            <div style={{ background: 'rgba(var(--k-danger-rgb),0.08)', border: '1px solid rgba(var(--k-danger-rgb),0.2)', borderRadius: 14, padding: '12px 14px', marginBottom: 14, color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>
               ❌ Order Dibatalkan
             </div>
           )}
@@ -556,7 +556,7 @@ export default function TrackingPage() {
           </div>
 
           {order.jastip_discount_applied > 0 && (
-            <div style={{ background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.2)', borderRadius: 14, padding: '10px 14px', marginBottom: 12 }}>
+            <div style={{ background: 'rgba(var(--k-accent-rgb),0.08)', border: '1px solid rgba(var(--k-accent-rgb),0.2)', borderRadius: 14, padding: '10px 14px', marginBottom: 12 }}>
               <p style={{ color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, marginBottom: 2 }}>
                 ⚡ Diskon JastipQu: {formatRp(order.jastip_discount_applied)}
               </p>
@@ -568,7 +568,7 @@ export default function TrackingPage() {
 
           {order.mitra && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: '12px 14px' }}>
-              <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(42,95,130,0.15)', border: '2px solid rgba(42,95,130,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: 'var(--k-info)', flexShrink: 0 }}>
+              <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(var(--k-info-rgb),0.15)', border: '2px solid rgba(var(--k-info-rgb),0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: 'var(--k-info)', flexShrink: 0 }}>
                 {order.mitra.name[0].toUpperCase()}
               </div>
               <div style={{ flex: 1 }}>
@@ -578,7 +578,7 @@ export default function TrackingPage() {
                 </p>
               </div>
               {gpsActive && (
-                <span style={{ padding: '4px 10px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)' }}>Online</span>
+                <span style={{ padding: '4px 10px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: 'rgba(var(--k-accent-rgb),0.1)', color: 'var(--k-accent)' }}>Online</span>
               )}
             </div>
           )}
@@ -588,7 +588,7 @@ export default function TrackingPage() {
           {canComplain && (
             <button onClick={() => setShowComplaint(true)} style={{
               width: '100%', marginTop: 12, padding: '13px', borderRadius: 14,
-              border: '1.5px solid rgba(184,134,11,0.4)', background: 'rgba(184,134,11,0.06)',
+              border: '1.5px solid rgba(var(--k-warn-rgb),0.4)', background: 'rgba(var(--k-warn-rgb),0.06)',
               color: 'var(--k-warn)', fontWeight: 700, fontSize: 14, cursor: 'pointer',
             }}>
               ⚠️ Laporkan Masalah

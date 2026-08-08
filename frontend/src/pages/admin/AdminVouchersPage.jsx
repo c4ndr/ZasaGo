@@ -21,9 +21,9 @@ const DEFAULT_FORM = {
 function StatusBadge({ voucher }) {
   const now = new Date()
   if (!voucher.is_active) return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(160,160,188,0.15)', color: '#A0A0BC' }}>Nonaktif</span>
-  if (voucher.expires_at && new Date(voucher.expires_at) < now) return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)' }}>Kedaluwarsa</span>
-  if (voucher.max_uses && voucher.used_count >= voucher.max_uses) return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(184,134,11,0.1)', color: 'var(--k-warn)' }}>Habis</span>
-  return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)' }}>Aktif</span>
+  if (voucher.expires_at && new Date(voucher.expires_at) < now) return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(var(--k-danger-rgb),0.1)', color: 'var(--k-danger)' }}>Kedaluwarsa</span>
+  if (voucher.max_uses && voucher.used_count >= voucher.max_uses) return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(var(--k-warn-rgb),0.1)', color: 'var(--k-warn)' }}>Habis</span>
+  return <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 100, background: 'rgba(var(--k-accent-rgb),0.1)', color: 'var(--k-accent)' }}>Aktif</span>
 }
 
 export default function AdminVouchersPage() {
@@ -163,7 +163,7 @@ export default function AdminVouchersPage() {
               {/* Actions */}
               <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
                 <button onClick={() => openEdit(v)} style={{ padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 600, background: 'var(--k-card2)', color: 'var(--k-sub)', border: '1px solid var(--k-border)', cursor: 'pointer' }}>Edit</button>
-                <button onClick={() => handleDelete(v.id)} disabled={deleting === v.id} style={{ padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 600, background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', border: '1px solid rgba(192,67,92,0.2)', cursor: 'pointer', opacity: deleting === v.id ? 0.5 : 1 }}>
+                <button onClick={() => handleDelete(v.id)} disabled={deleting === v.id} style={{ padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 600, background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)', border: '1px solid rgba(var(--k-danger-rgb),0.2)', cursor: 'pointer', opacity: deleting === v.id ? 0.5 : 1 }}>
                   {deleting === v.id ? '...' : 'Hapus'}
                 </button>
               </div>
@@ -252,7 +252,7 @@ export default function AdminVouchersPage() {
                     <button key={m.key} type="button" onClick={() => toggleModule(m.key)} style={{
                       padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                       border: `1.5px solid ${form.applicable_modules.includes(m.key) ? 'var(--k-accent)' : 'var(--k-border)'}`,
-                      background: form.applicable_modules.includes(m.key) ? 'rgba(46,125,91,0.08)' : 'var(--k-card2)',
+                      background: form.applicable_modules.includes(m.key) ? 'rgba(var(--k-accent-rgb),0.08)' : 'var(--k-card2)',
                       color: form.applicable_modules.includes(m.key) ? 'var(--k-accent)' : 'var(--k-muted)',
                     }}>{m.label}</button>
                   ))}

@@ -93,7 +93,7 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
               </div>
 
               {showResolve && (
-                <div style={{ background: 'rgba(46,125,91,0.06)', border: '1px solid rgba(46,125,91,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ background: 'rgba(var(--k-accent-rgb),0.06)', border: '1px solid rgba(var(--k-accent-rgb),0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <input className="input-field" placeholder="Nominal refund (opsional, kosongkan jika tidak ada refund)"
                     type="number" value={refund} onChange={e => setRefund(e.target.value)}
                     style={{ padding: '9px 14px', fontSize: 13 }} />
@@ -110,7 +110,7 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
               )}
 
               {showReject && (
-                <div style={{ background: 'rgba(192,67,92,0.06)', border: '1px solid rgba(192,67,92,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 8 }}>
+                <div style={{ background: 'rgba(var(--k-danger-rgb),0.06)', border: '1px solid rgba(var(--k-danger-rgb),0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 8 }}>
                   <input className="input-field" placeholder="Alasan penolakan (wajib)"
                     value={note} onChange={e => setNote(e.target.value)}
                     style={{ flex: 1, padding: '9px 14px', fontSize: 13 }} />
@@ -183,7 +183,7 @@ export default function AdminComplaintsPage() {
             <button key={t.key} onClick={() => setStatus(t.key)}
               style={{ padding: '7px 18px', borderRadius: 100, fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 border: active ? '1px solid var(--k-accent)' : '1px solid var(--k-border)',
-                background: active ? 'rgba(46,125,91,0.1)' : 'transparent',
+                background: active ? 'rgba(var(--k-accent-rgb),0.1)' : 'transparent',
                 color: active ? 'var(--k-accent)' : 'var(--k-sub)' }}>
               {t.label}
             </button>

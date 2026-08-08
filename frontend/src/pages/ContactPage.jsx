@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(var(--k-accent-rgb),0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -56,7 +56,7 @@ export default function ContactPage() {
       <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* Brand intro */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 20, padding: '24px 20px', display: 'flex', alignItems: 'center', gap: 16, position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -20, top: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(46,125,91,0.07)' }} />
+          <div style={{ position: 'absolute', right: -20, top: -20, width: 120, height: 120, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.07)' }} />
           <LOGO />
           <div>
             <p style={{ fontSize: 18, fontWeight: 900, color: '#fff', margin: 0 }}>ZasaQu</p>
@@ -91,13 +91,13 @@ export default function ContactPage() {
         </div>
 
         {/* Hours */}
-        <div style={{ background: 'rgba(46,125,91,0.06)', borderRadius: 16, padding: '18px', border: '1px solid rgba(46,125,91,0.2)' }}>
+        <div style={{ background: 'rgba(var(--k-accent-rgb),0.06)', borderRadius: 16, padding: '18px', border: '1px solid rgba(var(--k-accent-rgb),0.2)' }}>
           <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 12px' }}>Jam Operasional</p>
           {[
             { day: 'Senin – Jumat',  time: '08.00 – 22.00 WIB' },
             { day: 'Sabtu – Minggu', time: '09.00 – 21.00 WIB' },
           ].map(r => (
-            <div key={r.day} style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, marginBottom: 8, borderBottom: '1px solid rgba(46,125,91,0.15)' }}>
+            <div key={r.day} style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, marginBottom: 8, borderBottom: '1px solid rgba(var(--k-accent-rgb),0.15)' }}>
               <span style={{ fontSize: 13, color: 'var(--k-muted)' }}>{r.day}</span>
               <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{r.time}</span>
             </div>

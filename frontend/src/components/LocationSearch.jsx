@@ -283,7 +283,7 @@ export default function LocationSearch({
           style={{
             width: '100%', padding: '12px 40px 12px 14px', borderRadius: 12, boxSizing: 'border-box',
             background: 'var(--k-card2)',
-            border: `1px solid ${confirmed ? 'rgba(46,125,91,0.5)' : (open || nearbyOpen) ? 'rgba(40,55,75,0.4)' : 'var(--k-border)'}`,
+            border: `1px solid ${confirmed ? 'rgba(var(--k-accent-rgb),0.5)' : (open || nearbyOpen) ? 'rgba(var(--k-primary-rgb),0.4)' : 'var(--k-border)'}`,
             color: 'var(--k-text)', fontSize: 14, outline: 'none', transition: 'border-color 0.2s',
             ...inputStyle,
           }}
@@ -312,7 +312,7 @@ export default function LocationSearch({
                 onTouchStart={() => { touchingRef.current = true }}
                 onTouchEnd={() => handleSelectNearby(place)}
                 onClick={() => handleSelectNearby(place)}
-                style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < nearbyPlaces.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(40,55,75,0.1)' }}
+                style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < nearbyPlaces.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(var(--k-primary-rgb),0.1)' }}
               >
                 <span style={{ flexShrink: 0, marginTop: 1, fontSize: 16 }}>{placeEmoji(place.types)}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -333,7 +333,7 @@ export default function LocationSearch({
                 onTouchStart={() => { touchingRef.current = true }}
                 onTouchEnd={() => handleSelect(place)}
                 onClick={() => handleSelect(place)}
-                style={{ width: '100%', textAlign: 'left', padding: '11px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < suggestions.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(40,55,75,0.1)' }}
+                style={{ width: '100%', textAlign: 'left', padding: '11px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < suggestions.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(var(--k-primary-rgb),0.1)' }}
               >
                 <span style={{ flexShrink: 0, marginTop: 2, fontSize: 16 }}>{placeEmoji(place.types)}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -357,7 +357,7 @@ export default function LocationSearch({
                 onTouchStart={() => { touchingRef.current = true }}
                 onTouchEnd={() => handleSelectGeocode(hit)}
                 onClick={() => handleSelectGeocode(hit)}
-                style={{ width: '100%', textAlign: 'left', padding: '11px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < geocodeFallback.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(40,55,75,0.1)' }}
+                style={{ width: '100%', textAlign: 'left', padding: '11px 14px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < geocodeFallback.length - 1 ? '1px solid var(--k-border)' : 'none', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(var(--k-primary-rgb),0.1)' }}
               >
                 <span style={{ flexShrink: 0, marginTop: 2, fontSize: 16 }}>🗺️</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -376,7 +376,7 @@ export default function LocationSearch({
               onTouchStart={() => { touchingRef.current = true }}
               onTouchEnd={handleFreeText}
               onClick={handleFreeText}
-              style={{ width: '100%', textAlign: 'left', padding: '12px 14px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(40,55,75,0.1)' }}
+              style={{ width: '100%', textAlign: 'left', padding: '12px 14px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--k-text)', display: 'flex', alignItems: 'flex-start', gap: 10, WebkitTapHighlightColor: 'rgba(var(--k-primary-rgb),0.1)' }}
             >
               <span style={{ flexShrink: 0, marginTop: 2, fontSize: 15 }}>✏️</span>
               <div style={{ flex: 1 }}>

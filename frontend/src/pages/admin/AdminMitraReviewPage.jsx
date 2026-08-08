@@ -70,7 +70,7 @@ function ReviewCard({ mitra: m, onApprove, onReject, onViewImg }) {
       {/* Header strip */}
       <div style={{ background: `rgba(${SVC.zasago.rgb},0.07)`, padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid rgba(${SVC.zasago.rgb},0.12)` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 40, height: 40, borderRadius: '50%', background: isMotor ? 'rgba(46,125,91,0.15)' : 'rgba(40,55,75,0.15)', border: `2px solid ${isMotor ? 'rgba(46,125,91,0.3)' : 'rgba(40,55,75,0.3)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
+          <div style={{ width: 40, height: 40, borderRadius: '50%', background: isMotor ? 'rgba(var(--k-accent-rgb),0.15)' : 'rgba(var(--k-primary-rgb),0.15)', border: `2px solid ${isMotor ? 'rgba(var(--k-accent-rgb),0.3)' : 'rgba(var(--k-primary-rgb),0.3)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
             {isMotor ? '🏍️' : '🚗'}
           </div>
           <div>
@@ -80,11 +80,11 @@ function ReviewCard({ mitra: m, onApprove, onReject, onViewImg }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {!hasAllDocs && (
-            <span style={{ fontSize: 11, color: 'var(--k-danger)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(192,67,92,0.1)', border: '1px solid rgba(192,67,92,0.2)' }}>
+            <span style={{ fontSize: 11, color: 'var(--k-danger)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(var(--k-danger-rgb),0.1)', border: '1px solid rgba(var(--k-danger-rgb),0.2)' }}>
               ⚠ Dokumen belum lengkap
             </span>
           )}
-          <span style={{ fontSize: 11, color: 'var(--k-warn)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(184,134,11,0.12)', border: '1px solid rgba(184,134,11,0.3)' }}>
+          <span style={{ fontSize: 11, color: 'var(--k-warn)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(var(--k-warn-rgb),0.12)', border: '1px solid rgba(var(--k-warn-rgb),0.3)' }}>
             ⏳ Menunggu Review
           </span>
           <button onClick={() => setExpanded(e => !e)} style={{ padding: '5px 12px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>
@@ -141,7 +141,7 @@ function ReviewCard({ mitra: m, onApprove, onReject, onViewImg }) {
                     const doc = docs.find(d => d.type === type)
                     const meta = DOC_LABELS[type]
                     return (
-                      <div key={type} style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${doc ? 'var(--k-border)' : 'rgba(192,67,92,0.2)'}`, background: 'var(--k-input)' }}>
+                      <div key={type} style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${doc ? 'var(--k-border)' : 'rgba(var(--k-danger-rgb),0.2)'}`, background: 'var(--k-input)' }}>
                         <div style={{ padding: '8px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: doc?.file_path ? '1px solid var(--k-border)' : 'none' }}>
                           <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--k-text)' }}>{meta.emoji} {meta.label}</span>
                           {doc ? (
@@ -173,11 +173,11 @@ function ReviewCard({ mitra: m, onApprove, onReject, onViewImg }) {
 
         {/* Inline reject form */}
         {showReject && (
-          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(192,67,92,0.05)', border: '1px solid rgba(192,67,92,0.2)' }}>
+          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(var(--k-danger-rgb),0.05)', border: '1px solid rgba(var(--k-danger-rgb),0.2)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-danger)', marginBottom: 8 }}>Alasan penolakan:</p>
             <textarea value={reason} onChange={e => setReason(e.target.value)} rows={2}
               placeholder="Contoh: Foto KTP buram, mohon upload ulang dengan kualitas lebih baik..."
-              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
+              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(var(--k-danger-rgb),0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               <button onClick={() => { setShowReject(false); setReason('') }}
                 style={{ flex: 1, padding: '9px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
@@ -195,7 +195,7 @@ function ReviewCard({ mitra: m, onApprove, onReject, onViewImg }) {
         {!showReject && (
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setShowReject(true)} disabled={busy}
-              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.35)', background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
+              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(var(--k-danger-rgb),0.35)', background: 'rgba(var(--k-danger-rgb),0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
               ✕ Tolak
             </button>
             <button onClick={handleApprove} disabled={busy || docs.length === 0}
@@ -279,7 +279,7 @@ export default function AdminMitraReviewPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Review Mitra ZasaGo</h2>
           {total > 0 && (
-            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(184,134,11,0.15)', color: 'var(--k-warn)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(184,134,11,0.35)' }}>
+            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(var(--k-warn-rgb),0.15)', color: 'var(--k-warn)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(var(--k-warn-rgb),0.35)' }}>
               {total} menunggu
             </span>
           )}

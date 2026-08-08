@@ -94,7 +94,7 @@ export default function ZasaHomePage() {
                 style={{
                   padding: '14px 8px', borderRadius: 16, border: 'none', cursor: 'pointer',
                   background: active ? c.grad : 'var(--k-card)',
-                  boxShadow: active ? '0 4px 16px rgba(40,55,75,0.3)' : 'none',
+                  boxShadow: active ? '0 4px 16px rgba(var(--k-primary-rgb),0.3)' : 'none',
                   transition: 'all 0.2s',
                 }}>
                 <div style={{ fontSize: 22, marginBottom: 4 }}>{c.emoji}</div>
@@ -154,7 +154,7 @@ function ProviderCard({ provider: p, onClick }) {
         {p.banner_path && <img src={storageUrl(p.banner_path, p.updated_at)} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.25)' }} />
         {/* Status badge */}
-        <span style={{ position: 'absolute', top: 8, right: 10, fontSize: 10, fontWeight: 800, padding: '3px 9px', borderRadius: 20, background: p.is_open ? 'rgba(46,125,91,0.9)' : 'rgba(0,0,0,0.5)', color: '#fff', backdropFilter: 'blur(4px)' }}>
+        <span style={{ position: 'absolute', top: 8, right: 10, fontSize: 10, fontWeight: 800, padding: '3px 9px', borderRadius: 20, background: p.is_open ? 'rgba(var(--k-accent-rgb),0.9)' : 'rgba(0,0,0,0.5)', color: '#fff', backdropFilter: 'blur(4px)' }}>
           {p.is_open ? '● Buka' : '○ Tutup'}
         </span>
       </div>
@@ -184,7 +184,7 @@ function ProviderCard({ provider: p, onClick }) {
               </span>
             )}
             {p.experience_years > 0 && (
-              <span style={{ fontSize: 10, fontWeight: 600, padding: '3px 9px', borderRadius: 20, background: 'rgba(40,55,75,0.1)', color: 'var(--k-primary)' }}>
+              <span style={{ fontSize: 10, fontWeight: 600, padding: '3px 9px', borderRadius: 20, background: 'rgba(var(--k-primary-rgb),0.1)', color: 'var(--k-primary)' }}>
                 {p.experience_years} thn
               </span>
             )}

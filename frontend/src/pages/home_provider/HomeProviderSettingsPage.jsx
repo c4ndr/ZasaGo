@@ -205,7 +205,7 @@ export default function HomeProviderSettingsPage() {
             <button onClick={handleToggleOpen} style={{
               padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer',
               fontWeight: 700, fontSize: 13,
-              background: provider?.is_open ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)',
+              background: provider?.is_open ? 'rgba(var(--k-danger-rgb),0.12)' : 'rgba(var(--k-accent-rgb),0.12)',
               color: provider?.is_open ? 'var(--k-danger)' : 'var(--k-accent)',
             }}>
               {provider?.is_open ? 'Tutup Usaha' : 'Buka Usaha'}
@@ -438,7 +438,7 @@ export default function HomeProviderSettingsPage() {
                     />
                     <button type="button"
                       onClick={() => setForm(f => ({ ...f, certificates: (f.certificates ?? []).filter((_, j) => j !== i) }))}
-                      style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(192,67,92,0.4)', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', cursor: 'pointer', fontSize: 16 }}>
+                      style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(var(--k-danger-rgb),0.4)', background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)', cursor: 'pointer', fontSize: 16 }}>
                       ✕
                     </button>
                   </div>
@@ -464,8 +464,8 @@ export default function HomeProviderSettingsPage() {
           </button>
 
           <button type="button" onClick={() => { if (confirm('Keluar dari akun?')) { logout(); navigate('/login') } }} style={{
-            padding: '12px', borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.4)',
-            background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)',
+            padding: '12px', borderRadius: 12, border: '1.5px solid rgba(var(--k-danger-rgb),0.4)',
+            background: 'rgba(var(--k-danger-rgb),0.06)', color: 'var(--k-danger)',
             fontWeight: 700, fontSize: 14, cursor: 'pointer',
           }}>
             Keluar (Logout)

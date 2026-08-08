@@ -107,7 +107,7 @@ export default function HomeProviderPage() {
         <span style={{
           position: 'absolute', top: 52, right: 16, fontSize: 12, fontWeight: 800,
           padding: '5px 14px', borderRadius: 20, backdropFilter: 'blur(8px)',
-          background: provider.is_open ? 'rgba(46,125,91,0.85)' : 'rgba(0,0,0,0.55)',
+          background: provider.is_open ? 'rgba(var(--k-accent-rgb),0.85)' : 'rgba(0,0,0,0.55)',
           color: '#fff',
         }}>
           {provider.is_open ? '● Buka' : '○ Tutup'}
@@ -134,7 +134,7 @@ export default function HomeProviderPage() {
                   </span>
                 )}
                 {provider.experience_years > 0 && (
-                  <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 10px', borderRadius: 20, background: 'rgba(40,55,75,0.1)', color: 'var(--k-primary)' }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 10px', borderRadius: 20, background: 'rgba(var(--k-primary-rgb),0.1)', color: 'var(--k-primary)' }}>
                     {provider.experience_years} thn pengalaman
                   </span>
                 )}
@@ -167,7 +167,7 @@ export default function HomeProviderPage() {
                 </span>
               )}
               {provider.experience_years > 0 && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: 'rgba(40,55,75,0.1)', color: 'var(--k-primary)', border: '1px solid rgba(40,55,75,0.3)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: 'rgba(var(--k-primary-rgb),0.1)', color: 'var(--k-primary)', border: '1px solid rgba(var(--k-primary-rgb),0.3)' }}>
                   📅 {provider.experience_years} tahun pengalaman
                 </span>
               )}
@@ -194,7 +194,7 @@ export default function HomeProviderPage() {
 
         {/* Tutup warning */}
         {!provider.is_open && (
-          <div style={{ padding: '10px 14px', borderRadius: 12, background: 'rgba(192,67,92,0.08)', border: '1px solid rgba(192,67,92,0.2)', marginBottom: 14, fontSize: 13, color: 'var(--k-danger)', display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div style={{ padding: '10px 14px', borderRadius: 12, background: 'rgba(var(--k-danger-rgb),0.08)', border: '1px solid rgba(var(--k-danger-rgb),0.2)', marginBottom: 14, fontSize: 13, color: 'var(--k-danger)', display: 'flex', gap: 8, alignItems: 'center' }}>
             <span>⚠️</span> Sedang tutup — Anda tetap bisa memesan, diproses saat buka.
           </div>
         )}
@@ -241,7 +241,7 @@ export default function HomeProviderPage() {
                           <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'var(--k-input)', color: 'var(--k-muted)' }}>Min {sv.min_order} {sv.unit}</span>
                         )}
                         {estDate && (
-                          <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)' }}>📅 Selesai {estDate}</span>
+                          <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'rgba(var(--k-accent-rgb),0.1)', color: 'var(--k-accent)' }}>📅 Selesai {estDate}</span>
                         )}
                       </div>
                     </div>
@@ -251,7 +251,7 @@ export default function HomeProviderPage() {
                       {isKg ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           {qty > 0 && (
-                            <button onClick={() => setKgQty(sv.id, 0)} style={{ width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>✕</button>
+                            <button onClick={() => setKgQty(sv.id, 0)} style={{ width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer', background: 'rgba(var(--k-danger-rgb),0.12)', color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>✕</button>
                           )}
                           <div style={{ position: 'relative' }}>
                             <input type="number" value={qty || ''} onChange={e => setKgQty(sv.id, e.target.value, sv.min_order)}

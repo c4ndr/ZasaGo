@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(var(--k-accent-rgb),0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -154,8 +154,8 @@ export default function LayananPage() {
       <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Intro */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 20, padding: '22px 20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 140, height: 140, borderRadius: '50%', background: 'rgba(46,125,91,0.06)' }} />
-          <p style={{ fontSize: 11, color: 'rgba(46,125,91,0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 8px' }}>ZasaQu Ecosystem</p>
+          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 140, height: 140, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.06)' }} />
+          <p style={{ fontSize: 11, color: 'rgba(var(--k-accent-rgb),0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 8px' }}>ZasaQu Ecosystem</p>
           <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: '0 0 8px', lineHeight: 1.3 }}>Satu Aplikasi,{'\n'}Semua Kebutuhan</p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0, lineHeight: 1.6 }}>ZasaQu menghadirkan 6 layanan terintegrasi untuk memudahkan kehidupan sehari-hari Anda.</p>
         </div>

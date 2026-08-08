@@ -72,7 +72,7 @@ export default function ReportComplaintModal({ orderType, orderId, onClose, onSu
             <button key={r.key} onClick={() => setReason(r.key)} style={{
               padding: '8px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, cursor: 'pointer',
               border: reason === r.key ? '1.5px solid var(--k-accent)' : '1px solid var(--k-border)',
-              background: reason === r.key ? 'rgba(46,125,91,0.1)' : 'transparent',
+              background: reason === r.key ? 'rgba(var(--k-accent-rgb),0.1)' : 'transparent',
               color: reason === r.key ? 'var(--k-accent)' : 'var(--k-sub)',
             }}>
               {r.label}

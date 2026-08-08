@@ -95,8 +95,8 @@ export default function AdminMartProductsPage() {
                 disabled={toggling === p.id}
                 style={{
                   flexShrink: 0, padding: '8px 14px', borderRadius: 10, cursor: 'pointer', fontWeight: 700, fontSize: 12,
-                  border: `1px solid ${p.is_active ? 'rgba(192,67,92,0.25)' : 'rgba(34,197,94,0.25)'}`,
-                  background: p.is_active ? 'rgba(192,67,92,0.08)' : 'rgba(34,197,94,0.08)',
+                  border: `1px solid ${p.is_active ? 'rgba(var(--k-danger-rgb),0.25)' : 'rgba(34,197,94,0.25)'}`,
+                  background: p.is_active ? 'rgba(var(--k-danger-rgb),0.08)' : 'rgba(34,197,94,0.08)',
                   color: p.is_active ? 'var(--k-danger)' : '#22C55E',
                   opacity: toggling === p.id ? 0.6 : 1,
                 }}

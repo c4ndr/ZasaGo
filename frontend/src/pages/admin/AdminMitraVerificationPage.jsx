@@ -167,7 +167,7 @@ function MitraDrawer({ mitra, onClose, onUpdated }) {
                 }} />
               <button onClick={handleReject} disabled={loading || !reason.trim()} style={{
                 width: '100%', padding: '13px', borderRadius: 12, border: 'none', cursor: 'pointer',
-                background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14,
+                background: 'rgba(var(--k-danger-rgb),0.12)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14,
                 opacity: (loading || !reason.trim()) ? 0.5 : 1,
               }}>✗ Tolak Permohonan</button>
             </div>
@@ -219,8 +219,8 @@ export default function AdminMitraVerificationPage() {
         {mitras.length > 0 && (
           <span style={{
             padding: '6px 16px', borderRadius: 20, fontSize: 13, fontWeight: 700,
-            background: 'rgba(184,134,11,0.15)', color: 'var(--k-warn)',
-            border: '1px solid rgba(184,134,11,0.3)',
+            background: 'rgba(var(--k-warn-rgb),0.15)', color: 'var(--k-warn)',
+            border: '1px solid rgba(var(--k-warn-rgb),0.3)',
           }}>{meta.total ?? mitras.length} menunggu</span>
         )}
       </div>
@@ -270,7 +270,7 @@ export default function AdminMitraVerificationPage() {
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
                   <div style={{
                     padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700,
-                    background: uploaded >= 4 ? 'rgba(46,125,91,0.12)' : 'rgba(184,134,11,0.12)',
+                    background: uploaded >= 4 ? 'rgba(var(--k-accent-rgb),0.12)' : 'rgba(var(--k-warn-rgb),0.12)',
                     color: uploaded >= 4 ? 'var(--k-accent)' : 'var(--k-warn)',
                     marginBottom: 4,
                   }}>{uploaded}/4 dokumen</div>

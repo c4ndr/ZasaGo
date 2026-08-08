@@ -230,7 +230,7 @@ export default function AddressPicker({ value, onChange, onGpsLoading }) {
                     {addr.is_default && (
                       <span style={{
                         fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 6,
-                        background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
+                        background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)',
                       }}>
                         Default
                       </span>

@@ -4,15 +4,20 @@
    halaman/komponen. Jangan duplikasi definisi ini
    di file lain, import dari sini. */
 
+/* `rgb` di sini sengaja referensi var(--k-x-rgb) (bukan angka
+   statis) supaya rgba(${SVC.x.rgb},alpha) yang dipakai svcShadow()
+   dkk ikut berubah otomatis pas dark mode — dulu statis jadi
+   shadow/glow kartu kebawa gelap terus walau kartunya sudah
+   berubah warna. */
 export const SVC = {
-  zasago:   { bg: 'var(--k-zasago-bg)',   fg: 'var(--k-zasago-fg)',   rgb: '27,72,101' },
-  zasafood: { bg: 'var(--k-zasafood-bg)', fg: 'var(--k-zasafood-fg)', rgb: '33,96,70' },
-  jastip:   { bg: 'var(--k-jastip-bg)',   fg: 'var(--k-jastip-fg)',   rgb: '130,45,79' },
-  zasashop: { bg: 'var(--k-zasashop-bg)', fg: 'var(--k-zasashop-fg)', rgb: '130,71,7' },
-  zasahome: { bg: 'var(--k-zasahome-bg)', fg: 'var(--k-zasahome-fg)', rgb: '72,46,111' },
-  zasaride: { bg: 'var(--k-zasaride-bg)', fg: 'var(--k-zasaride-fg)', rgb: '22,86,89' },
-  zasaserv: { bg: 'var(--k-zasaserv-bg)', fg: 'var(--k-zasaserv-fg)', rgb: '108,82,16' },
-  wallet:   { bg: 'var(--k-wallet-bg)',   fg: 'var(--k-wallet-fg)',   rgb: '98,58,24' },
+  zasago:   { bg: 'var(--k-zasago-bg)',   fg: 'var(--k-zasago-fg)',   rgb: 'var(--k-zasago-rgb)' },
+  zasafood: { bg: 'var(--k-zasafood-bg)', fg: 'var(--k-zasafood-fg)', rgb: 'var(--k-zasafood-rgb)' },
+  jastip:   { bg: 'var(--k-jastip-bg)',   fg: 'var(--k-jastip-fg)',   rgb: 'var(--k-jastip-rgb)' },
+  zasashop: { bg: 'var(--k-zasashop-bg)', fg: 'var(--k-zasashop-fg)', rgb: 'var(--k-zasashop-rgb)' },
+  zasahome: { bg: 'var(--k-zasahome-bg)', fg: 'var(--k-zasahome-fg)', rgb: 'var(--k-zasahome-rgb)' },
+  zasaride: { bg: 'var(--k-zasaride-bg)', fg: 'var(--k-zasaride-fg)', rgb: 'var(--k-zasaride-rgb)' },
+  zasaserv: { bg: 'var(--k-zasaserv-bg)', fg: 'var(--k-zasaserv-fg)', rgb: 'var(--k-zasaserv-rgb)' },
+  wallet:   { bg: 'var(--k-wallet-bg)',   fg: 'var(--k-wallet-fg)',   rgb: 'var(--k-wallet-rgb)' },
 }
 
 /* Shadow neumorphic — [kontak] + [ambient menyebar,
@@ -24,22 +29,12 @@ export function svcShadow(rgb, strong = false) {
     : `0 5px 12px rgba(${rgb},0.18), 0 22px 36px -12px rgba(${rgb},0.34), inset 0 1.5px 0 rgba(255,255,255,0.65), inset 0 -6px 11px -8px rgba(${rgb},0.32)`
 }
 
-/* Highlight glossy — sorot lembut di atas (tetap di
-   dark mode) + garis kilat diagonal (khusus light mode
-   — disembunyikan otomatis di dark via CSS .gloss-streak). */
+/* Dulu ada highlight glossy (sorot atas + garis kilat
+   diagonal) di sini, tapi kesannya kelewat "berkilap"
+   di atas kartu berwarna — dihapus. Dipertahankan sebagai
+   komponen kosong supaya semua pemanggil `<Gloss />` yang
+   sudah tersebar di banyak halaman tetap valid tanpa perlu
+   diubah satu-satu. */
 export function Gloss() {
-  return (
-    <>
-      <div style={{
-        position: 'absolute', left: '-10%', top: '-45%', width: '120%', height: '70%',
-        background: 'radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.14) 45%, rgba(255,255,255,0) 75%)',
-        pointerEvents: 'none',
-      }} />
-      <div className="gloss-streak" style={{
-        position: 'absolute', top: '-40%', left: '-15%', width: '55%', height: '200%',
-        background: 'linear-gradient(75deg, rgba(255,255,255,0) 25%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.15) 56%, rgba(255,255,255,0) 68%)',
-        pointerEvents: 'none',
-      }} />
-    </>
-  )
+  return null
 }

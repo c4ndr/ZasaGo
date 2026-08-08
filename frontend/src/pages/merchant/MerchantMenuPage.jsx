@@ -52,7 +52,7 @@ function ItemModal({ item, categories, onClose, onSaved }) {
       onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{ background: 'var(--k-card)', borderRadius: '20px 20px 0 0', padding: '24px 20px', width: '100%', maxWidth: 520, maxHeight: '92vh', overflowY: 'auto' }}>
         <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 20 }}>{item ? 'Edit Item' : 'Tambah Item Baru'}</div>
-        {err && <div style={{ color: 'var(--k-danger)', fontSize: 13, marginBottom: 12, padding: '8px 12px', background: 'rgba(192,67,92,0.08)', borderRadius: 8 }}>{err}</div>}
+        {err && <div style={{ color: 'var(--k-danger)', fontSize: 13, marginBottom: 12, padding: '8px 12px', background: 'rgba(var(--k-danger-rgb),0.08)', borderRadius: 8 }}>{err}</div>}
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {/* Foto */}
@@ -361,7 +361,7 @@ export default function MerchantMenuPage() {
                     padding: '7px 14px', borderRadius: 8, border: 'none',
                     cursor: togglingId === item.id ? 'default' : 'pointer', fontSize: 12, fontWeight: 700,
                     opacity: togglingId === item.id ? 0.6 : 1,
-                    background: item.is_available ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)',
+                    background: item.is_available ? 'rgba(var(--k-danger-rgb),0.12)' : 'rgba(var(--k-accent-rgb),0.12)',
                     color: item.is_available ? '#DC2626' : '#027A48',
                   }}>
                     {togglingId === item.id ? '...' : item.is_available ? 'Habis' : 'Tersedia'}
@@ -374,7 +374,7 @@ export default function MerchantMenuPage() {
                     }}>Edit</button>
                     <button onClick={() => askDeleteItem(item)} style={{
                       padding: '7px 9px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                      background: 'rgba(192,67,92,0.1)', color: '#DC2626', fontSize: 14,
+                      background: 'rgba(var(--k-danger-rgb),0.1)', color: '#DC2626', fontSize: 14,
                     }}>🗑</button>
                   </div>
                 </div>

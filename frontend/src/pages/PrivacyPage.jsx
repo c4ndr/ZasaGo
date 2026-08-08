@@ -65,7 +65,7 @@ export default function PrivacyPage() {
 
       <div style={{ padding: '16px' }}>
         {/* Intro */}
-        <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '16px', border: '1px solid rgba(40,55,75,0.2)', marginBottom: 16 }}>
+        <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '16px', border: '1px solid rgba(var(--k-primary-rgb),0.2)', marginBottom: 16 }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             <strong>ZasaQu</strong> berkomitmen melindungi privasi Anda. Dokumen ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai peraturan yang berlaku di Indonesia.
           </p>

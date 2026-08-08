@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(var(--k-accent-rgb),0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -76,9 +76,9 @@ export default function DaftarMitraPage() {
       <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Hero */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 20, padding: '24px 20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 160, height: 160, borderRadius: '50%', background: 'rgba(46,125,91,0.06)' }} />
-          <div style={{ position: 'absolute', left: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(184,134,11,0.05)' }} />
-          <p style={{ fontSize: 11, color: 'rgba(46,125,91,0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px' }}>Program Mitra ZasaQu</p>
+          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 160, height: 160, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.06)' }} />
+          <div style={{ position: 'absolute', left: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(var(--k-warn-rgb),0.05)' }} />
+          <p style={{ fontSize: 11, color: 'rgba(var(--k-accent-rgb),0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px' }}>Program Mitra ZasaQu</p>
           <p style={{ fontSize: 22, fontWeight: 900, color: '#fff', margin: '0 0 10px', lineHeight: 1.3 }}>Penghasilan Lebih,{'\n'}Waktu Bebas</p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: '0 0 20px', lineHeight: 1.6 }}>Bergabunglah dengan ribuan mitra ZasaQu dan mulai hasilkan pendapatan tambahan dengan cara yang fleksibel.</p>
           <button onClick={() => navigate('/register')}
@@ -133,7 +133,7 @@ export default function DaftarMitraPage() {
           <div style={{ background: 'var(--k-card)', borderRadius: 16, border: '1px solid var(--k-border)', padding: '18px', display: 'flex', flexDirection: 'column', gap: 14 }}>
             {HOW_TO_REGISTER.map((item, i) => (
               <div key={item.step} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(46,125,91,0.12)', border: '2px solid rgba(46,125,91,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(var(--k-accent-rgb),0.12)', border: '2px solid rgba(var(--k-accent-rgb),0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-accent)' }}>{item.step}</span>
                 </div>
                 <div style={{ flex: 1, paddingTop: 2 }}>
@@ -146,7 +146,7 @@ export default function DaftarMitraPage() {
         </div>
 
         {/* Syarat umum */}
-        <div style={{ background: 'var(--k-primary-bg)', borderRadius: 16, padding: '16px', border: '1px solid rgba(40,55,75,0.2)' }}>
+        <div style={{ background: 'var(--k-primary-bg)', borderRadius: 16, padding: '16px', border: '1px solid rgba(var(--k-primary-rgb),0.2)' }}>
           <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-primary)', margin: '0 0 10px' }}>📋 Syarat Umum Semua Mitra</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {[
@@ -167,7 +167,7 @@ export default function DaftarMitraPage() {
         {/* CTA buttons */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <button onClick={() => navigate('/register')}
-            style={{ width: '100%', padding: '16px', borderRadius: 14, border: 'none', background: 'var(--k-accent)', color: '#0C0C16', fontWeight: 900, fontSize: 16, cursor: 'pointer', boxShadow: '0 6px 20px rgba(46,125,91,0.25)' }}>
+            style={{ width: '100%', padding: '16px', borderRadius: 14, border: 'none', background: 'var(--k-accent)', color: '#0C0C16', fontWeight: 900, fontSize: 16, cursor: 'pointer', boxShadow: '0 6px 20px rgba(var(--k-accent-rgb),0.25)' }}>
             Daftar Jadi Mitra Sekarang
           </button>
           <div style={{ display: 'flex', gap: 10 }}>

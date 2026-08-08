@@ -77,7 +77,7 @@ function ReviewCard({ merchant: m, onApprove, onReject }) {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 11, color: 'var(--k-warn)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(184,134,11,0.12)', border: '1px solid rgba(184,134,11,0.3)' }}>
+          <span style={{ fontSize: 11, color: 'var(--k-warn)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(var(--k-warn-rgb),0.12)', border: '1px solid rgba(var(--k-warn-rgb),0.3)' }}>
             ⏳ Menunggu Review
           </span>
           <button onClick={toggleExpand} style={{ padding: '5px 12px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>
@@ -185,7 +185,7 @@ function ReviewCard({ merchant: m, onApprove, onReject }) {
                                   </div>
                                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
                                     <p style={{ fontSize: 13, fontWeight: 700, color: SVC.zasafood.fg }}>{fmtRp(item.price)}</p>
-                                    <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 20, background: item.is_available ? 'rgba(46,125,91,0.12)' : 'rgba(156,163,175,0.15)', color: item.is_available ? 'var(--k-accent)' : '#9CA3AF', fontWeight: 600 }}>
+                                    <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 20, background: item.is_available ? 'rgba(var(--k-accent-rgb),0.12)' : 'rgba(156,163,175,0.15)', color: item.is_available ? 'var(--k-accent)' : '#9CA3AF', fontWeight: 600 }}>
                                       {item.is_available ? 'Tersedia' : 'Habis'}
                                     </span>
                                   </div>
@@ -211,11 +211,11 @@ function ReviewCard({ merchant: m, onApprove, onReject }) {
 
         {/* Inline reject form */}
         {showReject && (
-          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(192,67,92,0.05)', border: '1px solid rgba(192,67,92,0.2)' }}>
+          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(var(--k-danger-rgb),0.05)', border: '1px solid rgba(var(--k-danger-rgb),0.2)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-danger)', marginBottom: 8 }}>Alasan penolakan:</p>
             <textarea value={reason} onChange={e => setReason(e.target.value)} rows={2}
               placeholder="Contoh: Foto menu tidak lengkap, mohon lengkapi informasi restoran..."
-              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
+              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(var(--k-danger-rgb),0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               <button onClick={() => { setShowReject(false); setReason('') }}
                 style={{ flex: 1, padding: '9px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
@@ -233,7 +233,7 @@ function ReviewCard({ merchant: m, onApprove, onReject }) {
         {!showReject && (
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setShowReject(true)} disabled={busy}
-              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.35)', background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
+              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(var(--k-danger-rgb),0.35)', background: 'rgba(var(--k-danger-rgb),0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
               ✕ Tolak
             </button>
             <button onClick={handleApprove} disabled={busy}
@@ -311,7 +311,7 @@ export default function AdminFoodMerchantReviewPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Review Merchant ZasaFood</h2>
           {total > 0 && (
-            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(184,134,11,0.15)', color: 'var(--k-warn)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(184,134,11,0.35)' }}>
+            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(var(--k-warn-rgb),0.15)', color: 'var(--k-warn)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(var(--k-warn-rgb),0.35)' }}>
               {total} menunggu
             </span>
           )}

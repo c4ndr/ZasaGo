@@ -7,9 +7,9 @@ function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
 const STATUS_META = {
-  pending:   { label: 'Pending',   color: 'var(--k-warn)',   bg: 'rgba(184,134,11,0.12)' },
-  active:    { label: 'Aktif',     color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.12)'  },
-  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.12)'  },
+  pending:   { label: 'Pending',   color: 'var(--k-warn)',   bg: 'rgba(var(--k-warn-rgb),0.12)' },
+  active:    { label: 'Aktif',     color: 'var(--k-accent)', bg: 'rgba(var(--k-accent-rgb),0.12)'  },
+  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(var(--k-danger-rgb),0.12)'  },
 }
 
 const CAT_LABEL = { laundry: 'Laundry', pijat: 'Pijat', cleaning: 'Cleaning', tukang: 'Tukang', lainnya: 'Lainnya' }
@@ -52,7 +52,7 @@ function CreateModal({ onClose, onCreated }) {
           <h2 style={{ fontWeight: 800, fontSize: 17 }}>Tambah Provider</h2>
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: 'var(--k-muted)' }}>×</button>
         </div>
-        {error && <div style={{ marginBottom: 14, padding: '10px 14px', borderRadius: 10, background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontSize: 13 }}>{error}</div>}
+        {error && <div style={{ marginBottom: 14, padding: '10px 14px', borderRadius: 10, background: 'rgba(var(--k-danger-rgb),0.1)', color: 'var(--k-danger)', fontSize: 13 }}>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gap: 12 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
@@ -99,7 +99,7 @@ function ProviderDetail({ provider: p, stats, onApprove, onSuspend, onClose }) {
         <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
           <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: sm.bg, color: sm.color }}>{sm.label}</span>
           <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: 'var(--k-input)', color: 'var(--k-muted)' }}>{CAT_LABEL[p.category] ?? p.category}</span>
-          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: p.is_open ? 'rgba(46,125,91,0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>{p.is_open ? 'Buka' : 'Tutup'}</span>
+          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: p.is_open ? 'rgba(var(--k-accent-rgb),0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>{p.is_open ? 'Buka' : 'Tutup'}</span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
           {[['Total Order', stats?.total_orders], ['Selesai', stats?.completed_orders], ['Pending', stats?.pending_orders], ['Revenue', fmtRp(stats?.total_revenue)]].map(([l, v]) => (
@@ -129,12 +129,12 @@ function ProviderDetail({ provider: p, stats, onApprove, onSuspend, onClose }) {
         )}
         <div style={{ display: 'flex', gap: 10 }}>
           {p.status !== 'active' && (
-            <button onClick={onApprove} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={onApprove} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)', fontWeight: 700, fontSize: 13 }}>
               ✓ Setujui
             </button>
           )}
           {p.status !== 'suspended' && (
-            <button onClick={onSuspend} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={onSuspend} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
               Suspend
             </button>
           )}
@@ -266,7 +266,7 @@ export default function AdminHomeProvidersPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
                   <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
                   <div style={{ display: 'flex', gap: 8, fontSize: 11, color: 'var(--k-muted)' }}>
-                    <span style={{ padding: '2px 8px', borderRadius: 10, background: p.is_open ? 'rgba(46,125,91,0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>
+                    <span style={{ padding: '2px 8px', borderRadius: 10, background: p.is_open ? 'rgba(var(--k-accent-rgb),0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>
                       {p.is_open ? 'Buka' : 'Tutup'}
                     </span>
                     <span>{p.orders_count ?? 0} order</span>

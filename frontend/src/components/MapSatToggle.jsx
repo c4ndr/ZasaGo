@@ -6,7 +6,7 @@ export default function MapSatToggle({ mapType, onToggle, style = {} }) {
       style={{
         position: 'absolute', bottom: 8, left: 8, zIndex: 5,
         padding: '5px 10px', borderRadius: 8, border: 'none',
-        background: isSat ? 'rgba(46,125,91,0.85)' : 'rgba(12,12,22,0.82)',
+        background: isSat ? 'rgba(var(--k-accent-rgb),0.85)' : 'rgba(12,12,22,0.82)',
         backdropFilter: 'blur(8px)',
         color: '#fff', fontSize: 11, fontWeight: 700, cursor: 'pointer',
         display: 'flex', alignItems: 'center', gap: 4,

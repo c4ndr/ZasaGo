@@ -4,7 +4,7 @@ import RoadPolyline from './RoadPolyline'
 import MapSatToggle from './MapSatToggle'
 import { fitGoogleMap } from '../utils/geo'
 
-const originStyle = { width: 30, height: 30, borderRadius: '50%', background: 'var(--k-accent)', border: '3px solid #fff', boxShadow: '0 2px 8px rgba(46,125,91,.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 13, transform: 'translate(-50%,-50%)' }
+const originStyle = { width: 30, height: 30, borderRadius: '50%', background: 'var(--k-accent)', border: '3px solid #fff', boxShadow: '0 2px 8px rgba(var(--k-accent-rgb),.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 13, transform: 'translate(-50%,-50%)' }
 const destStyle   = { ...originStyle, background: '#818CF8', boxShadow: '0 2px 8px rgba(129,140,248,.5)' }
 
 const MAP_OPTIONS = { disableDefaultUI: true, gestureHandling: 'none', clickableIcons: false }

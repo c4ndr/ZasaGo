@@ -96,7 +96,7 @@ export default function MerchantLocationPicker({ lat, lng, onPick }) {
         </p>
         <button type="button" onClick={detectGps} disabled={locating || geocoding}
           style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700, flexShrink: 0,
-            background: 'var(--k-primary-bg)', color: 'var(--k-primary)', border: '1px solid rgba(40,55,75,0.25)',
+            background: 'var(--k-primary-bg)', color: 'var(--k-primary)', border: '1px solid rgba(var(--k-primary-rgb),0.25)',
             borderRadius: 8, padding: '5px 10px', cursor: (locating || geocoding) ? 'not-allowed' : 'pointer',
             opacity: (locating || geocoding) ? 0.6 : 1, marginLeft: 8 }}>
           {locating

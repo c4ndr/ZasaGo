@@ -150,7 +150,7 @@ function UserWalletModal({ user, onClose, onRefresh }) {
             </div>
 
             {mode === 'debit' && (
-              <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(192,67,92,0.06)', border: '1px solid rgba(192,67,92,0.2)', marginBottom: 12 }}>
+              <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(var(--k-danger-rgb),0.06)', border: '1px solid rgba(var(--k-danger-rgb),0.2)', marginBottom: 12 }}>
                 <p style={{ color: 'var(--k-danger)', fontSize: 12, fontWeight: 600 }}>⚠️ Pengurangan saldo akan dicatat di audit log dan riwayat transaksi user.</p>
               </div>
             )}
@@ -182,7 +182,7 @@ function UserWalletModal({ user, onClose, onRefresh }) {
               </div>
 
               {msg && (
-                <div style={{ padding: '10px 12px', borderRadius: 10, background: msg.startsWith('✓') ? 'rgba(16,185,129,0.08)' : 'rgba(192,67,92,0.08)', border: `1px solid ${msg.startsWith('✓') ? '#10B981' : '#C0435C'}44` }}>
+                <div style={{ padding: '10px 12px', borderRadius: 10, background: msg.startsWith('✓') ? 'rgba(16,185,129,0.08)' : 'rgba(var(--k-danger-rgb),0.08)', border: `1px solid ${msg.startsWith('✓') ? '#10B981' : '#C0435C'}44` }}>
                   <p style={{ fontSize: 13, fontWeight: 600, color: msg.startsWith('✓') ? '#10B981' : 'var(--k-danger)', margin: 0 }}>{msg}</p>
                 </div>
               )}
@@ -351,7 +351,7 @@ export default function AdminWalletPage() {
                     return (
                       <div key={u.id} onClick={() => setSelected(u)}
                         style={{ background: 'var(--k-card)', borderRadius: 14, padding: '14px 16px', border: '1px solid var(--k-border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(40,55,75,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
+                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(var(--k-primary-rgb),0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                             <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
@@ -399,7 +399,7 @@ export default function AdminWalletPage() {
                     const user     = tx.wallet?.user
                     return (
                       <div key={tx.id} style={{ background: 'var(--k-card)', borderRadius: 14, padding: '14px 16px', border: `1px solid ${isCredit ? '#10B981' : '#C0435C'}33`, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: isCredit ? 'rgba(16,185,129,0.12)' : 'rgba(192,67,92,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
+                        <div style={{ width: 40, height: 40, borderRadius: 12, background: isCredit ? 'rgba(16,185,129,0.12)' : 'rgba(var(--k-danger-rgb),0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
                           {isCredit ? '⬆️' : '⬇️'}
                         </div>
                         <div style={{ flex: 1 }}>

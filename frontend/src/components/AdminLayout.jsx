@@ -172,8 +172,8 @@ function PendingPopover({ counts }) {
     <div ref={ref} style={{ position: 'relative' }}>
       <button onClick={() => setOpen(o => !o)} style={{
         display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px',
-        borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)',
-        background: open ? 'rgba(192,67,92,0.1)' : 'transparent',
+        borderRadius: 8, border: '1px solid rgba(var(--k-danger-rgb),0.3)',
+        background: open ? 'rgba(var(--k-danger-rgb),0.1)' : 'transparent',
         cursor: 'pointer', color: 'var(--k-danger)', fontWeight: 700, fontSize: 12,
       }}>
         <span>🔔</span>
@@ -241,7 +241,7 @@ function UserMenu() {
       }}>
         <div style={{
           width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-          background: 'var(--k-primary-bg)', border: '1.5px solid rgba(40,55,75,0.3)',
+          background: 'var(--k-primary-bg)', border: '1.5px solid rgba(var(--k-primary-rgb),0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 12, fontWeight: 800, color: 'var(--k-primary)',
         }}>
@@ -275,7 +275,7 @@ function UserMenu() {
               background: 'transparent', cursor: 'pointer',
               fontSize: 13, fontWeight: 600, color: 'var(--k-danger)',
             }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(192,67,92,0.08)'}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--k-danger-rgb),0.08)'}
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
               <span>🚪</span> Keluar
             </button>
@@ -303,7 +303,7 @@ function Sidebar({ onNavClick, counts }) {
           background: 'linear-gradient(135deg,var(--k-primary),var(--k-primary2))',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontWeight: 900, fontSize: 17, color: '#fff',
-          boxShadow: '0 2px 8px rgba(40,55,75,0.35)',
+          boxShadow: '0 2px 8px rgba(var(--k-primary-rgb),0.35)',
         }}>Z</div>
         <div>
           <p style={{ fontWeight: 800, fontSize: 14, color: 'var(--k-text)', lineHeight: 1.25 }}>{app_name || 'ZasaQu'}</p>

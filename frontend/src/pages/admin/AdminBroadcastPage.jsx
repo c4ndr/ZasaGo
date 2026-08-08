@@ -44,12 +44,12 @@ export default function AdminBroadcastPage() {
         </p>
 
         {result && (
-          <div style={{ background: 'rgba(46,125,91,0.1)', border: '1.5px solid rgba(46,125,91,0.3)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-accent)', fontWeight: 600, fontSize: 14 }}>
+          <div style={{ background: 'rgba(var(--k-accent-rgb),0.1)', border: '1.5px solid rgba(var(--k-accent-rgb),0.3)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-accent)', fontWeight: 600, fontSize: 14 }}>
             ✓ {result}
           </div>
         )}
         {error && (
-          <div style={{ background: 'rgba(192,67,92,0.08)', border: '1.5px solid rgba(192,67,92,0.2)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-danger)', fontSize: 14 }}>
+          <div style={{ background: 'rgba(var(--k-danger-rgb),0.08)', border: '1.5px solid rgba(var(--k-danger-rgb),0.2)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-danger)', fontSize: 14 }}>
             {error}
           </div>
         )}
@@ -63,7 +63,7 @@ export default function AdminBroadcastPage() {
                 <button key={opt.value} type="button" onClick={() => setTarget(opt.value)} style={{
                   padding: '10px 12px', borderRadius: 12, cursor: 'pointer', textAlign: 'left',
                   border: `2px solid ${target === opt.value ? 'var(--k-accent)' : 'var(--k-border)'}`,
-                  background: target === opt.value ? 'rgba(46,125,91,0.08)' : 'var(--k-card)',
+                  background: target === opt.value ? 'rgba(var(--k-accent-rgb),0.08)' : 'var(--k-card)',
                   color: target === opt.value ? 'var(--k-accent)' : 'var(--k-text)',
                   fontWeight: target === opt.value ? 700 : 500, fontSize: 13,
                   transition: 'all 0.15s',

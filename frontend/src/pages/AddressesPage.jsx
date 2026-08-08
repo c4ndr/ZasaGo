@@ -7,8 +7,8 @@ import { getPosition } from '../utils/geo'
 
 const LABELS = ['Rumah', 'Kantor', 'Lainnya']
 const LABEL_COLOR = {
-  Rumah:   { bg: 'rgba(42,95,130,0.12)',   color: 'var(--k-info)' },
-  Kantor:  { bg: 'rgba(46,125,91,0.12)',   color: 'var(--k-accent)' },
+  Rumah:   { bg: 'rgba(var(--k-info-rgb),0.12)',   color: 'var(--k-info)' },
+  Kantor:  { bg: 'rgba(var(--k-accent-rgb),0.12)',   color: 'var(--k-accent)' },
   Lainnya: { bg: 'rgba(148,139,125,0.15)', color: 'var(--k-muted)' },
 }
 const LABEL_EMOJI = { Rumah: '🏠', Kantor: '🏢', Lainnya: '📌' }
@@ -351,7 +351,7 @@ export default function AddressesPage() {
                   {addr.is_default && (
                     <span style={{
                       fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 20,
-                      background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
+                      background: 'rgba(var(--k-accent-rgb),0.12)', color: 'var(--k-accent)',
                     }}>
                       ✓ Default
                     </span>

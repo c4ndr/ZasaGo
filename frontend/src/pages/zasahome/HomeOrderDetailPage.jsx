@@ -223,8 +223,8 @@ export default function HomeOrderDetailPage() {
         {/* Cancel button */}
         {isActive && ['pending', 'confirmed'].includes(order.status) && (
           <button onClick={handleCancel} disabled={cancelling} style={{
-            padding: '13px', borderRadius: 14, border: '1.5px solid rgba(192,67,92,0.4)',
-            background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)',
+            padding: '13px', borderRadius: 14, border: '1.5px solid rgba(var(--k-danger-rgb),0.4)',
+            background: 'rgba(var(--k-danger-rgb),0.06)', color: 'var(--k-danger)',
             fontWeight: 700, fontSize: 14, cursor: cancelling ? 'default' : 'pointer',
           }}>
             {cancelling ? 'Membatalkan...' : 'Batalkan Pesanan'}

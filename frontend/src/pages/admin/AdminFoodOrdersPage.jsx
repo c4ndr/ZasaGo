@@ -7,17 +7,17 @@ function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) }
 
 const STATUS_META = {
-  pending:           { label: 'Menunggu Merchant', color: 'var(--k-warn)',    bg: 'rgba(184,134,11,0.12)',  icon: '⏳', pulse: true  },
+  pending:           { label: 'Menunggu Merchant', color: 'var(--k-warn)',    bg: 'rgba(var(--k-warn-rgb),0.12)',  icon: '⏳', pulse: true  },
   merchant_accepted: { label: 'Diterima',          color: '#63B3ED', bg: 'rgba(99,179,237,0.12)',   icon: '✅', pulse: false },
   preparing:         { label: 'Dimasak',           color: '#9F7AEA', bg: 'rgba(159,122,234,0.12)',  icon: '👨‍🍳', pulse: true  },
-  ready_for_pickup:  { label: 'Siap Diambil',      color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.12)',   icon: '🎉', pulse: true  },
-  mitra_on_pickup:   { label: 'Mitra Menuju Warung', color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)', icon: '🏍️', pulse: true  },
-  picked_up:         { label: 'Diambil Mitra',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)',   icon: '📦', pulse: false },
-  on_delivery:       { label: 'Dalam Perjalanan',  color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)',   icon: '🚀', pulse: true  },
-  delivered:         { label: 'Sampai Tujuan',     color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.15)',   icon: '🎊', pulse: true  },
-  completed:         { label: 'Selesai',           color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.08)',   icon: '⭐', pulse: false },
+  ready_for_pickup:  { label: 'Siap Diambil',      color: 'var(--k-accent)',  bg: 'rgba(var(--k-accent-rgb),0.12)',   icon: '🎉', pulse: true  },
+  mitra_on_pickup:   { label: 'Mitra Menuju Warung', color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.12)', icon: '🏍️', pulse: true  },
+  picked_up:         { label: 'Diambil Mitra',     color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.12)',   icon: '📦', pulse: false },
+  on_delivery:       { label: 'Dalam Perjalanan',  color: 'var(--k-primary)', bg: 'rgba(var(--k-primary-rgb),0.12)',   icon: '🚀', pulse: true  },
+  delivered:         { label: 'Sampai Tujuan',     color: 'var(--k-accent)',  bg: 'rgba(var(--k-accent-rgb),0.15)',   icon: '🎊', pulse: true  },
+  completed:         { label: 'Selesai',           color: 'var(--k-accent)',  bg: 'rgba(var(--k-accent-rgb),0.08)',   icon: '⭐', pulse: false },
   cancelled:         { label: 'Dibatalkan',        color: '#A0A0BC', bg: 'rgba(160,160,188,0.08)', icon: '❌', pulse: false },
-  rejected:          { label: 'Ditolak Merchant',  color: 'var(--k-danger)',  bg: 'rgba(192,67,92,0.08)', icon: '❌', pulse: false },
+  rejected:          { label: 'Ditolak Merchant',  color: 'var(--k-danger)',  bg: 'rgba(var(--k-danger-rgb),0.08)', icon: '❌', pulse: false },
 }
 
 const TABS = [
@@ -78,7 +78,7 @@ function OrderDrawer({ order, onClose }) {
         ))}
 
         {order.notes && (
-          <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(40,55,75,0.07)', border: '1px solid rgba(40,55,75,0.2)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 12 }}>
+          <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(var(--k-primary-rgb),0.07)', border: '1px solid rgba(var(--k-primary-rgb),0.2)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 12 }}>
             📝 {order.notes}
           </div>
         )}
@@ -264,7 +264,7 @@ export default function AdminFoodOrdersPage() {
                         </span>
                         <span style={{
                           padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700,
-                          background: order.payment_method === 'cod' ? 'rgba(40,55,75,0.1)' : 'rgba(46,125,91,0.1)',
+                          background: order.payment_method === 'cod' ? 'rgba(var(--k-primary-rgb),0.1)' : 'rgba(var(--k-accent-rgb),0.1)',
                           color: order.payment_method === 'cod' ? 'var(--k-primary)' : 'var(--k-accent)',
                         }}>{order.payment_method === 'cod' ? 'COD' : 'Wallet'}</span>
                       </div>
@@ -311,8 +311,8 @@ export default function AdminFoodOrdersPage() {
                       {canComplete && (
                         <button onClick={e => { e.stopPropagation(); forceComplete(order.id) }} disabled={actionId === order.id}
                           style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                            background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)',
-                            border: '1px solid rgba(46,125,91,0.25)', cursor: 'pointer',
+                            background: 'rgba(var(--k-accent-rgb),0.1)', color: 'var(--k-accent)',
+                            border: '1px solid rgba(var(--k-accent-rgb),0.25)', cursor: 'pointer',
                             opacity: actionId === order.id ? 0.5 : 1 }}>
                           ✓ Selesaikan
                         </button>
@@ -321,8 +321,8 @@ export default function AdminFoodOrdersPage() {
                       {canCancel && (
                         <button onClick={e => { e.stopPropagation(); setShowCancel(showCancel === order.id ? null : order.id); setCancelReason('') }}
                           style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                            background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)',
-                            border: '1px solid rgba(192,67,92,0.2)', cursor: 'pointer' }}>
+                            background: 'rgba(var(--k-danger-rgb),0.08)', color: 'var(--k-danger)',
+                            border: '1px solid rgba(var(--k-danger-rgb),0.2)', cursor: 'pointer' }}>
                           ✕ Batalkan
                         </button>
                       )}

@@ -24,12 +24,12 @@ export default function AboutPage() {
     <div style={{ minHeight: '100vh', background: 'var(--k-bg)', paddingBottom: 40 }}>
       {/* Hero header */}
       <div style={{ background: 'linear-gradient(135deg,#0C0C16 0%,#1a1a2e 100%)', padding: '20px 20px 50px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', right: -40, top: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(46,125,91,0.06)' }} />
-        <div style={{ position: 'absolute', left: -20, bottom: -40, width: 140, height: 140, borderRadius: '50%', background: 'rgba(46,125,91,0.04)' }} />
+        <div style={{ position: 'absolute', right: -40, top: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.06)' }} />
+        <div style={{ position: 'absolute', left: -20, bottom: -40, width: 140, height: 140, borderRadius: '50%', background: 'rgba(var(--k-accent-rgb),0.04)' }} />
         <button onClick={() => navigate(-1)} style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: 'none', color: '#fff', fontSize: 18, cursor: 'pointer', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>←</button>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, position: 'relative' }}>
           {/* Logo */}
-          <div style={{ width: 80, height: 80, borderRadius: 24, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(46,125,91,0.4)' }}>
+          <div style={{ width: 80, height: 80, borderRadius: 24, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px rgba(var(--k-accent-rgb),0.4)' }}>
             <span style={{ fontSize: 40, fontWeight: 900, color: '#0C0C16' }}>Z</span>
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -102,7 +102,7 @@ export default function AboutPage() {
         </div>
 
         {/* Mitra CTA */}
-        <div style={{ background: 'linear-gradient(135deg,rgba(46,125,91,0.08),rgba(46,125,91,0.04))', borderRadius: 16, padding: '18px', border: '1px solid rgba(46,125,91,0.2)', display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ background: 'linear-gradient(135deg,rgba(var(--k-accent-rgb),0.08),rgba(var(--k-accent-rgb),0.04))', borderRadius: 16, padding: '18px', border: '1px solid rgba(var(--k-accent-rgb),0.2)', display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ fontSize: 36, flexShrink: 0 }}>🛵</div>
           <div style={{ flex: 1 }}>
             <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--k-text)', margin: '0 0 4px' }}>Bergabung Jadi Mitra</p>

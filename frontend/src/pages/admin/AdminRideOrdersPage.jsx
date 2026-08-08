@@ -192,7 +192,7 @@ export default function AdminRideOrdersPage() {
                 <div style={{
                   fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 100,
                   color: fare.is_active ? 'var(--k-accent)' : 'var(--k-danger)',
-                  background: fare.is_active ? 'rgba(46,125,91,0.1)' : 'rgba(192,67,92,0.1)',
+                  background: fare.is_active ? 'rgba(var(--k-accent-rgb),0.1)' : 'rgba(var(--k-danger-rgb),0.1)',
                 }}>{fare.is_active ? 'Aktif' : 'Nonaktif'}</div>
               </div>
 
@@ -257,7 +257,7 @@ export default function AdminRideOrdersPage() {
                   </div>
                   <button onClick={() => setEditFare({ ...fare })} style={{
                     width: '100%', padding: '10px', borderRadius: 12,
-                    background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.3)',
+                    background: 'var(--k-glow)', border: '1px solid rgba(var(--k-accent-rgb),0.3)',
                     color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
                   }}>✏️ Edit Tarif</button>
                 </>
