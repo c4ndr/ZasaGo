@@ -217,20 +217,20 @@ export default function AddressPicker({ value, onChange, onGpsLoading }) {
                     padding: '14px 18px',
                     borderBottom: '1px solid var(--k-border)',
                     cursor: 'pointer',
-                    background: value?.address === addr.address ? 'rgba(99,102,241,0.06)' : 'transparent',
+                    background: value?.address === addr.address ? 'var(--k-primary-bg)' : 'transparent',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                     <span style={{
                       fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 6,
-                      background: 'rgba(99,102,241,0.12)', color: 'var(--k-primary)',
+                      background: 'var(--k-primary-bg)', color: 'var(--k-primary)',
                     }}>
                       {getLabelEmoji(addr.label)} {addr.label}
                     </span>
                     {addr.is_default && (
                       <span style={{
                         fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 6,
-                        background: 'rgba(0,200,150,0.12)', color: 'var(--k-accent)',
+                        background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
                       }}>
                         Default
                       </span>

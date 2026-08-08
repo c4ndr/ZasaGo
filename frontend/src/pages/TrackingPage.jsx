@@ -57,13 +57,13 @@ function playStatusSound() {
 }
 
 const STATUS_COLOR_MAP = {
-  accepted:    { bg: '#1a3a2a', border: '#00C896', text: '#00C896' },
-  on_pickup:   { bg: '#2a2a1a', border: '#F6AD55', text: '#F6AD55' },
-  picked_up:   { bg: '#2a2a1a', border: '#F6AD55', text: '#F6AD55' },
+  accepted:    { bg: '#1a3a2a', border: '#2E7D5B', text: '#2E7D5B' },
+  on_pickup:   { bg: '#2a2a1a', border: '#B8860B', text: '#B8860B' },
+  picked_up:   { bg: '#2a2a1a', border: '#B8860B', text: '#B8860B' },
   on_delivery: { bg: '#1a1a3a', border: '#B794F4', text: '#B794F4' },
-  delivered:   { bg: '#1a3a2a', border: '#00C896', text: '#00C896' },
-  completed:   { bg: '#1a3a2a', border: '#00C896', text: '#00C896' },
-  cancelled:   { bg: '#3a1a1a', border: '#F56565', text: '#F56565' },
+  delivered:   { bg: '#1a3a2a', border: '#2E7D5B', text: '#2E7D5B' },
+  completed:   { bg: '#1a3a2a', border: '#2E7D5B', text: '#2E7D5B' },
+  cancelled:   { bg: '#3a1a1a', border: '#C0435C', text: '#C0435C' },
 }
 
 function StatusNotif({ update, onDismiss }) {
@@ -185,7 +185,7 @@ function PhotoViewer({ photos, orderId, status }) {
             <AuthedImg
               src={`/orders/${orderId}/photos/delivery`}
               alt="Bukti sampai"
-              style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 12, border: '2px solid rgba(0,200,150,0.35)' }}
+              style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 12, border: '2px solid rgba(46,125,91,0.35)' }}
             />
             <p style={{ fontSize: 11, color: 'var(--k-accent)', fontWeight: 700, textAlign: 'center', marginTop: 4 }}>✓ Paket Sudah Sampai</p>
           </button>
@@ -206,7 +206,7 @@ function PhotoViewer({ photos, orderId, status }) {
                 <div key={stage}>
                   {url ? (
                     <button onClick={() => setPreview(url)} style={{ width: '100%', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}>
-                      <AuthedImg src={url} alt={PHOTO_LABELS[stage]} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10, border: '1px solid rgba(0,200,150,0.2)' }} />
+                      <AuthedImg src={url} alt={PHOTO_LABELS[stage]} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 10, border: '1px solid rgba(46,125,91,0.2)' }} />
                     </button>
                   ) : (
                     <div style={{ width: '100%', aspectRatio: '1', background: 'var(--k-card2)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed var(--k-border)' }}>
@@ -252,8 +252,8 @@ function MitraMarkerEl() {
   return (
     <div style={{
       width: 44, height: 44, borderRadius: '50%',
-      background: '#3B82F6', border: '3px solid #fff',
-      boxShadow: '0 4px 14px rgba(59,130,246,.5)',
+      background: 'var(--k-info)', border: '3px solid #fff',
+      boxShadow: '0 4px 14px rgba(42,95,130,.5)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontSize: 20, userSelect: 'none',
     }}>🏍️</div>
@@ -335,7 +335,7 @@ export default function TrackingPage() {
       {shownUpdate && <StatusNotif update={shownUpdate} onDismiss={dismissNotif} />}
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse-gps { 0%,100% { box-shadow: 0 0 0 0 rgba(0,200,150,0.4); } 50% { box-shadow: 0 0 0 8px rgba(0,200,150,0); } }
+        @keyframes pulse-gps { 0%,100% { box-shadow: 0 0 0 0 rgba(46,125,91,0.4); } 50% { box-shadow: 0 0 0 8px rgba(46,125,91,0); } }
       `}</style>
 
       {/* ── Navbar ── */}
@@ -366,8 +366,8 @@ export default function TrackingPage() {
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => setFollow(f => !f)} style={{
             width: 40, height: 40, borderRadius: 12,
-            background: follow ? 'rgba(0,200,150,0.2)' : 'rgba(25,25,39,0.92)',
-            border: `1px solid ${follow ? 'rgba(0,200,150,0.4)' : 'rgba(37,37,56,0.8)'}`,
+            background: follow ? 'rgba(46,125,91,0.2)' : 'rgba(25,25,39,0.92)',
+            border: `1px solid ${follow ? 'rgba(46,125,91,0.4)' : 'rgba(37,37,56,0.8)'}`,
             backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', fontSize: 18, color: follow ? 'var(--k-accent)' : 'var(--k-muted)',
@@ -377,7 +377,7 @@ export default function TrackingPage() {
             <Link
               to={`/orders/${id}/chat`}
               state={{ otherName: order.mitra?.name }}
-              style={{ width: 40, height: 40, borderRadius: 12, background: 'linear-gradient(135deg,#00C896,#00A87D)', boxShadow: '0 4px 16px rgba(0,200,150,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontSize: 20 }}
+              style={{ width: 40, height: 40, borderRadius: 12, background: 'var(--k-accent)', boxShadow: '0 4px 16px rgba(46,125,91,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', fontSize: 20 }}
             >💬</Link>
           )}
         </div>
@@ -389,7 +389,7 @@ export default function TrackingPage() {
         zIndex: 1000, display: 'flex', alignItems: 'center', gap: 8,
         padding: '7px 16px', borderRadius: 100, whiteSpace: 'nowrap',
         background: 'rgba(25,25,39,0.92)',
-        border: `1px solid ${gpsActive ? 'rgba(0,200,150,0.35)' : mitraLocation ? 'rgba(246,173,85,0.35)' : 'rgba(37,37,56,0.8)'}`,
+        border: `1px solid ${gpsActive ? 'rgba(46,125,91,0.35)' : mitraLocation ? 'rgba(184,134,11,0.35)' : 'rgba(37,37,56,0.8)'}`,
         backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
       }}>
         <div style={{
@@ -408,8 +408,8 @@ export default function TrackingPage() {
             <div key={i} style={{
               display: 'flex', alignItems: 'flex-start', gap: 10,
               padding: '10px 14px', borderRadius: 14,
-              background: n.type === 'gps_lost' ? 'rgba(246,173,85,0.15)' : 'rgba(0,200,150,0.12)',
-              border: `1px solid ${n.type === 'gps_lost' ? 'rgba(246,173,85,0.35)' : 'rgba(0,200,150,0.3)'}`,
+              background: n.type === 'gps_lost' ? 'rgba(184,134,11,0.15)' : 'rgba(46,125,91,0.12)',
+              border: `1px solid ${n.type === 'gps_lost' ? 'rgba(184,134,11,0.35)' : 'rgba(46,125,91,0.3)'}`,
               backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
             }}>
               <span style={{ flexShrink: 0, fontSize: 15 }}>{n.type === 'gps_lost' ? '⚠️' : '📦'}</span>
@@ -435,7 +435,7 @@ export default function TrackingPage() {
             fitGoogleMap(map, pts, 60)
           }}
         >
-          <RoadPolyline pickup={pickup} dropoff={dropoff} color="#00C896" />
+          <RoadPolyline pickup={pickup} dropoff={dropoff} color="#2E7D5B" />
 
           {mitraLocation && (
             <OverlayView position={{ lat: mitraLocation.lat, lng: mitraLocation.lng }} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
@@ -445,12 +445,12 @@ export default function TrackingPage() {
 
           <OverlayView position={{ lat: pickup[0], lng: pickup[1] }} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             getPixelPositionOffset={(w, h) => ({ x: -w / 2, y: -h })}>
-            <PinMarkerEl color="#00C896" emoji="📍" />
+            <PinMarkerEl color="var(--k-accent)" emoji="📍" />
           </OverlayView>
 
           <OverlayView position={{ lat: dropoff[0], lng: dropoff[1] }} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             getPixelPositionOffset={(w, h) => ({ x: -w / 2, y: -h })}>
-            <PinMarkerEl color="#F56565" emoji="🏁" />
+            <PinMarkerEl color="var(--k-danger)" emoji="🏁" />
           </OverlayView>
         </GoogleMap>
 
@@ -460,7 +460,7 @@ export default function TrackingPage() {
           <div style={{
             position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)',
             zIndex: 4, padding: '10px 16px', borderRadius: 14, whiteSpace: 'nowrap',
-            background: 'rgba(25,25,39,0.92)', border: '1px solid rgba(246,173,85,0.3)',
+            background: 'rgba(25,25,39,0.92)', border: '1px solid rgba(184,134,11,0.3)',
             backdropFilter: 'blur(12px)', boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'none',
           }}>
@@ -504,7 +504,7 @@ export default function TrackingPage() {
                       <div style={{
                         width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
                         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
-                        background: isDoneStep ? 'var(--k-accent)' : isActive ? 'rgba(0,200,150,0.2)' : 'var(--k-card2)',
+                        background: isDoneStep ? 'var(--k-accent)' : isActive ? 'rgba(46,125,91,0.2)' : 'var(--k-card2)',
                         border: `2px solid ${isDoneStep ? 'var(--k-accent)' : isActive ? 'var(--k-accent)' : 'var(--k-border)'}`,
                         transition: 'all 0.3s',
                       }}>
@@ -524,7 +524,7 @@ export default function TrackingPage() {
           )}
 
           {isCancelled && (
-            <div style={{ background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', borderRadius: 14, padding: '12px 14px', marginBottom: 14, color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>
+            <div style={{ background: 'rgba(192,67,92,0.08)', border: '1px solid rgba(192,67,92,0.2)', borderRadius: 14, padding: '12px 14px', marginBottom: 14, color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>
               ❌ Order Dibatalkan
             </div>
           )}
@@ -534,7 +534,7 @@ export default function TrackingPage() {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 3 }}>
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--k-accent)', flexShrink: 0 }} />
                 <div style={{ width: 2, height: 18, background: 'var(--k-border)', margin: '2px 0' }} />
-                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F56565', flexShrink: 0 }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--k-danger)', flexShrink: 0 }} />
               </div>
               <div style={{ flex: 1 }}>
                 <MapsLink lat={order.pickup_lat} lng={order.pickup_lng} address={order.pickup_address} style={{ marginBottom: 10 }} />
@@ -556,7 +556,7 @@ export default function TrackingPage() {
           </div>
 
           {order.jastip_discount_applied > 0 && (
-            <div style={{ background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: 14, padding: '10px 14px', marginBottom: 12 }}>
+            <div style={{ background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.2)', borderRadius: 14, padding: '10px 14px', marginBottom: 12 }}>
               <p style={{ color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, marginBottom: 2 }}>
                 ⚡ Diskon JastipQu: {formatRp(order.jastip_discount_applied)}
               </p>
@@ -568,7 +568,7 @@ export default function TrackingPage() {
 
           {order.mitra && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16, padding: '12px 14px' }}>
-              <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(59,130,246,0.15)', border: '2px solid rgba(59,130,246,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: 'var(--k-info)', flexShrink: 0 }}>
+              <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'rgba(42,95,130,0.15)', border: '2px solid rgba(42,95,130,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 700, color: 'var(--k-info)', flexShrink: 0 }}>
                 {order.mitra.name[0].toUpperCase()}
               </div>
               <div style={{ flex: 1 }}>
@@ -578,7 +578,7 @@ export default function TrackingPage() {
                 </p>
               </div>
               {gpsActive && (
-                <span style={{ padding: '4px 10px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: 'rgba(0,200,150,0.1)', color: 'var(--k-accent)' }}>Online</span>
+                <span style={{ padding: '4px 10px', borderRadius: 100, fontSize: 11, fontWeight: 700, background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)' }}>Online</span>
               )}
             </div>
           )}
@@ -588,8 +588,8 @@ export default function TrackingPage() {
           {canComplain && (
             <button onClick={() => setShowComplaint(true)} style={{
               width: '100%', marginTop: 12, padding: '13px', borderRadius: 14,
-              border: '1.5px solid rgba(246,173,85,0.4)', background: 'rgba(246,173,85,0.06)',
-              color: '#F6AD55', fontWeight: 700, fontSize: 14, cursor: 'pointer',
+              border: '1.5px solid rgba(184,134,11,0.4)', background: 'rgba(184,134,11,0.06)',
+              color: 'var(--k-warn)', fontWeight: 700, fontSize: 14, cursor: 'pointer',
             }}>
               ⚠️ Laporkan Masalah
             </button>

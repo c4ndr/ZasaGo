@@ -34,12 +34,12 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
     }}>
       <style>{`
         @keyframes callPulse {
-          0%,100% { box-shadow: 0 0 0 0 rgba(0,200,150,0.5); }
-          50%      { box-shadow: 0 0 0 20px rgba(0,200,150,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(46,125,91,0.5); }
+          50%      { box-shadow: 0 0 0 20px rgba(46,125,91,0); }
         }
         @keyframes callRing {
-          0%,100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
-          50%      { box-shadow: 0 0 0 20px rgba(99,102,241,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(40,55,75,0.5); }
+          50%      { box-shadow: 0 0 0 20px rgba(40,55,75,0); }
         }
       `}</style>
 
@@ -49,9 +49,7 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
       {/* Avatar */}
       <div style={{
         width: 88, height: 88, borderRadius: '50%',
-        background: isActive
-          ? 'linear-gradient(135deg, #00C896, #00A87D)'
-          : 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        background: isActive ? 'var(--k-accent)' : 'var(--k-primary)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 40, marginBottom: 24,
         animation: isRinging ? 'callRing 1.5s infinite' : isActive ? 'callPulse 2s infinite' : 'none',
@@ -79,7 +77,7 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
         {isActive && (
           <button onClick={onMute} style={{
             width: 60, height: 60, borderRadius: '50%',
-            background: isMuted ? '#EF4444' : 'rgba(255,255,255,0.15)',
+            background: isMuted ? 'var(--k-danger)' : 'rgba(255,255,255,0.15)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 22, touchAction: 'manipulation',
@@ -90,7 +88,7 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
         {isActive && (
           <button onClick={onSpeaker} style={{
             width: 60, height: 60, borderRadius: '50%',
-            background: isSpeaker ? '#6366F1' : 'rgba(255,255,255,0.15)',
+            background: isSpeaker ? 'var(--k-primary)' : 'rgba(255,255,255,0.15)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 22, touchAction: 'manipulation',
@@ -106,10 +104,10 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
             onTouchEnd={(e) => { e.preventDefault(); onAnswer() }}
             style={{
               width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #00C896, #00A87D)',
+              background: 'var(--k-accent)',
               border: 'none', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 28, boxShadow: '0 4px 20px rgba(0,200,150,0.5)',
+              fontSize: 28, boxShadow: '0 4px 20px rgba(46,125,91,0.5)',
               touchAction: 'manipulation',
               // Tidak ada animation/transform langsung di tombol — CSS transform menggeser hit area di Android
             }}>
@@ -123,10 +121,10 @@ export default function CallModal({ callState, isMuted, isSpeaker, duration, ice
           onTouchEnd={(e) => { e.preventDefault(); onEnd() }}
           style={{
             width: 72, height: 72, borderRadius: '50%',
-            background: 'linear-gradient(135deg, #EF4444, #DC2626)',
+            background: 'var(--k-danger)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 28, boxShadow: '0 4px 20px rgba(239,68,68,0.4)',
+            fontSize: 28, boxShadow: '0 4px 20px rgba(192,67,92,0.4)',
             touchAction: 'manipulation',
           }}>
           📵

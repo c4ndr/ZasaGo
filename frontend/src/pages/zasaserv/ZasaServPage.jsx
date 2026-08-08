@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api, { storageUrl } from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const CATEGORIES = [
-  { value: '',          label: 'Semua',        emoji: '🔧', grad: 'linear-gradient(135deg,#059669,#10B981)' },
-  { value: 'ac',        label: 'Servis AC',    emoji: '❄️', grad: 'linear-gradient(135deg,#3B82F6,#06B6D4)' },
-  { value: 'elektronik',label: 'Elektronik',   emoji: '📺', grad: 'linear-gradient(135deg,#8B5CF6,#6366F1)' },
-  { value: 'listrik',   label: 'Listrik',      emoji: '⚡', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)' },
-  { value: 'air',       label: 'Pipa & Air',   emoji: '💧', grad: 'linear-gradient(135deg,#0EA5E9,#6366F1)' },
+  { value: '',          label: 'Semua',        emoji: '🔧', grad: 'linear-gradient(135deg,var(--k-accent),#10B981)' },
+  { value: 'ac',        label: 'Servis AC',    emoji: '❄️', grad: 'linear-gradient(135deg,var(--k-primary),#06B6D4)' },
+  { value: 'elektronik',label: 'Elektronik',   emoji: '📺', grad: 'linear-gradient(135deg,var(--k-primary2),var(--k-primary))' },
+  { value: 'listrik',   label: 'Listrik',      emoji: '⚡', grad: 'linear-gradient(135deg,var(--k-warn),var(--k-danger))' },
+  { value: 'air',       label: 'Pipa & Air',   emoji: '💧', grad: 'linear-gradient(135deg,#0EA5E9,var(--k-primary))' },
   { value: 'bangunan',  label: 'Bangunan',     emoji: '🏗️', grad: 'linear-gradient(135deg,#78716C,#44403C)' },
   { value: 'jahit',     label: 'Jahit/Permak', emoji: '🧵', grad: 'linear-gradient(135deg,#EC4899,#F43F5E)' },
   { value: 'cctv',      label: 'Pasang CCTV',  emoji: '📹', grad: 'linear-gradient(135deg,#374151,#6B7280)' },
-  { value: 'lainnya',   label: 'Lainnya',      emoji: '🛠️', grad: 'linear-gradient(135deg,#6366F1,#EC4899)' },
+  { value: 'lainnya',   label: 'Lainnya',      emoji: '🛠️', grad: 'linear-gradient(135deg,var(--k-primary),#EC4899)' },
 ]
 
 const SKILL_LV = {
   pemula:        { label: 'Pemula',        color: '#94A3B8' },
   terlatih:      { label: 'Terlatih',      color: '#22C55E' },
-  berpengalaman: { label: 'Berpengalaman', color: '#3B82F6' },
-  profesional:   { label: 'Profesional',   color: '#8B5CF6' },
-  master:        { label: 'Master',        color: '#F59E0B' },
+  berpengalaman: { label: 'Berpengalaman', color: 'var(--k-primary)' },
+  profesional:   { label: 'Profesional',   color: 'var(--k-primary2)' },
+  master:        { label: 'Master',        color: 'var(--k-warn)' },
 }
 
 function startingPrice(provider) {
@@ -52,22 +53,24 @@ export default function ZasaServPage() {
       <style>{`@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}} @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}`}</style>
 
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(160deg,#064e3b 0%,#065f46 55%,#047857 100%)', padding: '52px 20px 28px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -60, right: -60, width: 220, height: 220, borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
-        <button onClick={() => navigate(-1)} style={{ background: 'rgba(255,255,255,0.12)', border: 'none', color: '#fff', fontSize: 13, cursor: 'pointer', marginBottom: 20, padding: '6px 14px', borderRadius: 20 }}>
-          ← Kembali
-        </button>
-        <div style={{ fontSize: 28, fontWeight: 800, color: '#fff', marginBottom: 4 }}>🔧 ZasaServis</div>
-        <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13 }}>Teknisi & servis panggil ke lokasi Anda</div>
+      <div style={{ background: SVC.zasaserv.bg, padding: '52px 20px 28px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasaserv.fg, fontSize: 13, cursor: 'pointer', marginBottom: 20, padding: '6px 14px', borderRadius: 20, boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Kembali
+          </button>
+          <div style={{ fontSize: 28, fontWeight: 800, color: SVC.zasaserv.fg, marginBottom: 4 }}>🔧 ZasaServis</div>
+          <div style={{ color: SVC.zasaserv.fg, opacity: 0.7, fontSize: 13 }}>Teknisi & servis panggil ke lokasi Anda</div>
 
-        {/* Search */}
-        <div style={{ marginTop: 18, position: 'relative' }}>
-          <input
-            placeholder="Cari teknisi atau servis..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            style={{ width: '100%', padding: '12px 16px', borderRadius: 14, border: 'none', fontSize: 14, background: 'rgba(255,255,255,0.95)', boxSizing: 'border-box' }}
-          />
+          {/* Search */}
+          <div style={{ marginTop: 18, position: 'relative' }}>
+            <input
+              placeholder="Cari teknisi atau servis..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ width: '100%', padding: '12px 16px', borderRadius: 14, border: 'none', fontSize: 14, background: 'var(--k-surface)', color: 'var(--k-text)', boxSizing: 'border-box' }}
+            />
+          </div>
         </div>
       </div>
 
@@ -76,9 +79,9 @@ export default function ZasaServPage() {
         {CATEGORIES.map(c => (
           <button key={c.value} onClick={() => setCategory(c.value)} style={{
             flexShrink: 0, padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600,
-            background: category === c.value ? '#059669' : 'var(--k-card)',
+            background: category === c.value ? 'var(--k-accent)' : 'var(--k-card)',
             color: category === c.value ? '#fff' : 'var(--k-text)',
-            boxShadow: category === c.value ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
+            boxShadow: category === c.value ? '0 2px 8px rgba(46,125,91,0.3)' : 'none',
           }}>
             {c.emoji} {c.label}
           </button>
@@ -117,7 +120,7 @@ export default function ZasaServPage() {
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
                 <div style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 6 }}>{p.address ?? 'Lokasi belum diisi'}</div>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(5,150,105,0.12)', color: '#059669', fontWeight: 600 }}>{cat.label}</span>
+                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)', fontWeight: 600 }}>{cat.label}</span>
                   <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(100,100,100,0.1)', color: skill.color, fontWeight: 600 }}>{skill.label}</span>
                   {p.experience_years > 0 && (
                     <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'var(--k-input)', color: 'var(--k-muted)', fontWeight: 500 }}>{p.experience_years}th pengalaman</span>
@@ -127,13 +130,13 @@ export default function ZasaServPage() {
 
               <div style={{ textAlign: 'right', flexShrink: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 3, justifyContent: 'flex-end', marginBottom: 4 }}>
-                  <span style={{ color: '#F59E0B', fontSize: 12 }}>★</span>
+                  <span style={{ color: 'var(--k-warn)', fontSize: 12 }}>★</span>
                   <span style={{ fontSize: 12, fontWeight: 700 }}>{p.average_rating > 0 ? p.average_rating.toFixed(1) : '–'}</span>
                 </div>
                 {minPrice != null && (
                   <div style={{ fontSize: 11, color: 'var(--k-muted)' }}>
                     Mulai<br/>
-                    <span style={{ fontWeight: 700, color: '#059669', fontSize: 13 }}>
+                    <span style={{ fontWeight: 700, color: 'var(--k-accent)', fontSize: 13 }}>
                       Rp {minPrice.toLocaleString('id')}
                     </span>
                   </div>

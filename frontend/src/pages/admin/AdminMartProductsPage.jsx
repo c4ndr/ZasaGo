@@ -44,7 +44,7 @@ export default function AdminMartProductsPage() {
 
       {/* Filter + Search */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-        {[{ v: '', l: 'Semua', color: 'var(--k-sub)' }, { v: 'active', l: 'Aktif', color: '#22C55E' }, { v: 'inactive', l: 'Nonaktif', color: '#EF4444' }].map(t => (
+        {[{ v: '', l: 'Semua', color: 'var(--k-sub)' }, { v: 'active', l: 'Aktif', color: '#22C55E' }, { v: 'inactive', l: 'Nonaktif', color: '#C0435C' }].map(t => (
           <button key={t.v} onClick={() => setActiveFilter(t.v)}
             style={{
               padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: activeFilter === t.v ? 700 : 500,
@@ -95,9 +95,9 @@ export default function AdminMartProductsPage() {
                 disabled={toggling === p.id}
                 style={{
                   flexShrink: 0, padding: '8px 14px', borderRadius: 10, cursor: 'pointer', fontWeight: 700, fontSize: 12,
-                  border: `1px solid ${p.is_active ? 'rgba(239,68,68,0.25)' : 'rgba(34,197,94,0.25)'}`,
-                  background: p.is_active ? 'rgba(239,68,68,0.08)' : 'rgba(34,197,94,0.08)',
-                  color: p.is_active ? '#EF4444' : '#22C55E',
+                  border: `1px solid ${p.is_active ? 'rgba(192,67,92,0.25)' : 'rgba(34,197,94,0.25)'}`,
+                  background: p.is_active ? 'rgba(192,67,92,0.08)' : 'rgba(34,197,94,0.08)',
+                  color: p.is_active ? 'var(--k-danger)' : '#22C55E',
                   opacity: toggling === p.id ? 0.6 : 1,
                 }}
               >

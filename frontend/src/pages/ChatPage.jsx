@@ -110,10 +110,10 @@ function MessageBubble({ msg, isOwn, showAvatar, senderName }) {
           padding: '10px 14px',
           borderRadius: isOwn ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
           background: isOwn
-            ? 'linear-gradient(135deg, #00C896, #00A87D)'
+            ? 'var(--k-accent)'
             : 'var(--k-card2)',
           border: isOwn ? 'none' : '1px solid var(--k-border)',
-          boxShadow: isOwn ? '0 2px 10px rgba(0,200,150,0.25)' : '0 1px 4px rgba(0,0,0,0.2)',
+          boxShadow: isOwn ? '0 2px 10px rgba(46,125,91,0.25)' : '0 1px 4px rgba(0,0,0,0.2)',
           opacity: msg.is_blocked ? 0.45 : 1,
           position: 'relative',
         }}>
@@ -355,7 +355,7 @@ export default function ChatPage() {
         {/* Icon chat */}
         <div style={{
           width: 38, height: 38, borderRadius: 12, flexShrink: 0,
-          background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.25)',
+          background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.25)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
         }}>💬</div>
 
@@ -374,9 +374,9 @@ export default function ChatPage() {
           style={{
             width: 38, height: 38, borderRadius: 12, flexShrink: 0, border: 'none',
             background: callState !== 'idle'
-              ? 'linear-gradient(135deg,#EF4444,#DC2626)'
-              : 'rgba(0,200,150,0.12)',
-            border: '1px solid ' + (callState !== 'idle' ? 'transparent' : 'rgba(0,200,150,0.25)'),
+              ? 'var(--k-danger)'
+              : 'rgba(46,125,91,0.12)',
+            border: '1px solid ' + (callState !== 'idle' ? 'transparent' : 'rgba(46,125,91,0.25)'),
             cursor: 'pointer', fontSize: 18,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
@@ -404,10 +404,10 @@ export default function ChatPage() {
       {callError && (
         <div style={{
           position: 'fixed', top: 70, left: 12, right: 12, zIndex: 10001,
-          background: '#DC2626', borderRadius: 14,
+          background: 'var(--k-danger)', borderRadius: 14,
           padding: '14px 16px',
           display: 'flex', alignItems: 'flex-start', gap: 10,
-          boxShadow: '0 8px 30px rgba(239,68,68,0.45)',
+          boxShadow: '0 8px 30px rgba(192,67,92,0.45)',
         }}>
           <span style={{ fontSize: 20, flexShrink: 0 }}>🎤</span>
           <p style={{ color: '#fff', fontSize: 13, fontWeight: 600, lineHeight: 1.55, flex: 1 }}>{callError}</p>
@@ -423,7 +423,7 @@ export default function ChatPage() {
       {warning && (
         <div style={{
           margin: '10px 14px 0', padding: '10px 14px', borderRadius: 14, flexShrink: 0,
-          background: 'rgba(246,173,85,0.08)', border: '1px solid rgba(246,173,85,0.25)',
+          background: 'rgba(184,134,11,0.08)', border: '1px solid rgba(184,134,11,0.25)',
           display: 'flex', alignItems: 'flex-start', gap: 8,
         }}>
           <span style={{ fontSize: 16, flexShrink: 0 }}>⚠️</span>
@@ -474,7 +474,7 @@ export default function ChatPage() {
                 color: 'var(--k-sub)', fontSize: 13, cursor: 'pointer',
                 transition: 'all 0.15s', fontFamily: 'inherit',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--k-glow)'; e.currentTarget.style.color = 'var(--k-accent)'; e.currentTarget.style.borderColor = 'rgba(0,200,150,0.3)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'var(--k-glow)'; e.currentTarget.style.color = 'var(--k-accent)'; e.currentTarget.style.borderColor = 'rgba(46,125,91,0.3)' }}
               onMouseLeave={e => { e.currentTarget.style.background = 'var(--k-card)'; e.currentTarget.style.color = 'var(--k-sub)'; e.currentTarget.style.borderColor = 'var(--k-border)' }}
               >
                 {t.text}
@@ -487,11 +487,11 @@ export default function ChatPage() {
       {/* ── Banner chat disuspend ── */}
       {suspended && (
         <div style={{
-          flexShrink: 0, background: 'rgba(245,101,101,0.08)',
-          borderTop: '1px solid rgba(245,101,101,0.25)',
+          flexShrink: 0, background: 'rgba(192,67,92,0.08)',
+          borderTop: '1px solid rgba(192,67,92,0.25)',
           padding: '12px 16px', textAlign: 'center',
         }}>
-          <p style={{ color: '#F56565', fontSize: 13, fontWeight: 700 }}>
+          <p style={{ color: 'var(--k-danger)', fontSize: 13, fontWeight: 700 }}>
             🚫 Chat ini dinonaktifkan karena pelanggaran berulang.
           </p>
           <p style={{ color: 'var(--k-muted)', fontSize: 11, marginTop: 4 }}>
@@ -505,7 +505,7 @@ export default function ChatPage() {
         <div style={{ flexShrink: 0, padding: '8px 14px 0', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
           <div style={{ position: 'relative', display: 'inline-block' }}>
             <img src={imagePreview} alt="preview" style={{ maxHeight: 120, maxWidth: 180, borderRadius: 10, objectFit: 'cover', display: 'block', border: '1.5px solid var(--k-border)' }} />
-            <button onClick={clearImage} style={{ position: 'absolute', top: -8, right: -8, width: 22, height: 22, borderRadius: '50%', background: '#EF4444', border: 'none', color: '#fff', fontWeight: 900, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>×</button>
+            <button onClick={clearImage} style={{ position: 'absolute', top: -8, right: -8, width: 22, height: 22, borderRadius: '50%', background: 'var(--k-danger)', border: 'none', color: '#fff', fontWeight: 900, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>×</button>
           </div>
           <span style={{ fontSize: 12, color: 'var(--k-muted)', paddingTop: 4 }}>Siap dikirim</span>
         </div>
@@ -524,7 +524,7 @@ export default function ChatPage() {
         <button onClick={() => setShowTemplates(s => !s)} style={{
           width: 40, height: 40, borderRadius: 12, flexShrink: 0,
           background: showTemplates ? 'var(--k-glow)' : 'var(--k-card)',
-          border: `1px solid ${showTemplates ? 'rgba(0,200,150,0.35)' : 'var(--k-border)'}`,
+          border: `1px solid ${showTemplates ? 'rgba(46,125,91,0.35)' : 'var(--k-border)'}`,
           color: showTemplates ? 'var(--k-accent)' : 'var(--k-muted)',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.2s',
@@ -535,9 +535,9 @@ export default function ChatPage() {
         {/* Tombol kamera/foto */}
         <button onClick={() => fileInputRef.current?.click()} disabled={suspended} style={{
           width: 40, height: 40, borderRadius: 12, flexShrink: 0,
-          background: imageFile ? 'rgba(99,102,241,0.15)' : 'var(--k-card)',
-          border: `1px solid ${imageFile ? '#6366F1' : 'var(--k-border)'}`,
-          color: imageFile ? '#6366F1' : 'var(--k-muted)',
+          background: imageFile ? 'var(--k-primary-bg)' : 'var(--k-card)',
+          border: `1px solid ${imageFile ? 'var(--k-primary)' : 'var(--k-border)'}`,
+          color: imageFile ? 'var(--k-primary)' : 'var(--k-muted)',
           cursor: suspended ? 'not-allowed' : 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
@@ -580,7 +580,7 @@ export default function ChatPage() {
           cursor: (input.trim() || imageFile) && !sending ? 'pointer' : 'not-allowed',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.2s',
-          boxShadow: (input.trim() || imageFile) && !sending ? '0 3px 10px rgba(0,200,150,0.35)' : 'none',
+          boxShadow: (input.trim() || imageFile) && !sending ? '0 3px 10px rgba(46,125,91,0.35)' : 'none',
         }}>
           {sending
             ? <div style={{ width: 14, height: 14, border: '2px solid currentColor', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />

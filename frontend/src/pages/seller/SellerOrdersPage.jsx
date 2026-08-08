@@ -4,6 +4,7 @@ import api from '../../services/api'
 import echo from '../../services/echo'
 import { useAuth } from '../../context/AuthContext'
 import { playNewOrderChime, setupChimeUnlock } from '../../utils/systemNotif'
+import { SVC } from '../../utils/svcTheme'
 
 const fmtRp   = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtDate = (d) => new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
@@ -19,14 +20,14 @@ const TABS = [
 ]
 
 const STATUS_META = {
-  pending:     { label: 'Menunggu',      color: '#F59E0B', bg: '#FFFBEB', border: '#F59E0B55' },
-  confirmed:   { label: 'Dikonfirmasi',  color: '#3B82F6', bg: '#EFF6FF', border: '#3B82F655' },
-  packed:      { label: 'Dikemas',       color: '#8B5CF6', bg: '#FAF5FF', border: '#8B5CF655' },
-  picking_up:  { label: 'Dijemput',      color: '#F97316', bg: '#FFF7ED', border: '#F9731655' },
-  on_delivery: { label: 'Dikirim',       color: '#6366F1', bg: '#EEF2FF', border: '#6366F155' },
+  pending:     { label: 'Menunggu',      color: 'var(--k-warn)', bg: '#FFFBEB', border: 'rgba(184,134,11,0.33)' },
+  confirmed:   { label: 'Dikonfirmasi',  color: 'var(--k-primary)', bg: '#EFF6FF', border: 'rgba(40,55,75,0.33)' },
+  packed:      { label: 'Dikemas',       color: 'var(--k-primary2)', bg: '#FAF5FF', border: 'rgba(29,41,57,0.33)' },
+  picking_up:  { label: 'Dijemput',      color: 'var(--k-primary)', bg: '#FFF7ED', border: 'rgba(40,55,75,0.33)' },
+  on_delivery: { label: 'Dikirim',       color: 'var(--k-primary2)', bg: '#EEF2FF', border: 'rgba(29,41,57,0.33)' },
   delivered:   { label: 'Terkirim',      color: '#10B981', bg: '#ECFDF5', border: '#10B98155' },
   completed:   { label: 'Selesai',       color: '#22C55E', bg: '#F0FDF4', border: '#22C55E55' },
-  cancelled:   { label: 'Dibatalkan',    color: '#EF4444', bg: '#FEF2F2', border: '#EF444455' },
+  cancelled:   { label: 'Dibatalkan',    color: 'var(--k-danger)', bg: '#FEF2F2', border: 'rgba(192,67,92,0.33)' },
 }
 
 const FLOW_STEPS = ['Baru', 'Konfirmasi', 'Kemas', 'Kurir', 'Dikirim', 'Selesai']
@@ -114,7 +115,7 @@ export default function SellerOrdersPage() {
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
 
       {toast && (
-        <div style={{ position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 9999, padding: '11px 20px', borderRadius: 12, fontWeight: 700, fontSize: 13, background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.15)', whiteSpace: 'nowrap' }}>
+        <div style={{ position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 9999, padding: '11px 20px', borderRadius: 12, fontWeight: 700, fontSize: 13, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.15)', whiteSpace: 'nowrap' }}>
           {toast.msg}
         </div>
       )}
@@ -125,7 +126,7 @@ export default function SellerOrdersPage() {
           const badge = t.value === 'pending' ? counts.pending : t.value === 'packed' ? counts.packed : 0
           return (
             <button key={t.value} onClick={() => { setTab(t.value); setExpanded(null) }}
-              style={{ padding: '10px 14px', border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: tab === t.value ? 700 : 500, color: tab === t.value ? '#6366F1' : 'var(--k-muted)', borderBottom: tab === t.value ? '2px solid #6366F1' : '2px solid transparent', whiteSpace: 'nowrap', position: 'relative' }}>
+              style={{ padding: '10px 14px', border: 'none', background: 'none', cursor: 'pointer', fontSize: 12, fontWeight: tab === t.value ? 700 : 500, color: tab === t.value ? SVC.zasashop.fg : 'var(--k-muted)', borderBottom: tab === t.value ? `2px solid ${SVC.zasashop.fg}` : '2px solid transparent', whiteSpace: 'nowrap', position: 'relative' }}>
               {t.emoji} {t.label}
               {badge > 0 && (
                 <span style={{ marginLeft: 5, background: '#DC2626', color: '#fff', fontSize: 10, fontWeight: 800, padding: '1px 5px', borderRadius: 20, lineHeight: 1.4 }}>{badge}</span>
@@ -138,7 +139,7 @@ export default function SellerOrdersPage() {
       <div style={{ padding: '14px 16px' }}>
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', padding: 40 }}>
-            <div style={{ width: 24, height: 24, border: '3px solid #6366F1', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+            <div style={{ width: 24, height: 24, border: `3px solid ${SVC.zasashop.fg}`, borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
           </div>
         ) : orders.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--k-muted)' }}>
@@ -169,7 +170,7 @@ export default function SellerOrdersPage() {
                       <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>{order.customer?.name} · {fmtDate(order.created_at)}</p>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <p style={{ fontSize: 14, fontWeight: 800, color: '#6366F1' }}>{fmtRp(order.total)}</p>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: SVC.zasashop.fg }}>{fmtRp(order.total)}</p>
                       <p style={{ fontSize: 11, color: 'var(--k-muted)', marginTop: 1 }}>{order.items?.length ?? 0} produk {exp ? '▲' : '▼'}</p>
                     </div>
                   </div>
@@ -192,7 +193,7 @@ export default function SellerOrdersPage() {
                             </div>
                             <div style={{ flex: 1, minWidth: 0 }}>
                               <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--k-text)', lineHeight: 1.3 }}>{item.product_name}</p>
-                              <p style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 2 }}>{item.quantity}× · {fmtRp(item.price)} = <b style={{ color: '#6366F1' }}>{fmtRp(item.quantity * item.price)}</b></p>
+                              <p style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 2 }}>{item.quantity}× · {fmtRp(item.price)} = <b style={{ color: SVC.zasashop.fg }}>{fmtRp(item.quantity * item.price)}</b></p>
                               {item.notes && <p style={{ fontSize: 11, color: 'var(--k-sub)', marginTop: 2, fontStyle: 'italic' }}>📝 {item.notes}</p>}
                             </div>
                           </div>
@@ -213,7 +214,7 @@ export default function SellerOrdersPage() {
                         )}
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, fontWeight: 800, color: 'var(--k-text)', paddingTop: 6, borderTop: '1px solid var(--k-border)', marginTop: 4 }}>
                           <span>Total</span>
-                          <span style={{ color: '#6366F1' }}>{fmtRp(order.total)}</span>
+                          <span style={{ color: SVC.zasashop.fg }}>{fmtRp(order.total)}</span>
                         </div>
                         {order.payment_method === 'cod' && (
                           <div style={{ marginTop: 8, padding: '6px 10px', borderRadius: 8, background: 'rgba(220,38,38,0.07)', border: '1px solid rgba(220,38,38,0.2)' }}>
@@ -228,7 +229,7 @@ export default function SellerOrdersPage() {
                         <p style={{ fontSize: 13, color: 'var(--k-text)', fontWeight: 600, lineHeight: 1.4 }}>{order.delivery_address}</p>
                         {order.customer?.name && <p style={{ fontSize: 12, color: 'var(--k-muted)', marginTop: 4 }}>👤 {order.customer.name}</p>}
                         {order.delivery_phone && (
-                          <a href={`tel:${order.delivery_phone}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 6, fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(0,200,150,0.1)', padding: '5px 10px', borderRadius: 8, border: '1px solid rgba(0,200,150,0.2)' }}>
+                          <a href={`tel:${order.delivery_phone}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 6, fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(46,125,91,0.1)', padding: '5px 10px', borderRadius: 8, border: '1px solid rgba(46,125,91,0.2)' }}>
                             📞 {order.delivery_phone}
                           </a>
                         )}
@@ -239,14 +240,14 @@ export default function SellerOrdersPage() {
 
                       {/* Info kurir (jika sudah ada) */}
                       {order.mitra && (
-                        <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(249,115,22,0.06)', border: '1px solid rgba(249,115,22,0.2)', marginBottom: 14 }}>
-                          <p style={{ fontSize: 11, fontWeight: 700, color: '#F97316', marginBottom: 5, letterSpacing: '0.05em' }}>🛵 KURIR PENGIRIMAN</p>
+                        <div style={{ padding: '10px 12px', borderRadius: 10, background: `rgba(${SVC.zasashop.rgb},0.06)`, border: `1px solid rgba(${SVC.zasashop.rgb},0.2)`, marginBottom: 14 }}>
+                          <p style={{ fontSize: 11, fontWeight: 700, color: SVC.zasashop.fg, marginBottom: 5, letterSpacing: '0.05em' }}>🛵 KURIR PENGIRIMAN</p>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div>
                               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>{order.mitra.name}</p>
                             </div>
                             {order.mitra.phone && (
-                              <a href={`tel:${order.mitra.phone}`} style={{ fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(0,200,150,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(0,200,150,0.2)' }}>
+                              <a href={`tel:${order.mitra.phone}`} style={{ fontSize: 12, color: '#027A48', textDecoration: 'none', fontWeight: 700, background: 'rgba(46,125,91,0.1)', padding: '6px 12px', borderRadius: 8, border: '1px solid rgba(46,125,91,0.2)' }}>
                                 📞 Hubungi
                               </a>
                             )}
@@ -259,11 +260,11 @@ export default function SellerOrdersPage() {
                         {order.status === 'pending' && (
                           <>
                             <button onClick={() => act(order.id, 'confirm')} disabled={acting}
-                              style={{ flex: 1, padding: '12px', borderRadius: 11, border: 'none', background: acting ? 'var(--k-border)' : '#3B82F6', color: '#fff', fontWeight: 700, fontSize: 13, cursor: acting ? 'not-allowed' : 'pointer' }}>
+                              style={{ flex: 1, padding: '12px', borderRadius: 11, border: 'none', background: acting ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: acting ? 'not-allowed' : 'pointer' }}>
                               ✅ Konfirmasi Pesanan
                             </button>
                             <button onClick={() => { setCancelId(order.id); setExpanded(null) }}
-                              style={{ padding: '12px 16px', borderRadius: 11, border: '1.5px solid #EF4444', background: 'none', color: '#EF4444', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+                              style={{ padding: '12px 16px', borderRadius: 11, border: '1.5px solid var(--k-danger)', background: 'none', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
                               Tolak
                             </button>
                           </>
@@ -271,11 +272,11 @@ export default function SellerOrdersPage() {
                         {order.status === 'confirmed' && (
                           <>
                             <button onClick={() => act(order.id, 'pack')} disabled={acting}
-                              style={{ flex: 1, padding: '12px', borderRadius: 11, border: 'none', background: acting ? 'var(--k-border)' : '#8B5CF6', color: '#fff', fontWeight: 700, fontSize: 13, cursor: acting ? 'not-allowed' : 'pointer' }}>
+                              style={{ flex: 1, padding: '12px', borderRadius: 11, border: 'none', background: acting ? 'var(--k-border)' : 'var(--k-primary2)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: acting ? 'not-allowed' : 'pointer' }}>
                               📦 Tandai Sudah Dikemas
                             </button>
                             <button onClick={() => { setCancelId(order.id); setExpanded(null) }}
-                              style={{ padding: '12px 16px', borderRadius: 11, border: '1.5px solid #EF4444', background: 'none', color: '#EF4444', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+                              style={{ padding: '12px 16px', borderRadius: 11, border: '1.5px solid var(--k-danger)', background: 'none', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
                               Batal
                             </button>
                           </>
@@ -284,16 +285,16 @@ export default function SellerOrdersPage() {
                           <div style={{ width: '100%', padding: '12px 14px', borderRadius: 11, background: 'rgba(139,92,246,0.08)', border: '1.5px solid rgba(139,92,246,0.3)', display: 'flex', alignItems: 'center', gap: 8 }}>
                             <span style={{ fontSize: 20 }}>⏳</span>
                             <div>
-                              <p style={{ fontSize: 13, fontWeight: 700, color: '#8B5CF6' }}>Menunggu kurir mengambil barang</p>
+                              <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-primary2)' }}>Menunggu kurir mengambil barang</p>
                               <p style={{ fontSize: 11, color: 'var(--k-sub)' }}>Siapkan paket di depan toko</p>
                             </div>
                           </div>
                         )}
                         {['picking_up', 'on_delivery'].includes(order.status) && (
-                          <div style={{ width: '100%', padding: '12px 14px', borderRadius: 11, background: 'rgba(99,102,241,0.07)', border: '1.5px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <div style={{ width: '100%', padding: '12px 14px', borderRadius: 11, background: 'rgba(29,41,57,0.07)', border: '1.5px solid rgba(29,41,57,0.2)', display: 'flex', alignItems: 'center', gap: 8 }}>
                             <span style={{ fontSize: 20, animation: 'none' }}>🚚</span>
                             <div>
-                              <p style={{ fontSize: 13, fontWeight: 700, color: '#6366F1' }}>
+                              <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-primary2)' }}>
                                 {order.status === 'picking_up' ? 'Kurir sedang menuju toko' : 'Pesanan sedang diantarkan'}
                               </p>
                               <p style={{ fontSize: 11, color: 'var(--k-sub)' }}>
@@ -332,7 +333,7 @@ export default function SellerOrdersPage() {
             <div style={{ display: 'flex', gap: 10 }}>
               <button onClick={() => { setCancelId(null); setCancelReason('') }} style={{ flex: 1, padding: '13px', borderRadius: 12, border: '1.5px solid var(--k-border)', background: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>Kembali</button>
               <button onClick={() => { act(cancelId, 'cancel', { reason: cancelReason || 'Ditolak penjual' }); setCancelId(null); setCancelReason('') }} disabled={acting}
-                style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: acting ? 'var(--k-border)' : '#EF4444', color: '#fff', cursor: acting ? 'not-allowed' : 'pointer', fontSize: 13, fontWeight: 800 }}>
+                style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: acting ? 'var(--k-border)' : 'var(--k-danger)', color: '#fff', cursor: acting ? 'not-allowed' : 'pointer', fontSize: 13, fontWeight: 800 }}>
                 {acting ? 'Memproses...' : 'Batalkan Pesanan'}
               </button>
             </div>

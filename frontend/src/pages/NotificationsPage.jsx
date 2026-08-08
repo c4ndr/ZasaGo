@@ -34,34 +34,41 @@ const TYPE_ICON = {
   mart_status_completed:      '🛒',
 }
 
+const ACCENT  = { color: 'var(--k-accent)',  rgb: '46,125,91' }
+const INFO    = { color: 'var(--k-info)',    rgb: '42,95,130' }
+const MUTED   = { color: 'var(--k-muted)',   rgb: '148,139,125' }
+const WARN    = { color: 'var(--k-warn)',    rgb: '184,134,11' }
+const PRIMARY = { color: 'var(--k-primary)', rgb: '40,55,75' }
+const DANGER  = { color: 'var(--k-danger)',  rgb: '192,67,92' }
+
 const TYPE_COLOR = {
-  order_accepted:      '#00C896',
-  order_on_pickup:     '#63B3ED',
-  order_picked_up:     '#63B3ED',
-  order_delivered:     '#00C896',
-  order_completed:     '#00C896',
-  order_cancelled:     '#A0A0BC',
-  rating_request:      '#F6AD55',
-  jastip_accepted:     '#00C896',
-  new_order:           '#B794F4',
-  food_new_order:      '#F97316',
-  food_accepted:       '#00C896',
-  food_rejected:       '#F56565',
-  food_preparing:      '#9F7AEA',
-  food_ready:          '#00C896',
-  food_mitra_assigned: '#63B3ED',
-  food_picked_up:      '#9F7AEA',
-  food_on_delivery:    '#63B3ED',
-  food_delivered:      '#00C896',
-  food_completed:      '#00C896',
-  food_cancelled:             '#A0A0BC',
-  food_timeout:               '#F56565',
-  food_rating_request:        '#F6AD55',
-  food_jastip_session_closed: '#F56565',
-  mitra_gps_lost:             '#F6AD55',
-  mart_mitra_accepted:        '#7C3AED',
-  mart_status_on_delivery:    '#7C3AED',
-  mart_status_completed:      '#7C3AED',
+  order_accepted:      ACCENT,
+  order_on_pickup:     INFO,
+  order_picked_up:     INFO,
+  order_delivered:     ACCENT,
+  order_completed:     ACCENT,
+  order_cancelled:     MUTED,
+  rating_request:      WARN,
+  jastip_accepted:     ACCENT,
+  new_order:           PRIMARY,
+  food_new_order:      WARN,
+  food_accepted:       ACCENT,
+  food_rejected:       DANGER,
+  food_preparing:      PRIMARY,
+  food_ready:          ACCENT,
+  food_mitra_assigned: INFO,
+  food_picked_up:      PRIMARY,
+  food_on_delivery:    INFO,
+  food_delivered:      ACCENT,
+  food_completed:      ACCENT,
+  food_cancelled:             MUTED,
+  food_timeout:               DANGER,
+  food_rating_request:        WARN,
+  food_jastip_session_closed: DANGER,
+  mitra_gps_lost:             WARN,
+  mart_mitra_accepted:        PRIMARY,
+  mart_status_on_delivery:    PRIMARY,
+  mart_status_completed:      PRIMARY,
 }
 
 function formatTime(dateStr) {
@@ -172,21 +179,21 @@ export default function NotificationsPage() {
           </div>
         ) : notifs.map(notif => {
           const icon  = TYPE_ICON[notif.type]  ?? '🔔'
-          const color = TYPE_COLOR[notif.type] ?? '#A0A0BC'
+          const tc    = TYPE_COLOR[notif.type] ?? MUTED
           const isUnread = !notif.read_at
           return (
             <button key={notif.id} onClick={() => markOneRead(notif)} style={{
               display: 'flex', alignItems: 'flex-start', gap: 14,
               padding: '14px 16px', borderRadius: 18, textAlign: 'left',
-              background: isUnread ? `${color}08` : 'var(--k-card)',
-              border: `1px solid ${isUnread ? `${color}25` : 'var(--k-border)'}`,
+              background: isUnread ? `rgba(${tc.rgb},0.08)` : 'var(--k-card)',
+              border: `1px solid ${isUnread ? `rgba(${tc.rgb},0.25)` : 'var(--k-border)'}`,
               cursor: 'pointer', width: '100%',
               transition: 'all 0.15s',
             }}>
               {/* Ikon */}
               <div style={{
                 width: 42, height: 42, borderRadius: 14, flexShrink: 0,
-                background: `${color}15`,
+                background: `rgba(${tc.rgb},0.15)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 20, position: 'relative',
               }}>
@@ -195,7 +202,7 @@ export default function NotificationsPage() {
                   <span style={{
                     position: 'absolute', top: -2, right: -2,
                     width: 10, height: 10, borderRadius: '50%',
-                    background: color, border: '2px solid var(--k-bg)',
+                    background: tc.color, border: '2px solid var(--k-bg)',
                   }} />
                 )}
               </div>
@@ -208,7 +215,7 @@ export default function NotificationsPage() {
                 <p style={{ fontSize: 12, color: 'var(--k-muted)', lineHeight: 1.5, marginBottom: 4 }}>
                   {notif.body}
                 </p>
-                <p style={{ fontSize: 10, color: 'var(--k-muted)', fontWeight: isUnread ? 700 : 400, color: isUnread ? color : 'var(--k-muted)' }}>
+                <p style={{ fontSize: 10, fontWeight: isUnread ? 700 : 400, color: isUnread ? tc.color : 'var(--k-muted)' }}>
                   {formatTime(notif.created_at)}
                 </p>
               </div>

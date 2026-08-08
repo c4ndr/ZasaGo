@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api, { storageUrl } from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
 
@@ -12,9 +13,9 @@ const DOC_LABELS = {
 }
 
 const DOC_STATUS = {
-  pending:  { color: '#F6AD55', label: 'Menunggu' },
-  approved: { color: '#00C896', label: 'Disetujui' },
-  rejected: { color: '#F56565', label: 'Ditolak' },
+  pending:  { color: 'var(--k-warn)', label: 'Menunggu' },
+  approved: { color: 'var(--k-accent)', label: 'Disetujui' },
+  rejected: { color: 'var(--k-danger)', label: 'Ditolak' },
 }
 
 function hue(n) { return [...(n||'U')].reduce((a,c) => a + c.charCodeAt(0), 0) % 360 }
@@ -79,7 +80,7 @@ function MitraDrawer({ mitra, onClose, onUpdated }) {
 
       <div style={{ width: '100%', maxWidth: 460, background: 'var(--k-card)', height: '100%', overflowY: 'auto', padding: '24px' }}>
         {toast && (
-          <div style={{ position: 'sticky', top: 0, zIndex: 10, marginBottom: 16, padding: '12px 16px', borderRadius: 10, fontSize: 13, fontWeight: 600, background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff' }}>{toast.msg}</div>
+          <div style={{ position: 'sticky', top: 0, zIndex: 10, marginBottom: 16, padding: '12px 16px', borderRadius: 10, fontSize: 13, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>{toast.msg}</div>
         )}
 
         {/* Header */}
@@ -127,7 +128,7 @@ function MitraDrawer({ mitra, onClose, onUpdated }) {
               return (
                 <div key={doc.id} style={{
                   padding: '12px', borderRadius: 12, background: 'var(--k-input)',
-                  border: `1px solid ${doc.status === 'rejected' ? '#F56565' : 'var(--k-border)'}`,
+                  border: `1px solid ${doc.status === 'rejected' ? 'var(--k-danger)' : 'var(--k-border)'}`,
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: doc.file_path ? 8 : 0 }}>
                     <span style={{ fontWeight: 600, fontSize: 13 }}>{DOC_LABELS[doc.type] ?? doc.type}</span>
@@ -152,7 +153,7 @@ function MitraDrawer({ mitra, onClose, onUpdated }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <button onClick={handleApprove} disabled={loading} style={{
               width: '100%', padding: '13px', borderRadius: 12, border: 'none', cursor: 'pointer',
-              background: '#00C896', color: '#fff', fontWeight: 700, fontSize: 14,
+              background: SVC.zasago.fg, color: '#fff', fontWeight: 700, fontSize: 14,
               opacity: loading ? 0.6 : 1,
             }}>✓ Setujui & Aktifkan Mitra</button>
 
@@ -166,7 +167,7 @@ function MitraDrawer({ mitra, onClose, onUpdated }) {
                 }} />
               <button onClick={handleReject} disabled={loading || !reason.trim()} style={{
                 width: '100%', padding: '13px', borderRadius: 12, border: 'none', cursor: 'pointer',
-                background: 'rgba(245,101,101,0.12)', color: '#F56565', fontWeight: 700, fontSize: 14,
+                background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14,
                 opacity: (loading || !reason.trim()) ? 0.5 : 1,
               }}>✗ Tolak Permohonan</button>
             </div>
@@ -218,8 +219,8 @@ export default function AdminMitraVerificationPage() {
         {mitras.length > 0 && (
           <span style={{
             padding: '6px 16px', borderRadius: 20, fontSize: 13, fontWeight: 700,
-            background: 'rgba(246,173,85,0.15)', color: '#F6AD55',
-            border: '1px solid rgba(246,173,85,0.3)',
+            background: 'rgba(184,134,11,0.15)', color: 'var(--k-warn)',
+            border: '1px solid rgba(184,134,11,0.3)',
           }}>{meta.total ?? mitras.length} menunggu</span>
         )}
       </div>
@@ -269,8 +270,8 @@ export default function AdminMitraVerificationPage() {
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
                   <div style={{
                     padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700,
-                    background: uploaded >= 4 ? 'rgba(0,200,150,0.12)' : 'rgba(246,173,85,0.12)',
-                    color: uploaded >= 4 ? '#00C896' : '#F6AD55',
+                    background: uploaded >= 4 ? 'rgba(46,125,91,0.12)' : 'rgba(184,134,11,0.12)',
+                    color: uploaded >= 4 ? 'var(--k-accent)' : 'var(--k-warn)',
                     marginBottom: 4,
                   }}>{uploaded}/4 dokumen</div>
                   <div style={{ fontSize: 11, color: 'var(--k-muted)' }}>Klik untuk review →</div>

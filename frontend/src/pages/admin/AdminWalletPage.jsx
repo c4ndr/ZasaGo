@@ -1,23 +1,24 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const fmtRp  = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const fmtDt  = (s) => s ? new Date(s).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '-'
 
 const TYPE_LABEL = {
-  topup:              { label: 'Top Up',          color: '#10B981', sign: '+' },
-  withdraw:           { label: 'Withdraw',         color: '#EF4444', sign: '-' },
-  order_payment:      { label: 'Bayar Order',      color: '#EF4444', sign: '-' },
-  order_income:       { label: 'Pendapatan',       color: '#10B981', sign: '+' },
-  commission:         { label: 'Komisi',           color: '#EF4444', sign: '-' },
-  platform_commission:{ label: 'Komisi Platform',  color: '#EF4444', sign: '-' },
-  refund:             { label: 'Refund',           color: '#10B981', sign: '+' },
-  mart_payment:       { label: 'Bayar Mart',       color: '#EF4444', sign: '-' },
-  mart_refund:        { label: 'Refund Mart',      color: '#10B981', sign: '+' },
-  admin_credit:       { label: 'Kredit Admin',     color: '#6366F1', sign: '+' },
-  admin_debit:        { label: 'Debit Admin',      color: '#F59E0B', sign: '-' },
-  jastip_discount:    { label: 'Diskon Jastip',    color: '#10B981', sign: '+' },
+  topup:              { label: 'Top Up',          color: '#10B981', rgb: '16,185,129', sign: '+' },
+  withdraw:           { label: 'Withdraw',         color: '#C0435C', rgb: '192,67,92',  sign: '-' },
+  order_payment:      { label: 'Bayar Order',      color: '#C0435C', rgb: '192,67,92',  sign: '-' },
+  order_income:       { label: 'Pendapatan',       color: '#10B981', rgb: '16,185,129', sign: '+' },
+  commission:         { label: 'Komisi',           color: '#C0435C', rgb: '192,67,92',  sign: '-' },
+  platform_commission:{ label: 'Komisi Platform',  color: '#C0435C', rgb: '192,67,92',  sign: '-' },
+  refund:             { label: 'Refund',           color: '#10B981', rgb: '16,185,129', sign: '+' },
+  mart_payment:       { label: 'Bayar Mart',       color: '#C0435C', rgb: '192,67,92',  sign: '-' },
+  mart_refund:        { label: 'Refund Mart',      color: '#10B981', rgb: '16,185,129', sign: '+' },
+  admin_credit:       { label: 'Kredit Admin',     color: 'var(--k-primary)', rgb: '40,55,75',   sign: '+' },
+  admin_debit:        { label: 'Debit Admin',      color: 'var(--k-warn)',    rgb: '184,134,11',  sign: '-' },
+  jastip_discount:    { label: 'Diskon Jastip',    color: '#10B981', rgb: '16,185,129', sign: '+' },
 }
 
 const ROLE_LABEL = {
@@ -31,15 +32,15 @@ const ROLE_LABEL = {
 // ── Chip warna role ──────────────────────────────────────────────────────────
 function RoleChip({ role }) {
   const colors = {
-    customer:    '#3B82F6',
-    mitra_motor: '#10B981',
-    mitra_mobil: '#059669',
-    seller:      '#8B5CF6',
-    merchant:    '#F97316',
+    customer:    { color: 'var(--k-primary)',  rgb: '40,55,75'   },
+    mitra_motor: { color: '#10B981',           rgb: '16,185,129' },
+    mitra_mobil: { color: 'var(--k-accent)',   rgb: '46,125,91'  },
+    seller:      { color: 'var(--k-primary2)', rgb: '29,41,57'   },
+    merchant:    { color: 'var(--k-primary)',  rgb: '40,55,75'   },
   }
-  const c = colors[role] || '#6B7280'
+  const c = colors[role] || { color: '#6B7280', rgb: '107,114,128' }
   return (
-    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 6, background: c + '22', color: c }}>
+    <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 6, background: `rgba(${c.rgb},0.13)`, color: c.color }}>
       {ROLE_LABEL[role] || role}
     </span>
   )
@@ -110,12 +111,15 @@ function UserWalletModal({ user, onClose, onRefresh }) {
         </div>
 
         {/* Saldo card */}
-        <div style={{ margin: '16px 16px 0', borderRadius: 16, padding: '16px', background: 'linear-gradient(135deg,#1E1B4B,#312E81)' }}>
-          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 11, fontWeight: 600, marginBottom: 2 }}>💰 Total Saldo</p>
-          <p style={{ color: '#fff', fontSize: 26, fontWeight: 900, margin: 0 }}>{fmtRp(balance)}</p>
-          <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
-            <div><p style={{ color: '#86EFAC', fontSize: 12, fontWeight: 700 }}>{fmtRp(avail)}</p><p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10 }}>Tersedia</p></div>
-            {locked > 0 && <div><p style={{ color: '#FCD34D', fontSize: 12, fontWeight: 700 }}>{fmtRp(locked)}</p><p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10 }}>Dikunci</p></div>}
+        <div style={{ margin: '16px 16px 0', borderRadius: 16, padding: '16px', position: 'relative', overflow: 'hidden', background: SVC.wallet.bg, boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+            <p style={{ color: SVC.wallet.fg, opacity: 0.7, fontSize: 11, fontWeight: 600, marginBottom: 2 }}>💰 Total Saldo</p>
+            <p style={{ color: SVC.wallet.fg, fontSize: 26, fontWeight: 900, margin: 0 }}>{fmtRp(balance)}</p>
+            <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
+              <div><p style={{ color: SVC.wallet.fg, fontSize: 12, fontWeight: 700 }}>{fmtRp(avail)}</p><p style={{ color: SVC.wallet.fg, opacity: 0.55, fontSize: 10 }}>Tersedia</p></div>
+              {locked > 0 && <div><p style={{ color: SVC.wallet.fg, fontSize: 12, fontWeight: 700 }}>{fmtRp(locked)}</p><p style={{ color: SVC.wallet.fg, opacity: 0.55, fontSize: 10 }}>Dikunci</p></div>}
+            </div>
           </div>
         </div>
 
@@ -135,7 +139,7 @@ function UserWalletModal({ user, onClose, onRefresh }) {
           <div style={{ padding: '16px' }}>
             {/* Mode toggle */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-              {[['credit','➕ Tambah Saldo','#10B981'],['debit','➖ Kurangi Saldo','#EF4444']].map(([m,l,c]) => (
+              {[['credit','➕ Tambah Saldo','#10B981'],['debit','➖ Kurangi Saldo','#C0435C']].map(([m,l,c]) => (
                 <button key={m} onClick={() => { setMode(m); setMsg('') }}
                   style={{ flex: 1, padding: '12px 8px', borderRadius: 12, border: `2px solid ${mode===m ? c : 'var(--k-border)'}`,
                     background: mode===m ? c+'18' : 'var(--k-card)', color: mode===m ? c : 'var(--k-muted)',
@@ -146,8 +150,8 @@ function UserWalletModal({ user, onClose, onRefresh }) {
             </div>
 
             {mode === 'debit' && (
-              <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', marginBottom: 12 }}>
-                <p style={{ color: '#EF4444', fontSize: 12, fontWeight: 600 }}>⚠️ Pengurangan saldo akan dicatat di audit log dan riwayat transaksi user.</p>
+              <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(192,67,92,0.06)', border: '1px solid rgba(192,67,92,0.2)', marginBottom: 12 }}>
+                <p style={{ color: 'var(--k-danger)', fontSize: 12, fontWeight: 600 }}>⚠️ Pengurangan saldo akan dicatat di audit log dan riwayat transaksi user.</p>
               </div>
             )}
 
@@ -178,14 +182,14 @@ function UserWalletModal({ user, onClose, onRefresh }) {
               </div>
 
               {msg && (
-                <div style={{ padding: '10px 12px', borderRadius: 10, background: msg.startsWith('✓') ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)', border: `1px solid ${msg.startsWith('✓') ? '#10B981' : '#EF4444'}44` }}>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: msg.startsWith('✓') ? '#10B981' : '#EF4444', margin: 0 }}>{msg}</p>
+                <div style={{ padding: '10px 12px', borderRadius: 10, background: msg.startsWith('✓') ? 'rgba(16,185,129,0.08)' : 'rgba(192,67,92,0.08)', border: `1px solid ${msg.startsWith('✓') ? '#10B981' : '#C0435C'}44` }}>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: msg.startsWith('✓') ? '#10B981' : 'var(--k-danger)', margin: 0 }}>{msg}</p>
                 </div>
               )}
 
               <button onClick={submit} disabled={loading}
                 style={{ padding: '14px', borderRadius: 12, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: 800, fontSize: 14,
-                  background: mode === 'credit' ? '#10B981' : '#EF4444', color: '#fff', opacity: loading ? 0.7 : 1 }}>
+                  background: mode === 'credit' ? '#10B981' : 'var(--k-danger)', color: '#fff', opacity: loading ? 0.7 : 1 }}>
                 {loading ? 'Memproses...' : mode === 'credit' ? '➕ Tambah Saldo' : '➖ Kurangi Saldo'}
               </button>
             </div>
@@ -202,10 +206,10 @@ function UserWalletModal({ user, onClose, onRefresh }) {
               <>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {txs.data.map(tx => {
-                    const meta = TYPE_LABEL[tx.type] ?? { label: tx.type, color: '#6B7280', sign: '?' }
+                    const meta = TYPE_LABEL[tx.type] ?? { label: tx.type, color: '#6B7280', rgb: '107,114,128', sign: '?' }
                     return (
                       <div key={tx.id} style={{ background: 'var(--k-card)', borderRadius: 12, padding: '12px 14px', border: '1px solid var(--k-border)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: meta.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, background: `rgba(${meta.rgb},0.10)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                           <span style={{ fontSize: 14 }}>{meta.sign === '+' ? '↑' : '↓'}</span>
                         </div>
                         <div style={{ flex: 1 }}>
@@ -292,10 +296,13 @@ export default function AdminWalletPage() {
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* Hero */}
-        <div style={{ borderRadius: 16, padding: '18px', background: 'linear-gradient(135deg,#1E1B4B,#312E81)' }}>
-          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>🏦 Manajemen Saldo</p>
-          <p style={{ color: '#fff', fontSize: 16, fontWeight: 900, margin: 0 }}>Tambah & Kurangi Saldo User</p>
-          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, marginTop: 4 }}>Setiap perubahan dicatat di audit log & riwayat transaksi user</p>
+        <div style={{ borderRadius: 16, padding: '18px', position: 'relative', overflow: 'hidden', background: SVC.wallet.bg, boxShadow: svcShadow(SVC.wallet.rgb, true) }}>
+          <Gloss />
+          <div style={{ position: 'relative' }}>
+            <p style={{ color: SVC.wallet.fg, opacity: 0.75, fontSize: 12, fontWeight: 600, marginBottom: 4 }}>🏦 Manajemen Saldo</p>
+            <p style={{ color: SVC.wallet.fg, fontSize: 16, fontWeight: 900, margin: 0 }}>Tambah & Kurangi Saldo User</p>
+            <p style={{ color: SVC.wallet.fg, opacity: 0.65, fontSize: 12, marginTop: 4 }}>Setiap perubahan dicatat di audit log & riwayat transaksi user</p>
+          </div>
         </div>
 
         {/* Tab */}
@@ -344,7 +351,7 @@ export default function AdminWalletPage() {
                     return (
                       <div key={u.id} onClick={() => setSelected(u)}
                         style={{ background: 'var(--k-card)', borderRadius: 14, padding: '14px 16px', border: '1px solid var(--k-border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(99,102,241,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
+                        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(40,55,75,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>👤</div>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                             <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{u.name}</p>
@@ -353,8 +360,8 @@ export default function AdminWalletPage() {
                           <p style={{ fontSize: 11, color: 'var(--k-muted)', margin: 0 }}>{u.email ?? u.phone}</p>
                         </div>
                         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                          <p style={{ fontSize: 14, fontWeight: 900, color: bal < 0 ? '#EF4444' : '#10B981', margin: 0 }}>{fmtRp(bal)}</p>
-                          {lck > 0 && <p style={{ fontSize: 10, color: '#F59E0B', margin: '2px 0 0' }}>🔒 {fmtRp(lck)}</p>}
+                          <p style={{ fontSize: 14, fontWeight: 900, color: bal < 0 ? 'var(--k-danger)' : '#10B981', margin: 0 }}>{fmtRp(bal)}</p>
+                          {lck > 0 && <p style={{ fontSize: 10, color: 'var(--k-warn)', margin: '2px 0 0' }}>🔒 {fmtRp(lck)}</p>}
                         </div>
                       </div>
                     )
@@ -391,8 +398,8 @@ export default function AdminWalletPage() {
                     const isCredit = tx.type === 'admin_credit'
                     const user     = tx.wallet?.user
                     return (
-                      <div key={tx.id} style={{ background: 'var(--k-card)', borderRadius: 14, padding: '14px 16px', border: `1px solid ${isCredit ? '#10B981' : '#EF4444'}33`, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                        <div style={{ width: 40, height: 40, borderRadius: 12, background: isCredit ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
+                      <div key={tx.id} style={{ background: 'var(--k-card)', borderRadius: 14, padding: '14px 16px', border: `1px solid ${isCredit ? '#10B981' : '#C0435C'}33`, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                        <div style={{ width: 40, height: 40, borderRadius: 12, background: isCredit ? 'rgba(16,185,129,0.12)' : 'rgba(192,67,92,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
                           {isCredit ? '⬆️' : '⬇️'}
                         </div>
                         <div style={{ flex: 1 }}>
@@ -404,7 +411,7 @@ export default function AdminWalletPage() {
                           <p style={{ fontSize: 10, color: 'var(--k-muted)', margin: '2px 0 0' }}>{fmtDt(tx.created_at)}</p>
                         </div>
                         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                          <p style={{ fontSize: 14, fontWeight: 900, color: isCredit ? '#10B981' : '#EF4444', margin: 0 }}>
+                          <p style={{ fontSize: 14, fontWeight: 900, color: isCredit ? '#10B981' : 'var(--k-danger)', margin: 0 }}>
                             {isCredit ? '+' : '-'}{fmtRp(tx.amount)}
                           </p>
                           <p style={{ fontSize: 10, color: 'var(--k-muted)', margin: '2px 0 0' }}>→ {fmtRp(tx.balance_after)}</p>

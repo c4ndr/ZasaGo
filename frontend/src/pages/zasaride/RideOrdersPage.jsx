@@ -8,12 +8,12 @@ const COMPLAINT_WINDOW_HOURS = 24
 const fmt = (n) => new Intl.NumberFormat('id-ID').format(n)
 
 const STATUS_BADGE = {
-  pending:   { label: 'Mencari Driver', color: '#F59E0B', bg: 'rgba(245,158,11,0.1)' },
-  accepted:  { label: 'Driver Menuju',  color: '#3B82F6', bg: 'rgba(59,130,246,0.1)' },
-  on_pickup: { label: 'Driver Tiba',    color: '#8B5CF6', bg: 'rgba(139,92,246,0.1)' },
-  on_ride:   { label: 'Dalam Perjalanan', color: '#00C896', bg: 'rgba(0,200,150,0.1)' },
-  completed: { label: 'Selesai',        color: '#00C896', bg: 'rgba(0,200,150,0.1)' },
-  cancelled: { label: 'Dibatalkan',     color: '#EF4444', bg: 'rgba(239,68,68,0.1)' },
+  pending:   { label: 'Mencari Driver', color: 'var(--k-warn)', bg: 'rgba(184,134,11,0.1)' },
+  accepted:  { label: 'Driver Menuju',  color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)' },
+  on_pickup: { label: 'Driver Tiba',    color: 'var(--k-primary2)', bg: 'rgba(29,41,57,0.1)' },
+  on_ride:   { label: 'Dalam Perjalanan', color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.1)' },
+  completed: { label: 'Selesai',        color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.1)' },
+  cancelled: { label: 'Dibatalkan',     color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.1)' },
 }
 
 function RatingModal({ order, onClose, onDone }) {
@@ -69,7 +69,7 @@ function RatingModal({ order, onClose, onDone }) {
           }}
         />
 
-        {error && <p style={{ fontSize: 13, color: '#EF4444', marginBottom: 12 }}>{error}</p>}
+        {error && <p style={{ fontSize: 13, color: 'var(--k-danger)', marginBottom: 12 }}>{error}</p>}
 
         <button onClick={submit} disabled={loading} style={{
           width: '100%', padding: '14px', borderRadius: 16,
@@ -128,14 +128,14 @@ function OrderCard({ order, onRate }) {
       {order.status === 'completed' && !order.my_rating && (
         <button onClick={() => onRate(order)} style={{
           marginTop: 12, width: '100%', padding: '10px', borderRadius: 12,
-          background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.25)',
+          background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.25)',
           color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
         }}>⭐ Beri Rating</button>
       )}
       {order.status === 'completed' && order.my_rating && (
         <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize: 13, color: 'var(--k-muted)' }}>Rating kamu:</span>
-          <span style={{ fontSize: 14, color: '#F59E0B', fontWeight: 700 }}>{'★'.repeat(order.my_rating.score)}{'☆'.repeat(5 - order.my_rating.score)}</span>
+          <span style={{ fontSize: 14, color: 'var(--k-warn)', fontWeight: 700 }}>{'★'.repeat(order.my_rating.score)}{'☆'.repeat(5 - order.my_rating.score)}</span>
         </div>
       )}
 
@@ -143,7 +143,7 @@ function OrderCard({ order, onRate }) {
         <button onClick={() => setShowComplaint(true)} style={{
           marginTop: 8, width: '100%', padding: '10px', borderRadius: 12,
           background: 'rgba(246,173,85,0.06)', border: '1px solid rgba(246,173,85,0.3)',
-          color: '#F6AD55', fontSize: 13, fontWeight: 700, cursor: 'pointer',
+          color: 'var(--k-warn)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
         }}>⚠️ Laporkan Masalah</button>
       )}
       {complaintSent && (

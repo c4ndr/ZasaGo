@@ -45,7 +45,7 @@ export default function VoucherInput({ orderAmount, module, onApply, onClear }) 
 
       {info ? (
         <div style={{
-          background: 'rgba(0,200,150,0.08)', border: '1px solid rgba(0,200,150,0.3)',
+          background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.3)',
           borderRadius: 14, padding: '12px 14px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
@@ -57,7 +57,7 @@ export default function VoucherInput({ orderAmount, module, onApply, onClear }) 
           </div>
           <button type="button" onClick={handleClear} style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            color: '#EF4444', fontSize: 13, fontWeight: 700, padding: '4px 8px',
+            color: 'var(--k-danger)', fontSize: 13, fontWeight: 700, padding: '4px 8px',
           }}>✕</button>
         </div>
       ) : (
@@ -70,7 +70,7 @@ export default function VoucherInput({ orderAmount, module, onApply, onClear }) 
               placeholder="Masukkan kode promo"
               style={{
                 flex: 1, background: 'var(--k-card)', color: 'var(--k-text)',
-                border: `1.5px solid ${err ? '#EF4444' : 'var(--k-border)'}`,
+                border: `1.5px solid ${err ? 'var(--k-danger)' : 'var(--k-border)'}`,
                 borderRadius: 14, padding: '12px 14px', fontSize: 13,
                 outline: 'none', fontFamily: 'inherit',
               }}
@@ -90,7 +90,7 @@ export default function VoucherInput({ orderAmount, module, onApply, onClear }) 
               {loading ? '...' : 'Pakai'}
             </button>
           </div>
-          {err && <p style={{ fontSize: 12, color: '#EF4444', marginTop: 6 }}>{err}</p>}
+          {err && <p style={{ fontSize: 12, color: 'var(--k-danger)', marginTop: 6 }}>{err}</p>}
         </>
       )}
     </div>

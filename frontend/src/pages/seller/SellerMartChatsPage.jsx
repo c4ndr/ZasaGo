@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
 
@@ -37,7 +38,7 @@ export default function SellerMartChatsPage() {
 
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}>
-          <div style={{ width: 28, height: 28, border: '3px solid #6366F1', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          <div style={{ width: 28, height: 28, border: `3px solid ${SVC.zasashop.fg}`, borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
           <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
         </div>
       ) : rooms.length === 0 ? (
@@ -52,18 +53,18 @@ export default function SellerMartChatsPage() {
             <div
               key={r.room_id}
               onClick={() => navigate(`/seller/mart/chats/${r.room_id}`)}
-              style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', borderBottom: '1px solid var(--k-border)', cursor: 'pointer', background: r.unread_count > 0 ? 'rgba(99,102,241,0.04)' : 'transparent' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', borderBottom: '1px solid var(--k-border)', cursor: 'pointer', background: r.unread_count > 0 ? `rgba(${SVC.zasashop.rgb},0.04)` : 'transparent' }}
             >
               {/* Avatar */}
-              <div style={{ width: 48, height: 48, borderRadius: 24, background: '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
+              <div style={{ width: 48, height: 48, borderRadius: 24, background: SVC.zasashop.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
                 {r.customer?.photo_url
                   ? <img src={`${STORAGE}/${r.customer.photo_url}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : r.customer?.avatar_preset
                     ? (() => {
                         const [emoji, bg] = (r.customer.avatar_preset || '').split('|')
-                        return <div style={{ width: '100%', height: '100%', background: bg || '#6366F1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>{emoji}</div>
+                        return <div style={{ width: '100%', height: '100%', background: bg || SVC.zasashop.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>{emoji}</div>
                       })()
-                    : <span style={{ color: '#fff', fontWeight: 800, fontSize: 18 }}>{(r.customer?.name || '?')[0].toUpperCase()}</span>
+                    : <span style={{ color: SVC.zasashop.fg, fontWeight: 800, fontSize: 18 }}>{(r.customer?.name || '?')[0].toUpperCase()}</span>
                 }
               </div>
 
@@ -82,7 +83,7 @@ export default function SellerMartChatsPage() {
 
               {/* Badge unread */}
               {r.unread_count > 0 && (
-                <span style={{ background: '#6366F1', color: '#fff', fontSize: 10, fontWeight: 900, minWidth: 20, height: 20, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 5px', flexShrink: 0 }}>
+                <span style={{ background: 'var(--k-danger)', color: '#fff', fontSize: 10, fontWeight: 900, minWidth: 20, height: 20, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 5px', flexShrink: 0 }}>
                   {r.unread_count > 99 ? '99+' : r.unread_count}
                 </span>
               )}

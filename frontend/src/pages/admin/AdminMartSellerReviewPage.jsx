@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtDate(d) {
   return d ? new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'
@@ -55,14 +56,14 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
 
   return (
     <div style={{
-      background: 'var(--k-card)', border: '1.5px solid rgba(59,130,246,0.25)',
+      background: 'var(--k-card)', border: `1.5px solid rgba(${SVC.zasashop.rgb},0.25)`,
       borderRadius: 18, overflow: 'hidden',
-      boxShadow: '0 2px 12px rgba(59,130,246,0.07)',
+      boxShadow: `0 2px 12px rgba(${SVC.zasashop.rgb},0.07)`,
     }}>
       {/* Header strip */}
-      <div style={{ background: 'rgba(59,130,246,0.07)', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(59,130,246,0.12)' }}>
+      <div style={{ background: `rgba(${SVC.zasashop.rgb},0.07)`, padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid rgba(${SVC.zasashop.rgb},0.12)` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(59,130,246,0.12)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
+          <div style={{ width: 40, height: 40, borderRadius: 10, background: `rgba(${SVC.zasashop.rgb},0.12)`, border: `1px solid rgba(${SVC.zasashop.rgb},0.2)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
             🛍️
           </div>
           <div>
@@ -71,7 +72,7 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 11, color: '#F59E0B', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(245,158,11,0.12)', border: '1px solid rgba(245,158,11,0.3)' }}>
+          <span style={{ fontSize: 11, color: 'var(--k-warn)', fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(184,134,11,0.12)', border: '1px solid rgba(184,134,11,0.3)' }}>
             ⏳ Menunggu Review
           </span>
           <button onClick={toggleExpand} style={{ padding: '5px 12px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>
@@ -149,7 +150,7 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
                     <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>Kategori Produk</p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                       {cats.map(c => (
-                        <span key={c} style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: 'rgba(59,130,246,0.1)', color: '#3B82F6', fontWeight: 600 }}>{c}</span>
+                        <span key={c} style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: `rgba(${SVC.zasashop.rgb},0.1)`, color: SVC.zasashop.fg, fontWeight: 600 }}>{c}</span>
                       ))}
                     </div>
                   </div>
@@ -172,8 +173,8 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
                             </p>
                           </div>
                           <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                            <p style={{ fontSize: 13, fontWeight: 700, color: '#3B82F6' }}>{fmtRp(p.price)}</p>
-                            <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 20, background: p.is_active ? 'rgba(5,150,105,0.12)' : 'rgba(156,163,175,0.15)', color: p.is_active ? '#059669' : '#9CA3AF', fontWeight: 600 }}>
+                            <p style={{ fontSize: 13, fontWeight: 700, color: SVC.zasashop.fg }}>{fmtRp(p.price)}</p>
+                            <span style={{ fontSize: 10, padding: '2px 7px', borderRadius: 20, background: p.is_active ? 'rgba(46,125,91,0.12)' : 'rgba(156,163,175,0.15)', color: p.is_active ? 'var(--k-accent)' : '#9CA3AF', fontWeight: 600 }}>
                               {p.is_active ? 'Aktif' : 'Nonaktif'}
                             </span>
                           </div>
@@ -193,18 +194,18 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
 
         {/* Inline reject form */}
         {showReject && (
-          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: '#EF4444', marginBottom: 8 }}>Alasan penolakan:</p>
+          <div style={{ marginBottom: 14, padding: '14px', borderRadius: 12, background: 'rgba(192,67,92,0.05)', border: '1px solid rgba(192,67,92,0.2)' }}>
+            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-danger)', marginBottom: 8 }}>Alasan penolakan:</p>
             <textarea value={reason} onChange={e => setReason(e.target.value)} rows={2}
               placeholder="Contoh: Informasi toko tidak lengkap, mohon lengkapi deskripsi dan foto..."
-              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(239,68,68,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
+              style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               <button onClick={() => { setShowReject(false); setReason('') }}
                 style={{ flex: 1, padding: '9px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
                 Batal
               </button>
               <button onClick={handleReject} disabled={busy || !reason.trim()}
-                style={{ flex: 1, padding: '9px', borderRadius: 8, border: 'none', background: reason.trim() ? '#EF4444' : 'var(--k-border)', color: reason.trim() ? '#fff' : 'var(--k-muted)', cursor: reason.trim() ? 'pointer' : 'default', fontSize: 13, fontWeight: 700 }}>
+                style={{ flex: 1, padding: '9px', borderRadius: 8, border: 'none', background: reason.trim() ? 'var(--k-danger)' : 'var(--k-border)', color: reason.trim() ? '#fff' : 'var(--k-muted)', cursor: reason.trim() ? 'pointer' : 'default', fontSize: 13, fontWeight: 700 }}>
                 {busy ? 'Menolak...' : 'Konfirmasi Tolak'}
               </button>
             </div>
@@ -215,11 +216,11 @@ function ReviewCard({ seller: s, onApprove, onReject }) {
         {!showReject && (
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setShowReject(true)} disabled={busy}
-              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(239,68,68,0.35)', background: 'rgba(239,68,68,0.06)', color: '#EF4444', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
+              style={{ flex: 1, padding: '11px', borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.35)', background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
               ✕ Tolak
             </button>
             <button onClick={handleApprove} disabled={busy}
-              style={{ flex: 2, padding: '11px', borderRadius: 12, border: 'none', background: busy ? 'var(--k-border)' : '#3B82F6', color: busy ? 'var(--k-muted)' : '#fff', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
+              style={{ flex: 2, padding: '11px', borderRadius: 12, border: 'none', background: busy ? 'var(--k-border)' : SVC.zasashop.fg, color: busy ? 'var(--k-muted)' : '#fff', fontWeight: 700, fontSize: 13, cursor: busy ? 'default' : 'pointer' }}>
               {busy ? 'Memproses...' : '✓ Setujui Toko'}
             </button>
           </div>
@@ -278,12 +279,12 @@ export default function AdminMartSellerReviewPage() {
     setTimeout(() => setToast(null), 3500)
   }
 
-  const toastColor = { success: '#059669', error: '#EF4444', info: '#F59E0B' }
+  const toastColor = { success: 'var(--k-accent)', error: 'var(--k-danger)', info: 'var(--k-warn)' }
 
   return (
     <AdminLayout title="Review Seller ZasaShop">
       {toast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toastColor[toast.type] ?? '#3B82F6', color: '#fff', maxWidth: 320, boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
+        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toastColor[toast.type] ?? SVC.zasashop.fg, color: '#fff', maxWidth: 320, boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
           {toast.msg}
         </div>
       )}
@@ -293,7 +294,7 @@ export default function AdminMartSellerReviewPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Review Seller ZasaShop</h2>
           {total > 0 && (
-            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(245,158,11,0.15)', color: '#F59E0B', fontWeight: 800, fontSize: 13, border: '1px solid rgba(245,158,11,0.35)' }}>
+            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(184,134,11,0.15)', color: 'var(--k-warn)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(184,134,11,0.35)' }}>
               {total} menunggu
             </span>
           )}

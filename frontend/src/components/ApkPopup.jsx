@@ -82,9 +82,9 @@ export default function ApkPopup() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <div style={{
                 width: 56, height: 56, borderRadius: 18, flexShrink: 0,
-                background: 'linear-gradient(135deg, var(--k-accent), #00A87D)',
+                background: 'linear-gradient(135deg, var(--k-accent), var(--k-accent2))',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 6px 20px rgba(0,200,150,0.35)',
+                boxShadow: '0 6px 20px rgba(46,125,91,0.35)',
               }}>
                 <span style={{ fontSize: 26, fontWeight: 900, color: '#0C0C16' }}>Z</span>
               </div>
@@ -139,7 +139,7 @@ export default function ApkPopup() {
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
               background: 'var(--k-accent)',
               borderRadius: 16, padding: '15px 24px',
-              boxShadow: '0 4px 16px rgba(0,200,150,0.35)',
+              boxShadow: '0 4px 16px rgba(46,125,91,0.35)',
             }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path d="M12 16l-4-4h3V4h2v8h3l-4 4z" fill="#0C0C16"/>

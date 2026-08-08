@@ -69,7 +69,7 @@ export default function TosPage() {
 
       <div style={{ padding: '16px' }}>
         {/* Intro */}
-        <div style={{ background: 'rgba(0,200,150,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(0,200,150,0.2)', marginBottom: 16 }}>
+        <div style={{ background: 'rgba(46,125,91,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(46,125,91,0.2)', marginBottom: 16 }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             Dokumen ini mengatur penggunaan platform <strong>ZasaQu</strong> oleh seluruh pengguna termasuk customer, mitra, merchant, pedagang, dan penyedia jasa rumah.
           </p>
@@ -86,7 +86,7 @@ export default function TosPage() {
 
         <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ padding: '16px', background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', textAlign: 'center' }}>
-            <p style={{ fontSize: 12, color: 'var(--k-muted)', margin: '0 0 10px' }}>Pertanyaan? Hubungi kami di <a href="mailto:support@zasaqu.uk" style={{ color: '#00C896', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a></p>
+            <p style={{ fontSize: 12, color: 'var(--k-muted)', margin: '0 0 10px' }}>Pertanyaan? Hubungi kami di <a href="mailto:support@zasaqu.uk" style={{ color: 'var(--k-accent)', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a></p>
             <button onClick={() => navigate('/refund')}
               style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-text)', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
               💸 Lihat Kebijakan Refund Lengkap

@@ -4,22 +4,23 @@ import api from '../../services/api'
 import echo from '../../services/echo'
 import { useAuth } from '../../context/AuthContext'
 import { playNewOrderChime, setupChimeUnlock } from '../../utils/systemNotif'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 function fmtTime(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) }
 
 const STATUS_META = {
-  pending:           { label: 'Pesanan Baru!',       color: '#DC2626', bg: '#FEF2F2', border: '#F56565',   icon: '🔔', ring: true  },
-  merchant_accepted: { label: 'Diterima — Siap Masak', color: '#7C3AED', bg: '#FAF5FF', border: '#9F7AEA', icon: '✅', ring: false },
-  preparing:         { label: 'Sedang Dimasak',       color: '#7C3AED', bg: '#FAF5FF', border: '#9F7AEA',  icon: '👨‍🍳', ring: false },
-  ready_for_pickup:  { label: 'Siap — Menunggu Mitra', color: '#027A48', bg: '#ECFDF3', border: '#00C896', icon: '🎉', ring: false },
-  mitra_on_pickup:   { label: 'Mitra Menuju Warung',  color: '#1D4ED8', bg: '#EFF6FF', border: '#3B82F6',  icon: '🏍️', ring: false },
-  picked_up:         { label: 'Pesanan Diambil Mitra', color: '#1D4ED8', bg: '#EFF6FF', border: '#3B82F6', icon: '📦', ring: false },
-  on_delivery:       { label: 'Sedang Dikirim',        color: '#92400E', bg: '#FFFBEB', border: '#F59E0B', icon: '🚀', ring: false },
-  delivered:         { label: 'Sampai ke Pelanggan',   color: '#027A48', bg: '#ECFDF3', border: '#00C896', icon: '🎊', ring: false },
-  completed:         { label: 'Selesai',               color: '#374151', bg: '#F9FAFB', border: '#E5E7EB', icon: '⭐', ring: false },
-  cancelled:         { label: 'Dibatalkan',            color: '#6B7280', bg: '#F9FAFB', border: '#E5E7EB', icon: '✕',  ring: false },
-  rejected:          { label: 'Ditolak',               color: '#DC2626', bg: '#FEF2F2', border: '#F56565', icon: '✕',  ring: false },
+  pending:           { label: 'Pesanan Baru!',       color: '#DC2626', bg: '#FEF2F2', border: 'var(--k-danger)', rgb: '192,67,92',   icon: '🔔', ring: true  },
+  merchant_accepted: { label: 'Diterima — Siap Masak', color: 'var(--k-primary)', bg: '#FAF5FF', border: '#9F7AEA', rgb: '159,122,234', icon: '✅', ring: false },
+  preparing:         { label: 'Sedang Dimasak',       color: 'var(--k-primary)', bg: '#FAF5FF', border: '#9F7AEA', rgb: '159,122,234',  icon: '👨‍🍳', ring: false },
+  ready_for_pickup:  { label: 'Siap — Menunggu Mitra', color: '#027A48', bg: '#ECFDF3', border: 'var(--k-accent)', rgb: '46,125,91', icon: '🎉', ring: false },
+  mitra_on_pickup:   { label: 'Mitra Menuju Warung',  color: 'var(--k-primary)', bg: '#EFF6FF', border: 'var(--k-primary)', rgb: '40,55,75',  icon: '🏍️', ring: false },
+  picked_up:         { label: 'Pesanan Diambil Mitra', color: 'var(--k-primary)', bg: '#EFF6FF', border: 'var(--k-primary)', rgb: '40,55,75', icon: '📦', ring: false },
+  on_delivery:       { label: 'Sedang Dikirim',        color: '#92400E', bg: '#FFFBEB', border: 'var(--k-warn)', rgb: '184,134,11', icon: '🚀', ring: false },
+  delivered:         { label: 'Sampai ke Pelanggan',   color: '#027A48', bg: '#ECFDF3', border: 'var(--k-accent)', rgb: '46,125,91', icon: '🎊', ring: false },
+  completed:         { label: 'Selesai',               color: '#374151', bg: '#F9FAFB', border: '#E5E7EB', rgb: '229,231,235', icon: '⭐', ring: false },
+  cancelled:         { label: 'Dibatalkan',            color: '#6B7280', bg: '#F9FAFB', border: '#E5E7EB', rgb: '229,231,235', icon: '✕',  ring: false },
+  rejected:          { label: 'Ditolak',               color: '#DC2626', bg: '#FEF2F2', border: 'var(--k-danger)', rgb: '192,67,92', icon: '✕',  ring: false },
 }
 
 const ACTIVE = ['pending','merchant_accepted','preparing','ready_for_pickup','mitra_on_pickup','picked_up','on_delivery','delivered']
@@ -75,12 +76,12 @@ function PrepCountdown({ acceptedAt, prepMinutes }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px',
-      borderRadius: 10, background: over ? 'rgba(220,38,38,0.1)' : 'rgba(124,58,237,0.08)',
-      border: `1px solid ${over ? '#F56565' : '#DDD6FE'}`, marginBottom: 10,
+      borderRadius: 10, background: over ? 'rgba(220,38,38,0.1)' : 'rgba(40,55,75,0.08)',
+      border: `1px solid ${over ? 'var(--k-danger)' : '#DDD6FE'}`, marginBottom: 10,
     }}>
       <span style={{ fontSize: 18 }}>{over ? '⚠️' : '⏱️'}</span>
       <div>
-        <p style={{ fontSize: 11, color: over ? '#DC2626' : '#7C3AED', fontWeight: 700 }}>
+        <p style={{ fontSize: 11, color: over ? '#DC2626' : 'var(--k-primary)', fontWeight: 700 }}>
           {over ? 'Waktu masak habis!' : 'Sisa waktu masak'}
         </p>
         <p style={{ fontSize: 20, fontWeight: 800, fontFamily: 'monospace', color: over ? '#DC2626' : '#111827', lineHeight: 1 }}>
@@ -114,19 +115,19 @@ function PrepModal({ order, onClose, onAccepted }) {
       <div style={{ background: 'var(--k-card)', borderRadius: '20px 20px 0 0', padding: '24px 20px', width: '100%', maxWidth: 480 }}>
         <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 4 }}>Terima #{order.order_number}</div>
         <div style={{ fontSize: 13, color: 'var(--k-sub)', marginBottom: 18 }}>Berapa menit estimasi pesanan siap?</div>
-        {err && <div style={{ color: '#F56565', fontSize: 13, marginBottom: 12 }}>{err}</div>}
+        {err && <div style={{ color: 'var(--k-danger)', fontSize: 13, marginBottom: 12 }}>{err}</div>}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
           {[10,15,20,30,45,60].map(m => (
             <button key={m} onClick={() => setMins(m)} style={{
               padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer',
-              background: mins === m ? '#F97316' : 'var(--k-input)',
-              color: mins === m ? '#fff' : 'var(--k-sub)', fontWeight: mins === m ? 700 : 500, fontSize: 14,
+              background: mins === m ? SVC.zasafood.bg : 'var(--k-input)',
+              color: mins === m ? SVC.zasafood.fg : 'var(--k-sub)', fontWeight: mins === m ? 700 : 500, fontSize: 14,
             }}>{m} mnt</button>
           ))}
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={onClose} style={{ flex: 1, padding: '13px', borderRadius: 12, border: '1.5px solid var(--k-border)', background: 'transparent', color: 'var(--k-sub)', cursor: 'pointer', fontWeight: 600 }}>Batal</button>
-          <button onClick={submit} disabled={busy} style={{ flex: 2, padding: '13px', borderRadius: 12, border: 'none', cursor: 'pointer', background: '#00C896', color: '#fff', fontWeight: 800, fontSize: 15 }}>
+          <button onClick={submit} disabled={busy} style={{ flex: 2, padding: '13px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'var(--k-accent)', color: '#fff', fontWeight: 800, fontSize: 15 }}>
             {busy ? 'Menyimpan...' : '✓ Terima Order'}
           </button>
         </div>
@@ -157,7 +158,7 @@ function RejectModal({ order, onClose, onRejected }) {
       onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{ background: 'var(--k-card)', borderRadius: '20px 20px 0 0', padding: '24px 20px', width: '100%', maxWidth: 480 }}>
         <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 14 }}>Tolak #{order.order_number}</div>
-        {err && <div style={{ color: '#F56565', fontSize: 13, marginBottom: 12 }}>{err}</div>}
+        {err && <div style={{ color: 'var(--k-danger)', fontSize: 13, marginBottom: 12 }}>{err}</div>}
         <textarea rows={3} value={reason} onChange={e => setReason(e.target.value)}
           placeholder="Alasan penolakan (opsional)..."
           style={{ width: '100%', padding: '10px 12px', borderRadius: 10, border: '1.5px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 13, resize: 'vertical', boxSizing: 'border-box', marginBottom: 14 }} />
@@ -196,7 +197,7 @@ function OrderDetailModal({ order, onClose }) {
             <p style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--k-muted)', letterSpacing: '0.07em', marginBottom: 8 }}>Pelanggan</p>
             <p style={{ fontWeight: 700, fontSize: 15, color: 'var(--k-text)', marginBottom: 4 }}>{order.customer?.name}</p>
             {order.customer?.phone && (
-              <a href={`tel:${order.customer.phone}`} style={{ fontSize: 13, color: '#1D4ED8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5 }}>
+              <a href={`tel:${order.customer.phone}`} style={{ fontSize: 13, color: 'var(--k-info)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5 }}>
                 📞 {order.customer.phone}
               </a>
             )}
@@ -217,7 +218,7 @@ function OrderDetailModal({ order, onClose }) {
               <div key={i.id} style={{ marginBottom: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--k-input)', border: '1px solid var(--k-border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: i.notes ? 5 : 0 }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--k-text)' }}>{i.quantity}× {i.item_name}</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: '#F97316', flexShrink: 0, marginLeft: 8 }}>{fmtRp(i.item_price * i.quantity)}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: SVC.zasafood.fg, flexShrink: 0, marginLeft: 8 }}>{fmtRp(i.item_price * i.quantity)}</span>
                 </div>
                 {i.notes && (
                   <p style={{ fontSize: 12, color: 'var(--k-sub)', fontStyle: 'italic', marginTop: 3 }}>📝 {i.notes}</p>
@@ -228,8 +229,8 @@ function OrderDetailModal({ order, onClose }) {
 
           {/* Catatan global */}
           {order.notes && (
-            <div style={{ marginBottom: 16, padding: '10px 12px', borderRadius: 10, background: 'rgba(249,115,22,0.07)', border: '1px solid rgba(249,115,22,0.2)' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: '#C2410C', marginBottom: 4 }}>Catatan Pesanan</p>
+            <div style={{ marginBottom: 16, padding: '10px 12px', borderRadius: 10, background: `rgba(${SVC.zasafood.rgb},0.07)`, border: `1px solid rgba(${SVC.zasafood.rgb},0.2)` }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: SVC.zasafood.fg, marginBottom: 4 }}>Catatan Pesanan</p>
               <p style={{ fontSize: 13, color: 'var(--k-text)' }}>{order.notes}</p>
             </div>
           )}
@@ -244,7 +245,7 @@ function OrderDetailModal({ order, onClose }) {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 15, fontWeight: 800 }}>
               <span style={{ color: 'var(--k-text)' }}>Total</span>
-              <span style={{ color: '#F97316' }}>{fmtRp(order.total_amount)}</span>
+              <span style={{ color: SVC.zasafood.fg }}>{fmtRp(order.total_amount)}</span>
             </div>
             {order.merchant_income > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginTop: 5 }}>
@@ -277,7 +278,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
   const isActive = ACTIVE.includes(order.status)
 
   const nextAction = {
-    merchant_accepted: { label: '🍳 Mulai Masak',  endpoint: 'preparing', color: '#7C3AED', bg: '#EDE9FE' },
+    merchant_accepted: { label: '🍳 Mulai Masak',  endpoint: 'preparing', color: 'var(--k-primary)', bg: '#EDE9FE' },
     preparing:         { label: '✓ Pesanan Siap',  endpoint: 'ready',     color: '#027A48', bg: '#DCFCE7' },
   }[order.status]
 
@@ -293,7 +294,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
     }}>
 
       {/* ── Status banner ── */}
-      <div style={{ background: sm.bg, padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${sm.border}40` }}>
+      <div style={{ background: sm.bg, padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid rgba(${sm.rgb},0.25)` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
           {sm.ring && <div style={{ width: 8, height: 8, borderRadius: '50%', background: sm.color, animation: 'blink 1s infinite', flexShrink: 0 }} />}
           <span style={{ fontSize: 13, fontWeight: 800, color: sm.color }}>{sm.icon} {sm.label}</span>
@@ -315,7 +316,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 12, paddingBottom: 12, borderBottom: '1px solid var(--k-border)' }}>
           <div style={{
             width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-            background: 'rgba(249,115,22,0.1)', border: '1.5px solid rgba(249,115,22,0.2)',
+            background: `rgba(${SVC.zasafood.rgb},0.1)`, border: `1.5px solid rgba(${SVC.zasafood.rgb},0.2)`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
           }}>👤</div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -323,8 +324,8 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
               <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)' }}>{order.customer?.name}</span>
               <span style={{
                 fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 20,
-                background: order.payment_method === 'cod' ? 'rgba(249,115,22,0.1)' : 'rgba(0,200,150,0.1)',
-                color: order.payment_method === 'cod' ? '#C2410C' : '#027A48',
+                background: order.payment_method === 'cod' ? `rgba(${SVC.zasafood.rgb},0.1)` : 'rgba(46,125,91,0.1)',
+                color: order.payment_method === 'cod' ? SVC.zasafood.fg : '#027A48',
               }}>{order.payment_method === 'cod' ? '💵 COD' : '💳 Wallet'}</span>
             </div>
             <div style={{ fontSize: 11, color: '#9CA3AF', fontFamily: 'monospace' }}>#{order.order_number}</div>
@@ -358,17 +359,17 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
 
         {/* ── Catatan ── */}
         {order.notes && (
-          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: 'rgba(249,115,22,0.07)', border: '1px solid rgba(249,115,22,0.2)', fontSize: 12, color: 'var(--k-text)' }}>
+          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: `rgba(${SVC.zasafood.rgb},0.07)`, border: `1px solid rgba(${SVC.zasafood.rgb},0.2)`, fontSize: 12, color: 'var(--k-text)' }}>
             📝 <span style={{ fontWeight: 600 }}>Catatan:</span> {order.notes}
           </div>
         )}
 
         {/* ── Info mitra (saat sudah assign) ── */}
         {order.mitra && ['mitra_on_pickup','picked_up','on_delivery','delivered'].includes(order.status) && (
-          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: 'rgba(59,130,246,0.07)', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
+          <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 9, background: 'rgba(42,95,130,0.07)', border: '1px solid rgba(42,95,130,0.2)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
             <span style={{ fontSize: 18 }}>🏍️</span>
             <div>
-              <span style={{ fontWeight: 700, color: '#1D4ED8' }}>{order.mitra.name}</span>
+              <span style={{ fontWeight: 700, color: 'var(--k-info)' }}>{order.mitra.name}</span>
               <span style={{ fontSize: 11, color: '#9CA3AF', marginLeft: 6 }}>
                 {order.status === 'mitra_on_pickup' ? '— menuju warung' : order.status === 'picked_up' ? '— pesanan diambil' : '— sedang dikirim'}
               </span>
@@ -386,7 +387,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 800, marginBottom: order.merchant_income ? 4 : 0 }}>
             <span style={{ color: 'var(--k-text)' }}>Total</span>
-            <span style={{ color: '#F97316' }}>{fmtRp(order.total_amount)}</span>
+            <span style={{ color: SVC.zasafood.fg }}>{fmtRp(order.total_amount)}</span>
           </div>
           {order.merchant_income > 0 && (
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 10 }}>
@@ -405,7 +406,7 @@ function OrderCard({ order, onAccept, onReject, onAction, onDetail }) {
                 }}>Tolak</button>
                 <button onClick={e => { e.stopPropagation(); onAccept(order) }} style={{
                   flex: 2, padding: '11px', borderRadius: 10, border: 'none', cursor: 'pointer',
-                  background: '#00C896', color: '#fff', fontWeight: 800, fontSize: 14,
+                  background: 'var(--k-accent)', color: '#fff', fontWeight: 800, fontSize: 14,
                 }}>✓ Terima Order</button>
               </>
             )}
@@ -487,7 +488,7 @@ export default function MerchantOrdersPage() {
         <div style={{
           position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)',
           zIndex: 9999, padding: '11px 20px', borderRadius: 12, fontWeight: 700, fontSize: 13,
-          background: toast.ok ? '#00C896' : '#F56565', color: '#fff',
+          background: toast.ok ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff',
           boxShadow: '0 4px 16px rgba(0,0,0,0.15)', whiteSpace: 'nowrap',
         }}>{toast.msg}</div>
       )}
@@ -501,7 +502,7 @@ export default function MerchantOrdersPage() {
 
         {/* Sync error */}
         {syncError && (
-          <div style={{ padding: '11px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(245,101,101,0.1)', color: '#F56565', fontSize: 13, fontWeight: 600 }}>
+          <div style={{ padding: '11px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontSize: 13, fontWeight: 600 }}>
             ⚠ Gagal memuat data. Periksa koneksi.
           </div>
         )}
@@ -512,8 +513,8 @@ export default function MerchantOrdersPage() {
             <button key={k} onClick={() => setTab(k)} style={{
               flex: 1, padding: '11px', border: 'none', cursor: 'pointer',
               background: 'transparent', fontWeight: tab === k ? 700 : 500, fontSize: 14,
-              color: tab === k ? '#F97316' : 'var(--k-sub)',
-              borderBottom: tab === k ? '2.5px solid #F97316' : '2.5px solid transparent',
+              color: tab === k ? SVC.zasafood.fg : 'var(--k-sub)',
+              borderBottom: tab === k ? `2.5px solid ${SVC.zasafood.fg}` : '2.5px solid transparent',
               marginBottom: -2,
             }}>
               {l}{k === 'active' && pendingCount > 0 && (
@@ -525,7 +526,7 @@ export default function MerchantOrdersPage() {
 
         {loading ? (
           <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--k-sub)' }}>
-            <div style={{ width: 26, height: 26, border: '3px solid #F97316', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 12px' }} />
+            <div style={{ width: 26, height: 26, border: `3px solid ${SVC.zasafood.fg}`, borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 12px' }} />
             <p style={{ fontSize: 13 }}>Memuat order...</p>
           </div>
         ) : filtered.length === 0 ? (

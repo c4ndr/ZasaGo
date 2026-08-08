@@ -10,9 +10,13 @@ const DOC_CONFIG = [
   { type: 'vehicle_photo', label: 'Foto Kendaraan', desc: 'Foto kendaraan tampak depan + plat nomor',      emoji: '📷' },
 ]
 
-function statusColor(s) {
-  return { pending: '#F6AD55', approved: '#00C896', rejected: '#F56565' }[s] ?? 'var(--k-sub)'
+const STATUS_META = {
+  pending:  { color: 'var(--k-warn)',   bg: 'rgba(246,173,85,0.15)' },
+  approved: { color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.15)' },
+  rejected: { color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.15)' },
 }
+function statusColor(s) { return STATUS_META[s]?.color ?? 'var(--k-sub)' }
+function statusBg(s)    { return STATUS_META[s]?.bg ?? 'rgba(148,139,125,0.12)' }
 function statusLabel(s) {
   return { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' }[s] ?? '—'
 }
@@ -36,7 +40,7 @@ function DocCard({ config, doc, onUpload, uploading }) {
   return (
     <div style={{
       borderRadius: 16, background: 'var(--k-card)',
-      border: `1.5px solid ${isRejected ? '#F56565' : isApproved ? '#00C896' : 'var(--k-border)'}`,
+      border: `1.5px solid ${isRejected ? 'var(--k-danger)' : isApproved ? 'var(--k-accent)' : 'var(--k-border)'}`,
       overflow: 'hidden',
     }}>
       <div style={{ padding: '16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
@@ -51,12 +55,12 @@ function DocCard({ config, doc, onUpload, uploading }) {
             <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{
                 padding: '2px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-                color: statusColor(doc.status), background: `${statusColor(doc.status)}22`,
+                color: statusColor(doc.status), background: statusBg(doc.status),
               }}>{statusLabel(doc.status)}</span>
             </div>
           )}
           {isRejected && doc?.rejection_reason && (
-            <div style={{ marginTop: 6, fontSize: 12, color: '#F56565', background: 'rgba(245,101,101,0.08)', padding: '6px 10px', borderRadius: 8 }}>
+            <div style={{ marginTop: 6, fontSize: 12, color: 'var(--k-danger)', background: 'rgba(192,67,92,0.08)', padding: '6px 10px', borderRadius: 8 }}>
               {doc.rejection_reason}
             </div>
           )}
@@ -80,9 +84,9 @@ function DocCard({ config, doc, onUpload, uploading }) {
           <label style={{ display: 'block' }}>
             <div style={{
               width: '100%', padding: '10px', borderRadius: 10, textAlign: 'center',
-              border: `1.5px dashed ${isRejected ? '#F56565' : 'var(--k-border)'}`,
+              border: `1.5px dashed ${isRejected ? 'var(--k-danger)' : 'var(--k-border)'}`,
               cursor: isUploading ? 'default' : 'pointer', fontSize: 13, fontWeight: 600,
-              color: isUploading ? 'var(--k-sub)' : isRejected ? '#F56565' : 'var(--k-accent)',
+              color: isUploading ? 'var(--k-sub)' : isRejected ? 'var(--k-danger)' : 'var(--k-accent)',
               background: isUploading ? 'var(--k-input)' : 'transparent',
             }}>
               {isUploading ? '⏳ Mengupload...' : doc?.file_path ? '🔄 Upload Ulang' : '📤 Upload Foto'}
@@ -95,7 +99,7 @@ function DocCard({ config, doc, onUpload, uploading }) {
 
       {isApproved && (
         <div style={{ padding: '8px 16px 16px' }}>
-          <div style={{ fontSize: 12, color: '#00C896', fontWeight: 600 }}>✓ Dokumen diverifikasi</div>
+          <div style={{ fontSize: 12, color: 'var(--k-accent)', fontWeight: 600 }}>✓ Dokumen diverifikasi</div>
         </div>
       )}
     </div>
@@ -164,7 +168,7 @@ export default function MitraOnboardingPage() {
         <div style={{
           position: 'fixed', top: 20, left: '50%', transform: 'translateX(-50%)',
           zIndex: 9999, padding: '12px 24px', borderRadius: 12, fontWeight: 700, fontSize: 14,
-          background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff',
+          background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff',
           whiteSpace: 'nowrap',
         }}>{toast.msg}</div>
       )}
@@ -188,9 +192,9 @@ export default function MitraOnboardingPage() {
         {anyRejected ? (
           <div style={{
             padding: '14px 18px', borderRadius: 14, marginBottom: 16,
-            background: 'rgba(245,101,101,0.1)', border: '1.5px solid rgba(245,101,101,0.3)',
+            background: 'rgba(192,67,92,0.1)', border: '1.5px solid rgba(192,67,92,0.3)',
           }}>
-            <div style={{ fontWeight: 700, color: '#F56565', marginBottom: 4 }}>Dokumen Ditolak</div>
+            <div style={{ fontWeight: 700, color: 'var(--k-danger)', marginBottom: 4 }}>Dokumen Ditolak</div>
             <div style={{ fontSize: 13, color: 'var(--k-sub)' }}>
               Beberapa dokumen ditolak. Periksa keterangan di bawah dan upload ulang dokumen yang benar.
             </div>
@@ -198,9 +202,9 @@ export default function MitraOnboardingPage() {
         ) : allUploaded ? (
           <div style={{
             padding: '14px 18px', borderRadius: 14, marginBottom: 16,
-            background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.3)',
+            background: 'rgba(46,125,91,0.1)', border: '1.5px solid rgba(46,125,91,0.3)',
           }}>
-            <div style={{ fontWeight: 700, color: '#00C896', marginBottom: 4 }}>Semua Dokumen Terkirim ✓</div>
+            <div style={{ fontWeight: 700, color: 'var(--k-accent)', marginBottom: 4 }}>Semua Dokumen Terkirim ✓</div>
             <div style={{ fontSize: 13, color: 'var(--k-sub)' }}>
               Admin sedang memverifikasi. Halaman ini akan otomatis update saat status berubah.
             </div>
@@ -210,7 +214,7 @@ export default function MitraOnboardingPage() {
             padding: '14px 18px', borderRadius: 14, marginBottom: 16,
             background: 'rgba(246,173,85,0.1)', border: '1.5px solid rgba(246,173,85,0.3)',
           }}>
-            <div style={{ fontWeight: 700, color: '#F6AD55', marginBottom: 4 }}>
+            <div style={{ fontWeight: 700, color: 'var(--k-warn)', marginBottom: 4 }}>
               {docs.filter(d => d.uploaded).length} / 4 Dokumen Terkirim
             </div>
             <div style={{ fontSize: 13, color: 'var(--k-sub)' }}>

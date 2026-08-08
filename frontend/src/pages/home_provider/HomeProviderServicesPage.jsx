@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const UNITS = [
   { value: 'kg',   label: 'kg (per kilogram)' },
@@ -73,20 +74,23 @@ export default function HomeProviderServicesPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 80 }}>
       {toast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff' }}>
+        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>
           {toast.msg}
         </div>
       )}
 
-      <div style={{ padding: '52px 20px 20px', background: 'linear-gradient(160deg,#0F1E25 0%,var(--k-bg) 100%)' }}>
-        <button onClick={() => navigate('/home/provider')} style={{ background: 'none', border: 'none', color: 'var(--k-muted)', fontSize: 14, cursor: 'pointer', marginBottom: 12, padding: 0 }}>
-          ← Dashboard
-        </button>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Kelola Layanan</h1>
-          <button onClick={openNew} style={{ padding: '8px 16px', borderRadius: 10, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontWeight: 700, fontSize: 13 }}>
-            + Tambah
+      <div style={{ padding: '52px 20px 20px', background: SVC.zasahome.bg, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasahome.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate('/home/provider')} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasahome.fg, fontSize: 13, cursor: 'pointer', marginBottom: 12, padding: '6px 14px', borderRadius: 999, boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Dashboard
           </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h1 style={{ fontSize: 20, fontWeight: 800, color: SVC.zasahome.fg }}>Kelola Layanan</h1>
+            <button onClick={openNew} style={{ padding: '8px 16px', borderRadius: 999, border: 'none', cursor: 'pointer', background: 'var(--k-surface)', color: SVC.zasahome.fg, fontWeight: 700, fontSize: 13, boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+              + Tambah
+            </button>
+          </div>
         </div>
       </div>
 
@@ -97,7 +101,7 @@ export default function HomeProviderServicesPage() {
           <div style={{ textAlign: 'center', padding: '50px 0', color: 'var(--k-muted)' }}>
             <p style={{ fontSize: 36, marginBottom: 10 }}>🧺</p>
             <p style={{ fontWeight: 600 }}>Belum ada layanan</p>
-            <button onClick={openNew} style={{ marginTop: 14, padding: '10px 24px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontWeight: 700 }}>
+            <button onClick={openNew} style={{ marginTop: 14, padding: '10px 24px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'var(--k-primary)', color: '#fff', fontWeight: 700, boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
               Tambah Layanan
             </button>
           </div>
@@ -108,14 +112,14 @@ export default function HomeProviderServicesPage() {
                 <p style={{ fontWeight: 700, fontSize: 14, color: sv.is_active ? 'var(--k-text)' : 'var(--k-muted)' }}>{sv.name}</p>
                 {!sv.is_active && <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 10, background: 'rgba(160,160,188,0.12)', color: 'var(--k-muted)' }}>Nonaktif</span>}
               </div>
-              <p style={{ fontSize: 13, color: '#6366F1', fontWeight: 600 }}>Rp {sv.price.toLocaleString('id')}/{sv.unit}</p>
+              <p style={{ fontSize: 13, color: SVC.zasahome.fg, fontWeight: 600 }}>Rp {sv.price.toLocaleString('id')}/{sv.unit}</p>
               <p style={{ fontSize: 11, color: 'var(--k-muted)' }}>Min {sv.min_order}{sv.unit} • ~{sv.estimated_hours}jam</p>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={() => toggleActive(sv)} style={{ padding: '6px 10px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', fontSize: 11, cursor: 'pointer' }}>
                 {sv.is_active ? 'Nonaktifkan' : 'Aktifkan'}
               </button>
-              <button onClick={() => openEdit(sv)} style={{ padding: '6px 10px', borderRadius: 8, border: 'none', background: 'rgba(99,102,241,0.12)', color: '#6366F1', fontSize: 11, cursor: 'pointer', fontWeight: 700 }}>
+              <button onClick={() => openEdit(sv)} style={{ padding: '6px 10px', borderRadius: 8, border: 'none', background: `rgba(${SVC.zasahome.rgb},0.12)`, color: SVC.zasahome.fg, fontSize: 11, cursor: 'pointer', fontWeight: 700 }}>
                 Edit
               </button>
             </div>
@@ -144,7 +148,7 @@ export default function HomeProviderServicesPage() {
                 <div><label style={lbl}>Est. Selesai (jam)</label><input style={inp} type="number" min={1} value={form.estimated_hours} onChange={e => setForm(f => ({ ...f, estimated_hours: e.target.value }))} /></div>
               </div>
               <div><label style={lbl}>Deskripsi</label><textarea style={{ ...inp, resize: 'vertical' }} rows={2} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} /></div>
-              <button type="submit" disabled={saving} style={{ padding: '13px', borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer', background: saving ? 'var(--k-border)' : 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+              <button type="submit" disabled={saving} style={{ padding: '13px', borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer', background: saving ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: saving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
                 {saving ? 'Menyimpan...' : 'Simpan'}
               </button>
             </form>

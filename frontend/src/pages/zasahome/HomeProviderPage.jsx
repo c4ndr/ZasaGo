@@ -2,26 +2,27 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import api, { storageUrl } from '../../services/api'
+import { SVC, svcShadow } from '../../utils/svcTheme'
 
 const UNIT_LABEL = { kg: '/kg', item: '/item', jam: '/jam', sesi: '/sesi' }
 
 const CAT_EMOJI = { laundry: '👕', pijat: '💆', cleaning: '🧹', tukang: '🔧', cukur: '💈', lainnya: '⚡' }
 
 const CAT_GRAD = {
-  laundry:  'linear-gradient(135deg,#3B82F6,#06B6D4)',
-  pijat:    'linear-gradient(135deg,#EC4899,#8B5CF6)',
-  cleaning: 'linear-gradient(135deg,#10B981,#3B82F6)',
-  tukang:   'linear-gradient(135deg,#F59E0B,#EF4444)',
-  cukur:    'linear-gradient(135deg,#0EA5E9,#6366F1)',
-  lainnya:  'linear-gradient(135deg,#6366F1,#EC4899)',
+  laundry:  'linear-gradient(135deg,var(--k-primary),#06B6D4)',
+  pijat:    'linear-gradient(135deg,#EC4899,var(--k-primary))',
+  cleaning: 'linear-gradient(135deg,#10B981,var(--k-primary))',
+  tukang:   'linear-gradient(135deg,var(--k-warn),var(--k-danger))',
+  cukur:    'linear-gradient(135deg,#0EA5E9,var(--k-primary))',
+  lainnya:  'linear-gradient(135deg,var(--k-primary),#EC4899)',
 }
 
 const SKILL_LV = {
-  pemula:        { label: 'Pemula',        color: '#94A3B8', stars: '⭐' },
-  terlatih:      { label: 'Terlatih',      color: '#22C55E', stars: '⭐⭐' },
-  berpengalaman: { label: 'Berpengalaman', color: '#3B82F6', stars: '⭐⭐⭐' },
-  profesional:   { label: 'Profesional',   color: '#8B5CF6', stars: '⭐⭐⭐⭐' },
-  master:        { label: 'Master',        color: '#F59E0B', stars: '⭐⭐⭐⭐⭐' },
+  pemula:        { label: 'Pemula',        color: '#94A3B8', rgb: '148,163,184', stars: '⭐' },
+  terlatih:      { label: 'Terlatih',      color: 'var(--k-accent)', rgb: '46,125,91', stars: '⭐⭐' },
+  berpengalaman: { label: 'Berpengalaman', color: 'var(--k-primary)', rgb: '40,55,75', stars: '⭐⭐⭐' },
+  profesional:   { label: 'Profesional',   color: 'var(--k-primary2)', rgb: '29,41,57', stars: '⭐⭐⭐⭐' },
+  master:        { label: 'Master',        color: 'var(--k-warn)', rgb: '184,134,11', stars: '⭐⭐⭐⭐⭐' },
 }
 
 function estimatedDate(estimatedHours) {
@@ -75,12 +76,12 @@ export default function HomeProviderPage() {
 
   if (loading) return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: 32, height: 32, border: '3px solid #6366F1', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+      <div style={{ width: 32, height: 32, border: `3px solid ${SVC.zasahome.fg}`, borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   )
 
-  const grad = CAT_GRAD[provider.category] ?? 'linear-gradient(135deg,#6366F1,#8B5CF6)'
+  const grad = CAT_GRAD[provider.category] ?? 'linear-gradient(135deg,var(--k-primary),var(--k-primary2))'
   const lv   = provider.skill_level ? SKILL_LV[provider.skill_level] : null
 
   return (
@@ -106,7 +107,7 @@ export default function HomeProviderPage() {
         <span style={{
           position: 'absolute', top: 52, right: 16, fontSize: 12, fontWeight: 800,
           padding: '5px 14px', borderRadius: 20, backdropFilter: 'blur(8px)',
-          background: provider.is_open ? 'rgba(0,200,150,0.85)' : 'rgba(0,0,0,0.55)',
+          background: provider.is_open ? 'rgba(46,125,91,0.85)' : 'rgba(0,0,0,0.55)',
           color: '#fff',
         }}>
           {provider.is_open ? '● Buka' : '○ Tutup'}
@@ -125,15 +126,15 @@ export default function HomeProviderPage() {
               <h1 style={{ fontSize: 18, fontWeight: 900, color: 'var(--k-text)', lineHeight: 1.2, marginBottom: 4 }}>{provider.name}</h1>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {provider.average_rating > 0 && (
-                  <span style={{ fontSize: 12, color: '#F59E0B', fontWeight: 700 }}>⭐ {provider.average_rating.toFixed(1)}</span>
+                  <span style={{ fontSize: 12, color: 'var(--k-warn)', fontWeight: 700 }}>⭐ {provider.average_rating.toFixed(1)}</span>
                 )}
                 {lv && (
-                  <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: `${lv.color}18`, color: lv.color, border: `1px solid ${lv.color}30` }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: `rgba(${lv.rgb},0.10)`, color: lv.color, border: `1px solid rgba(${lv.rgb},0.19)` }}>
                     {lv.stars} {lv.label}
                   </span>
                 )}
                 {provider.experience_years > 0 && (
-                  <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 10px', borderRadius: 20, background: 'rgba(249,115,22,0.1)', color: '#F97316' }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 10px', borderRadius: 20, background: 'rgba(40,55,75,0.1)', color: 'var(--k-primary)' }}>
                     {provider.experience_years} thn pengalaman
                   </span>
                 )}
@@ -161,12 +162,12 @@ export default function HomeProviderPage() {
             <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--k-muted)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>Kredensial</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: provider.certificates?.length > 0 ? 10 : 0 }}>
               {lv && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: `${lv.color}18`, color: lv.color, border: `1px solid ${lv.color}40` }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: `rgba(${lv.rgb},0.10)`, color: lv.color, border: `1px solid rgba(${lv.rgb},0.25)` }}>
                   {lv.stars} {lv.label}
                 </span>
               )}
               {provider.experience_years > 0 && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: 'rgba(249,115,22,0.1)', color: '#F97316', border: '1px solid rgba(249,115,22,0.3)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 20, fontWeight: 700, fontSize: 12, background: 'rgba(40,55,75,0.1)', color: 'var(--k-primary)', border: '1px solid rgba(40,55,75,0.3)' }}>
                   📅 {provider.experience_years} tahun pengalaman
                 </span>
               )}
@@ -184,7 +185,7 @@ export default function HomeProviderPage() {
         {provider.specializations?.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
             {provider.specializations.map(s => (
-              <span key={s} style={{ padding: '5px 14px', borderRadius: 20, fontSize: 12, fontWeight: 600, background: 'rgba(99,102,241,0.1)', color: '#6366F1', border: '1px solid rgba(99,102,241,0.25)' }}>
+              <span key={s} style={{ padding: '5px 14px', borderRadius: 20, fontSize: 12, fontWeight: 600, background: `rgba(${SVC.zasahome.rgb},0.1)`, color: SVC.zasahome.fg, border: `1px solid rgba(${SVC.zasahome.rgb},0.25)` }}>
                 {s}
               </span>
             ))}
@@ -193,7 +194,7 @@ export default function HomeProviderPage() {
 
         {/* Tutup warning */}
         {!provider.is_open && (
-          <div style={{ padding: '10px 14px', borderRadius: 12, background: 'rgba(245,101,101,0.08)', border: '1px solid rgba(245,101,101,0.2)', marginBottom: 14, fontSize: 13, color: '#F56565', display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div style={{ padding: '10px 14px', borderRadius: 12, background: 'rgba(192,67,92,0.08)', border: '1px solid rgba(192,67,92,0.2)', marginBottom: 14, fontSize: 13, color: 'var(--k-danger)', display: 'flex', gap: 8, alignItems: 'center' }}>
             <span>⚠️</span> Sedang tutup — Anda tetap bisa memesan, diproses saat buka.
           </div>
         )}
@@ -217,9 +218,9 @@ export default function HomeProviderPage() {
               return (
                 <div key={sv.id} style={{
                   background: 'var(--k-card)',
-                  border: active ? '2px solid #6366F1' : '1px solid var(--k-border)',
+                  border: active ? `2px solid ${SVC.zasahome.fg}` : '1px solid var(--k-border)',
                   borderRadius: 18, overflow: 'hidden',
-                  boxShadow: active ? '0 4px 20px rgba(99,102,241,0.15)' : '0 1px 6px rgba(0,0,0,0.04)',
+                  boxShadow: active ? `0 4px 20px rgba(${SVC.zasahome.rgb},0.15)` : '0 1px 6px rgba(0,0,0,0.04)',
                   transition: 'all 0.2s',
                 }}>
                   {/* Accent bar */}
@@ -229,7 +230,7 @@ export default function HomeProviderPage() {
                     <div style={{ flex: 1 }}>
                       <p style={{ fontWeight: 700, color: 'var(--k-text)', fontSize: 15, marginBottom: 3 }}>{sv.name}</p>
                       {sv.description && <p style={{ fontSize: 12, color: 'var(--k-muted)', marginBottom: 6, lineHeight: 1.5 }}>{sv.description}</p>}
-                      <p style={{ fontSize: 15, fontWeight: 800, color: '#6366F1', marginBottom: 6 }}>
+                      <p style={{ fontSize: 15, fontWeight: 800, color: SVC.zasahome.fg, marginBottom: 6 }}>
                         Rp {sv.price.toLocaleString('id')}{UNIT_LABEL[sv.unit] ?? ''}
                       </p>
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -240,7 +241,7 @@ export default function HomeProviderPage() {
                           <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'var(--k-input)', color: 'var(--k-muted)' }}>Min {sv.min_order} {sv.unit}</span>
                         )}
                         {estDate && (
-                          <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'rgba(0,200,150,0.1)', color: '#00C896' }}>📅 Selesai {estDate}</span>
+                          <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)' }}>📅 Selesai {estDate}</span>
                         )}
                       </div>
                     </div>
@@ -250,12 +251,12 @@ export default function HomeProviderPage() {
                       {isKg ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           {qty > 0 && (
-                            <button onClick={() => setKgQty(sv.id, 0)} style={{ width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer', background: 'rgba(245,101,101,0.12)', color: '#F56565', fontSize: 14, fontWeight: 700 }}>✕</button>
+                            <button onClick={() => setKgQty(sv.id, 0)} style={{ width: 30, height: 30, borderRadius: 8, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontSize: 14, fontWeight: 700 }}>✕</button>
                           )}
                           <div style={{ position: 'relative' }}>
                             <input type="number" value={qty || ''} onChange={e => setKgQty(sv.id, e.target.value, sv.min_order)}
                               placeholder={`${sv.min_order ?? 1}`} min={sv.min_order ?? 0.1} step={0.5}
-                              style={{ width: 68, height: 36, borderRadius: 10, border: `2px solid ${active ? '#6366F1' : 'var(--k-border)'}`, background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 15, fontWeight: 700, textAlign: 'center', outline: 'none', padding: '0 4px' }}
+                              style={{ width: 68, height: 36, borderRadius: 10, border: `2px solid ${active ? SVC.zasahome.fg : 'var(--k-border)'}`, background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 15, fontWeight: 700, textAlign: 'center', outline: 'none', padding: '0 4px' }}
                             />
                             <span style={{ position: 'absolute', right: 5, bottom: 3, fontSize: 9, color: 'var(--k-muted)' }}>kg</span>
                           </div>
@@ -265,10 +266,10 @@ export default function HomeProviderPage() {
                           {qty > 0 && (
                             <>
                               <button onClick={() => adjustCart(sv.id, -1)} style={{ width: 32, height: 32, borderRadius: 10, border: 'none', cursor: 'pointer', background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 20, fontWeight: 700, lineHeight: 1 }}>−</button>
-                              <span style={{ fontWeight: 800, fontSize: 16, color: '#6366F1', minWidth: 24, textAlign: 'center' }}>{qty}</span>
+                              <span style={{ fontWeight: 800, fontSize: 16, color: SVC.zasahome.fg, minWidth: 24, textAlign: 'center' }}>{qty}</span>
                             </>
                           )}
-                          <button onClick={() => adjustCart(sv.id, 1)} style={{ width: 32, height: 32, borderRadius: 10, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontSize: 20, fontWeight: 700, lineHeight: 1 }}>+</button>
+                          <button onClick={() => adjustCart(sv.id, 1)} style={{ width: 32, height: 32, borderRadius: 10, border: 'none', cursor: 'pointer', background: SVC.zasahome.bg, color: SVC.zasahome.fg, fontSize: 20, fontWeight: 700, lineHeight: 1 }}>+</button>
                         </div>
                       )}
                     </div>
@@ -290,14 +291,14 @@ export default function HomeProviderPage() {
           <button onClick={proceedOrder} style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '14px 20px', borderRadius: 16, border: 'none', cursor: 'pointer',
-            background: 'linear-gradient(135deg,#6366F1,#8B5CF6)',
-            boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
+            background: SVC.zasahome.bg,
+            boxShadow: svcShadow(SVC.zasahome.rgb),
           }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ background: 'rgba(255,255,255,0.25)', borderRadius: 8, padding: '2px 8px', fontSize: 12, fontWeight: 800, color: '#fff' }}>{totalItems}</span>
-              <span style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>Pesan Sekarang</span>
+              <span style={{ background: `rgba(${SVC.zasahome.rgb},0.18)`, borderRadius: 8, padding: '2px 8px', fontSize: 12, fontWeight: 800, color: SVC.zasahome.fg }}>{totalItems}</span>
+              <span style={{ fontSize: 15, fontWeight: 700, color: SVC.zasahome.fg }}>Pesan Sekarang</span>
             </span>
-            <span style={{ fontSize: 15, fontWeight: 800, color: '#fff' }}>Rp {totalPrice.toLocaleString('id')} →</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: SVC.zasahome.fg }}>Rp {totalPrice.toLocaleString('id')} →</span>
           </button>
         </div>
       )}

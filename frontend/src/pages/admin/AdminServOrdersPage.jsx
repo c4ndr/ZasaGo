@@ -6,12 +6,12 @@ function fmtDate(d) { return d ? new Date(d).toLocaleString('id-ID', { day: 'num
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
 const STATUS_META = {
-  pending:     { label: 'Pending',          color: '#F59E0B', bg: 'rgba(245,158,11,0.12)'  },
-  confirmed:   { label: 'Dikonfirmasi',     color: '#3B82F6', bg: 'rgba(59,130,246,0.12)'  },
-  traveling:   { label: 'Menuju Lokasi',    color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)'  },
-  in_progress: { label: 'Sedang Dikerjakan',color: '#EC4899', bg: 'rgba(236,72,153,0.12)'  },
-  completed:   { label: 'Selesai',          color: '#059669', bg: 'rgba(5,150,105,0.12)'   },
-  cancelled:   { label: 'Dibatalkan',       color: '#EF4444', bg: 'rgba(239,68,68,0.12)'   },
+  pending:     { label: 'Pending',          color: 'var(--k-warn)',    rgb: '184,134,11', bg: 'rgba(184,134,11,0.12)'  },
+  confirmed:   { label: 'Dikonfirmasi',     color: 'var(--k-primary)', rgb: '40,55,75',    bg: 'rgba(40,55,75,0.12)'  },
+  traveling:   { label: 'Menuju Lokasi',    color: 'var(--k-primary)', rgb: '40,55,75',    bg: 'rgba(40,55,75,0.12)'  },
+  in_progress: { label: 'Sedang Dikerjakan',color: '#EC4899',          rgb: '236,72,153',  bg: 'rgba(236,72,153,0.12)'  },
+  completed:   { label: 'Selesai',          color: 'var(--k-accent)',  rgb: '46,125,91',   bg: 'rgba(46,125,91,0.12)'   },
+  cancelled:   { label: 'Dibatalkan',       color: 'var(--k-danger)',  rgb: '192,67,92',   bg: 'rgba(192,67,92,0.12)' },
 }
 
 const STATUS_TABS = [
@@ -64,7 +64,7 @@ function OrderDetail({ order, onCancel, onClose }) {
           {order.traveling_at   && <p style={{ fontSize: 12 }}>Berangkat: {fmtDate(order.traveling_at)}</p>}
           {order.in_progress_at && <p style={{ fontSize: 12 }}>Mulai kerja: {fmtDate(order.in_progress_at)}</p>}
           {order.completed_at   && <p style={{ fontSize: 12 }}>Selesai: {fmtDate(order.completed_at)}</p>}
-          {order.cancel_reason  && <p style={{ color: '#EF4444' }}>Alasan batal: {order.cancel_reason}</p>}
+          {order.cancel_reason  && <p style={{ color: 'var(--k-danger)' }}>Alasan batal: {order.cancel_reason}</p>}
         </div>
 
         {/* Items */}
@@ -78,7 +78,7 @@ function OrderDetail({ order, onCancel, onClose }) {
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10, fontWeight: 700 }}>
             <p>Total</p>
-            <p style={{ color: '#059669' }}>{fmtRp(order.total_price)}</p>
+            <p style={{ color: 'var(--k-accent)' }}>{fmtRp(order.total_price)}</p>
           </div>
         </div>
 
@@ -109,13 +109,13 @@ function OrderDetail({ order, onCancel, onClose }) {
                   Batal
                 </button>
                 <button onClick={handleCancel} disabled={cancelling || !reason.trim()}
-                  style={{ flex: 1, padding: 10, borderRadius: 10, border: 'none', background: reason.trim() ? 'rgba(239,68,68,0.1)' : 'var(--k-border)', color: reason.trim() ? '#EF4444' : 'var(--k-muted)', fontWeight: 700, cursor: reason.trim() ? 'pointer' : 'default' }}>
+                  style={{ flex: 1, padding: 10, borderRadius: 10, border: 'none', background: reason.trim() ? 'rgba(192,67,92,0.1)' : 'var(--k-border)', color: reason.trim() ? 'var(--k-danger)' : 'var(--k-muted)', fontWeight: 700, cursor: reason.trim() ? 'pointer' : 'default' }}>
                   {cancelling ? 'Membatalkan...' : 'Konfirmasi Batalkan'}
                 </button>
               </div>
             </div>
           ) : (
-            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: 11, borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(239,68,68,0.08)', color: '#EF4444', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: 11, borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
               Force Cancel Order
             </button>
           )
@@ -171,7 +171,7 @@ export default function AdminServOrdersPage() {
   return (
     <AdminLayout title="ZasaServis — Pesanan">
       {toast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? '#059669' : '#EF4444', color: '#fff' }}>
+        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>
           {toast.msg}
         </div>
       )}
@@ -189,13 +189,14 @@ export default function AdminServOrdersPage() {
       <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         {STATUS_TABS.map(t => {
           const meta = STATUS_META[t.key]
-          const color = meta?.color ?? '#059669'
+          const color = meta?.color ?? 'var(--k-accent)'
+          const rgb   = meta?.rgb   ?? '46,125,91'
           const active = tab === t.key
           return (
             <button key={t.key} onClick={() => setTab(t.key)} style={{
               padding: '7px 14px', borderRadius: 20, fontSize: 12, fontWeight: active ? 700 : 500,
-              border: `1px solid ${active ? (color + '40') : 'var(--k-border)'}`,
-              cursor: 'pointer', background: active ? (color + '18') : 'var(--k-card)',
+              border: `1px solid ${active ? `rgba(${rgb},0.25)` : 'var(--k-border)'}`,
+              cursor: 'pointer', background: active ? `rgba(${rgb},0.10)` : 'var(--k-card)',
               color: active ? color : 'var(--k-muted)',
             }}>
               {t.label}
@@ -243,7 +244,7 @@ export default function AdminServOrdersPage() {
                       <td style={{ padding: '12px 14px' }}>
                         <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, background: s.bg, color: s.color, whiteSpace: 'nowrap' }}>{s.label}</span>
                       </td>
-                      <td style={{ padding: '12px 14px', fontWeight: 700, color: '#059669', whiteSpace: 'nowrap' }}>{fmtRp(o.total_price)}</td>
+                      <td style={{ padding: '12px 14px', fontWeight: 700, color: 'var(--k-accent)', whiteSpace: 'nowrap' }}>{fmtRp(o.total_price)}</td>
                       <td style={{ padding: '12px 14px', color: 'var(--k-muted)', fontSize: 11, whiteSpace: 'nowrap' }}>{fmtDate(o.created_at)}</td>
                     </tr>
                   )

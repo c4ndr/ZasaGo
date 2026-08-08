@@ -100,7 +100,7 @@ function Badge({ n }) {
   return (
     <span style={{
       minWidth: 18, height: 18, borderRadius: 9, flexShrink: 0,
-      background: '#EF4444', color: '#fff',
+      background: 'var(--k-danger)', color: '#fff',
       fontSize: 10, fontWeight: 800, lineHeight: '18px',
       textAlign: 'center', padding: '0 5px',
     }}>
@@ -121,9 +121,9 @@ function NavItem({ to, emoji, label, badgeKey, exact, counts, onClick }) {
         display: 'flex', alignItems: 'center', gap: 9,
         padding: '7px 10px', borderRadius: 7, textDecoration: 'none',
         fontSize: 13, fontWeight: isActive ? 600 : 400,
-        color: isActive ? '#F97316' : 'var(--k-sub)',
-        background: isActive ? 'rgba(249,115,22,0.08)' : 'transparent',
-        borderLeft: isActive ? '3px solid #F97316' : '3px solid transparent',
+        color: isActive ? 'var(--k-primary)' : 'var(--k-sub)',
+        background: isActive ? 'var(--k-primary-bg)' : 'transparent',
+        borderLeft: isActive ? '3px solid var(--k-primary)' : '3px solid transparent',
         marginBottom: 2, transition: 'background 0.12s, color 0.12s',
       })}
       onMouseEnter={e => {
@@ -172,9 +172,9 @@ function PendingPopover({ counts }) {
     <div ref={ref} style={{ position: 'relative' }}>
       <button onClick={() => setOpen(o => !o)} style={{
         display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px',
-        borderRadius: 8, border: '1px solid rgba(239,68,68,0.3)',
-        background: open ? 'rgba(239,68,68,0.1)' : 'transparent',
-        cursor: 'pointer', color: '#EF4444', fontWeight: 700, fontSize: 12,
+        borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)',
+        background: open ? 'rgba(192,67,92,0.1)' : 'transparent',
+        cursor: 'pointer', color: 'var(--k-danger)', fontWeight: 700, fontSize: 12,
       }}>
         <span>🔔</span>
         <span>{total} pending</span>
@@ -241,9 +241,9 @@ function UserMenu() {
       }}>
         <div style={{
           width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-          background: 'rgba(249,115,22,0.12)', border: '1.5px solid rgba(249,115,22,0.3)',
+          background: 'var(--k-primary-bg)', border: '1.5px solid rgba(40,55,75,0.3)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 12, fontWeight: 800, color: '#F97316',
+          fontSize: 12, fontWeight: 800, color: 'var(--k-primary)',
         }}>
           {(user?.name ?? 'A')[0].toUpperCase()}
         </div>
@@ -273,9 +273,9 @@ function UserMenu() {
               width: '100%', display: 'flex', alignItems: 'center', gap: 8,
               padding: '8px 10px', borderRadius: 8, border: 'none',
               background: 'transparent', cursor: 'pointer',
-              fontSize: 13, fontWeight: 600, color: '#EF4444',
+              fontSize: 13, fontWeight: 600, color: 'var(--k-danger)',
             }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(192,67,92,0.08)'}
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
               <span>🚪</span> Keluar
             </button>
@@ -300,10 +300,10 @@ function Sidebar({ onNavClick, counts }) {
       }}>
         <div style={{
           width: 30, height: 30, borderRadius: 8, flexShrink: 0,
-          background: 'linear-gradient(135deg,#F97316,#EF4444)',
+          background: 'linear-gradient(135deg,var(--k-primary),var(--k-primary2))',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontWeight: 900, fontSize: 17, color: '#fff',
-          boxShadow: '0 2px 8px rgba(249,115,22,0.35)',
+          boxShadow: '0 2px 8px rgba(40,55,75,0.35)',
         }}>Z</div>
         <div>
           <p style={{ fontWeight: 800, fontSize: 14, color: 'var(--k-text)', lineHeight: 1.25 }}>{app_name || 'ZasaQu'}</p>

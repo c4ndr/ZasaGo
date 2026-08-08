@@ -7,9 +7,9 @@ const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: 'numeric',
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
 
 const STATUS_META = {
-  pending:   { label: 'Pending',   color: '#F59E0B', bg: 'rgba(245,158,11,0.12)' },
+  pending:   { label: 'Pending',   color: 'var(--k-warn)', bg: 'rgba(184,134,11,0.12)' },
   active:    { label: 'Aktif',     color: '#22C55E', bg: 'rgba(34,197,94,0.12)' },
-  suspended: { label: 'Suspended', color: '#EF4444', bg: 'rgba(239,68,68,0.12)' },
+  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.12)' },
 }
 
 const EMPTY_CREATE = { name: '', email: '', phone: '', password: '', store_name: '', store_address: '', store_phone: '' }
@@ -80,12 +80,12 @@ export default function AdminMartSellersPage() {
 
       {/* Tabs + Search */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-        {[{ v: '', l: 'Semua', color: 'var(--k-sub)' }, { v: 'pending', l: 'Pending', color: '#F59E0B' }, { v: 'active', l: 'Aktif', color: '#22C55E' }, { v: 'suspended', l: 'Suspended', color: '#EF4444' }].map(t => (
+        {[{ v: '', l: 'Semua', color: 'var(--k-sub)', rgb: '91,100,114' }, { v: 'pending', l: 'Pending', color: 'var(--k-warn)', rgb: '184,134,11' }, { v: 'active', l: 'Aktif', color: '#22C55E', rgb: '34,197,94' }, { v: 'suspended', l: 'Suspended', color: 'var(--k-danger)', rgb: '192,67,92' }].map(t => (
           <button key={t.v} onClick={() => setTab(t.v)}
             style={{
               padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: tab === t.v ? 700 : 500,
-              border: `1px solid ${tab === t.v ? t.color + '40' : 'var(--k-border)'}`,
-              cursor: 'pointer', background: tab === t.v ? `${t.color}22` : 'var(--k-card)',
+              border: `1px solid ${tab === t.v ? `rgba(${t.rgb},0.25)` : 'var(--k-border)'}`,
+              cursor: 'pointer', background: tab === t.v ? `rgba(${t.rgb},0.13)` : 'var(--k-card)',
               color: tab === t.v ? t.color : 'var(--k-sub)',
             }}>
             {t.l}
@@ -174,7 +174,7 @@ export default function AdminMartSellersPage() {
                           )}
                           {s.status === 'active' && (
                             <button onClick={e => { e.stopPropagation(); setSuspendId(s.id) }} disabled={acting}
-                              style={{ flex: 1, padding: '9px', borderRadius: 8, border: 'none', background: '#EF4444', color: '#fff', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
+                              style={{ flex: 1, padding: '9px', borderRadius: 8, border: 'none', background: 'var(--k-danger)', color: '#fff', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
                               🚫 Suspend
                             </button>
                           )}
@@ -204,7 +204,7 @@ export default function AdminMartSellersPage() {
               style={{ width: '100%', padding: '10px 12px', borderRadius: 10, border: '1px solid var(--k-border)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 13, outline: 'none', boxSizing: 'border-box', marginBottom: 14 }} />
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={() => { setSuspendId(null); setSuspendReason('') }} style={{ flex: 1, padding: '11px', borderRadius: 10, border: '1px solid var(--k-border)', background: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700, color: 'var(--k-text)' }}>Batal</button>
-              <button onClick={suspend} disabled={acting} style={{ flex: 1, padding: '11px', borderRadius: 10, border: 'none', background: '#EF4444', color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer', opacity: acting ? 0.7 : 1 }}>
+              <button onClick={suspend} disabled={acting} style={{ flex: 1, padding: '11px', borderRadius: 10, border: 'none', background: 'var(--k-danger)', color: '#fff', fontWeight: 800, fontSize: 13, cursor: 'pointer', opacity: acting ? 0.7 : 1 }}>
                 {acting ? 'Memproses...' : 'Suspend'}
               </button>
             </div>

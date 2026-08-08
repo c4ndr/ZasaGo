@@ -1,19 +1,20 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
 const STATUS_META = {
-  pending:    { label: 'Pending',      color: '#F6AD55', bg: 'rgba(246,173,85,0.12)'   },
-  confirmed:  { label: 'Dikonfirmasi', color: '#6366F1', bg: 'rgba(99,102,241,0.12)'   },
-  picked_up:  { label: 'Dijemput',     color: '#6366F1', bg: 'rgba(99,102,241,0.1)'    },
-  processing: { label: 'Diproses',     color: '#F97316', bg: 'rgba(249,115,22,0.1)'    },
-  ready:      { label: 'Siap',         color: '#00C896', bg: 'rgba(0,200,150,0.1)'     },
-  delivering: { label: 'Diantar',      color: '#6366F1', bg: 'rgba(99,102,241,0.1)'    },
-  completed:  { label: 'Selesai',      color: '#00C896', bg: 'rgba(0,200,150,0.12)'    },
-  cancelled:  { label: 'Dibatalkan',   color: '#F56565', bg: 'rgba(245,101,101,0.12)'  },
+  pending:    { label: 'Pending',      color: 'var(--k-warn)',    bg: 'rgba(184,134,11,0.12)'  },
+  confirmed:  { label: 'Dikonfirmasi', color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)'    },
+  picked_up:  { label: 'Dijemput',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
+  processing: { label: 'Diproses',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
+  ready:      { label: 'Siap',         color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.1)'    },
+  delivering: { label: 'Diantar',      color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.1)'     },
+  completed:  { label: 'Selesai',      color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.12)'   },
+  cancelled:  { label: 'Dibatalkan',   color: 'var(--k-danger)',  bg: 'rgba(192,67,92,0.12)'   },
 }
 
 const STATUS_TABS = [
@@ -53,7 +54,7 @@ function OrderDetail({ order, onCancel, onClose }) {
           <p>📍 {order.pickup_address}</p>
           {order.notes && <p>📝 {order.notes}</p>}
           <p style={{ fontSize: 12 }}>Dibuat: {fmtDate(order.created_at)}</p>
-          {order.cancel_reason && <p style={{ color: '#F56565' }}>Alasan batal: {order.cancel_reason}</p>}
+          {order.cancel_reason && <p style={{ color: 'var(--k-danger)' }}>Alasan batal: {order.cancel_reason}</p>}
         </div>
 
         <div style={{ marginBottom: 16 }}>
@@ -65,7 +66,7 @@ function OrderDetail({ order, onCancel, onClose }) {
             </div>
           ))}
           <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10, fontWeight: 700 }}>
-            <p>Total</p><p style={{ color: '#6366F1' }}>{fmtRp(order.total_price)}</p>
+            <p>Total</p><p style={{ color: SVC.zasahome.fg }}>{fmtRp(order.total_price)}</p>
           </div>
         </div>
 
@@ -76,13 +77,13 @@ function OrderDetail({ order, onCancel, onClose }) {
                 style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-text)', fontSize: 13, resize: 'none', boxSizing: 'border-box', marginBottom: 8 }} />
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={() => setShowCancel(false)} style={{ flex: 1, padding: '10px', borderRadius: 10, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer' }}>Batal</button>
-                <button onClick={handleCancel} disabled={cancelling || !reason.trim()} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: 'rgba(245,101,101,0.1)', color: '#F56565', fontWeight: 700, cursor: 'pointer' }}>
+                <button onClick={handleCancel} disabled={cancelling || !reason.trim()} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontWeight: 700, cursor: 'pointer' }}>
                   {cancelling ? 'Membatalkan...' : 'Konfirmasi Batalkan'}
                 </button>
               </div>
             </div>
           ) : (
-            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(245,101,101,0.08)', color: '#F56565', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={() => setShowCancel(true)} style={{ width: '100%', padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
               Force Cancel Order
             </button>
           )
@@ -128,7 +129,7 @@ export default function AdminHomeOrdersPage() {
 
   return (
     <AdminLayout title="ZasaHome — Pesanan">
-      {toast && <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff' }}>{toast.msg}</div>}
+      {toast && <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>{toast.msg}</div>}
       {selected && <OrderDetail order={selected} onCancel={handleCancel} onClose={() => setSelected(null)} />}
 
       {/* Header */}
@@ -142,9 +143,9 @@ export default function AdminHomeOrdersPage() {
         {STATUS_TABS.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
             style={{ padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: tab === t.key ? 700 : 500,
-              border: `1px solid ${tab === t.key ? '#6366F140' : 'var(--k-border)'}`,
-              cursor: 'pointer', background: tab === t.key ? 'rgba(99,102,241,0.12)' : 'var(--k-card)',
-              color: tab === t.key ? '#6366F1' : 'var(--k-sub)',
+              border: `1px solid ${tab === t.key ? `rgba(${SVC.zasahome.rgb},0.4)` : 'var(--k-border)'}`,
+              cursor: 'pointer', background: tab === t.key ? `rgba(${SVC.zasahome.rgb},0.12)` : 'var(--k-card)',
+              color: tab === t.key ? SVC.zasahome.fg : 'var(--k-sub)',
             }}>
             {t.label}
           </button>
@@ -186,7 +187,7 @@ export default function AdminHomeOrdersPage() {
                       <td style={{ padding: '13px 14px' }}>
                         <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
                       </td>
-                      <td style={{ padding: '13px 14px', fontWeight: 700, color: '#6366F1' }}>{fmtRp(o.total_price)}</td>
+                      <td style={{ padding: '13px 14px', fontWeight: 700, color: SVC.zasahome.fg }}>{fmtRp(o.total_price)}</td>
                       <td style={{ padding: '13px 14px', color: 'var(--k-muted)', fontSize: 11 }}>{fmtDate(o.created_at)}</td>
                     </tr>
                   )

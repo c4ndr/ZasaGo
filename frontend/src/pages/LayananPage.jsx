@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg,#00C896,#00A87D)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(0,200,150,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -12,8 +13,7 @@ const SERVICES = [
     emoji: '🛵',
     name: 'ZasaGo',
     tagline: 'Ojek & Pengiriman Ekspres',
-    color: '#F97316',
-    bg: 'rgba(249,115,22,0.08)',
+    svc: SVC.zasago,
     description: 'Layanan ojek dan kurir cepat untuk kebutuhan sehari-hari. Pesan kapan saja, mitra terdekat siap melayani dalam hitungan menit.',
     features: [
       'Antar jemput penumpang',
@@ -34,8 +34,7 @@ const SERVICES = [
     emoji: '🍔',
     name: 'ZasaFood',
     tagline: 'Pesan Makanan dari Merchant Lokal',
-    color: '#EF4444',
-    bg: 'rgba(239,68,68,0.08)',
+    svc: SVC.zasafood,
     description: 'Temukan berbagai pilihan makanan dari warung dan restoran lokal di sekitar Anda. Pesan dan nikmati tanpa perlu keluar rumah.',
     features: [
       'Ratusan menu dari merchant lokal',
@@ -56,8 +55,7 @@ const SERVICES = [
     emoji: '🛒',
     name: 'ZasaMart',
     tagline: 'Belanja Produk Lokal',
-    color: '#10B981',
-    bg: 'rgba(16,185,129,0.08)',
+    svc: SVC.zasashop,
     description: 'Belanja produk kebutuhan dari pedagang lokal di sekitar Anda. Dukung UMKM lokal sambil mendapat produk segar dan terpercaya.',
     features: [
       'Produk dari pedagang lokal terverifikasi',
@@ -78,8 +76,7 @@ const SERVICES = [
     emoji: '🏠',
     name: 'ZasaHome',
     tagline: 'Jasa Layanan Rumah',
-    color: '#8B5CF6',
-    bg: 'rgba(139,92,246,0.08)',
+    svc: SVC.zasahome,
     description: 'Dapatkan tenaga ahli untuk berbagai kebutuhan rumah Anda. Dari kebersihan hingga perbaikan, semua bisa dipesan lewat ZasaQu.',
     features: [
       'Layanan laundry kiloan & ekspres',
@@ -100,8 +97,7 @@ const SERVICES = [
     emoji: '🚗',
     name: 'ZasaRide',
     tagline: 'Transportasi Online Terdekat',
-    color: '#059669',
-    bg: 'rgba(5,150,105,0.08)',
+    svc: SVC.zasaride,
     description: 'Pesan ojek atau taksi online dengan cepat dan aman. Mitra driver terverifikasi siap mengantar Anda ke tujuan dengan nyaman.',
     features: [
       'Pesan motor atau mobil sesuai kebutuhan',
@@ -122,8 +118,7 @@ const SERVICES = [
     emoji: '🔧',
     name: 'ZasaServis',
     tagline: 'Servis & Perbaikan Profesional',
-    color: '#0EA5E9',
-    bg: 'rgba(14,165,233,0.08)',
+    svc: SVC.zasaserv,
     description: 'Temukan teknisi profesional untuk kebutuhan servis dan perbaikan. Dari elektronik hingga kendaraan, semua tersedia di ZasaQu.',
     features: [
       'Teknisi berpengalaman & terverifikasi',
@@ -159,8 +154,8 @@ export default function LayananPage() {
       <div style={{ padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Intro */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 20, padding: '22px 20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 140, height: 140, borderRadius: '50%', background: 'rgba(0,200,150,0.06)' }} />
-          <p style={{ fontSize: 11, color: 'rgba(0,200,150,0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 8px' }}>ZasaQu Ecosystem</p>
+          <div style={{ position: 'absolute', right: -30, bottom: -30, width: 140, height: 140, borderRadius: '50%', background: 'rgba(46,125,91,0.06)' }} />
+          <p style={{ fontSize: 11, color: 'rgba(46,125,91,0.8)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 8px' }}>ZasaQu Ecosystem</p>
           <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: '0 0 8px', lineHeight: 1.3 }}>Satu Aplikasi,{'\n'}Semua Kebutuhan</p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0, lineHeight: 1.6 }}>ZasaQu menghadirkan 6 layanan terintegrasi untuk memudahkan kehidupan sehari-hari Anda.</p>
         </div>
@@ -169,11 +164,12 @@ export default function LayananPage() {
         {SERVICES.map(s => (
           <div key={s.key} style={{ background: 'var(--k-card)', borderRadius: 20, border: '1px solid var(--k-border)', overflow: 'hidden' }}>
             {/* Service header */}
-            <div style={{ background: s.bg, padding: '20px 18px', display: 'flex', alignItems: 'center', gap: 14, borderBottom: '1px solid var(--k-border)' }}>
-              <div style={{ width: 56, height: 56, borderRadius: 18, background: `${s.color}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, flexShrink: 0 }}>{s.emoji}</div>
-              <div>
-                <p style={{ fontSize: 18, fontWeight: 900, color: 'var(--k-text)', margin: 0 }}>{s.name}</p>
-                <p style={{ fontSize: 12, color: s.color, fontWeight: 700, margin: '2px 0 0' }}>{s.tagline}</p>
+            <div style={{ background: s.svc.bg, padding: '20px 18px', display: 'flex', alignItems: 'center', gap: 14, borderBottom: '1px solid var(--k-border)', position: 'relative', overflow: 'hidden' }}>
+              <Gloss />
+              <div style={{ position: 'relative', width: 56, height: 56, borderRadius: 18, background: 'var(--k-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, flexShrink: 0, boxShadow: svcShadow(s.svc.rgb) }}>{s.emoji}</div>
+              <div style={{ position: 'relative' }}>
+                <p style={{ fontSize: 18, fontWeight: 900, color: s.svc.fg, margin: 0 }}>{s.name}</p>
+                <p style={{ fontSize: 12, color: s.svc.fg, fontWeight: 700, margin: '2px 0 0', opacity: 0.85 }}>{s.tagline}</p>
               </div>
             </div>
 
@@ -186,7 +182,7 @@ export default function LayananPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 16 }}>
                 {s.features.map(f => (
                   <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <span style={{ color: s.color, fontSize: 14, marginTop: 1, flexShrink: 0 }}>✓</span>
+                    <span style={{ color: `rgba(${s.svc.rgb},1)`, fontSize: 14, marginTop: 1, flexShrink: 0 }}>✓</span>
                     <span style={{ fontSize: 13, color: 'var(--k-text)', lineHeight: 1.5 }}>{f}</span>
                   </div>
                 ))}
@@ -197,8 +193,8 @@ export default function LayananPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {s.howto.map((step, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <div style={{ width: 24, height: 24, borderRadius: 8, background: `${s.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 0 }}>
-                      <span style={{ fontSize: 12, fontWeight: 800, color: s.color }}>{i + 1}</span>
+                    <div style={{ width: 24, height: 24, borderRadius: 8, background: `rgba(${s.svc.rgb},0.15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 0 }}>
+                      <span style={{ fontSize: 12, fontWeight: 800, color: `rgba(${s.svc.rgb},1)` }}>{i + 1}</span>
                     </div>
                     <span style={{ fontSize: 13, color: 'var(--k-text)', lineHeight: 1.6, paddingTop: 2 }}>{step}</span>
                   </div>
@@ -214,7 +210,7 @@ export default function LayananPage() {
           <p style={{ fontSize: 13, color: 'var(--k-muted)', margin: 0, lineHeight: 1.6 }}>Unduh aplikasi ZasaQu atau akses melalui browser dan mulai menikmati semua layanan kami.</p>
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => navigate('/register')}
-              style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#00C896,#00A87D)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
+              style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: 'var(--k-accent)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
               Daftar Sekarang
             </button>
             <button onClick={() => navigate('/cara-kerja')}

@@ -65,7 +65,7 @@ export default function PrivacyPage() {
 
       <div style={{ padding: '16px' }}>
         {/* Intro */}
-        <div style={{ background: 'rgba(99,102,241,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(99,102,241,0.2)', marginBottom: 16 }}>
+        <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '16px', border: '1px solid rgba(40,55,75,0.2)', marginBottom: 16 }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             <strong>ZasaQu</strong> berkomitmen melindungi privasi Anda. Dokumen ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai peraturan yang berlaku di Indonesia.
           </p>
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
         <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ padding: '16px', background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', textAlign: 'center' }}>
             <p style={{ fontSize: 12, color: 'var(--k-muted)', margin: 0 }}>
-              Pertanyaan privasi? Hubungi <a href="mailto:support@zasaqu.uk" style={{ color: '#6366F1', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a>
+              Pertanyaan privasi? Hubungi <a href="mailto:support@zasaqu.uk" style={{ color: 'var(--k-primary)', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a>
             </p>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
 import useAppInfo from '../../hooks/useAppInfo'
+import { SVC } from '../../utils/svcTheme'
 
 const MODULES = [
   {
@@ -9,54 +10,54 @@ const MODULES = [
     label: 'ZasaGo',
     emoji: '📦',
     desc: 'Pengiriman barang & JastipQu (titip sejalur)',
-    color: '#3B82F6',
-    bg: 'rgba(59,130,246,0.08)',
-    border: 'rgba(59,130,246,0.20)',
+    color: SVC.zasago.fg,
+    bg: `rgba(${SVC.zasago.rgb},0.08)`,
+    border: `rgba(${SVC.zasago.rgb},0.20)`,
   },
   {
     key: 'zasafood',
     label: 'ZasaFood',
     emoji: '🍜',
     desc: 'Pesan makanan dari merchant lokal',
-    color: '#F97316',
-    bg: 'rgba(249,115,22,0.08)',
-    border: 'rgba(249,115,22,0.20)',
+    color: SVC.zasafood.fg,
+    bg: `rgba(${SVC.zasafood.rgb},0.08)`,
+    border: `rgba(${SVC.zasafood.rgb},0.20)`,
   },
   {
     key: 'zasamart',
     label: 'ZasaShop',
     emoji: '🛒',
     desc: 'Marketplace produk UMKM lokal',
-    color: '#8B5CF6',
-    bg: 'rgba(139,92,246,0.08)',
-    border: 'rgba(139,92,246,0.20)',
+    color: SVC.zasashop.fg,
+    bg: `rgba(${SVC.zasashop.rgb},0.08)`,
+    border: `rgba(${SVC.zasashop.rgb},0.20)`,
   },
   {
     key: 'zasahome',
     label: 'ZasaHome',
     emoji: '🏠',
     desc: 'Layanan rumah: laundry, bersih-bersih, dan jasa lainnya',
-    color: '#6366F1',
-    bg: 'rgba(99,102,241,0.08)',
-    border: 'rgba(99,102,241,0.20)',
+    color: SVC.zasahome.fg,
+    bg: `rgba(${SVC.zasahome.rgb},0.08)`,
+    border: `rgba(${SVC.zasahome.rgb},0.20)`,
   },
   {
     key: 'zasaride',
     label: 'ZasaRide',
     emoji: '🛵',
     desc: 'Ojek & antar jemput penumpang',
-    color: '#059669',
-    bg: 'rgba(5,150,105,0.08)',
-    border: 'rgba(5,150,105,0.20)',
+    color: SVC.zasaride.fg,
+    bg: `rgba(${SVC.zasaride.rgb},0.08)`,
+    border: `rgba(${SVC.zasaride.rgb},0.20)`,
   },
   {
     key: 'zasaserv',
     label: 'ZasaServis',
     emoji: '🔧',
     desc: 'Servis elektronik, kendaraan, dan peralatan rumah',
-    color: '#D97706',
-    bg: 'rgba(217,119,6,0.08)',
-    border: 'rgba(217,119,6,0.20)',
+    color: SVC.zasaserv.fg,
+    bg: `rgba(${SVC.zasaserv.rgb},0.08)`,
+    border: `rgba(${SVC.zasaserv.rgb},0.20)`,
   },
 ]
 
@@ -113,7 +114,7 @@ export default function AdminModulesPage() {
       <div style={{ maxWidth: 640 }}>
         {/* Info banner */}
         <div style={{
-          background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)',
+          background: 'rgba(99,179,237,0.06)', border: '1px solid rgba(99,179,237,0.2)',
           borderRadius: 14, padding: '14px 16px', marginBottom: 20,
           display: 'flex', gap: 12, alignItems: 'flex-start',
         }}>
@@ -217,7 +218,7 @@ export default function AdminModulesPage() {
       {toast && (
         <div style={{
           position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)',
-          background: toast.type === 'success' ? '#059669' : '#DC2626',
+          background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)',
           color: '#fff', padding: '10px 20px', borderRadius: 12,
           fontSize: 13, fontWeight: 600, zIndex: 9999,
           boxShadow: '0 4px 16px rgba(0,0,0,0.15)',

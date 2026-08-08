@@ -44,12 +44,12 @@ export default function AdminBroadcastPage() {
         </p>
 
         {result && (
-          <div style={{ background: 'rgba(0,200,150,0.1)', border: '1.5px solid rgba(0,200,150,0.3)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: '#027A48', fontWeight: 600, fontSize: 14 }}>
+          <div style={{ background: 'rgba(46,125,91,0.1)', border: '1.5px solid rgba(46,125,91,0.3)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-accent)', fontWeight: 600, fontSize: 14 }}>
             ✓ {result}
           </div>
         )}
         {error && (
-          <div style={{ background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.2)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: '#DC2626', fontSize: 14 }}>
+          <div style={{ background: 'rgba(192,67,92,0.08)', border: '1.5px solid rgba(192,67,92,0.2)', borderRadius: 12, padding: '12px 16px', marginBottom: 20, color: 'var(--k-danger)', fontSize: 14 }}>
             {error}
           </div>
         )}
@@ -63,7 +63,7 @@ export default function AdminBroadcastPage() {
                 <button key={opt.value} type="button" onClick={() => setTarget(opt.value)} style={{
                   padding: '10px 12px', borderRadius: 12, cursor: 'pointer', textAlign: 'left',
                   border: `2px solid ${target === opt.value ? 'var(--k-accent)' : 'var(--k-border)'}`,
-                  background: target === opt.value ? 'rgba(var(--k-accent-rgb),0.08)' : 'var(--k-card)',
+                  background: target === opt.value ? 'rgba(46,125,91,0.08)' : 'var(--k-card)',
                   color: target === opt.value ? 'var(--k-accent)' : 'var(--k-text)',
                   fontWeight: target === opt.value ? 700 : 500, fontSize: 13,
                   transition: 'all 0.15s',
@@ -108,7 +108,7 @@ export default function AdminBroadcastPage() {
             <div style={{ background: 'var(--k-card)', border: '1.5px solid var(--k-border)', borderRadius: 14, padding: 14 }}>
               <p style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 8, fontWeight: 600 }}>PREVIEW NOTIFIKASI</p>
               <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#00C896,#059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>🔔</div>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,var(--k-accent),var(--k-accent2))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>🔔</div>
                 <div>
                   <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)', marginBottom: 2 }}>{title || '...'}</p>
                   <p style={{ fontSize: 13, color: 'var(--k-muted)', lineHeight: 1.5 }}>{body || '...'}</p>

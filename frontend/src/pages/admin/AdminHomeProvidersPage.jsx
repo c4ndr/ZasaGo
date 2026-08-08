@@ -1,23 +1,24 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
 const STATUS_META = {
-  pending:   { label: 'Pending',   color: '#F6AD55', bg: 'rgba(246,173,85,0.12)'  },
-  active:    { label: 'Aktif',     color: '#00C896', bg: 'rgba(0,200,150,0.12)'   },
-  suspended: { label: 'Suspended', color: '#F56565', bg: 'rgba(245,101,101,0.12)' },
+  pending:   { label: 'Pending',   color: 'var(--k-warn)',   bg: 'rgba(184,134,11,0.12)' },
+  active:    { label: 'Aktif',     color: 'var(--k-accent)', bg: 'rgba(46,125,91,0.12)'  },
+  suspended: { label: 'Suspended', color: 'var(--k-danger)', bg: 'rgba(192,67,92,0.12)'  },
 }
 
 const CAT_LABEL = { laundry: 'Laundry', pijat: 'Pijat', cleaning: 'Cleaning', tukang: 'Tukang', lainnya: 'Lainnya' }
 
 const STATUS_TABS = [
-  { key: 'pending',   label: 'Pending',   color: '#F6AD55' },
-  { key: 'active',    label: 'Aktif',     color: '#00C896' },
-  { key: 'suspended', label: 'Suspended', color: '#F56565' },
-  { key: 'all',       label: 'Semua',     color: 'var(--k-sub)' },
+  { key: 'pending',   label: 'Pending',   color: 'var(--k-warn)',   rgb: '184,134,11' },
+  { key: 'active',    label: 'Aktif',     color: 'var(--k-accent)', rgb: '46,125,91'  },
+  { key: 'suspended', label: 'Suspended', color: 'var(--k-danger)', rgb: '192,67,92'  },
+  { key: 'all',       label: 'Semua',     color: 'var(--k-sub)',    rgb: '91,100,114' },
 ]
 
 const EMPTY_FORM = {
@@ -51,7 +52,7 @@ function CreateModal({ onClose, onCreated }) {
           <h2 style={{ fontWeight: 800, fontSize: 17 }}>Tambah Provider</h2>
           <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: 'var(--k-muted)' }}>×</button>
         </div>
-        {error && <div style={{ marginBottom: 14, padding: '10px 14px', borderRadius: 10, background: 'rgba(245,101,101,0.1)', color: '#F56565', fontSize: 13 }}>{error}</div>}
+        {error && <div style={{ marginBottom: 14, padding: '10px 14px', borderRadius: 10, background: 'rgba(192,67,92,0.1)', color: 'var(--k-danger)', fontSize: 13 }}>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gap: 12 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
@@ -77,7 +78,7 @@ function CreateModal({ onClose, onCreated }) {
               <div><label style={{ fontSize: 11, color: 'var(--k-muted)', display: 'block', marginBottom: 4 }}>Telepon</label><input style={inp} value={form.owner_phone} onChange={e => set('owner_phone', e.target.value)} /></div>
             </div>
           </div>
-          <button type="submit" disabled={loading} style={{ width: '100%', marginTop: 20, padding: '12px', borderRadius: 12, border: 'none', cursor: loading ? 'default' : 'pointer', background: loading ? 'var(--k-border)' : 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+          <button type="submit" disabled={loading} style={{ width: '100%', marginTop: 20, padding: '12px', borderRadius: 12, border: 'none', cursor: loading ? 'default' : 'pointer', background: loading ? 'var(--k-border)' : SVC.zasahome.fg, color: '#fff', fontWeight: 700, fontSize: 14 }}>
             {loading ? 'Membuat...' : 'Buat Provider'}
           </button>
         </form>
@@ -98,7 +99,7 @@ function ProviderDetail({ provider: p, stats, onApprove, onSuspend, onClose }) {
         <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
           <span style={{ fontSize: 12, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: sm.bg, color: sm.color }}>{sm.label}</span>
           <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: 'var(--k-input)', color: 'var(--k-muted)' }}>{CAT_LABEL[p.category] ?? p.category}</span>
-          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: p.is_open ? 'rgba(0,200,150,0.1)' : 'var(--k-input)', color: p.is_open ? '#00C896' : 'var(--k-muted)' }}>{p.is_open ? 'Buka' : 'Tutup'}</span>
+          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 20, background: p.is_open ? 'rgba(46,125,91,0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>{p.is_open ? 'Buka' : 'Tutup'}</span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
           {[['Total Order', stats?.total_orders], ['Selesai', stats?.completed_orders], ['Pending', stats?.pending_orders], ['Revenue', fmtRp(stats?.total_revenue)]].map(([l, v]) => (
@@ -121,19 +122,19 @@ function ProviderDetail({ provider: p, stats, onApprove, onSuspend, onClose }) {
             {p.all_services.map(s => (
               <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--k-border)' }}>
                 <p style={{ fontSize: 13 }}>{s.name} <span style={{ color: 'var(--k-muted)', fontSize: 11 }}>({s.unit})</span></p>
-                <p style={{ fontSize: 13, fontWeight: 600, color: '#6366F1' }}>Rp {s.price.toLocaleString('id')}</p>
+                <p style={{ fontSize: 13, fontWeight: 600, color: SVC.zasahome.fg }}>Rp {s.price.toLocaleString('id')}</p>
               </div>
             ))}
           </div>
         )}
         <div style={{ display: 'flex', gap: 10 }}>
           {p.status !== 'active' && (
-            <button onClick={onApprove} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(0,200,150,0.12)', color: '#00C896', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={onApprove} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)', fontWeight: 700, fontSize: 13 }}>
               ✓ Setujui
             </button>
           )}
           {p.status !== 'suspended' && (
-            <button onClick={onSuspend} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(245,101,101,0.08)', color: '#F56565', fontWeight: 700, fontSize: 13 }}>
+            <button onClick={onSuspend} style={{ flex: 1, padding: '11px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 13 }}>
               Suspend
             </button>
           )}
@@ -199,7 +200,7 @@ export default function AdminHomeProvidersPage() {
 
   return (
     <AdminLayout title="ZasaHome — Provider">
-      {toast && <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff' }}>{toast.msg}</div>}
+      {toast && <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>{toast.msg}</div>}
       {showCreate && <CreateModal onClose={() => setShowCreate(false)} onCreated={p => { setProviders(ps => [p, ...ps]); showToast('success', 'Provider dibuat.') }} />}
       {selected && <ProviderDetail provider={selected} stats={selStats} onApprove={handleApprove} onSuspend={handleSuspend} onClose={() => setSelected(null)} />}
 
@@ -209,7 +210,7 @@ export default function AdminHomeProvidersPage() {
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Provider ZasaHome</h2>
           <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--k-muted)' }}>Kelola penyedia jasa rumah: laundry, bersih-bersih, dan lainnya</p>
         </div>
-        <button onClick={() => setShowCreate(true)} style={{ padding: '10px 20px', borderRadius: 12, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#6366F1,#8B5CF6)', color: '#fff', fontWeight: 700, fontSize: 13 }}>
+        <button onClick={() => setShowCreate(true)} style={{ padding: '10px 20px', borderRadius: 12, border: 'none', cursor: 'pointer', background: SVC.zasahome.fg, color: '#fff', fontWeight: 700, fontSize: 13 }}>
           + Tambah Provider
         </button>
       </div>
@@ -219,8 +220,8 @@ export default function AdminHomeProvidersPage() {
         {STATUS_TABS.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)} style={{
             padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: tab === t.key ? 700 : 500,
-            border: `1px solid ${tab === t.key ? t.color + '40' : 'var(--k-border)'}`,
-            cursor: 'pointer', background: tab === t.key ? `${t.color}22` : 'var(--k-card)',
+            border: `1px solid ${tab === t.key ? `rgba(${t.rgb},0.25)` : 'var(--k-border)'}`,
+            cursor: 'pointer', background: tab === t.key ? `rgba(${t.rgb},0.13)` : 'var(--k-card)',
             color: tab === t.key ? t.color : 'var(--k-sub)',
           }}>
             {t.label}
@@ -245,7 +246,7 @@ export default function AdminHomeProvidersPage() {
             return (
               <div key={p.id}
                 onClick={() => openDetail(p)}
-                onMouseEnter={e => e.currentTarget.style.borderColor = '#6366F1'}
+                onMouseEnter={e => e.currentTarget.style.borderColor = SVC.zasahome.fg}
                 onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--k-border)'}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 16, padding: '14px 18px',
@@ -254,7 +255,7 @@ export default function AdminHomeProvidersPage() {
                 }}>
                 <div style={{
                   width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                  background: 'rgba(99,102,241,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
+                  background: `rgba(${SVC.zasahome.rgb},0.1)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
                 }}>
                   {CAT_LABEL[p.category]?.charAt(0) === 'L' ? '🧺' : CAT_LABEL[p.category]?.charAt(0) === 'P' ? '💆' : CAT_LABEL[p.category]?.charAt(0) === 'C' ? '🧹' : CAT_LABEL[p.category]?.charAt(0) === 'T' ? '🔨' : '🏠'}
                 </div>
@@ -265,7 +266,7 @@ export default function AdminHomeProvidersPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
                   <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
                   <div style={{ display: 'flex', gap: 8, fontSize: 11, color: 'var(--k-muted)' }}>
-                    <span style={{ padding: '2px 8px', borderRadius: 10, background: p.is_open ? 'rgba(0,200,150,0.1)' : 'var(--k-input)', color: p.is_open ? '#00C896' : 'var(--k-muted)' }}>
+                    <span style={{ padding: '2px 8px', borderRadius: 10, background: p.is_open ? 'rgba(46,125,91,0.1)' : 'var(--k-input)', color: p.is_open ? 'var(--k-accent)' : 'var(--k-muted)' }}>
                       {p.is_open ? 'Buka' : 'Tutup'}
                     </span>
                     <span>{p.orders_count ?? 0} order</span>

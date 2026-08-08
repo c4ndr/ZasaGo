@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { isNative } from '../../utils/nativePlatform'
 import { compressImage } from '../../utils/compressImage'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 async function pickImageNative() {
   const photo = await Camera.getPhoto({ allowEditing: false, resultType: CameraResultType.DataUrl, source: CameraSource.Photos, quality: 75, width: 1200, height: 1200 })
@@ -13,11 +14,11 @@ async function pickImageNative() {
 }
 
 const SKILL_LEVELS = [
-  { key: 'pemula',        label: 'Pemula',        desc: 'Baru belajar, < 1 tahun',         color: '#94A3B8', badge: '⭐' },
-  { key: 'terlatih',      label: 'Terlatih',      desc: '1–3 tahun pengalaman',             color: '#22C55E', badge: '⭐⭐' },
-  { key: 'berpengalaman', label: 'Berpengalaman', desc: '3–5 tahun, punya teknik sendiri',  color: '#3B82F6', badge: '⭐⭐⭐' },
-  { key: 'profesional',   label: 'Profesional',   desc: '5–10 tahun, bersertifikat',        color: '#8B5CF6', badge: '⭐⭐⭐⭐' },
-  { key: 'master',        label: 'Master',        desc: '10+ tahun, terlatih & diakui',     color: '#F59E0B', badge: '⭐⭐⭐⭐⭐' },
+  { key: 'pemula',        label: 'Pemula',        desc: 'Baru belajar, < 1 tahun',         color: '#94A3B8', rgb: '148,163,184', badge: '⭐' },
+  { key: 'terlatih',      label: 'Terlatih',      desc: '1–3 tahun pengalaman',             color: 'var(--k-accent)', rgb: '46,125,91', badge: '⭐⭐' },
+  { key: 'berpengalaman', label: 'Berpengalaman', desc: '3–5 tahun, punya teknik sendiri',  color: 'var(--k-primary)', rgb: '40,55,75', badge: '⭐⭐⭐' },
+  { key: 'profesional',   label: 'Profesional',   desc: '5–10 tahun, bersertifikat',        color: 'var(--k-primary2)', rgb: '29,41,57', badge: '⭐⭐⭐⭐' },
+  { key: 'master',        label: 'Master',        desc: '10+ tahun, terlatih & diakui',     color: 'var(--k-warn)', rgb: '184,134,11', badge: '⭐⭐⭐⭐⭐' },
 ]
 
 const CATEGORY_SKILLS = {
@@ -34,7 +35,7 @@ function fmtStatus(s) {
   return { pending: 'Menunggu Persetujuan', active: 'Aktif', suspended: 'Disuspend' }[s] ?? s
 }
 function statusColor(s) {
-  return { pending: '#F59E0B', active: '#059669', suspended: '#EF4444' }[s] ?? '#94A3B8'
+  return { pending: 'var(--k-warn)', active: 'var(--k-accent)', suspended: 'var(--k-danger)' }[s] ?? '#94A3B8'
 }
 
 export default function ServProviderSettingsPage() {
@@ -181,16 +182,19 @@ export default function ServProviderSettingsPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       {toast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? '#059669' : '#EF4444', color: '#fff' }}>
+        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff' }}>
           {toast.msg}
         </div>
       )}
 
-      <div style={{ padding: '52px 20px 20px', background: 'linear-gradient(135deg,#064e3b,#059669)' }}>
-        <button onClick={() => navigate('/serv/provider')} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', fontSize: 13, cursor: 'pointer', marginBottom: 12, padding: '6px 14px', borderRadius: 20 }}>
-          ← Dashboard
-        </button>
-        <h1 style={{ fontSize: 20, fontWeight: 800, color: '#fff' }}>Pengaturan</h1>
+      <div style={{ padding: '52px 20px 20px', background: SVC.zasaserv.bg, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate('/serv/provider')} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasaserv.fg, fontSize: 13, cursor: 'pointer', marginBottom: 12, padding: '6px 14px', borderRadius: 999, boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Dashboard
+          </button>
+          <h1 style={{ fontSize: 20, fontWeight: 800, color: SVC.zasaserv.fg }}>Pengaturan</h1>
+        </div>
       </div>
 
       <div style={{ padding: '16px', maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -202,7 +206,7 @@ export default function ServProviderSettingsPage() {
             <div style={{ fontWeight: 700, color: statusColor(provider?.status), fontSize: 15 }}>{fmtStatus(provider?.status)}</div>
           </div>
           {provider?.status === 'active' && (
-            <button onClick={handleToggleOpen} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, background: provider?.is_open ? 'rgba(239,68,68,0.12)' : 'rgba(5,150,105,0.12)', color: provider?.is_open ? '#EF4444' : '#059669' }}>
+            <button onClick={handleToggleOpen} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13, background: provider?.is_open ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)', color: provider?.is_open ? 'var(--k-danger)' : 'var(--k-accent)' }}>
               {provider?.is_open ? 'Tutup Usaha' : 'Buka Usaha'}
             </button>
           )}
@@ -227,12 +231,12 @@ export default function ServProviderSettingsPage() {
               const imgSrc = previews[type] || (path ? storageUrl(path) + `?t=${ts}` : null)
               const isUpl  = uploading[type]
               const imgBox = (
-                <div style={{ width: type === 'logo' ? 88 : 176, height: 88, borderRadius: type === 'logo' ? '50%' : 12, background: 'var(--k-input)', border: `2px dashed ${isUpl ? '#059669' : 'var(--k-border)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', marginBottom: 6, position: 'relative' }}>
+                <div style={{ width: type === 'logo' ? 88 : 176, height: 88, borderRadius: type === 'logo' ? '50%' : 12, background: 'var(--k-input)', border: `2px dashed ${isUpl ? SVC.zasaserv.fg : 'var(--k-border)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', marginBottom: 6, position: 'relative' }}>
                   {imgSrc ? <img src={imgSrc} alt={type} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ fontSize: 28 }}>{type === 'logo' ? '🔧' : '🖼️'}</span>}
                   {isUpl && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>⏳</div>}
                 </div>
               )
-              const caption = <div style={{ fontSize: 11, color: isUpl ? '#059669' : 'var(--k-muted)', fontWeight: isUpl ? 700 : 400 }}>{isUpl ? 'Mengupload...' : `${type === 'logo' ? 'Logo' : 'Banner'} (klik ganti)`}</div>
+              const caption = <div style={{ fontSize: 11, color: isUpl ? SVC.zasaserv.fg : 'var(--k-muted)', fontWeight: isUpl ? 700 : 400 }}>{isUpl ? 'Mengupload...' : `${type === 'logo' ? 'Logo' : 'Banner'} (klik ganti)`}</div>
               return isNative ? (
                 <div key={type} onClick={() => !isUpl && handleUploadNative(type)} style={{ cursor: isUpl ? 'wait' : 'pointer', textAlign: 'center' }}>{imgBox}{caption}</div>
               ) : (
@@ -281,7 +285,7 @@ export default function ServProviderSettingsPage() {
                         const cur = f.specializations ?? []
                         return { ...f, specializations: cur.includes(skill) ? cur.filter(s => s !== skill) : [...cur, skill] }
                       })}
-                      style={{ padding: '7px 14px', borderRadius: 20, cursor: 'pointer', fontWeight: active ? 700 : 400, fontSize: 12, background: active ? '#059669' : 'var(--k-card)', color: active ? '#fff' : 'var(--k-muted)', border: active ? '1.5px solid #059669' : '1.5px solid var(--k-border)' }}>
+                      style={{ padding: '7px 14px', borderRadius: 20, cursor: 'pointer', fontWeight: active ? 700 : 400, fontSize: 12, background: active ? SVC.zasaserv.bg : 'var(--k-card)', color: active ? SVC.zasaserv.fg : 'var(--k-muted)', border: active ? `1.5px solid ${SVC.zasaserv.fg}` : '1.5px solid var(--k-border)' }}>
                       {active ? '✓ ' : ''}{skill}
                     </button>
                   )
@@ -299,7 +303,7 @@ export default function ServProviderSettingsPage() {
                 const active = form.skill_level === lv.key
                 return (
                   <button key={lv.key} type="button" onClick={() => setForm(f => ({ ...f, skill_level: lv.key }))}
-                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, cursor: 'pointer', textAlign: 'left', border: active ? `2px solid ${lv.color}` : '1.5px solid var(--k-border)', background: active ? `${lv.color}18` : 'var(--k-card)' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, cursor: 'pointer', textAlign: 'left', border: active ? `2px solid ${lv.color}` : '1.5px solid var(--k-border)', background: active ? `rgba(${lv.rgb},0.10)` : 'var(--k-card)' }}>
                     <span style={{ fontSize: 18, minWidth: 60, textAlign: 'center' }}>{lv.badge}</span>
                     <div style={{ flex: 1 }}>
                       <p style={{ fontWeight: 700, fontSize: 14, color: active ? lv.color : 'var(--k-text)' }}>{lv.label}</p>
@@ -332,23 +336,23 @@ export default function ServProviderSettingsPage() {
                   onChange={e => setForm(f => { const certs = [...(f.certificates ?? [])]; certs[i] = e.target.value; return { ...f, certificates: certs } })}
                   style={{ ...inp, flex: 1, marginBottom: 0 }} />
                 <button type="button" onClick={() => setForm(f => ({ ...f, certificates: (f.certificates ?? []).filter((_, j) => j !== i) }))}
-                  style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(239,68,68,0.08)', color: '#EF4444', cursor: 'pointer', fontSize: 16 }}>✕</button>
+                  style={{ padding: '0 12px', borderRadius: 10, border: '1px solid rgba(192,67,92,0.4)', background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)', cursor: 'pointer', fontSize: 16 }}>✕</button>
               </div>
             ))}
             {(form.certificates ?? []).length < 10 && (
               <button type="button" onClick={() => setForm(f => ({ ...f, certificates: [...(f.certificates ?? []), ''] }))}
-                style={{ width: '100%', padding: 9, borderRadius: 10, border: '1.5px dashed rgba(5,150,105,0.4)', background: 'transparent', color: '#059669', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+                style={{ width: '100%', padding: 9, borderRadius: 10, border: `1.5px dashed rgba(${SVC.zasaserv.rgb},0.4)`, background: 'transparent', color: SVC.zasaserv.fg, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
                 + Tambah Sertifikat
               </button>
             )}
           </div>
 
-          <button type="submit" disabled={saving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer', background: saving ? 'var(--k-border)' : '#059669', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+          <button type="submit" disabled={saving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer', background: saving ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: saving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
           </button>
 
           <button type="button" onClick={() => { if (confirm('Keluar dari akun?')) { logout(); navigate('/login') } }}
-            style={{ padding: 12, borderRadius: 12, border: '1.5px solid rgba(239,68,68,0.4)', background: 'rgba(239,68,68,0.06)', color: '#EF4444', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+            style={{ padding: 12, borderRadius: 12, border: '1.5px solid rgba(192,67,92,0.4)', background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
             Keluar (Logout)
           </button>
         </form>
@@ -362,7 +366,7 @@ export default function ServProviderSettingsPage() {
               <div><label style={lbl}>Email</label><input style={inp} type="email" value={acct.email} onChange={e => setAcct(a => ({ ...a, email: e.target.value }))} placeholder="email@contoh.com" /></div>
             </div>
           </div>
-          <button type="submit" disabled={acctSaving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: acctSaving ? 'default' : 'pointer', background: acctSaving ? 'var(--k-border)' : 'linear-gradient(135deg,#0EA5E9,#059669)', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+          <button type="submit" disabled={acctSaving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: acctSaving ? 'default' : 'pointer', background: acctSaving ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: acctSaving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             {acctSaving ? 'Menyimpan...' : 'Simpan Akun'}
           </button>
         </form>
@@ -377,7 +381,7 @@ export default function ServProviderSettingsPage() {
               <div><label style={lbl}>Konfirmasi Password Baru</label><input style={inp} type="password" value={pwd.new_password_confirmation} onChange={e => setPwd(p => ({ ...p, new_password_confirmation: e.target.value }))} placeholder="Ulangi password baru" autoComplete="new-password" /></div>
             </div>
           </div>
-          <button type="submit" disabled={pwdSaving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: pwdSaving ? 'default' : 'pointer', background: pwdSaving ? 'var(--k-border)' : 'linear-gradient(135deg,#F59E0B,#EF4444)', color: '#fff', fontWeight: 700, fontSize: 14 }}>
+          <button type="submit" disabled={pwdSaving} style={{ padding: 12, borderRadius: 12, border: 'none', cursor: pwdSaving ? 'default' : 'pointer', background: pwdSaving ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14, boxShadow: pwdSaving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
             {pwdSaving ? 'Mengubah...' : 'Ubah Password'}
           </button>
         </form>
@@ -391,7 +395,7 @@ export default function ServProviderSettingsPage() {
           { icon: '👤', label: 'Akun',      path: null },
         ].map(item => (
           <button key={item.label} onClick={() => item.path && navigate(item.path)}
-            style={{ flex: 1, padding: '10px 4px 8px', border: 'none', cursor: 'pointer', background: 'transparent', color: !item.path ? '#059669' : 'var(--k-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+            style={{ flex: 1, padding: '10px 4px 8px', border: 'none', cursor: 'pointer', background: 'transparent', color: !item.path ? 'var(--k-accent)' : 'var(--k-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
             <span style={{ fontSize: 20 }}>{item.icon}</span>
             <span style={{ fontSize: 10, fontWeight: !item.path ? 700 : 400 }}>{item.label}</span>
           </button>

@@ -5,6 +5,7 @@ import MerchantLocationPicker from '../../components/MerchantLocationPicker'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { isNative } from '../../utils/nativePlatform'
 import { compressImage } from '../../utils/compressImage'
+import { SVC } from '../../utils/svcTheme'
 
 async function pickImageNative() {
   const photo = await Camera.getPhoto({
@@ -23,7 +24,7 @@ function fmtStatus(s) {
   return { pending: 'Menunggu Persetujuan', active: 'Aktif', suspended: 'Disuspend' }[s] ?? s
 }
 function statusColor(s) {
-  return { pending: '#F6AD55', active: '#00C896', suspended: '#F56565' }[s] ?? '#A0A0BC'
+  return { pending: 'var(--k-warn)', active: 'var(--k-accent)', suspended: 'var(--k-danger)' }[s] ?? '#A0A0BC'
 }
 
 export default function MerchantSettingsPage() {
@@ -141,7 +142,7 @@ export default function MerchantSettingsPage() {
         <div style={{
           position: 'fixed', top: 20, right: 20, zIndex: 9999,
           padding: '12px 20px', borderRadius: 12, fontSize: 14, fontWeight: 600,
-          background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff',
+          background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff',
         }}>{toast.msg}</div>
       )}
 
@@ -163,8 +164,8 @@ export default function MerchantSettingsPage() {
             <button onClick={handleToggleOpen} style={{
               padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer',
               fontWeight: 700, fontSize: 13,
-              background: merchant?.is_open ? 'rgba(245,101,101,0.12)' : 'rgba(0,200,150,0.12)',
-              color: merchant?.is_open ? '#F56565' : '#00C896',
+              background: merchant?.is_open ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)',
+              color: merchant?.is_open ? 'var(--k-danger)' : 'var(--k-accent)',
             }}>
               {merchant?.is_open ? 'Tutup Toko' : 'Buka Toko'}
             </button>
@@ -184,7 +185,7 @@ export default function MerchantSettingsPage() {
                 <div style={{
                   width: type === 'logo' ? 88 : 176, height: 88,
                   borderRadius: type === 'logo' ? '50%' : 12,
-                  background: 'var(--k-input)', border: `2px dashed ${isUpl ? '#F97316' : 'var(--k-border)'}`,
+                  background: 'var(--k-input)', border: `2px dashed ${isUpl ? SVC.zasafood.fg : 'var(--k-border)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   overflow: 'hidden', marginBottom: 6, position: 'relative', transition: 'border-color 0.2s',
                 }}>
@@ -192,7 +193,7 @@ export default function MerchantSettingsPage() {
                   {isUpl && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>⏳</div>}
                 </div>
               )
-              const caption = <div style={{ fontSize: 11, color: isUpl ? '#F97316' : 'var(--k-sub)', fontWeight: isUpl ? 700 : 400 }}>{isUpl ? 'Mengupload...' : `${type === 'logo' ? 'Logo' : 'Banner'} (klik ganti)`}</div>
+              const caption = <div style={{ fontSize: 11, color: isUpl ? SVC.zasafood.fg : 'var(--k-sub)', fontWeight: isUpl ? 700 : 400 }}>{isUpl ? 'Mengupload...' : `${type === 'logo' ? 'Logo' : 'Banner'} (klik ganti)`}</div>
               return isNative ? (
                 <div key={type} onClick={() => !isUpl && handleUploadNative(type)} style={{ cursor: isUpl ? 'wait' : 'pointer', textAlign: 'center' }}>
                   {imgBox}{caption}
@@ -269,8 +270,9 @@ export default function MerchantSettingsPage() {
 
           <button type="submit" disabled={saving} style={{
             padding: '12px', borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer',
-            background: saving ? 'var(--k-border)' : '#F97316', color: '#fff',
+            background: saving ? 'var(--k-border)' : 'var(--k-primary)', color: '#fff',
             fontWeight: 700, fontSize: 14,
+            boxShadow: saving ? 'none' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>
             {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
           </button>

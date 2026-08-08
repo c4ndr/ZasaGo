@@ -7,14 +7,14 @@ const fmtDate = (d) => new Date(d).toLocaleString('id-ID', { day: 'numeric', mon
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
 
 const STATUS_META = {
-  pending:     { label: 'Menunggu',    color: '#F59E0B' },
-  confirmed:   { label: 'Dikonfirmasi', color: '#3B82F6' },
-  packed:      { label: 'Dikemas',     color: '#8B5CF6' },
-  picking_up:  { label: 'Dijemput',   color: '#F97316' },
-  on_delivery: { label: 'Dikirim',    color: '#6366F1' },
-  delivered:   { label: 'Terkirim',   color: '#10B981' },
-  completed:   { label: 'Selesai',    color: '#22C55E' },
-  cancelled:   { label: 'Dibatalkan', color: '#EF4444' },
+  pending:     { label: 'Menunggu',    color: 'var(--k-warn)',    rgb: '184,134,11' },
+  confirmed:   { label: 'Dikonfirmasi', color: 'var(--k-primary)', rgb: '40,55,75'   },
+  packed:      { label: 'Dikemas',     color: 'var(--k-primary)', rgb: '40,55,75'    },
+  picking_up:  { label: 'Dijemput',   color: 'var(--k-primary)', rgb: '40,55,75'     },
+  on_delivery: { label: 'Dikirim',    color: 'var(--k-primary)', rgb: '40,55,75'     },
+  delivered:   { label: 'Terkirim',   color: '#10B981', rgb: '16,185,129' },
+  completed:   { label: 'Selesai',    color: '#22C55E', rgb: '34,197,94' },
+  cancelled:   { label: 'Dibatalkan', color: 'var(--k-danger)', rgb: '192,67,92'     },
 }
 
 export default function AdminMartOrdersPage() {
@@ -59,12 +59,12 @@ export default function AdminMartOrdersPage() {
 
       {/* Tabs + Search */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-        {[{ v: '', l: 'Semua', c: 'var(--k-sub)' }, { v: 'pending', l: 'Menunggu', c: '#F59E0B' }, { v: 'confirmed', l: 'Dikonfirmasi', c: '#3B82F6' }, { v: 'packed', l: 'Dikemas', c: '#8B5CF6' }, { v: 'on_delivery', l: 'Dikirim', c: '#6366F1' }, { v: 'completed', l: 'Selesai', c: '#22C55E' }, { v: 'cancelled', l: 'Batal', c: '#EF4444' }].map(t => (
+        {[{ v: '', l: 'Semua', c: 'var(--k-sub)', rgb: '91,100,114' }, { v: 'pending', l: 'Menunggu', c: 'var(--k-warn)', rgb: '184,134,11' }, { v: 'confirmed', l: 'Dikonfirmasi', c: 'var(--k-primary)', rgb: '40,55,75' }, { v: 'packed', l: 'Dikemas', c: 'var(--k-primary)', rgb: '40,55,75' }, { v: 'on_delivery', l: 'Dikirim', c: 'var(--k-primary)', rgb: '40,55,75' }, { v: 'completed', l: 'Selesai', c: '#22C55E', rgb: '34,197,94' }, { v: 'cancelled', l: 'Batal', c: 'var(--k-danger)', rgb: '192,67,92' }].map(t => (
           <button key={t.v} onClick={() => setTab(t.v)}
             style={{
               padding: '7px 14px', borderRadius: 20, fontSize: 12, fontWeight: tab === t.v ? 700 : 500,
-              border: `1px solid ${tab === t.v ? t.c + '40' : 'var(--k-border)'}`,
-              cursor: 'pointer', background: tab === t.v ? `${t.c}18` : 'var(--k-card)',
+              border: `1px solid ${tab === t.v ? `rgba(${t.rgb},0.25)` : 'var(--k-border)'}`,
+              cursor: 'pointer', background: tab === t.v ? `rgba(${t.rgb},0.10)` : 'var(--k-card)',
               color: tab === t.v ? t.c : 'var(--k-sub)', whiteSpace: 'nowrap',
             }}>{t.l}</button>
         ))}
@@ -85,7 +85,7 @@ export default function AdminMartOrdersPage() {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {orders.map(o => {
-            const sm = STATUS_META[o.status] ?? { label: o.status, color: '#888' }
+            const sm = STATUS_META[o.status] ?? { label: o.status, color: '#888', rgb: '136,136,136' }
             return (
               <div key={o.id} onClick={() => setSelected(o.id === selected ? null : o.id)}
                 style={{ background: 'var(--k-card)', borderRadius: 14, border: `1.5px solid ${selected === o.id ? 'var(--k-accent)' : 'var(--k-border)'}`, padding: '14px 16px', cursor: 'pointer', transition: 'border-color .15s' }}>
@@ -96,7 +96,7 @@ export default function AdminMartOrdersPage() {
                         <p style={{ fontSize: 10, color: 'var(--k-muted)' }}>{fmtDate(o.created_at)}</p>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <span style={{ display: 'block', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 8, background: `${sm.color}20`, color: sm.color, marginBottom: 4 }}>{sm.label}</span>
+                        <span style={{ display: 'block', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 8, background: `rgba(${sm.rgb},0.12)`, color: sm.color, marginBottom: 4 }}>{sm.label}</span>
                         <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-accent)' }}>{fmtRp(o.total)}</p>
                       </div>
                     </div>
@@ -128,7 +128,7 @@ export default function AdminMartOrdersPage() {
                         {o.commission_rate > 0 && (
                           <div style={{ background: 'var(--k-card2)', borderRadius: 8, padding: '8px 10px', fontSize: 11, color: 'var(--k-sub)', marginBottom: 8, display: 'flex', gap: 14 }}>
                             <span>Subtotal: <b>{fmtRp(o.subtotal)}</b></span>
-                            <span>Komisi ({o.commission_rate}%): <b style={{ color: '#F59E0B' }}>-{fmtRp(o.platform_commission)}</b></span>
+                            <span>Komisi ({o.commission_rate}%): <b style={{ color: 'var(--k-warn)' }}>-{fmtRp(o.platform_commission)}</b></span>
                             <span>Income seller: <b style={{ color: '#22C55E' }}>{fmtRp(o.seller_income)}</b></span>
                           </div>
                         )}
@@ -139,7 +139,7 @@ export default function AdminMartOrdersPage() {
                               onClick={e => e.stopPropagation()}
                               style={{ width: '100%', padding: '8px 10px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 12, outline: 'none', boxSizing: 'border-box', marginBottom: 8 }} />
                             <button onClick={e => { e.stopPropagation(); forceCancel(o.id) }} disabled={cancelling || !cancelReason.trim()}
-                              style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: '#EF4444', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: !cancelReason.trim() ? 0.5 : 1 }}>
+                              style={{ padding: '8px 14px', borderRadius: 8, border: 'none', background: 'var(--k-danger)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: !cancelReason.trim() ? 0.5 : 1 }}>
                               🚫 Force Cancel
                             </button>
                           </div>

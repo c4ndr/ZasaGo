@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import api from '../../services/api'
 import LocationSearch from '../../components/LocationSearch'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 export default function ServCheckoutPage() {
   const navigate  = useNavigate()
@@ -48,12 +49,15 @@ export default function ServCheckoutPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg,#064e3b,#059669)', padding: '52px 16px 20px' }}>
-        <button onClick={() => navigate(-1)} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', borderRadius: 20, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12 }}>
-          ← Kembali
-        </button>
-        <div style={{ fontWeight: 800, fontSize: 20, color: '#fff' }}>Konfirmasi Pesanan</div>
-        <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, marginTop: 2 }}>{provider.name}</div>
+      <div style={{ background: SVC.zasaserv.bg, padding: '52px 16px 20px', position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasaserv.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasaserv.fg, borderRadius: 999, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12, boxShadow: `0 3px 8px rgba(${SVC.zasaserv.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Kembali
+          </button>
+          <div style={{ fontWeight: 800, fontSize: 20, color: SVC.zasaserv.fg }}>Konfirmasi Pesanan</div>
+          <div style={{ color: SVC.zasaserv.fg, opacity: 0.7, fontSize: 13, marginTop: 2 }}>{provider.name}</div>
+        </div>
       </div>
 
       <div style={{ padding: 16 }}>
@@ -71,7 +75,7 @@ export default function ServCheckoutPage() {
           })}
           <div style={{ borderTop: '1px solid var(--k-border)', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ fontWeight: 700 }}>Total</span>
-            <span style={{ fontWeight: 800, color: '#059669', fontSize: 16 }}>Rp {totalPrice.toLocaleString('id')}</span>
+            <span style={{ fontWeight: 800, color: 'var(--k-accent)', fontSize: 16 }}>Rp {totalPrice.toLocaleString('id')}</span>
           </div>
         </div>
 
@@ -113,7 +117,7 @@ export default function ServCheckoutPage() {
                 { enableHighAccuracy: true, timeout: 10000 }
               )
             }}
-            style={{ marginTop: 10, background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.3)', borderRadius: 10, padding: '8px 14px', cursor: 'pointer', fontSize: 12, color: '#059669', fontWeight: 700 }}
+            style={{ marginTop: 10, background: 'rgba(46,125,91,0.08)', border: '1px solid rgba(46,125,91,0.3)', borderRadius: 10, padding: '8px 14px', cursor: 'pointer', fontSize: 12, color: 'var(--k-accent)', fontWeight: 700 }}
           >
             📍 Gunakan lokasi saya sekarang
           </button>
@@ -142,12 +146,12 @@ export default function ServCheckoutPage() {
           />
         </div>
 
-        {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 12, padding: '10px 14px', color: '#EF4444', fontSize: 13, marginBottom: 14 }}>{error}</div>}
+        {error && <div style={{ background: 'rgba(192,67,92,0.1)', border: '1px solid rgba(192,67,92,0.3)', borderRadius: 12, padding: '10px 14px', color: 'var(--k-danger)', fontSize: 13, marginBottom: 14 }}>{error}</div>}
       </div>
 
       {/* Bottom bar */}
       <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '12px 16px', background: 'var(--k-card)', borderTop: '1px solid var(--k-border)' }}>
-        <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'var(--k-muted)' : '#059669', color: '#fff', border: 'none', borderRadius: 14, fontWeight: 700, fontSize: 15, cursor: loading ? 'not-allowed' : 'pointer' }}>
+        <button onClick={submit} disabled={loading} style={{ width: '100%', padding: '14px', background: loading ? 'var(--k-muted)' : 'var(--k-accent)', color: '#fff', border: 'none', borderRadius: 14, fontWeight: 700, fontSize: 15, cursor: loading ? 'not-allowed' : 'pointer' }}>
           {loading ? 'Memproses...' : `Pesan — Rp ${totalPrice.toLocaleString('id')}`}
         </button>
       </div>

@@ -1,24 +1,25 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api, { storageUrl } from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
 
 const MODULE_META = {
-  zasago:   { label: 'ZasaGo',    color: '#63B3ED' },
-  zasafood: { label: 'ZasaFood',  color: '#F6AD55' },
-  zasamart: { label: 'ZasaShop',  color: '#9575CD' },
-  zasahome: { label: 'ZasaHome',  color: '#00C896' },
-  zasaserv: { label: 'ZasaServis',color: '#F56565' },
-  zasaride: { label: 'ZasaRide',  color: '#38B2AC' },
+  zasago:   { label: 'ZasaGo',    color: SVC.zasago.fg,   rgb: SVC.zasago.rgb },
+  zasafood: { label: 'ZasaFood',  color: SVC.zasafood.fg, rgb: SVC.zasafood.rgb },
+  zasamart: { label: 'ZasaShop',  color: SVC.zasashop.fg, rgb: SVC.zasashop.rgb },
+  zasahome: { label: 'ZasaHome',  color: SVC.zasahome.fg, rgb: SVC.zasahome.rgb },
+  zasaserv: { label: 'ZasaServis',color: SVC.zasaserv.fg, rgb: SVC.zasaserv.rgb },
+  zasaride: { label: 'ZasaRide',  color: SVC.zasaride.fg, rgb: SVC.zasaride.rgb },
 }
 
 const STATUS_META = {
-  pending:   { label: 'Menunggu',  color: '#F6AD55' },
-  reviewing: { label: 'Ditinjau',  color: '#63B3ED' },
-  resolved:  { label: 'Selesai',   color: '#00C896' },
-  rejected:  { label: 'Ditolak',   color: '#F56565' },
+  pending:   { label: 'Menunggu',  color: 'var(--k-warn)',    rgb: '184,134,11' },
+  reviewing: { label: 'Ditinjau',  color: 'var(--k-primary)', rgb: '40,55,75' },
+  resolved:  { label: 'Selesai',   color: 'var(--k-accent)',  rgb: '46,125,91' },
+  rejected:  { label: 'Ditolak',   color: 'var(--k-danger)',  rgb: '192,67,92' },
 }
 
 const STATUS_TABS = [
@@ -35,7 +36,7 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
   const [note, setNote]           = useState('')
   const [refund, setRefund]       = useState('')
 
-  const mod    = MODULE_META[item.order_type] ?? { label: item.order_type, color: '#A0A0BC' }
+  const mod    = MODULE_META[item.order_type] ?? { label: item.order_type, color: 'var(--k-muted)', rgb: '148,139,125' }
   const status = STATUS_META[item.status] ?? STATUS_META.pending
   const isBusy = busy === item.id
 
@@ -48,9 +49,9 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
             <span style={{ fontWeight: 800, fontSize: 14, color: 'var(--k-text)' }}>{item.customer?.name}</span>
             <span style={{ padding: '2px 9px', borderRadius: 100, fontSize: 10, fontWeight: 700,
-              background: `${mod.color}18`, color: mod.color, border: `1px solid ${mod.color}44` }}>{mod.label}</span>
+              background: `rgba(${mod.rgb},0.10)`, color: mod.color, border: `1px solid rgba(${mod.rgb},0.27)` }}>{mod.label}</span>
             <span style={{ padding: '2px 9px', borderRadius: 100, fontSize: 10, fontWeight: 700,
-              background: `${status.color}18`, color: status.color, border: `1px solid ${status.color}44` }}>{status.label}</span>
+              background: `rgba(${status.rgb},0.10)`, color: status.color, border: `1px solid rgba(${status.rgb},0.27)` }}>{status.label}</span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--k-text)', marginBottom: 2 }}>{item.reason}</p>
           {item.description && <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>{item.description}</p>}
@@ -71,7 +72,7 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
               <p style={{ fontSize: 10, color: 'var(--k-muted)', marginBottom: 4 }}>Catatan Penyelesaian</p>
               <p style={{ fontSize: 12, color: 'var(--k-text)' }}>{item.resolution_note}</p>
               {item.refund_amount > 0 && (
-                <p style={{ fontSize: 13, fontWeight: 800, color: '#00C896', marginTop: 6 }}>Refund: {fmtRp(item.refund_amount)}</p>
+                <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-accent)', marginTop: 6 }}>Refund: {fmtRp(item.refund_amount)}</p>
               )}
             </div>
           )}
@@ -92,7 +93,7 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
               </div>
 
               {showResolve && (
-                <div style={{ background: 'rgba(0,200,150,0.06)', border: '1px solid rgba(0,200,150,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ background: 'rgba(46,125,91,0.06)', border: '1px solid rgba(46,125,91,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <input className="input-field" placeholder="Nominal refund (opsional, kosongkan jika tidak ada refund)"
                     type="number" value={refund} onChange={e => setRefund(e.target.value)}
                     style={{ padding: '9px 14px', fontSize: 13 }} />
@@ -102,14 +103,14 @@ function ComplaintCard({ item, onResolve, onReject, busy }) {
                   <button disabled={!note || isBusy}
                     onClick={() => onResolve(item.id, note, refund ? Number(refund) : null)}
                     style={{ padding: '9px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer',
-                      border: 'none', background: '#00C896', color: '#0C0C16', opacity: (!note || isBusy) ? 0.5 : 1, alignSelf: 'flex-start' }}>
+                      border: 'none', background: 'var(--k-accent)', color: '#0C0C16', opacity: (!note || isBusy) ? 0.5 : 1, alignSelf: 'flex-start' }}>
                     {isBusy ? 'Memproses...' : 'Kirim Penyelesaian'}
                   </button>
                 </div>
               )}
 
               {showReject && (
-                <div style={{ background: 'rgba(245,101,101,0.06)', border: '1px solid rgba(245,101,101,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 8 }}>
+                <div style={{ background: 'rgba(192,67,92,0.06)', border: '1px solid rgba(192,67,92,0.25)', borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 8 }}>
                   <input className="input-field" placeholder="Alasan penolakan (wajib)"
                     value={note} onChange={e => setNote(e.target.value)}
                     style={{ flex: 1, padding: '9px 14px', fontSize: 13 }} />
@@ -182,7 +183,7 @@ export default function AdminComplaintsPage() {
             <button key={t.key} onClick={() => setStatus(t.key)}
               style={{ padding: '7px 18px', borderRadius: 100, fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 border: active ? '1px solid var(--k-accent)' : '1px solid var(--k-border)',
-                background: active ? 'rgba(0,200,150,0.1)' : 'transparent',
+                background: active ? 'rgba(46,125,91,0.1)' : 'transparent',
                 color: active ? 'var(--k-accent)' : 'var(--k-sub)' }}>
               {t.label}
             </button>

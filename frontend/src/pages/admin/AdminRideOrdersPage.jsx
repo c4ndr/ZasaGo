@@ -4,12 +4,12 @@ import api from '../../services/api'
 const fmt = (n) => new Intl.NumberFormat('id-ID').format(n)
 
 const STATUS_COLOR = {
-  pending:   '#F59E0B',
-  accepted:  '#3B82F6',
-  on_pickup: '#8B5CF6',
-  on_ride:   '#00C896',
-  completed: '#00C896',
-  cancelled: '#EF4444',
+  pending:   { color: 'var(--k-warn)',    rgb: '184,134,11' },
+  accepted:  { color: 'var(--k-primary)', rgb: '40,55,75'   },
+  on_pickup: { color: 'var(--k-primary)', rgb: '40,55,75'   },
+  on_ride:   { color: 'var(--k-accent)',  rgb: '46,125,91'  },
+  completed: { color: 'var(--k-accent)',  rgb: '46,125,91'  },
+  cancelled: { color: 'var(--k-danger)',  rgb: '192,67,92'  },
 }
 const STATUS_LABEL = {
   pending:   'Menunggu',
@@ -80,12 +80,12 @@ export default function AdminRideOrdersPage() {
       {stats && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12, marginBottom: 20 }}>
           {[
-            { label: 'Total Order',   value: stats.total,     color: '#3B82F6' },
-            { label: 'Hari Ini',      value: stats.today,     color: '#F59E0B' },
-            { label: 'Aktif',         value: stats.active,    color: '#00C896' },
-            { label: 'Selesai',       value: stats.completed, color: '#00C896' },
-            { label: 'Dibatalkan',    value: stats.cancelled, color: '#EF4444' },
-            { label: 'Komisi',        value: `Rp ${fmt(stats.revenue)}`, color: '#8B5CF6' },
+            { label: 'Total Order',   value: stats.total,     color: 'var(--k-primary)' },
+            { label: 'Hari Ini',      value: stats.today,     color: 'var(--k-warn)' },
+            { label: 'Aktif',         value: stats.active,    color: 'var(--k-accent)' },
+            { label: 'Selesai',       value: stats.completed, color: 'var(--k-accent)' },
+            { label: 'Dibatalkan',    value: stats.cancelled, color: 'var(--k-danger)' },
+            { label: 'Komisi',        value: `Rp ${fmt(stats.revenue)}`, color: 'var(--k-primary)' },
           ].map(s => (
             <div key={s.label} style={{
               background: 'var(--k-card)', border: '1px solid var(--k-border)',
@@ -161,7 +161,7 @@ export default function AdminRideOrdersPage() {
                       <td style={{ padding: '12px' }}>
                         <span style={{
                           fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 100,
-                          color: STATUS_COLOR[o.status], background: `${STATUS_COLOR[o.status]}15`,
+                          color: STATUS_COLOR[o.status]?.color, background: `rgba(${STATUS_COLOR[o.status]?.rgb},0.12)`,
                           whiteSpace: 'nowrap',
                         }}>{STATUS_LABEL[o.status] || o.status}</span>
                       </td>
@@ -191,8 +191,8 @@ export default function AdminRideOrdersPage() {
                 </div>
                 <div style={{
                   fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 100,
-                  color: fare.is_active ? '#00C896' : '#EF4444',
-                  background: fare.is_active ? 'rgba(0,200,150,0.1)' : 'rgba(239,68,68,0.1)',
+                  color: fare.is_active ? 'var(--k-accent)' : 'var(--k-danger)',
+                  background: fare.is_active ? 'rgba(46,125,91,0.1)' : 'rgba(192,67,92,0.1)',
                 }}>{fare.is_active ? 'Aktif' : 'Nonaktif'}</div>
               </div>
 
@@ -257,7 +257,7 @@ export default function AdminRideOrdersPage() {
                   </div>
                   <button onClick={() => setEditFare({ ...fare })} style={{
                     width: '100%', padding: '10px', borderRadius: 12,
-                    background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.3)',
+                    background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.3)',
                     color: 'var(--k-accent)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
                   }}>✏️ Edit Tarif</button>
                 </>

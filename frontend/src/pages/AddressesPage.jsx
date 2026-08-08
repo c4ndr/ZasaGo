@@ -7,9 +7,9 @@ import { getPosition } from '../utils/geo'
 
 const LABELS = ['Rumah', 'Kantor', 'Lainnya']
 const LABEL_COLOR = {
-  Rumah:   { bg: 'rgba(59,130,246,0.12)',  color: '#3B82F6' },
-  Kantor:  { bg: 'rgba(16,185,129,0.12)',  color: '#10B981' },
-  Lainnya: { bg: 'rgba(156,163,175,0.15)', color: '#9CA3AF' },
+  Rumah:   { bg: 'rgba(42,95,130,0.12)',   color: 'var(--k-info)' },
+  Kantor:  { bg: 'rgba(46,125,91,0.12)',   color: 'var(--k-accent)' },
+  Lainnya: { bg: 'rgba(148,139,125,0.15)', color: 'var(--k-muted)' },
 }
 const LABEL_EMOJI = { Rumah: '🏠', Kantor: '🏢', Lainnya: '📌' }
 
@@ -78,7 +78,7 @@ function AddressForm({ initial, onSave, onCancel, saving }) {
               style={{
                 flex: 1, padding: '8px 4px', borderRadius: 10, cursor: 'pointer',
                 border: `2px solid ${form.label === l ? 'var(--k-primary)' : 'var(--k-border)'}`,
-                background: form.label === l ? 'rgba(99,102,241,0.1)' : 'var(--k-card)',
+                background: form.label === l ? 'var(--k-primary-bg)' : 'var(--k-card)',
                 color: form.label === l ? 'var(--k-primary)' : 'var(--k-muted)',
                 fontWeight: form.label === l ? 700 : 400, fontSize: 13,
               }}
@@ -351,7 +351,7 @@ export default function AddressesPage() {
                   {addr.is_default && (
                     <span style={{
                       fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 20,
-                      background: 'rgba(0,200,150,0.12)', color: 'var(--k-accent)',
+                      background: 'rgba(46,125,91,0.12)', color: 'var(--k-accent)',
                     }}>
                       ✓ Default
                     </span>

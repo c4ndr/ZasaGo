@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import api from '../../services/api'
 import { STATUS_META as BASE_STATUS_META, FLOW_STEPS, getCategoryConfig } from '../../utils/homeServiceConfig'
 import ReportComplaintModal from '../../components/ReportComplaintModal'
+import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
 
 const COMPLAINT_WINDOW_HOURS = 24
 
@@ -60,26 +61,30 @@ export default function HomeOrderDetailPage() {
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 40 }}>
       {/* Header */}
-      <div style={{ padding: '52px 20px 20px', background: 'linear-gradient(160deg,#0F1E25 0%,var(--k-bg) 100%)' }}>
-        <button onClick={() => navigate('/home/orders')} style={{ background: 'none', border: 'none', color: 'var(--k-muted)', fontSize: 14, cursor: 'pointer', marginBottom: 12, padding: 0 }}>
-          ← Pesanan Saya
-        </button>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <h1 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Detail Pesanan</h1>
-            <p style={{ color: 'var(--k-muted)', fontSize: 13 }}>{order.order_number}</p>
+      <div style={{ padding: '52px 20px 20px', background: SVC.zasahome.bg, position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.zasahome.rgb, true) }}>
+        <Gloss />
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => navigate('/home/orders')} style={{ background: 'var(--k-surface)', border: 'none', color: SVC.zasahome.fg, borderRadius: 999, padding: '6px 14px', fontSize: 13, cursor: 'pointer', marginBottom: 12, boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)` }}>
+            ← Pesanan Saya
+          </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <h1 style={{ fontSize: 20, fontWeight: 800, color: SVC.zasahome.fg }}>Detail Pesanan</h1>
+              <p style={{ color: SVC.zasahome.fg, opacity: 0.7, fontSize: 13 }}>{order.order_number}</p>
+            </div>
+            {canChat && (
+              <button
+                onClick={() => navigate(`/home/orders/${id}/chat`, { state: { otherName: order.provider?.name } })}
+                style={{
+                  padding: '8px 16px', borderRadius: 12, border: 'none',
+                  background: 'var(--k-surface)', color: SVC.zasahome.fg,
+                  fontWeight: 700, fontSize: 13, cursor: 'pointer',
+                  boxShadow: `0 3px 8px rgba(${SVC.zasahome.rgb},0.22), inset 0 1.5px 0 rgba(255,255,255,0.9)`,
+                }}>
+                💬 Chat
+              </button>
+            )}
           </div>
-          {canChat && (
-            <button
-              onClick={() => navigate(`/home/orders/${id}/chat`, { state: { otherName: order.provider?.name } })}
-              style={{
-                padding: '8px 16px', borderRadius: 12, border: '1.5px solid #6366F1',
-                background: 'rgba(99,102,241,0.1)', color: '#6366F1',
-                fontWeight: 700, fontSize: 13, cursor: 'pointer',
-              }}>
-              💬 Chat
-            </button>
-          )}
         </div>
       </div>
 
@@ -95,17 +100,17 @@ export default function HomeOrderDetailPage() {
               <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>
                 Dipesan {fmtDate(order.created_at)}
               </p>
-              {order.cancel_reason && <p style={{ fontSize: 12, color: '#F56565', marginTop: 4 }}>Alasan: {order.cancel_reason}</p>}
+              {order.cancel_reason && <p style={{ fontSize: 12, color: 'var(--k-danger)', marginTop: 4 }}>Alasan: {order.cancel_reason}</p>}
             </div>
             {cfg.flow === 'on_site' ? (
-              <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, flexShrink: 0, background: 'rgba(99,102,241,0.12)', color: '#6366F1' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, flexShrink: 0, background: `rgba(${SVC.zasahome.rgb},0.12)`, color: SVC.zasahome.fg }}>
                 {cfg.icon} On-Site
               </span>
             ) : (
               <span style={{
                 fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, flexShrink: 0,
                 background: order.pickup_type === 'antar_jemput' ? 'rgba(59,130,246,0.12)' : 'rgba(160,160,188,0.12)',
-                color: order.pickup_type === 'antar_jemput' ? '#3B82F6' : 'var(--k-muted)',
+                color: order.pickup_type === 'antar_jemput' ? 'var(--k-info)' : 'var(--k-muted)',
               }}>
                 {order.pickup_type === 'antar_jemput' ? '🚚 Antar Jemput' : '🏃 Antar Sendiri'}
               </span>
@@ -114,9 +119,9 @@ export default function HomeOrderDetailPage() {
 
           {/* Scheduled time untuk on_site */}
           {order.scheduled_pickup_at && (
-            <div style={{ marginTop: 8, padding: '6px 10px', borderRadius: 8, background: 'rgba(99,102,241,0.08)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ marginTop: 8, padding: '6px 10px', borderRadius: 8, background: `rgba(${SVC.zasahome.rgb},0.08)`, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               <span style={{ fontSize: 13 }}>🕐</span>
-              <span style={{ fontSize: 12, color: '#6366F1', fontWeight: 600 }}>
+              <span style={{ fontSize: 12, color: SVC.zasahome.fg, fontWeight: 600 }}>
                 {fmtDate(order.scheduled_pickup_at)}
               </span>
             </div>
@@ -137,18 +142,18 @@ export default function HomeOrderDetailPage() {
                         <div style={{
                           width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center',
                           justifyContent: 'center', fontSize: 13,
-                          background: done ? '#6366F1' : current ? sm.color : 'var(--k-input)',
+                          background: done ? SVC.zasahome.fg : current ? sm.color : 'var(--k-input)',
                           border: current ? `2px solid ${sm.color}` : 'none',
                           color: done || current ? '#fff' : 'var(--k-muted)',
                         }}>
                           {done ? '✓' : (smStep.icon ?? step.label[0])}
                         </div>
-                        <span style={{ fontSize: 9, color: current ? sm.color : done ? '#6366F1' : 'var(--k-muted)', fontWeight: current ? 700 : 400, whiteSpace: 'nowrap' }}>
+                        <span style={{ fontSize: 9, color: current ? sm.color : done ? SVC.zasahome.fg : 'var(--k-muted)', fontWeight: current ? 700 : 400, whiteSpace: 'nowrap' }}>
                           {step.label}
                         </span>
                       </div>
                       {i < flowSteps.length - 1 && (
-                        <div style={{ flex: 1, height: 2, background: done ? '#6366F1' : 'var(--k-border)', margin: '0 4px', marginBottom: 18 }} />
+                        <div style={{ flex: 1, height: 2, background: done ? SVC.zasahome.fg : 'var(--k-border)', margin: '0 4px', marginBottom: 18 }} />
                       )}
                     </div>
                   )
@@ -162,7 +167,7 @@ export default function HomeOrderDetailPage() {
             <p style={{ fontSize: 11, color: 'var(--k-muted)', marginTop: 8 }}>📦 Siap: {fmtDate(order.ready_at)}</p>
           )}
           {order.completed_at && (
-            <p style={{ fontSize: 11, color: '#00C896', marginTop: 4 }}>✓ Selesai: {fmtDate(order.completed_at)}</p>
+            <p style={{ fontSize: 11, color: 'var(--k-accent)', marginTop: 4 }}>✓ Selesai: {fmtDate(order.completed_at)}</p>
           )}
         </div>
 
@@ -176,8 +181,8 @@ export default function HomeOrderDetailPage() {
               onClick={() => navigate(`/home/orders/${id}/chat`, { state: { otherName: order.provider?.name } })}
               style={{
                 width: '100%', padding: '10px', borderRadius: 12,
-                border: '1.5px solid rgba(99,102,241,0.4)', background: 'rgba(99,102,241,0.06)',
-                color: '#6366F1', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+                border: `1.5px solid rgba(${SVC.zasahome.rgb},0.4)`, background: `rgba(${SVC.zasahome.rgb},0.06)`,
+                color: SVC.zasahome.fg, fontWeight: 700, fontSize: 13, cursor: 'pointer',
               }}>
               💬 Hubungi Provider via Chat
             </button>
@@ -204,7 +209,7 @@ export default function HomeOrderDetailPage() {
           )}
           <div style={{ borderTop: '1px solid var(--k-border)', paddingTop: 10, marginTop: 10, display: 'flex', justifyContent: 'space-between' }}>
             <p style={{ fontWeight: 700 }}>Total</p>
-            <p style={{ fontWeight: 800, color: '#6366F1', fontSize: 16 }}>Rp {order.total_price.toLocaleString('id')}</p>
+            <p style={{ fontWeight: 800, color: SVC.zasahome.fg, fontSize: 16 }}>Rp {order.total_price.toLocaleString('id')}</p>
           </div>
         </div>
 
@@ -218,8 +223,8 @@ export default function HomeOrderDetailPage() {
         {/* Cancel button */}
         {isActive && ['pending', 'confirmed'].includes(order.status) && (
           <button onClick={handleCancel} disabled={cancelling} style={{
-            padding: '13px', borderRadius: 14, border: '1.5px solid rgba(245,101,101,0.4)',
-            background: 'rgba(245,101,101,0.06)', color: '#F56565',
+            padding: '13px', borderRadius: 14, border: '1.5px solid rgba(192,67,92,0.4)',
+            background: 'rgba(192,67,92,0.06)', color: 'var(--k-danger)',
             fontWeight: 700, fontSize: 14, cursor: cancelling ? 'default' : 'pointer',
           }}>
             {cancelling ? 'Membatalkan...' : 'Batalkan Pesanan'}
@@ -230,14 +235,14 @@ export default function HomeOrderDetailPage() {
         {canComplain && (
           <button onClick={() => setShowComplaint(true)} style={{
             padding: '13px', borderRadius: 14, border: '1.5px solid rgba(246,173,85,0.4)',
-            background: 'rgba(246,173,85,0.06)', color: '#F6AD55',
+            background: 'rgba(246,173,85,0.06)', color: 'var(--k-warn)',
             fontWeight: 700, fontSize: 14, cursor: 'pointer',
           }}>
             ⚠️ Laporkan Masalah
           </button>
         )}
         {complaintSent && (
-          <p style={{ textAlign: 'center', fontSize: 12, color: '#00C896', fontWeight: 700 }}>
+          <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--k-accent)', fontWeight: 700 }}>
             ✓ Laporan sudah dikirim, tim kami akan meninjau
           </p>
         )}

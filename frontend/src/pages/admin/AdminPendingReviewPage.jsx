@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtDate(d) {
   return d ? new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'
@@ -10,7 +11,7 @@ function fmtDate(d) {
 // ── Config per modul ──────────────────────────────────────────────────────────
 const MODULES = {
   food: {
-    key: 'food', label: 'ZasaFood', emoji: '🍜', color: '#F97316',
+    key: 'food', label: 'ZasaFood', emoji: '🍜', color: SVC.zasafood.fg, rgb: SVC.zasafood.rgb,
     reviewPath: '/admin/food/review',
     fetch: (page) => api.get(`/admin/food/merchants?status=pending&page=${page}`),
     approve: (id) => api.post(`/admin/food/merchants/${id}/approve`),
@@ -28,7 +29,7 @@ const MODULES = {
     }),
   },
   home: {
-    key: 'home', label: 'ZasaHome', emoji: '🏠', color: '#8B5CF6',
+    key: 'home', label: 'ZasaHome', emoji: '🏠', color: SVC.zasahome.fg, rgb: SVC.zasahome.rgb,
     reviewPath: '/admin/home/review',
     fetch: (page) => api.get(`/admin/home/providers?status=pending&page=${page}`),
     approve: (id) => api.post(`/admin/home/providers/${id}/approve`),
@@ -46,7 +47,7 @@ const MODULES = {
     }),
   },
   serv: {
-    key: 'serv', label: 'ZasaServis', emoji: '🔧', color: '#059669',
+    key: 'serv', label: 'ZasaServis', emoji: '🔧', color: SVC.zasaserv.fg, rgb: SVC.zasaserv.rgb,
     reviewPath: '/admin/serv/review',
     fetch: (page) => api.get(`/admin/serv/providers?status=pending&page=${page}`),
     approve: (id) => api.post(`/admin/serv/providers/${id}/approve`),
@@ -64,7 +65,7 @@ const MODULES = {
     }),
   },
   mart: {
-    key: 'mart', label: 'ZasaShop', emoji: '🛒', color: '#3B82F6',
+    key: 'mart', label: 'ZasaShop', emoji: '🛒', color: SVC.zasashop.fg, rgb: SVC.zasashop.rgb,
     reviewPath: '/admin/mart/review',
     fetch: (page) => api.get(`/admin/mart/sellers?status=pending&page=${page}`),
     approve: (id) => api.post(`/admin/mart/sellers/${id}/approve`),
@@ -82,7 +83,7 @@ const MODULES = {
     }),
   },
   mitra: {
-    key: 'mitra', label: 'Mitra Go', emoji: '🏍️', color: '#00C896',
+    key: 'mitra', label: 'Mitra Go', emoji: '🏍️', color: SVC.zasago.fg, rgb: SVC.zasago.rgb,
     reviewPath: '/admin/mitra/review',
     fetch: (page) => api.get(`/admin/mitra/pending?page=${page}`),
     approve: (id) => api.post(`/admin/mitra/${id}/approve`),
@@ -125,7 +126,7 @@ function ItemCard({ item, onApprove, onReject }) {
   return (
     <div style={{
       background: 'var(--k-card)', borderRadius: 14,
-      border: `1.5px solid ${mod.color}28`,
+      border: `1.5px solid rgba(${mod.rgb},0.16)`,
       padding: '14px 16px',
     }}>
       {/* Top row */}
@@ -135,7 +136,7 @@ function ItemCard({ item, onApprove, onReject }) {
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{ fontWeight: 700, fontSize: 14, color: 'var(--k-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</p>
             <div style={{ display: 'flex', gap: 6, marginTop: 3, flexWrap: 'wrap' }}>
-              <span style={{ fontSize: 11, padding: '1px 8px', borderRadius: 20, background: `${mod.color}18`, color: mod.color, fontWeight: 700 }}>{mod.label}</span>
+              <span style={{ fontSize: 11, padding: '1px 8px', borderRadius: 20, background: `rgba(${mod.rgb},0.12)`, color: mod.color, fontWeight: 700 }}>{mod.label}</span>
               {item.sub && <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>{item.sub}</span>}
               {item.extra && <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>· {item.extra}</span>}
             </div>
@@ -154,17 +155,17 @@ function ItemCard({ item, onApprove, onReject }) {
 
       {/* Reject form */}
       {showReject && (
-        <div style={{ marginBottom: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}>
+        <div style={{ marginBottom: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(192,67,92,0.05)', border: '1px solid rgba(192,67,92,0.2)' }}>
           <textarea value={reason} onChange={e => setReason(e.target.value)} rows={2}
             placeholder="Tuliskan alasan penolakan..."
-            style={{ width: '100%', padding: '7px 10px', borderRadius: 8, border: '1px solid rgba(239,68,68,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 12, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
+            style={{ width: '100%', padding: '7px 10px', borderRadius: 8, border: '1px solid rgba(192,67,92,0.3)', background: 'var(--k-card)', color: 'var(--k-text)', fontSize: 12, resize: 'none', boxSizing: 'border-box', outline: 'none' }} />
           <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
             <button onClick={() => { setShowReject(false); setReason('') }}
               style={{ flex: 1, padding: '7px', borderRadius: 8, border: '1px solid var(--k-border)', background: 'var(--k-input)', color: 'var(--k-muted)', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>
               Batal
             </button>
             <button onClick={handleReject} disabled={busy || !reason.trim()}
-              style={{ flex: 1, padding: '7px', borderRadius: 8, border: 'none', background: reason.trim() ? '#EF4444' : 'var(--k-border)', color: reason.trim() ? '#fff' : 'var(--k-muted)', cursor: reason.trim() ? 'pointer' : 'default', fontSize: 12, fontWeight: 700 }}>
+              style={{ flex: 1, padding: '7px', borderRadius: 8, border: 'none', background: reason.trim() ? 'var(--k-danger)' : 'var(--k-border)', color: reason.trim() ? '#fff' : 'var(--k-muted)', cursor: reason.trim() ? 'pointer' : 'default', fontSize: 12, fontWeight: 700 }}>
               {busy ? '...' : 'Konfirmasi Tolak'}
             </button>
           </div>
@@ -175,7 +176,7 @@ function ItemCard({ item, onApprove, onReject }) {
       {!showReject && (
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => setShowReject(true)} disabled={busy}
-            style={{ flex: 1, padding: '8px', borderRadius: 10, border: '1.5px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.05)', color: '#EF4444', fontWeight: 700, fontSize: 12, cursor: busy ? 'default' : 'pointer' }}>
+            style={{ flex: 1, padding: '8px', borderRadius: 10, border: '1.5px solid rgba(192,67,92,0.3)', background: 'rgba(192,67,92,0.05)', color: 'var(--k-danger)', fontWeight: 700, fontSize: 12, cursor: busy ? 'default' : 'pointer' }}>
             ✕ Tolak
           </button>
           <button onClick={handleApprove} disabled={busy}
@@ -262,7 +263,7 @@ export default function AdminPendingReviewPage() {
     ? Object.values(items).flat().sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     : (items[tab] ?? [])
 
-  const toastColor = { success: '#059669', error: '#EF4444', info: '#F59E0B' }
+  const toastColor = { success: 'var(--k-accent)', error: 'var(--k-danger)', info: 'var(--k-warn)' }
 
   return (
     <AdminLayout title="Semua Pending Review">
@@ -277,7 +278,7 @@ export default function AdminPendingReviewPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--k-text)' }}>Semua Pending Review</h2>
           {total > 0 && (
-            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(239,68,68,0.12)', color: '#EF4444', fontWeight: 800, fontSize: 13, border: '1px solid rgba(239,68,68,0.3)' }}>
+            <span style={{ padding: '4px 12px', borderRadius: 20, background: 'rgba(192,67,92,0.12)', color: 'var(--k-danger)', fontWeight: 800, fontSize: 13, border: '1px solid rgba(192,67,92,0.3)' }}>
               {total} total
             </span>
           )}
@@ -295,8 +296,8 @@ export default function AdminPendingReviewPage() {
             <button key={m.key} onClick={() => navigate(m.reviewPath)}
               style={{
                 padding: '14px 12px', borderRadius: 14, cursor: 'pointer', textAlign: 'center',
-                border: `1.5px solid ${n > 0 ? m.color + '40' : 'var(--k-border)'}`,
-                background: n > 0 ? `${m.color}10` : 'var(--k-card)',
+                border: `1.5px solid ${n > 0 ? `rgba(${m.rgb},0.35)` : 'var(--k-border)'}`,
+                background: n > 0 ? `rgba(${m.rgb},0.08)` : 'var(--k-card)',
                 transition: 'all 0.15s',
               }}
             >
@@ -319,16 +320,16 @@ export default function AdminPendingReviewPage() {
             <button key={t} onClick={() => setTab(t)}
               style={{
                 padding: '6px 14px', borderRadius: 20, border: '1.5px solid',
-                borderColor: active ? (mod?.color ?? '#EF4444') : 'var(--k-border)',
-                background: active ? (mod ? `${mod.color}15` : 'rgba(239,68,68,0.1)') : 'var(--k-card)',
-                color: active ? (mod?.color ?? '#EF4444') : 'var(--k-muted)',
+                borderColor: active ? (mod?.color ?? 'var(--k-danger)') : 'var(--k-border)',
+                background: active ? (mod ? `rgba(${mod.rgb},0.1)` : 'rgba(192,67,92,0.1)') : 'var(--k-card)',
+                color: active ? (mod?.color ?? 'var(--k-danger)') : 'var(--k-muted)',
                 fontWeight: active ? 700 : 500, fontSize: 13, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 6,
               }}
             >
               {mod ? `${mod.emoji} ${mod.label}` : '📋 Semua'}
               {count > 0 && (
-                <span style={{ fontSize: 11, fontWeight: 800, padding: '1px 6px', borderRadius: 10, background: active ? (mod?.color ?? '#EF4444') : 'var(--k-border)', color: active ? '#fff' : 'var(--k-muted)' }}>
+                <span style={{ fontSize: 11, fontWeight: 800, padding: '1px 6px', borderRadius: 10, background: active ? (mod?.color ?? 'var(--k-danger)') : 'var(--k-border)', color: active ? '#fff' : 'var(--k-muted)' }}>
                   {count}
                 </span>
               )}

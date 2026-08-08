@@ -88,7 +88,7 @@ function LocationPicker({ label, color, lat, lng, address, onchange }) {
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             background: locating ? 'var(--k-card2)' : 'var(--k-glow)',
-            color: 'var(--k-accent)', border: '1px solid rgba(0,200,150,0.25)',
+            color: 'var(--k-accent)', border: '1px solid rgba(46,125,91,0.25)',
             borderRadius: 10, padding: '6px 12px', fontSize: 12, fontWeight: 700,
             cursor: locating ? 'not-allowed' : 'pointer', opacity: locating ? 0.7 : 1,
             transition: 'all 0.2s',
@@ -101,7 +101,7 @@ function LocationPicker({ label, color, lat, lng, address, onchange }) {
       </div>
 
       {gpsError && (
-        <div style={{ margin: '0 12px 8px', padding: '9px 12px', borderRadius: 10, background: 'rgba(246,173,85,0.08)', border: '1px solid rgba(246,173,85,0.25)', display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+        <div style={{ margin: '0 12px 8px', padding: '9px 12px', borderRadius: 10, background: 'rgba(184,134,11,0.08)', border: '1px solid rgba(184,134,11,0.25)', display: 'flex', gap: 8, alignItems: 'flex-start' }}>
           <span style={{ fontSize: 14, flexShrink: 0 }}>⚠️</span>
           <p style={{ color: 'var(--k-warn)', fontSize: 12, lineHeight: 1.5 }}>{gpsError}</p>
         </div>
@@ -291,7 +291,7 @@ export default function CreateOrderPage() {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
-          <LocationPicker label="Lokasi Pickup" color="#00C896" lat={form.pickup_lat} lng={form.pickup_lng} address={form.pickup_address} onchange={onPickup} />
+          <LocationPicker label="Lokasi Pickup" color="var(--k-accent)" lat={form.pickup_lat} lng={form.pickup_lng} address={form.pickup_address} onchange={onPickup} />
 
           {addresses.length > 0 && (
             <div>
@@ -300,7 +300,7 @@ export default function CreateOrderPage() {
                 {addresses.map(addr => (
                   <button key={addr.id} type="button"
                     onClick={() => { onDropoff('lat', String(addr.lat)); onDropoff('lng', String(addr.lng)); onDropoff('address', addr.address) }}
-                    style={{ flexShrink: 0, padding: '7px 14px', borderRadius: 20, border: '1.5px solid var(--k-border)', background: form.dropoff_address === addr.address ? 'rgba(99,102,241,0.12)' : 'var(--k-card)', color: form.dropoff_address === addr.address ? 'var(--k-primary)' : 'var(--k-text)', fontSize: 12, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                    style={{ flexShrink: 0, padding: '7px 14px', borderRadius: 20, border: '1.5px solid var(--k-border)', background: form.dropoff_address === addr.address ? 'var(--k-primary-bg)' : 'var(--k-card)', color: form.dropoff_address === addr.address ? 'var(--k-primary)' : 'var(--k-text)', fontSize: 12, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
                     {addr.label === 'Rumah' ? '🏠' : addr.label === 'Kantor' ? '🏢' : '📌'} {addr.label}{addr.is_default ? ' ★' : ''}
                   </button>
                 ))}
@@ -308,7 +308,7 @@ export default function CreateOrderPage() {
             </div>
           )}
 
-          <LocationPicker label="Lokasi Tujuan" color="#F56565" lat={form.dropoff_lat} lng={form.dropoff_lng} address={form.dropoff_address} onchange={onDropoff} />
+          <LocationPicker label="Lokasi Tujuan" color="var(--k-danger)" lat={form.dropoff_lat} lng={form.dropoff_lng} address={form.dropoff_address} onchange={onDropoff} />
 
           {/* Detail Barang */}
           <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 20, padding: '16px' }}>
@@ -317,7 +317,7 @@ export default function CreateOrderPage() {
               <div>
                 <label className="label">Kategori Barang</label>
                 {catError ? (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 12, background: 'rgba(245,101,101,0.07)', border: '1px solid rgba(245,101,101,0.2)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 12, background: 'rgba(192,67,92,0.07)', border: '1px solid rgba(192,67,92,0.2)' }}>
                     <p style={{ flex: 1, color: 'var(--k-danger)', fontSize: 12 }}>⚠ Gagal memuat kategori.</p>
                     <button type="button" onClick={() => fetchCategories(false)} style={{ padding: '5px 12px', borderRadius: 8, fontSize: 12, fontWeight: 700, background: 'var(--k-danger)', color: '#fff', border: 'none', cursor: 'pointer' }}>Coba Lagi</button>
                   </div>
@@ -330,7 +330,7 @@ export default function CreateOrderPage() {
               </div>
 
               {(selectedCat?.requires_disclaimer || Number(form.item_value) > 200000) && (
-                <div style={{ background: 'rgba(246,173,85,0.08)', border: '1px solid rgba(246,173,85,0.2)', borderRadius: 14, padding: '12px 14px' }}>
+                <div style={{ background: 'rgba(184,134,11,0.08)', border: '1px solid rgba(184,134,11,0.2)', borderRadius: 14, padding: '12px 14px' }}>
                   <p style={{ color: 'var(--k-warn)', fontSize: 12, marginBottom: 10 }}>
                     {Number(form.item_value) > 200000
                       ? '⚠️ Nilai barang melebihi Rp200.000. Risiko kehilangan/kerusakan ditanggung pengirim.'
@@ -374,7 +374,7 @@ export default function CreateOrderPage() {
               <div>
                 <label className="label">Ongkos Kirim</label>
                 {estimate ? (
-                  <div style={{ background: 'var(--k-glow)', border: '1px solid rgba(0,200,150,0.3)', borderRadius: 14, padding: '14px 16px' }}>
+                  <div style={{ background: 'var(--k-glow)', border: '1px solid rgba(46,125,91,0.3)', borderRadius: 14, padding: '14px 16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ fontSize: 16 }}>🧮</span>
@@ -421,7 +421,7 @@ export default function CreateOrderPage() {
               )}
 
               {promo.discountAmount > 0 && (
-                <div style={{ background: 'rgba(0,200,150,0.06)', border: '1px solid rgba(0,200,150,0.2)', borderRadius: 14, padding: '10px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ background: 'rgba(46,125,91,0.06)', border: '1px solid rgba(46,125,91,0.2)', borderRadius: 14, padding: '10px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: 13, color: 'var(--k-muted)' }}>Ongkir setelah diskon</span>
                   <div style={{ textAlign: 'right' }}>
                     <p style={{ fontSize: 12, color: 'var(--k-muted)', textDecoration: 'line-through' }}>Rp {Number(form.shipping_fee).toLocaleString('id-ID')}</p>
@@ -432,7 +432,7 @@ export default function CreateOrderPage() {
             </div>
           </div>
 
-          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 14, cursor: 'pointer', background: form.is_jastip_enabled ? 'rgba(0,200,150,0.06)' : 'var(--k-card)', border: `1.5px solid ${form.is_jastip_enabled ? 'var(--k-accent)' : 'var(--k-border)'}`, borderRadius: 20, padding: '14px 16px', transition: 'all 0.2s' }}>
+          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 14, cursor: 'pointer', background: form.is_jastip_enabled ? 'rgba(46,125,91,0.06)' : 'var(--k-card)', border: `1.5px solid ${form.is_jastip_enabled ? 'var(--k-accent)' : 'var(--k-border)'}`, borderRadius: 20, padding: '14px 16px', transition: 'all 0.2s' }}>
             <div style={{ paddingTop: 2 }}>
               <input type="checkbox" name="is_jastip_enabled" checked={form.is_jastip_enabled} onChange={handleChange} style={{ accentColor: 'var(--k-accent)', width: 18, height: 18 }} />
             </div>
@@ -442,7 +442,7 @@ export default function CreateOrderPage() {
             </div>
           </label>
 
-          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 14, cursor: 'pointer', background: form.require_photo ? 'rgba(0,200,150,0.06)' : 'var(--k-card)', border: `1.5px solid ${form.require_photo ? 'var(--k-accent)' : 'var(--k-border)'}`, borderRadius: 20, padding: '14px 16px', transition: 'all 0.2s' }}>
+          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 14, cursor: 'pointer', background: form.require_photo ? 'rgba(46,125,91,0.06)' : 'var(--k-card)', border: `1.5px solid ${form.require_photo ? 'var(--k-accent)' : 'var(--k-border)'}`, borderRadius: 20, padding: '14px 16px', transition: 'all 0.2s' }}>
             <div style={{ paddingTop: 2 }}>
               <input type="checkbox" name="require_photo" checked={form.require_photo} onChange={handleChange} style={{ accentColor: 'var(--k-accent)', width: 18, height: 18 }} />
             </div>

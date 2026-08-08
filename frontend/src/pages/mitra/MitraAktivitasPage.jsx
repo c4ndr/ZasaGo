@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import useAppInfo from '../../hooks/useAppInfo'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 const MODULE_META = {
-  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: '#1D4ED8', bg: 'rgba(29,78,216,0.10)'  },
-  zasafood: { label: 'ZasaFood', emoji: '🍜', color: '#EA580C', bg: 'rgba(234,88,12,0.10)'  },
-  zasamart: { label: 'ZasaMart', emoji: '🛒', color: '#7C3AED', bg: 'rgba(124,58,237,0.10)' },
-  zasaride: { label: 'ZasaRide', emoji: '🚗', color: '#059669', bg: 'rgba(5,150,105,0.10)'  },
+  zasago:   { label: 'ZasaGo',   emoji: '🛵', color: SVC.zasago.fg,   bg: SVC.zasago.bg   },
+  zasafood: { label: 'ZasaFood', emoji: '🍜', color: SVC.zasafood.fg, bg: SVC.zasafood.bg },
+  zasamart: { label: 'ZasaMart', emoji: '🛒', color: SVC.zasashop.fg, bg: SVC.zasashop.bg },
+  zasaride: { label: 'ZasaRide', emoji: '🚗', color: SVC.zasaride.fg, bg: SVC.zasaride.bg },
 }
 
 const STATUS_LABEL = {
@@ -21,11 +22,11 @@ const STATUS_LABEL = {
 }
 
 const STATUS_COLOR = {
-  pending: '#F59E0B', accepted: '#00C896', picking_up: '#3B82F6', on_pickup: '#3B82F6',
-  picked_up: '#8B5CF6', on_delivery: '#6366F1', delivered: '#00C896', completed: '#10B981',
-  merchant_accepted: '#00C896', preparing: '#8B5CF6', ready_for_pickup: '#00C896',
-  mitra_on_pickup: '#3B82F6', confirmed: '#3B82F6', packed: '#8B5CF6',
-  cancelled: '#9CA3AF', rejected: '#9CA3AF', active: '#00C896',
+  pending: 'var(--k-warn)', accepted: 'var(--k-accent)', picking_up: 'var(--k-primary)', on_pickup: 'var(--k-primary)',
+  picked_up: 'var(--k-primary)', on_delivery: 'var(--k-primary)', delivered: 'var(--k-accent)', completed: '#10B981',
+  merchant_accepted: 'var(--k-accent)', preparing: 'var(--k-primary)', ready_for_pickup: 'var(--k-accent)',
+  mitra_on_pickup: 'var(--k-primary)', confirmed: 'var(--k-primary)', packed: 'var(--k-primary)',
+  cancelled: '#9CA3AF', rejected: '#9CA3AF', active: 'var(--k-accent)',
 }
 
 const GO_DONE   = ['completed', 'cancelled']
@@ -278,7 +279,7 @@ export default function MitraAktivitasPage() {
                 {/* Income / arrow */}
                 <div style={{ flexShrink: 0, textAlign: 'right' }}>
                   {isDone && income ? (
-                    <p style={{ fontSize: 13, fontWeight: 800, color: '#00C896' }}>
+                    <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-accent)' }}>
                       +{fmtRp(income)}
                     </p>
                   ) : !isDone ? (

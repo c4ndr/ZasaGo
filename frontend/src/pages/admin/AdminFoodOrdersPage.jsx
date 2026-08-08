@@ -1,22 +1,23 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtRp(v)   { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 function fmtDate(d) { return new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) }
 
 const STATUS_META = {
-  pending:           { label: 'Menunggu Merchant', color: '#F6AD55', bg: 'rgba(246,173,85,0.12)',   icon: '⏳', pulse: true  },
+  pending:           { label: 'Menunggu Merchant', color: 'var(--k-warn)',    bg: 'rgba(184,134,11,0.12)',  icon: '⏳', pulse: true  },
   merchant_accepted: { label: 'Diterima',          color: '#63B3ED', bg: 'rgba(99,179,237,0.12)',   icon: '✅', pulse: false },
   preparing:         { label: 'Dimasak',           color: '#9F7AEA', bg: 'rgba(159,122,234,0.12)',  icon: '👨‍🍳', pulse: true  },
-  ready_for_pickup:  { label: 'Siap Diambil',      color: '#00C896', bg: 'rgba(0,200,150,0.12)',    icon: '🎉', pulse: true  },
-  mitra_on_pickup:   { label: 'Mitra Menuju Warung', color: '#3B82F6', bg: 'rgba(59,130,246,0.12)', icon: '🏍️', pulse: true  },
-  picked_up:         { label: 'Diambil Mitra',     color: '#3B82F6', bg: 'rgba(59,130,246,0.12)',   icon: '📦', pulse: false },
-  on_delivery:       { label: 'Dalam Perjalanan',  color: '#F97316', bg: 'rgba(249,115,22,0.12)',   icon: '🚀', pulse: true  },
-  delivered:         { label: 'Sampai Tujuan',     color: '#00C896', bg: 'rgba(0,200,150,0.15)',    icon: '🎊', pulse: true  },
-  completed:         { label: 'Selesai',           color: '#00C896', bg: 'rgba(0,200,150,0.08)',    icon: '⭐', pulse: false },
+  ready_for_pickup:  { label: 'Siap Diambil',      color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.12)',   icon: '🎉', pulse: true  },
+  mitra_on_pickup:   { label: 'Mitra Menuju Warung', color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)', icon: '🏍️', pulse: true  },
+  picked_up:         { label: 'Diambil Mitra',     color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)',   icon: '📦', pulse: false },
+  on_delivery:       { label: 'Dalam Perjalanan',  color: 'var(--k-primary)', bg: 'rgba(40,55,75,0.12)',   icon: '🚀', pulse: true  },
+  delivered:         { label: 'Sampai Tujuan',     color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.15)',   icon: '🎊', pulse: true  },
+  completed:         { label: 'Selesai',           color: 'var(--k-accent)',  bg: 'rgba(46,125,91,0.08)',   icon: '⭐', pulse: false },
   cancelled:         { label: 'Dibatalkan',        color: '#A0A0BC', bg: 'rgba(160,160,188,0.08)', icon: '❌', pulse: false },
-  rejected:          { label: 'Ditolak Merchant',  color: '#F56565', bg: 'rgba(245,101,101,0.08)', icon: '❌', pulse: false },
+  rejected:          { label: 'Ditolak Merchant',  color: 'var(--k-danger)',  bg: 'rgba(192,67,92,0.08)', icon: '❌', pulse: false },
 }
 
 const TABS = [
@@ -51,9 +52,9 @@ function OrderDrawer({ order, onClose }) {
         <div style={{ background: 'var(--k-input)', borderRadius: 12, padding: '14px', marginBottom: 16 }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 10 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 2, gap: 2, flexShrink: 0 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00C896' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--k-accent)' }} />
               <div style={{ width: 1.5, height: 16, background: 'var(--k-border)' }} />
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#F56565' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--k-danger)' }} />
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 2 }}>Dari (Warung)</div>
@@ -77,7 +78,7 @@ function OrderDrawer({ order, onClose }) {
         ))}
 
         {order.notes && (
-          <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(249,115,22,0.07)', border: '1px solid rgba(249,115,22,0.2)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 12 }}>
+          <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(40,55,75,0.07)', border: '1px solid rgba(40,55,75,0.2)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 12 }}>
             📝 {order.notes}
           </div>
         )}
@@ -108,7 +109,7 @@ function OrderDrawer({ order, onClose }) {
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: 15, marginTop: 8, borderTop: '1px solid var(--k-border)', paddingTop: 10 }}>
-          <span>Total</span><span style={{ color: '#F97316' }}>{fmtRp(order.total_amount)}</span>
+          <span>Total</span><span style={{ color: SVC.zasafood.fg }}>{fmtRp(order.total_amount)}</span>
         </div>
       </div>
     </div>
@@ -187,7 +188,7 @@ export default function AdminFoodOrdersPage() {
         <div style={{
           position: 'fixed', top: 20, right: 20, zIndex: 9999,
           padding: '12px 20px', borderRadius: 12, fontWeight: 700, fontSize: 14,
-          background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff',
+          background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff',
           boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
         }}>{toast.msg}</div>
       )}
@@ -211,9 +212,9 @@ export default function AdminFoodOrdersPage() {
           <button key={t.key} onClick={() => setTab(t.key)} style={{
             padding: '8px 18px', borderRadius: 20, cursor: 'pointer',
             fontWeight: tab === t.key ? 700 : 500, fontSize: 13,
-            border: `1px solid ${tab === t.key ? '#F9731640' : 'var(--k-border)'}`,
-            background: tab === t.key ? 'rgba(249,115,22,0.12)' : 'var(--k-card)',
-            color: tab === t.key ? '#F97316' : 'var(--k-sub)',
+            border: `1px solid ${tab === t.key ? `rgba(${SVC.zasafood.rgb},0.4)` : 'var(--k-border)'}`,
+            background: tab === t.key ? `rgba(${SVC.zasafood.rgb},0.12)` : 'var(--k-card)',
+            color: tab === t.key ? SVC.zasafood.fg : 'var(--k-sub)',
           }}>{t.label}</button>
         ))}
         <input type="text" value={search} onChange={e => setSearch(e.target.value)}
@@ -263,17 +264,17 @@ export default function AdminFoodOrdersPage() {
                         </span>
                         <span style={{
                           padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700,
-                          background: order.payment_method === 'cod' ? 'rgba(249,115,22,0.1)' : 'rgba(0,200,150,0.1)',
-                          color: order.payment_method === 'cod' ? '#F97316' : '#00C896',
+                          background: order.payment_method === 'cod' ? 'rgba(40,55,75,0.1)' : 'rgba(46,125,91,0.1)',
+                          color: order.payment_method === 'cod' ? 'var(--k-primary)' : 'var(--k-accent)',
                         }}>{order.payment_method === 'cod' ? 'COD' : 'Wallet'}</span>
                       </div>
 
                       {/* Baris 2: rute Warung → Alamat antar (seperti ZasaGo) */}
                       <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 3, gap: 2, flexShrink: 0 }}>
-                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#00C896' }} />
+                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--k-accent)' }} />
                           <div style={{ width: 1.5, height: 14, background: 'var(--k-border)' }} />
-                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#F56565' }} />
+                          <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--k-danger)' }} />
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)', marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -287,20 +288,20 @@ export default function AdminFoodOrdersPage() {
 
                       {/* Baris 3: pelanggan + mitra + waktu */}
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-                        <span style={{ fontSize: 13, fontWeight: 800, color: '#F97316' }}>{fmtRp(order.total_amount)}</span>
+                        <span style={{ fontSize: 13, fontWeight: 800, color: SVC.zasafood.fg }}>{fmtRp(order.total_amount)}</span>
                         <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>
                           👤 {order.customer?.name ?? '—'}
                         </span>
                         {order.mitra ? (
-                          <span style={{ fontSize: 11, color: '#3B82F6', fontWeight: 600 }}>
+                          <span style={{ fontSize: 11, color: 'var(--k-primary)', fontWeight: 600 }}>
                             🏍️ {order.mitra.name}
                           </span>
                         ) : isLive && ['ready_for_pickup','mitra_on_pickup','picked_up','on_delivery'].includes(order.status) ? (
-                          <span style={{ fontSize: 11, color: '#F56565' }}>🏍️ Mitra belum assign</span>
+                          <span style={{ fontSize: 11, color: 'var(--k-danger)' }}>🏍️ Mitra belum assign</span>
                         ) : null}
                         <span style={{ fontSize: 11, color: 'var(--k-muted)' }}>{fmtDate(order.created_at)}</span>
                         {/* Komisi platform */}
-                        <span style={{ fontSize: 11, color: '#00C896' }}>+{fmtRp((order.platform_commission_food ?? 0) + (order.platform_commission_delivery ?? 0))}</span>
+                        <span style={{ fontSize: 11, color: 'var(--k-accent)' }}>+{fmtRp((order.platform_commission_food ?? 0) + (order.platform_commission_delivery ?? 0))}</span>
                       </div>
                     </div>
 
@@ -310,8 +311,8 @@ export default function AdminFoodOrdersPage() {
                       {canComplete && (
                         <button onClick={e => { e.stopPropagation(); forceComplete(order.id) }} disabled={actionId === order.id}
                           style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                            background: 'rgba(0,200,150,0.1)', color: '#00C896',
-                            border: '1px solid rgba(0,200,150,0.25)', cursor: 'pointer',
+                            background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)',
+                            border: '1px solid rgba(46,125,91,0.25)', cursor: 'pointer',
                             opacity: actionId === order.id ? 0.5 : 1 }}>
                           ✓ Selesaikan
                         </button>
@@ -320,8 +321,8 @@ export default function AdminFoodOrdersPage() {
                       {canCancel && (
                         <button onClick={e => { e.stopPropagation(); setShowCancel(showCancel === order.id ? null : order.id); setCancelReason('') }}
                           style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                            background: 'rgba(245,101,101,0.08)', color: '#F56565',
-                            border: '1px solid rgba(245,101,101,0.2)', cursor: 'pointer' }}>
+                            background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)',
+                            border: '1px solid rgba(192,67,92,0.2)', cursor: 'pointer' }}>
                           ✕ Batalkan
                         </button>
                       )}
@@ -337,7 +338,7 @@ export default function AdminFoodOrdersPage() {
                       <button onClick={() => forceCancel(order.id)}
                         disabled={!cancelReason.trim() || actionId === order.id}
                         style={{ padding: '8px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700,
-                          background: '#F56565', color: '#fff', border: 'none',
+                          background: 'var(--k-danger)', color: '#fff', border: 'none',
                           cursor: 'pointer', opacity: (!cancelReason.trim() || actionId === order.id) ? 0.5 : 1 }}>
                         Konfirmasi
                       </button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import MerchantLayout from '../../components/MerchantLayout'
 import api, { storageUrl } from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 function fmtRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID') }
 
@@ -51,7 +52,7 @@ function ItemModal({ item, categories, onClose, onSaved }) {
       onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{ background: 'var(--k-card)', borderRadius: '20px 20px 0 0', padding: '24px 20px', width: '100%', maxWidth: 520, maxHeight: '92vh', overflowY: 'auto' }}>
         <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 20 }}>{item ? 'Edit Item' : 'Tambah Item Baru'}</div>
-        {err && <div style={{ color: '#F56565', fontSize: 13, marginBottom: 12, padding: '8px 12px', background: 'rgba(245,101,101,0.08)', borderRadius: 8 }}>{err}</div>}
+        {err && <div style={{ color: 'var(--k-danger)', fontSize: 13, marginBottom: 12, padding: '8px 12px', background: 'rgba(192,67,92,0.08)', borderRadius: 8 }}>{err}</div>}
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {/* Foto */}
@@ -104,7 +105,8 @@ function ItemModal({ item, categories, onClose, onSaved }) {
             }}>Batal</button>
             <button type="submit" disabled={saving} style={{
               flex: 2, padding: '13px', borderRadius: 12, border: 'none', cursor: saving ? 'default' : 'pointer',
-              background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14,
+              background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 14,
+              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>
               {saving ? 'Menyimpan...' : 'Simpan Item'}
             </button>
@@ -230,7 +232,7 @@ export default function MerchantMenuPage() {
         <div style={{
           position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)',
           zIndex: 9999, padding: '11px 20px', borderRadius: 12, fontWeight: 700, fontSize: 13,
-          background: toast.type === 'success' ? '#00C896' : '#F56565', color: '#fff',
+          background: toast.type === 'success' ? 'var(--k-accent)' : 'var(--k-danger)', color: '#fff',
           boxShadow: '0 4px 16px rgba(0,0,0,0.15)', whiteSpace: 'nowrap',
         }}>{toast.msg}</div>
       )}
@@ -251,8 +253,8 @@ export default function MerchantMenuPage() {
         {/* ── Tombol tambah item (paling atas, besar) ── */}
         <button onClick={() => setModal('add')} style={{
           width: '100%', padding: '14px', borderRadius: 14,
-          border: '2px dashed rgba(249,115,22,0.5)', background: 'rgba(249,115,22,0.05)',
-          color: '#F97316', fontWeight: 700, fontSize: 14, cursor: 'pointer',
+          border: `2px dashed rgba(${SVC.zasafood.rgb},0.5)`, background: `rgba(${SVC.zasafood.rgb},0.05)`,
+          color: SVC.zasafood.fg, fontWeight: 700, fontSize: 14, cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
         }}>
           <span style={{ fontSize: 20 }}>+</span> Tambah Item Menu
@@ -272,7 +274,7 @@ export default function MerchantMenuPage() {
             />
             <button type="submit" disabled={addingCat || !newCatName.trim()} style={{
               padding: '10px 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
-              background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 13,
+              background: 'var(--k-primary)', color: '#fff', fontWeight: 700, fontSize: 13,
               opacity: (!newCatName.trim() || addingCat) ? 0.5 : 1,
             }}>Tambah</button>
           </form>
@@ -282,12 +284,12 @@ export default function MerchantMenuPage() {
                 <div key={c.id} style={{
                   display: 'flex', alignItems: 'center', gap: 5,
                   padding: '6px 10px 6px 13px', borderRadius: 20, fontSize: 12, fontWeight: 600,
-                  background: 'rgba(249,115,22,0.1)', color: '#F97316',
+                  background: `rgba(${SVC.zasafood.rgb},0.1)`, color: SVC.zasafood.fg,
                 }}>
                   {c.name}
                   <button onClick={() => askDeleteCategory(c)} style={{
-                    background: 'rgba(249,115,22,0.2)', border: 'none', cursor: 'pointer',
-                    color: '#C2410C', fontSize: 14, lineHeight: 1, padding: '0 3px', borderRadius: '50%',
+                    background: `rgba(${SVC.zasafood.rgb},0.2)`, border: 'none', cursor: 'pointer',
+                    color: SVC.zasafood.fg, fontSize: 14, lineHeight: 1, padding: '0 3px', borderRadius: '50%',
                   }}>×</button>
                 </div>
               ))}
@@ -305,8 +307,8 @@ export default function MerchantMenuPage() {
             ].map(tab => (
               <button key={tab.id} onClick={() => setActiveCat(tab.id)} style={{
                 padding: '7px 14px', borderRadius: 20, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-                background: activeCat === tab.id ? '#F97316' : 'var(--k-input)',
-                color: activeCat === tab.id ? '#fff' : 'var(--k-sub)',
+                background: activeCat === tab.id ? SVC.zasafood.bg : 'var(--k-input)',
+                color: activeCat === tab.id ? SVC.zasafood.fg : 'var(--k-sub)',
                 fontWeight: activeCat === tab.id ? 700 : 500, fontSize: 12,
               }}>{tab.label}</button>
             ))}
@@ -344,10 +346,10 @@ export default function MerchantMenuPage() {
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
-                  <div style={{ color: '#F97316', fontWeight: 700, fontSize: 13, marginTop: 2 }}>{fmtRp(item.price)}</div>
+                  <div style={{ color: SVC.zasafood.fg, fontWeight: 700, fontSize: 13, marginTop: 2 }}>{fmtRp(item.price)}</div>
                   {item.stock !== null && (
                     <div style={{ fontSize: 11, color: 'var(--k-sub)', marginTop: 1 }}>
-                      Stok: <span style={{ fontWeight: 700, color: item.stock === 0 ? '#F56565' : 'var(--k-text)' }}>{item.stock}</span>
+                      Stok: <span style={{ fontWeight: 700, color: item.stock === 0 ? 'var(--k-danger)' : 'var(--k-text)' }}>{item.stock}</span>
                     </div>
                   )}
                 </div>
@@ -359,7 +361,7 @@ export default function MerchantMenuPage() {
                     padding: '7px 14px', borderRadius: 8, border: 'none',
                     cursor: togglingId === item.id ? 'default' : 'pointer', fontSize: 12, fontWeight: 700,
                     opacity: togglingId === item.id ? 0.6 : 1,
-                    background: item.is_available ? 'rgba(245,101,101,0.12)' : 'rgba(0,200,150,0.12)',
+                    background: item.is_available ? 'rgba(192,67,92,0.12)' : 'rgba(46,125,91,0.12)',
                     color: item.is_available ? '#DC2626' : '#027A48',
                   }}>
                     {togglingId === item.id ? '...' : item.is_available ? 'Habis' : 'Tersedia'}
@@ -372,7 +374,7 @@ export default function MerchantMenuPage() {
                     }}>Edit</button>
                     <button onClick={() => askDeleteItem(item)} style={{
                       padding: '7px 9px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                      background: 'rgba(245,101,101,0.1)', color: '#DC2626', fontSize: 14,
+                      background: 'rgba(192,67,92,0.1)', color: '#DC2626', fontSize: 14,
                     }}>🗑</button>
                   </div>
                 </div>

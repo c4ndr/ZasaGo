@@ -5,7 +5,7 @@ const LAST_UPDATED = '12 Juni 2026'
 const CANCELLATION = [
   {
     service: '🛵 ZasaGo (Ojek & Kurir)',
-    color: '#F97316',
+    color: 'var(--k-warn)',
     policies: [
       { status: 'Sebelum mitra accept', action: 'Bisa dibatalkan bebas, saldo dikembalikan penuh' },
       { status: 'Setelah mitra accept', action: 'Bisa dibatalkan, namun dikenakan biaya pembatalan sesuai jarak tempuh mitra' },
@@ -14,7 +14,7 @@ const CANCELLATION = [
   },
   {
     service: '🍔 ZasaFood (Pesan Makanan)',
-    color: '#EF4444',
+    color: 'var(--k-danger)',
     policies: [
       { status: 'Merchant belum konfirmasi', action: 'Bisa dibatalkan, saldo dikembalikan penuh' },
       { status: 'Merchant sudah konfirmasi & masak', action: 'Tidak bisa dibatalkan — makanan sudah disiapkan' },
@@ -23,7 +23,7 @@ const CANCELLATION = [
   },
   {
     service: '🛒 ZasaMart (Belanja Produk)',
-    color: '#10B981',
+    color: 'var(--k-accent)',
     policies: [
       { status: 'Penjual belum konfirmasi', action: 'Bisa dibatalkan, saldo dikembalikan penuh' },
       { status: 'Penjual sudah konfirmasi', action: 'Tidak bisa dibatalkan kecuali produk tidak tersedia' },
@@ -32,7 +32,7 @@ const CANCELLATION = [
   },
   {
     service: '🏠 ZasaHome (Jasa Rumah)',
-    color: '#8B5CF6',
+    color: 'var(--k-primary)',
     policies: [
       { status: '> 2 jam sebelum jadwal', action: 'Bisa dibatalkan, saldo dikembalikan penuh' },
       { status: '< 2 jam sebelum jadwal', action: 'Dibatalkan dengan potongan 25% sebagai biaya cadangan' },
@@ -71,7 +71,7 @@ export default function RefundPage() {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Intro */}
-        <div style={{ background: 'rgba(0,200,150,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(0,200,150,0.2)' }}>
+        <div style={{ background: 'rgba(46,125,91,0.06)', borderRadius: 14, padding: '16px', border: '1px solid rgba(46,125,91,0.2)' }}>
           <p style={{ fontSize: 13, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
             ZasaQu berkomitmen memberikan pengalaman belanja dan pengiriman yang memuaskan. Dokumen ini menjelaskan kebijakan pembatalan, refund, dan mekanisme penyelesaian sengketa secara adil dan transparan.
           </p>
@@ -128,8 +128,8 @@ export default function RefundPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {REFUND_STEPS.map(step => (
               <div key={step.num} style={{ background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', padding: '14px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(0,200,150,0.12)', border: '2px solid rgba(0,200,150,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ fontSize: 13, fontWeight: 900, color: '#00C896' }}>{step.num}</span>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(46,125,91,0.12)', border: '2px solid rgba(46,125,91,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-accent)' }}>{step.num}</span>
                 </div>
                 <div>
                   <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)', margin: '0 0 3px' }}>{step.title}</p>
@@ -160,7 +160,7 @@ export default function RefundPage() {
         {/* Dispute resolution */}
         <div>
           <p style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-text)', margin: '0 0 12px' }}>⚖️ Penyelesaian Sengketa</p>
-          <div style={{ background: 'rgba(99,102,241,0.07)', borderRadius: 14, padding: '14px', border: '1px solid rgba(99,102,241,0.2)', marginBottom: 12 }}>
+          <div style={{ background: 'var(--k-primary-bg)', borderRadius: 14, padding: '14px', border: '1px solid rgba(40,55,75,0.2)', marginBottom: 12 }}>
             <p style={{ fontSize: 12, color: 'var(--k-text)', margin: 0, lineHeight: 1.7 }}>
               Sengketa adalah perselisihan antara pengguna (customer, mitra, atau merchant) yang tidak dapat diselesaikan secara mandiri. ZasaQu bertindak sebagai mediator yang tidak memihak.
             </p>
@@ -168,8 +168,8 @@ export default function RefundPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {DISPUTE_STEPS.map(step => (
               <div key={step.num} style={{ background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', padding: '14px 16px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(99,102,241,0.1)', border: '2px solid rgba(99,102,241,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ fontSize: 13, fontWeight: 900, color: '#6366F1' }}>{step.num}</span>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(40,55,75,0.1)', border: '2px solid rgba(40,55,75,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--k-primary)' }}>{step.num}</span>
                 </div>
                 <div>
                   <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)', margin: '0 0 3px' }}>{step.title}</p>
@@ -184,10 +184,10 @@ export default function RefundPage() {
         <div style={{ background: 'var(--k-card)', borderRadius: 14, border: '1px solid var(--k-border)', padding: '18px', textAlign: 'center' }}>
           <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-text)', margin: '0 0 8px' }}>Ada Masalah?</p>
           <p style={{ fontSize: 12, color: 'var(--k-muted)', margin: '0 0 14px', lineHeight: 1.6 }}>
-            Hubungi tim ZasaQu di <a href="mailto:support@zasaqu.uk" style={{ color: '#00C896', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a> atau WhatsApp kami. Sertakan nomor order untuk penanganan yang lebih cepat.
+            Hubungi tim ZasaQu di <a href="mailto:support@zasaqu.uk" style={{ color: 'var(--k-accent)', fontWeight: 700, textDecoration: 'none' }}>support@zasaqu.uk</a> atau WhatsApp kami. Sertakan nomor order untuk penanganan yang lebih cepat.
           </p>
           <button onClick={() => navigate('/contact')}
-            style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#00C896,#00A87D)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
+            style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'var(--k-accent)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
             Hubungi CS ZasaQu
           </button>
         </div>

@@ -96,7 +96,7 @@ export default function MerchantLocationPicker({ lat, lng, onPick }) {
         </p>
         <button type="button" onClick={detectGps} disabled={locating || geocoding}
           style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700, flexShrink: 0,
-            background: 'rgba(249,115,22,0.1)', color: '#F97316', border: '1px solid rgba(249,115,22,0.25)',
+            background: 'var(--k-primary-bg)', color: 'var(--k-primary)', border: '1px solid rgba(40,55,75,0.25)',
             borderRadius: 8, padding: '5px 10px', cursor: (locating || geocoding) ? 'not-allowed' : 'pointer',
             opacity: (locating || geocoding) ? 0.6 : 1, marginLeft: 8 }}>
           {locating
@@ -132,7 +132,7 @@ export default function MerchantLocationPicker({ lat, lng, onPick }) {
           </GoogleMap>
         ) : (
           <div style={{ width: '100%', height: '100%', background: 'var(--k-input)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8 }}>
-            <div style={{ width: 24, height: 24, border: '3px solid var(--k-border)', borderTopColor: '#6366F1', borderRadius: '50%', animation: 'mlp-spin 0.8s linear infinite' }} />
+            <div style={{ width: 24, height: 24, border: '3px solid var(--k-border)', borderTopColor: 'var(--k-primary)', borderRadius: '50%', animation: 'mlp-spin 0.8s linear infinite' }} />
             <span style={{ fontSize: 12, color: 'var(--k-muted)' }}>Memuat peta...</span>
           </div>
         )}

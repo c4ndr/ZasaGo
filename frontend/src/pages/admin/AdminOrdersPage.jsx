@@ -1,11 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import api from '../../services/api'
+import { SVC } from '../../utils/svcTheme'
 
 const STATUS_COLOR = {
-  pending:     '#F6AD55', accepted:    '#63B3ED', on_pickup:   '#63B3ED',
-  picked_up:   '#63B3ED', on_delivery: '#B794F4', delivered:   '#00C896',
-  completed:   '#00C896', cancelled:   '#F56565',
+  pending:     { color: 'var(--k-warn)',    rgb: '184,134,11' },
+  accepted:    { color: '#63B3ED',          rgb: '99,179,237' },
+  on_pickup:   { color: '#63B3ED',          rgb: '99,179,237' },
+  picked_up:   { color: '#63B3ED',          rgb: '99,179,237' },
+  on_delivery: { color: '#B794F4',          rgb: '183,148,244' },
+  delivered:   { color: 'var(--k-accent)',  rgb: '46,125,91'  },
+  completed:   { color: 'var(--k-accent)',  rgb: '46,125,91'  },
+  cancelled:   { color: 'var(--k-danger)',  rgb: '192,67,92'  },
 }
 const STATUS_LABELS = {
   pending:'Pending', accepted:'Diterima', on_pickup:'Menuju Pickup',
@@ -19,14 +25,14 @@ function formatDate(d) {
 }
 
 function StatusBadge({ status }) {
-  const color = STATUS_COLOR[status] ?? '#A0A0BC'
+  const sc = STATUS_COLOR[status] ?? { color: '#A0A0BC', rgb: '160,160,188' }
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 5,
       padding: '3px 10px', borderRadius: 100, fontSize: 11, fontWeight: 700,
-      background: `${color}18`, color, border: `1px solid ${color}33`,
+      background: `rgba(${sc.rgb},0.10)`, color: sc.color, border: `1px solid rgba(${sc.rgb},0.20)`,
     }}>
-      <span style={{ width: 5, height: 5, borderRadius: '50%', background: color, flexShrink: 0 }} />
+      <span style={{ width: 5, height: 5, borderRadius: '50%', background: sc.color, flexShrink: 0 }} />
       {STATUS_LABELS[status] ?? status}
     </span>
   )
@@ -34,7 +40,8 @@ function StatusBadge({ status }) {
 
 // ── Drawer detail order ZasaGo ────────────────────────────────────────────────
 function OrderDrawer({ order, onClose }) {
-  const color  = STATUS_COLOR[order.status]  ?? '#A0A0BC'
+  const sc     = STATUS_COLOR[order.status]  ?? { color: '#A0A0BC', rgb: '160,160,188' }
+  const color  = sc.color
   const label  = STATUS_LABELS[order.status] ?? order.status
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', justifyContent: 'flex-end' }}
@@ -52,7 +59,7 @@ function OrderDrawer({ order, onClose }) {
 
         {/* Status + tipe */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-          <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: `${color}18`, color, border: `1px solid ${color}33` }}>
+          <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: `rgba(${sc.rgb},0.10)`, color, border: `1px solid rgba(${sc.rgb},0.20)` }}>
             {label}
           </span>
           <span style={{ padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700, background: order.type === 'jastip' ? 'rgba(183,148,244,0.12)' : 'var(--k-input)', color: order.type === 'jastip' ? '#B794F4' : 'var(--k-muted)' }}>
@@ -65,9 +72,9 @@ function OrderDrawer({ order, onClose }) {
           <p style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--k-muted)', letterSpacing: '0.07em', marginBottom: 10 }}>Rute Pengiriman</p>
           <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 8 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 3, gap: 2, flexShrink: 0 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00C896' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--k-accent)' }} />
               <div style={{ width: 1.5, height: 18, background: 'var(--k-border)' }} />
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#F56565' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--k-danger)' }} />
             </div>
             <div style={{ flex: 1 }}>
               <p style={{ fontSize: 11, color: 'var(--k-muted)', marginBottom: 2 }}>Pickup</p>
@@ -90,7 +97,7 @@ function OrderDrawer({ order, onClose }) {
         ))}
 
         {order.notes && (
-          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(249,115,22,0.07)', border: '1px solid rgba(249,115,22,0.15)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 16 }}>
+          <div style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(40,55,75,0.07)', border: '1px solid rgba(40,55,75,0.15)', fontSize: 12, color: 'var(--k-sub)', marginBottom: 16 }}>
             📝 {order.notes}
           </div>
         )}
@@ -101,12 +108,12 @@ function OrderDrawer({ order, onClose }) {
             <span>Ongkos Kirim</span><span>{formatRp(order.shipping_fee)}</span>
           </div>
           {order.jastip_discount_applied > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#00C896', marginBottom: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--k-accent)', marginBottom: 6 }}>
               <span>Diskon JastipQu</span><span>-{formatRp(order.jastip_discount_applied)}</span>
             </div>
           )}
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 15, fontWeight: 800, paddingTop: 6, borderTop: '1px solid var(--k-border)' }}>
-            <span>Total</span><span style={{ color: '#F97316' }}>{formatRp(order.shipping_fee)}</span>
+            <span>Total</span><span style={{ color: SVC.zasago.fg }}>{formatRp(order.shipping_fee)}</span>
           </div>
         </div>
       </div>
@@ -247,7 +254,7 @@ export default function AdminOrdersPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 3, gap: 2 }}>
                     <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--k-accent)', flexShrink: 0 }} />
                     <div style={{ width: 1, height: 12, background: 'var(--k-border)' }} />
-                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#F56565', flexShrink: 0 }} />
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--k-danger)', flexShrink: 0 }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: 12, color: 'var(--k-sub)', marginBottom: 6, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -288,8 +295,8 @@ export default function AdminOrdersPage() {
                 {order.status === 'delivered' && (
                   <button onClick={e => { e.stopPropagation(); forceComplete(order.id) }} disabled={actionId === order.id}
                     style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                      background: 'rgba(0,200,150,0.1)', color: 'var(--k-accent)',
-                      border: '1px solid rgba(0,200,150,0.25)', cursor: 'pointer',
+                      background: 'rgba(46,125,91,0.1)', color: 'var(--k-accent)',
+                      border: '1px solid rgba(46,125,91,0.25)', cursor: 'pointer',
                       opacity: actionId === order.id ? 0.5 : 1 }}>
                     ✓ Force Selesai
                   </button>
@@ -297,8 +304,8 @@ export default function AdminOrdersPage() {
                 {!['completed', 'cancelled'].includes(order.status) && (
                   <button onClick={e => { e.stopPropagation(); setShowCancel(showCancel === order.id ? null : order.id); setCancelReason('') }}
                     style={{ padding: '7px 14px', borderRadius: 10, fontSize: 12, fontWeight: 700,
-                      background: 'rgba(245,101,101,0.08)', color: 'var(--k-danger)',
-                      border: '1px solid rgba(245,101,101,0.2)', cursor: 'pointer' }}>
+                      background: 'rgba(192,67,92,0.08)', color: 'var(--k-danger)',
+                      border: '1px solid rgba(192,67,92,0.2)', cursor: 'pointer' }}>
                     ✕ Cancel
                   </button>
                 )}

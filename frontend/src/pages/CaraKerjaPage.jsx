@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const LOGO = () => (
-  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg,#00C896,#00A87D)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(0,200,150,0.3)', flexShrink: 0 }}>
+  <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--k-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(46,125,91,0.3)', flexShrink: 0 }}>
     <span style={{ fontSize: 24, fontWeight: 900, color: '#0C0C16' }}>Z</span>
   </div>
 )
@@ -13,42 +13,42 @@ const CUSTOMER_STEPS = [
     icon: '📱',
     title: 'Daftar & Masuk',
     desc: 'Buat akun dengan nomor HP atau email. Verifikasi OTP, lalu login ke aplikasi.',
-    color: '#00C896',
+    color: 'var(--k-accent)', rgb: '46,125,91',
   },
   {
     num: '2',
     icon: '🎯',
     title: 'Pilih Layanan',
     desc: 'Pilih ZasaGo, ZasaFood, ZasaMart, atau ZasaHome sesuai kebutuhan Anda hari ini.',
-    color: '#F97316',
+    color: 'var(--k-warn)', rgb: '184,134,11',
   },
   {
     num: '3',
     icon: '📋',
     title: 'Buat Pesanan',
     desc: 'Masukkan detail pesanan — alamat, produk, atau jasa yang dibutuhkan. Lihat estimasi harga sebelum konfirmasi.',
-    color: '#6366F1',
+    color: 'var(--k-primary)', rgb: '40,55,75',
   },
   {
     num: '4',
     icon: '💳',
     title: 'Pilih Pembayaran',
     desc: 'Bayar dengan ZasaWallet (saldo digital) atau tunai (COD) sesuai yang Anda prefer.',
-    color: '#EF4444',
+    color: 'var(--k-danger)', rgb: '192,67,92',
   },
   {
     num: '5',
     icon: '📍',
     title: 'Lacak Real-Time',
     desc: 'Pantau posisi mitra Anda di peta secara langsung. Chat dengan mitra jika ada pertanyaan.',
-    color: '#10B981',
+    color: 'var(--k-info)', rgb: '42,95,130',
   },
   {
     num: '6',
     icon: '⭐',
     title: 'Terima & Nilai',
     desc: 'Terima pesanan dan beri penilaian untuk mitra. Rating Anda membantu menjaga kualitas layanan.',
-    color: '#F59E0B',
+    color: 'var(--k-warn)', rgb: '184,134,11',
   },
 ]
 
@@ -58,42 +58,42 @@ const MITRA_STEPS = [
     icon: '📝',
     title: 'Daftar sebagai Mitra',
     desc: 'Buat akun dan pilih jenis mitra: kurir/ojek (ZasaGo), antar makanan (ZasaFood), antar belanjaan (ZasaMart), atau jasa rumah (ZasaHome).',
-    color: '#00C896',
+    color: 'var(--k-accent)', rgb: '46,125,91',
   },
   {
     num: '2',
     icon: '🪪',
     title: 'Lengkapi Verifikasi',
     desc: 'Upload foto KTP, SIM (untuk ojek/kurir), dan foto kendaraan. Tim ZasaQu akan memverifikasi dalam 1–3 hari kerja.',
-    color: '#6366F1',
+    color: 'var(--k-primary)', rgb: '40,55,75',
   },
   {
     num: '3',
     icon: '💰',
     title: 'Isi Saldo Mitra',
     desc: 'Pastikan saldo ZasaWallet Anda minimal Rp 5.000 sebagai jaminan. Saldo digunakan untuk komisi platform.',
-    color: '#F97316',
+    color: 'var(--k-warn)', rgb: '184,134,11',
   },
   {
     num: '4',
     icon: '📡',
     title: 'Aktifkan & Terima Order',
     desc: 'Aktifkan status online dari halaman GPS. Order masuk akan muncul sebagai notifikasi — terima sebelum kedaluwarsa.',
-    color: '#EF4444',
+    color: 'var(--k-danger)', rgb: '192,67,92',
   },
   {
     num: '5',
     icon: '🛵',
     title: 'Jalankan Pesanan',
     desc: 'Ikuti rute di peta navigasi bawaan ZasaQu. Foto bukti pengiriman diperlukan untuk menyelesaikan order.',
-    color: '#10B981',
+    color: 'var(--k-info)', rgb: '42,95,130',
   },
   {
     num: '6',
     icon: '💵',
     title: 'Terima Pendapatan',
     desc: 'Pendapatan masuk ke ZasaWallet setelah order selesai. Tarik ke rekening bank kapan saja sesuai ketentuan penarikan.',
-    color: '#F59E0B',
+    color: 'var(--k-warn)', rgb: '184,134,11',
   },
 ]
 
@@ -149,7 +149,7 @@ export default function CaraKerjaPage() {
             <button key={t.key} onClick={() => setTab(t.key)}
               style={{
                 flex: 1, padding: '11px 8px', borderRadius: 10, border: 'none', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all 0.2s',
-                background: tab === t.key ? 'linear-gradient(135deg,#00C896,#00A87D)' : 'transparent',
+                background: tab === t.key ? 'var(--k-accent)' : 'transparent',
                 color: tab === t.key ? '#0C0C16' : 'var(--k-muted)',
               }}>
               {t.label}
@@ -159,7 +159,7 @@ export default function CaraKerjaPage() {
 
         {/* Intro banner */}
         <div style={{ background: 'linear-gradient(135deg,#0C0C16,#1a1a2e)', borderRadius: 18, padding: '20px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(0,200,150,0.07)' }} />
+          <div style={{ position: 'absolute', right: -20, top: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(46,125,91,0.07)' }} />
           <p style={{ fontSize: 20, fontWeight: 900, color: '#fff', margin: '0 0 8px' }}>
             {tab === 'customer' ? '6 Langkah Mudah Memesan' : '6 Langkah Jadi Mitra'}
           </p>
@@ -176,7 +176,7 @@ export default function CaraKerjaPage() {
             <div key={step.num} style={{ display: 'flex', gap: 0 }}>
               {/* Timeline */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 44, flexShrink: 0 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 12, background: `${step.color}18`, border: `2px solid ${step.color}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 12, background: `rgba(${step.rgb},0.1)`, border: `2px solid rgba(${step.rgb},0.25)`, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
                   <span style={{ fontSize: 13, fontWeight: 900, color: step.color }}>{step.num}</span>
                 </div>
                 {i < steps.length - 1 && (
@@ -199,8 +199,8 @@ export default function CaraKerjaPage() {
 
         {/* Tips */}
         {tab === 'mitra' && (
-          <div style={{ background: 'rgba(249,115,22,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(249,115,22,0.2)' }}>
-            <p style={{ fontSize: 13, fontWeight: 800, color: '#F97316', margin: '0 0 8px' }}>💡 Tips Mitra Sukses</p>
+          <div style={{ background: 'rgba(184,134,11,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(184,134,11,0.2)' }}>
+            <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-warn)', margin: '0 0 8px' }}>💡 Tips Mitra Sukses</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {[
                 'Aktif di jam sibuk (07–09 pagi, 11–13 siang, 17–20 sore)',
@@ -209,7 +209,7 @@ export default function CaraKerjaPage() {
                 'Pastikan HP terisi daya dan GPS aktif selama bertugas',
               ].map(t => (
                 <div key={t} style={{ display: 'flex', gap: 8 }}>
-                  <span style={{ color: '#F97316', fontSize: 13, flexShrink: 0 }}>›</span>
+                  <span style={{ color: 'var(--k-warn)', fontSize: 13, flexShrink: 0 }}>›</span>
                   <span style={{ fontSize: 13, color: 'var(--k-text)', lineHeight: 1.5 }}>{t}</span>
                 </div>
               ))}
@@ -218,8 +218,8 @@ export default function CaraKerjaPage() {
         )}
 
         {tab === 'customer' && (
-          <div style={{ background: 'rgba(0,200,150,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(0,200,150,0.2)' }}>
-            <p style={{ fontSize: 13, fontWeight: 800, color: '#00C896', margin: '0 0 8px' }}>💡 Tips Belanja Nyaman</p>
+          <div style={{ background: 'rgba(46,125,91,0.07)', borderRadius: 16, padding: '16px', border: '1px solid rgba(46,125,91,0.2)' }}>
+            <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--k-accent)', margin: '0 0 8px' }}>💡 Tips Belanja Nyaman</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {[
                 'Aktifkan GPS untuk akurasi lokasi yang lebih baik',
@@ -228,7 +228,7 @@ export default function CaraKerjaPage() {
                 'Simpan alamat favorit agar tidak perlu ketik ulang',
               ].map(t => (
                 <div key={t} style={{ display: 'flex', gap: 8 }}>
-                  <span style={{ color: '#00C896', fontSize: 13, flexShrink: 0 }}>›</span>
+                  <span style={{ color: 'var(--k-accent)', fontSize: 13, flexShrink: 0 }}>›</span>
                   <span style={{ fontSize: 13, color: 'var(--k-text)', lineHeight: 1.5 }}>{t}</span>
                 </div>
               ))}
@@ -260,7 +260,7 @@ export default function CaraKerjaPage() {
         {/* CTA */}
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={() => navigate('/register')}
-            style={{ flex: 1, padding: '14px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#00C896,#00A87D)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
+            style={{ flex: 1, padding: '14px', borderRadius: 12, border: 'none', background: 'var(--k-accent)', color: '#0C0C16', fontWeight: 800, fontSize: 14, cursor: 'pointer' }}>
             Mulai Sekarang
           </button>
           <button onClick={() => navigate('/contact')}

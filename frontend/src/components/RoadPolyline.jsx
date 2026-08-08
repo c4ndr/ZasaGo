@@ -6,7 +6,7 @@ import useRoadRoute from '../hooks/useRoadRoute'
 export default function RoadPolyline({
   pickup,
   dropoff,
-  color   = '#00C896',
+  color   = '#2E7D5B',
   weight  = 4,
   opacity = 0.85,
   dashArray,
