@@ -172,6 +172,7 @@ export default function ProfilePage() {
   const { theme, toggle: toggleTheme, isDark } = useTheme()
   const roleInfo = ROLE_LABEL[user?.role] ?? { label: user?.role, color: '#A0A0BC', bg: 'rgba(160,160,188,0.1)' }
   const isMitra  = user?.role?.startsWith('mitra')
+  const neu = !isMitra && isDark // dark neumorphic teal — cuma pelanggan + mode gelap
 
   function openEdit() {
     setEditForm({
@@ -306,7 +307,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
+    <div className={neu ? 'zq-neu' : ''} style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
       {/* Header */}
@@ -330,7 +331,12 @@ export default function ProfilePage() {
         <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--k-text)', marginTop: 14, marginBottom: 6 }}>
           {user?.name}
         </h2>
-        <span style={{ padding: '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700, background: roleInfo.bg, color: roleInfo.color }}>
+        <span style={{
+          padding: neu ? '4px 13px' : '5px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700,
+          background: neu ? 'transparent' : roleInfo.bg,
+          border: neu ? '1.5px solid #4ECDC4' : 'none',
+          color: neu ? '#4ECDC4' : roleInfo.color,
+        }}>
           {roleInfo.label}
         </span>
       </div>
@@ -442,23 +448,27 @@ export default function ProfilePage() {
           background: SVC.wallet.bg, border: 'none', borderRadius: 20,
           padding: '16px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           cursor: 'pointer', textAlign: 'left', width: '100%',
-          position: 'relative', overflow: 'hidden', boxShadow: svcShadow(SVC.wallet.rgb),
+          position: 'relative', overflow: 'hidden', boxShadow: neu ? 'var(--k-shadow)' : svcShadow(SVC.wallet.rgb),
         }}>
-          <Gloss />
+          {!neu && <Gloss />}
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{
-              width: 42, height: 42, borderRadius: 13, background: 'var(--k-surface)',
+              width: 42, height: 42, borderRadius: neu ? 15 : 13,
+              background: neu ? 'linear-gradient(145deg, #232a42, #171c2b)' : 'var(--k-surface)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
-              boxShadow: `0 3px 8px rgba(${SVC.wallet.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.wallet.rgb},0.4)`,
+              boxShadow: neu ? 'var(--k-shadow-sm)' : `0 3px 8px rgba(${SVC.wallet.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.wallet.rgb},0.4)`,
             }}>💳</div>
             <div>
-              <p style={{ fontSize: 13, fontWeight: 700, color: SVC.wallet.fg, marginBottom: 2 }}>Saldo Wallet</p>
-              <p style={{ fontSize: 18, fontWeight: 900, color: SVC.wallet.fg, textShadow: '-1px -1px 0 rgba(255,255,255,0.4), 1px 2px 2px rgba(120,70,20,0.3)' }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: neu ? 'var(--k-sub)' : SVC.wallet.fg, opacity: neu ? 1 : 0.8, marginBottom: 2 }}>Saldo Wallet</p>
+              <p style={{
+                fontSize: 18, fontWeight: 900, color: SVC.wallet.fg,
+                textShadow: neu ? 'none' : '-1px -1px 0 rgba(255,255,255,0.4), 1px 2px 2px rgba(120,70,20,0.3)',
+              }}>
                 Rp {Number(walletBalance ?? user?.wallet?.balance ?? 0).toLocaleString('id-ID')}
               </p>
             </div>
           </div>
-          <span style={{ position: 'relative', fontSize: 18, color: SVC.wallet.fg, opacity: 0.7 }}>›</span>
+          <span style={{ position: 'relative', fontSize: 18, color: neu ? 'var(--k-accent)' : SVC.wallet.fg, opacity: neu ? 0.85 : 0.7 }}>›</span>
         </button>
 
         {/* Pengaturan */}

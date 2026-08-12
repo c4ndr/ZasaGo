@@ -4,6 +4,7 @@ import BottomNav from '../../components/BottomNav'
 import api, { storageUrl } from '../../services/api'
 import useMartCartCount from '../../hooks/useMartCartCount'
 import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
+import { useTheme } from '../../hooks/useTheme'
 
 const fmtRp = (v) => 'Rp ' + Number(v || 0).toLocaleString('id-ID')
 const STORAGE = import.meta.env.VITE_STORAGE_URL || ((import.meta.env.VITE_API_URL || '') + '/storage')
@@ -139,9 +140,11 @@ export default function ZasaShopPage() {
   }, [meta, page, loading]) // eslint-disable-line
 
   const banner = BANNERS[bannerIdx]
+  const { isDark } = useTheme()
+  const neu = isDark // dark neumorphic teal — cuma saat mode gelap
 
   return (
-    <div style={{ background: 'var(--k-bg)', minHeight: '100dvh', paddingBottom: 80 }}>
+    <div className={neu ? 'zq-neu' : ''} style={{ background: 'var(--k-bg)', minHeight: '100dvh', paddingBottom: 80 }}>
 
       {/* ── Sticky header ── */}
       <div style={{ position: 'sticky', top: 0, zIndex: 20, background: 'var(--k-surface)', borderBottom: '1px solid var(--k-border)' }}>
@@ -187,17 +190,19 @@ export default function ZasaShopPage() {
           <button onClick={() => setActiveCat('')} style={{
             padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
             background: !activecat ? 'var(--k-primary)' : 'var(--k-card)',
-            color: !activecat ? '#fff' : 'var(--k-sub)',
+            color: !activecat ? (neu ? '#0E2624' : '#fff') : 'var(--k-sub)',
             fontSize: 12, fontWeight: !activecat ? 700 : 500,
             border: !activecat ? 'none' : '1px solid var(--k-border)',
+            boxShadow: !activecat ? 'none' : (neu ? 'var(--k-shadow-sm)' : 'none'),
           }}>🛍️ Semua</button>
           {categories.map(c => (
             <button key={c.id} onClick={() => setActiveCat(c.slug)} style={{
               padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
               background: activecat === c.slug ? 'var(--k-primary)' : 'var(--k-card)',
-              color: activecat === c.slug ? '#fff' : 'var(--k-sub)',
+              color: activecat === c.slug ? (neu ? '#0E2624' : '#fff') : 'var(--k-sub)',
               fontSize: 12, fontWeight: activecat === c.slug ? 700 : 500,
               border: activecat === c.slug ? 'none' : '1px solid var(--k-border)',
+              boxShadow: activecat === c.slug ? 'none' : (neu ? 'var(--k-shadow-sm)' : 'none'),
             }}>{c.icon} {c.name}</button>
           ))}
         </div>
@@ -209,19 +214,24 @@ export default function ZasaShopPage() {
         {!search && !activecat && (
           <div style={{ marginBottom: 18 }}>
             <div style={{
-              borderRadius: 18, overflow: 'hidden', position: 'relative', cursor: 'pointer',
+              borderRadius: 20, overflow: 'hidden', position: 'relative', cursor: 'pointer',
               background: SVC.zasashop.bg, minHeight: 110,
-              boxShadow: svcShadow(SVC.zasashop.rgb, true),
+              boxShadow: neu ? 'var(--k-shadow-lg)' : svcShadow(SVC.zasashop.rgb, true),
             }}>
-              <Gloss />
+              {!neu && <Gloss />}
               <div style={{
                 position: 'relative', padding: '20px 20px', minHeight: 110,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
                   <p style={{ fontSize: 20, fontWeight: 900, color: SVC.zasashop.fg, marginBottom: 4, lineHeight: 1.2 }}>{banner.title}</p>
-                  <p style={{ fontSize: 12, color: SVC.zasashop.fg, opacity: 0.75, marginBottom: 12 }}>{banner.sub}</p>
-                  <span style={{ background: 'var(--k-surface)', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 999, boxShadow: `0 3px 8px rgba(${SVC.zasashop.rgb},0.28)` }}>
+                  <p style={{ fontSize: 12, color: neu ? 'var(--k-sub)' : SVC.zasashop.fg, opacity: neu ? 1 : 0.75, marginBottom: 12 }}>{banner.sub}</p>
+                  <span style={{
+                    background: neu ? 'var(--k-primary-bg)' : 'var(--k-surface)',
+                    color: neu ? 'var(--k-accent)' : SVC.zasashop.fg,
+                    fontSize: 12, fontWeight: 700, padding: '6px 14px', borderRadius: 999,
+                    boxShadow: neu ? 'none' : `0 3px 8px rgba(${SVC.zasashop.rgb},0.28)`,
+                  }}>
                     {banner.cta} →
                   </span>
                 </div>
@@ -232,7 +242,13 @@ export default function ZasaShopPage() {
               <div style={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 5, zIndex: 2 }}>
                 {BANNERS.map((_, i) => (
                   <div key={i} onClick={e => { e.stopPropagation(); setBannerIdx(i) }}
-                    style={{ width: bannerIdx === i ? 20 : 6, height: 6, borderRadius: 3, background: bannerIdx === i ? SVC.zasashop.fg : `rgba(${SVC.zasashop.rgb},0.35)`, transition: 'width 0.25s', cursor: 'pointer' }} />
+                    style={{
+                      width: bannerIdx === i ? 20 : 6, height: 6, borderRadius: 3,
+                      background: bannerIdx === i
+                        ? (neu ? 'var(--k-accent)' : SVC.zasashop.fg)
+                        : (neu ? 'rgba(255,255,255,0.15)' : `rgba(${SVC.zasashop.rgb},0.35)`),
+                      transition: 'width 0.25s', cursor: 'pointer',
+                    }} />
                 ))}
               </div>
             </div>

@@ -12,6 +12,7 @@ import { requestNotifPermission, showOrderStatusNotif } from '../utils/systemNot
 import useOrderChatBadges from '../hooks/useOrderChatBadges'
 import ChatButton from '../components/ChatButton'
 import { SVC, svcShadow, Gloss } from '../utils/svcTheme'
+import { useTheme } from '../hooks/useTheme'
 
 const PHOTO_LABELS = { pickup: 'Tiba di Pickup', packing: 'Barang Dikemas', delivery: 'Sampai Tujuan' }
 const STORAGE_URL  = ''  // URL relatif — Vite proxy /storage → backend:8000
@@ -494,7 +495,7 @@ function CancelModal({ order, onConfirm, onClose }) {
 }
 
 // ── Card order ────────────────────────────────────────────────────────────────
-function OrderCard({ order, onCancelled, hasUnreadChat }) {
+function OrderCard({ order, onCancelled, hasUnreadChat, neu }) {
   const [showMap,       setShowMap]       = useState(false)
   const [mapModal,      setMapModal]      = useState(false)
   const [showCancel,    setShowCancel]    = useState(false)
@@ -651,7 +652,8 @@ function OrderCard({ order, onCancelled, hasUnreadChat }) {
               {isActive ? (
                 <Link to={`/orders/${order.id}/tracking`} style={{
                   padding: '9px 16px', borderRadius: 12, fontSize: 13, fontWeight: 800,
-                  background: 'var(--k-primary)', color: '#fff', textDecoration: 'none',
+                  background: neu ? 'linear-gradient(135deg, #4ECDC4, #3fb6ad)' : 'var(--k-primary)',
+                  color: neu ? '#0E2624' : '#fff', textDecoration: 'none',
                   display: 'flex', alignItems: 'center', gap: 6,
                 }}>
                   📡 Lacak
@@ -726,6 +728,8 @@ export default function OrdersPage() {
   }, [orders.map(o => o.id).join(','), fetchOrders]) // eslint-disable-line
 
   const [histFilter, setHistFilter] = useState('all') // all | completed | cancelled
+  const { isDark } = useTheme()
+  const neu = isDark // dark neumorphic teal — cuma saat mode gelap
 
   const active  = orders.filter(o => ACTIVE_STATUSES.includes(o.status))
   const histAll = orders.filter(o => !ACTIVE_STATUSES.includes(o.status))
@@ -738,7 +742,7 @@ export default function OrdersPage() {
   ]
 
   return (
-    <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
+    <div className={neu ? 'zq-neu' : ''} style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       {notif && <OrderNotifBanner notif={notif} onDismiss={dismissNotif} />}
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
@@ -753,20 +757,21 @@ export default function OrdersPage() {
           background: SVC.zasago.bg,
           borderRadius: 20, padding: '16px 18px',
           position: 'relative', overflow: 'hidden', marginBottom: 14,
-          boxShadow: svcShadow(SVC.zasago.rgb),
+          boxShadow: neu ? 'var(--k-shadow)' : svcShadow(SVC.zasago.rgb),
         }}>
-          <Gloss />
+          {!neu && <Gloss />}
           <div style={{ position:'absolute', right:-10, top:-10, fontSize:80, opacity:0.1, transform:'rotate(10deg)', pointerEvents:'none' }}>🚚</div>
           <div style={{ position:'absolute', right:52, bottom:-12, fontSize:56, opacity:0.08, transform:'rotate(-8deg)', pointerEvents:'none' }}>📦</div>
           <div style={{ position:'relative', zIndex:1 }}>
             <h1 style={{ fontSize: 20, fontWeight: 800, color: SVC.zasago.fg, marginBottom: 4 }}>📦 Order Saya</h1>
-            <p style={{ fontSize: 12, color: SVC.zasago.fg, opacity: 0.75, marginBottom: 14 }}>Lacak semua pengiriman kamu</p>
+            <p style={{ fontSize: 12, color: neu ? 'var(--k-sub)' : SVC.zasago.fg, opacity: neu ? 1 : 0.75, marginBottom: 14 }}>Lacak semua pengiriman kamu</p>
             <Link to="/orders/create" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
-              background: 'var(--k-primary)', color: '#fff',
+              background: neu ? 'linear-gradient(135deg, #4ECDC4, #3fb6ad)' : 'var(--k-primary)',
+              color: neu ? '#0E2624' : '#fff',
               fontSize: 13, fontWeight: 800, padding: '9px 18px',
               borderRadius: 12, textDecoration: 'none',
-              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+              boxShadow: neu ? 'var(--k-shadow-sm)' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>+ Buat Order Baru</Link>
           </div>
         </div>
@@ -802,23 +807,24 @@ export default function OrdersPage() {
               borderRadius: 20, padding: '40px 20px', textAlign: 'center',
               background: SVC.zasago.bg,
               position: 'relative', overflow: 'hidden',
-              boxShadow: svcShadow(SVC.zasago.rgb),
+              boxShadow: neu ? 'var(--k-shadow)' : svcShadow(SVC.zasago.rgb),
             }}>
-              <Gloss />
+              {!neu && <Gloss />}
               <div style={{ position:'absolute', right:-16, top:-16, fontSize:100, opacity:0.08, transform:'rotate(15deg)', pointerEvents:'none' }}>📦</div>
               <div style={{ position:'relative', zIndex:1 }}>
                 <p style={{ fontSize: 52, marginBottom: 12 }}>📦</p>
                 <p style={{ color: SVC.zasago.fg, fontWeight: 800, fontSize: 16, marginBottom: 6 }}>Belum ada order aktif</p>
-                <p style={{ color: SVC.zasago.fg, opacity: 0.75, fontSize: 13, marginBottom: 20 }}>Yuk, buat order pengiriman pertama kamu</p>
+                <p style={{ color: neu ? 'var(--k-sub)' : SVC.zasago.fg, opacity: neu ? 1 : 0.75, fontSize: 13, marginBottom: 20 }}>Yuk, buat order pengiriman pertama kamu</p>
                 <Link to="/orders/create" style={{
                   display: 'inline-block', padding: '12px 28px',
-                  background: 'var(--k-primary)', color: '#fff',
+                  background: neu ? 'linear-gradient(135deg, #4ECDC4, #3fb6ad)' : 'var(--k-primary)',
+                  color: neu ? '#0E2624' : '#fff',
                   fontWeight: 800, fontSize: 14, borderRadius: 14, textDecoration: 'none',
-                  boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+                  boxShadow: neu ? 'var(--k-shadow-sm)' : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
                 }}>🚀 Buat Order</Link>
               </div>
             </div>
-          ) : active.map(order => <OrderCard key={order.id} order={order} onCancelled={fetchOrders} hasUnreadChat={!!chatUnread[String(order.id)]} />)
+          ) : active.map(order => <OrderCard key={order.id} order={order} onCancelled={fetchOrders} hasUnreadChat={!!chatUnread[String(order.id)]} neu={neu} />)
         ) : (
           <>
             {/* Filter chip riwayat */}
@@ -828,7 +834,7 @@ export default function OrdersPage() {
                   <button key={k} onClick={() => setHistFilter(k)} style={{
                     padding: '6px 14px', borderRadius: 100, fontSize: 12, fontWeight: 700,
                     background: histFilter === k ? 'var(--k-primary)' : 'var(--k-surface)',
-                    color: histFilter === k ? '#fff' : 'var(--k-muted)',
+                    color: histFilter === k ? (neu ? '#0E2624' : '#fff') : 'var(--k-muted)',
                     border: `1px solid ${histFilter === k ? 'transparent' : 'var(--k-border)'}`,
                     cursor: 'pointer', transition: 'all 0.15s',
                   }}>{l}</button>
@@ -840,7 +846,7 @@ export default function OrdersPage() {
                 <p style={{ fontSize: 36, marginBottom: 10 }}>📋</p>
                 <p style={{ color: 'var(--k-muted)', fontSize: 14 }}>Belum ada riwayat order</p>
               </div>
-            ) : history.map(order => <OrderCard key={order.id} order={order} onCancelled={fetchOrders} hasUnreadChat={!!chatUnread[String(order.id)]} />)}
+            ) : history.map(order => <OrderCard key={order.id} order={order} onCancelled={fetchOrders} hasUnreadChat={!!chatUnread[String(order.id)]} neu={neu} />)}
           </>
         )}
       </div>

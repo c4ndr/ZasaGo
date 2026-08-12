@@ -155,6 +155,61 @@
   --k-wallet-rgb:   224,173,121;
 }
 
+/* ── Tema dark neumorphic — KHUSUS halaman utama pelanggan
+   (Beranda, ZasaGo, ZasaShop, ZasaFood, Akun). Override token
+   --k-* secara lokal lewat class scope `.zq-neu`, sengaja TIDAK
+   menyentuh :root / [data-theme="dark"] supaya admin/mitra/merchant
+   tetap pakai tema soft-UI/starfield seperti biasa. ── */
+.zq-neu {
+  --k-bg:        #171c2b;
+  --k-surface:   #1c2236;
+  --k-card:      #1c2236;
+  --k-card2:     #20263c;
+  --k-input:     #1c2236;
+  --k-header-bg: #171c2b;
+
+  --k-border:    rgba(255,255,255,0.06);
+  --k-border2:   rgba(255,255,255,0.1);
+
+  /* Neumorphic ganda: kontak gelap kanan-bawah + sorot tipis kiri-atas */
+  --k-shadow:       8px 8px 16px rgba(0,0,0,0.55), -8px -8px 16px rgba(255,255,255,0.03);
+  --k-shadow-lg:    10px 10px 22px rgba(0,0,0,0.6), -10px -10px 22px rgba(255,255,255,0.03);
+  --k-shadow-sm:    4px 4px 8px rgba(0,0,0,0.5), -4px -4px 8px rgba(255,255,255,0.04);
+  --k-shadow-inset: inset 4px 4px 8px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(255,255,255,0.03);
+  --k-inset-hi:     inset 0 1px 0 rgba(255,255,255,0.03);
+
+  --k-primary:    #4ECDC4;
+  --k-primary2:   #3fb6ad;
+  --k-primary-bg: rgba(78,205,196,0.15);
+  --k-primary-rgb: 78,205,196;
+
+  --k-accent:  #4ECDC4;
+  --k-accent2: #3fb6ad;
+  --k-glow:    rgba(78,205,196,0.25);
+  --k-accent-rgb: 78,205,196;
+
+  --k-text:  #F4F6F8;
+  --k-sub:   #8992A8;
+  --k-muted: #8992A8;
+
+  --k-danger:     #E17690; --k-danger-rgb: 225,118,144;
+  --k-warn:       #E0B84A; --k-warn-rgb:   224,184,74;
+  --k-info:       #6FA8CE; --k-info-rgb:   111,168,206;
+
+  /* Seragamkan palet per-layanan jadi surface gelap netral —
+     kartu servis tidak lagi berwarna solid per-modul, aksen
+     warna dipindah ke ikon chip & badge saja. */
+  --k-zasago-bg:   #1c2236; --k-zasago-fg:   #F4F6F8; --k-zasago-rgb:   78,205,196;
+  --k-zasafood-bg: #1c2236; --k-zasafood-fg: #F4F6F8; --k-zasafood-rgb: 78,205,196;
+  --k-jastip-bg:   #1c2236; --k-jastip-fg:   #F4F6F8; --k-jastip-rgb:   78,205,196;
+  --k-zasashop-bg: #1c2236; --k-zasashop-fg: #F4F6F8; --k-zasashop-rgb: 78,205,196;
+  --k-zasahome-bg: #1c2236; --k-zasahome-fg: #F4F6F8; --k-zasahome-rgb: 78,205,196;
+  --k-zasaride-bg: #1c2236; --k-zasaride-fg: #F4F6F8; --k-zasaride-rgb: 78,205,196;
+  --k-zasaserv-bg: #1c2236; --k-zasaserv-fg: #F4F6F8; --k-zasaserv-rgb: 78,205,196;
+  --k-wallet-bg:   #1c2236; --k-wallet-fg:   #F4F6F8; --k-wallet-rgb:   78,205,196;
+}
+.zq-neu h1, .zq-neu h2, .zq-neu h3 { text-shadow: none; }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {

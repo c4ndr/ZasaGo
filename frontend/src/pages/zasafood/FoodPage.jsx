@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import BottomNav from '../../components/BottomNav'
 import api, { storageUrl } from '../../services/api'
 import { SVC, svcShadow, Gloss } from '../../utils/svcTheme'
+import { useTheme } from '../../hooks/useTheme'
 
 function fmtRating(r) { return r > 0 ? r.toFixed(1) : '—' }
 
@@ -67,8 +68,11 @@ export default function FoodPage() {
       .catch(() => {})
   }, [userLat, userLng])
 
+  const { isDark } = useTheme()
+  const neu = isDark // dark neumorphic teal — cuma saat mode gelap
+
   return (
-    <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 80 }}>
+    <div className={neu ? 'zq-neu' : ''} style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 80 }}>
       {/* Header */}
       <div style={{
         background: 'var(--k-surface)',
@@ -79,23 +83,23 @@ export default function FoodPage() {
           background: SVC.zasafood.bg,
           padding: '20px 20px 16px',
           position: 'relative', overflow: 'hidden',
-          boxShadow: svcShadow(SVC.zasafood.rgb, true),
+          boxShadow: neu ? 'var(--k-shadow-lg)' : svcShadow(SVC.zasafood.rgb, true),
         }}>
-          <Gloss />
+          {!neu && <Gloss />}
           <div style={{ position:'absolute', right:-10, top:-8, fontSize:90, opacity:0.12, transform:'rotate(10deg)', pointerEvents:'none' }}>🍱</div>
           <div style={{ position:'absolute', right:64, bottom:-14, fontSize:60, opacity:0.1, transform:'rotate(-8deg)', pointerEvents:'none' }}>🍜</div>
           <div style={{ position:'absolute', left:-14, bottom:-14, width:72, height:72, borderRadius:'50%', background:'rgba(255,255,255,0.14)', pointerEvents:'none' }} />
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14, position:'relative', zIndex:1 }}>
             <div style={{
-              width: 44, height: 44, borderRadius: 14,
-              background: 'var(--k-surface)',
+              width: 44, height: 44, borderRadius: neu ? 16 : 14,
+              background: neu ? 'linear-gradient(145deg, #232a42, #171c2b)' : 'var(--k-surface)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24,
-              boxShadow: `0 3px 8px rgba(${SVC.zasafood.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasafood.rgb},0.4)`,
+              boxShadow: neu ? 'var(--k-shadow-sm)' : `0 3px 8px rgba(${SVC.zasafood.rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${SVC.zasafood.rgb},0.4)`,
             }}>🍜</div>
             <div>
               <div style={{ fontWeight: 800, fontSize: 18, color: SVC.zasafood.fg }}>ZasaFood</div>
-              <div style={{ fontSize: 12, color: SVC.zasafood.fg, opacity: 0.75 }}>Pesan dari warung lokal favoritmu</div>
+              <div style={{ fontSize: 12, color: neu ? 'var(--k-sub)' : SVC.zasafood.fg, opacity: neu ? 1 : 0.75 }}>Pesan dari warung lokal favoritmu</div>
             </div>
           </div>
 
@@ -117,7 +121,8 @@ export default function FoodPage() {
               padding: '7px 18px', borderRadius: 20, border: 'none', cursor: 'pointer',
               fontWeight: category === t.key ? 700 : 500, fontSize: 13, whiteSpace: 'nowrap',
               background: category === t.key ? 'var(--k-primary)' : 'var(--k-input)',
-              color: category === t.key ? '#fff' : 'var(--k-sub)',
+              color: category === t.key ? (neu ? '#0E2624' : '#fff') : 'var(--k-sub)',
+              boxShadow: category === t.key ? 'none' : (neu ? 'var(--k-shadow-sm)' : 'none'),
               transition: 'all 0.18s',
             }}>{t.label}</button>
           ))}
@@ -130,10 +135,10 @@ export default function FoodPage() {
           <div style={{
             marginBottom: 16, padding: '14px 16px', borderRadius: 16,
             background: SVC.jastip.bg, position: 'relative', overflow: 'hidden',
-            boxShadow: svcShadow(SVC.jastip.rgb),
+            boxShadow: neu ? 'var(--k-shadow)' : svcShadow(SVC.jastip.rgb),
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <Gloss />
+            {!neu && <Gloss />}
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 26 }}>🛵</span>
               <div>
@@ -159,11 +164,11 @@ export default function FoodPage() {
             style={{
               marginBottom: 16, padding: '14px 16px', borderRadius: 16, cursor: 'pointer',
               background: SVC.jastip.bg, position: 'relative', overflow: 'hidden',
-              boxShadow: svcShadow(SVC.jastip.rgb),
+              boxShadow: neu ? 'var(--k-shadow)' : svcShadow(SVC.jastip.rgb),
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}
           >
-            <Gloss />
+            {!neu && <Gloss />}
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 26 }}>🛵</span>
               <div>
@@ -220,7 +225,7 @@ export default function FoodPage() {
                     <span style={{
                       position: 'absolute', top: 10, left: 10,
                       padding: '4px 10px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-                      background: `rgb(${SVC.jastip.rgb})`, color: '#fff',
+                      background: `rgb(${SVC.jastip.rgb})`, color: neu ? '#0E2624' : '#fff',
                     }}>🛵 Ada di sesi</span>
                   )}
                 </div>

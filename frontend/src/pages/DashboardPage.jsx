@@ -60,36 +60,47 @@ const IconArrowRight = () => (
   </svg>
 )
 
-/* ── Kartu layanan — warna solid per layanan ── */
-function ServiceCard({ to, emoji, title, desc, badge, badgeActive = true, svc, active = true }) {
+/* ── Kartu layanan — warna solid per layanan (mode terang) atau
+   dark neumorphic teal (mode gelap, khusus pelanggan) ── */
+function ServiceCard({ to, emoji, title, desc, badge, badgeActive = true, svc, active = true, neu = false }) {
   const { bg, fg, rgb } = svc
+  const cardBg     = neu ? 'var(--k-card)' : bg
+  const cardShadow = neu ? 'var(--k-shadow)' : svcShadow(rgb)
+  const iconBg     = neu ? 'linear-gradient(145deg, #232a42, #171c2b)' : 'var(--k-surface)'
+  const iconShadow = neu ? 'var(--k-shadow-sm)' : `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`
+  const textColor  = neu ? 'var(--k-text)' : fg
+  const descColor  = neu ? 'var(--k-sub)' : fg
+  const descOpacity = neu ? 1 : 0.72
+  const badgeBg    = badgeActive ? (neu ? 'var(--k-primary-bg)' : 'var(--k-primary)') : (neu ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.55)')
+  const badgeColor = badgeActive ? (neu ? 'var(--k-accent)' : '#fff') : (neu ? 'var(--k-sub)' : fg)
+
   const inner = (
     <div style={{
-      background: bg,
-      borderRadius: 18, padding: '12px 11px',
+      background: cardBg,
+      borderRadius: neu ? 20 : 18, padding: '12px 11px',
       position: 'relative', overflow: 'hidden',
       opacity: active ? 1 : 0.55,
       transition: 'transform 0.15s, box-shadow 0.15s',
       cursor: active ? 'pointer' : 'default',
       minHeight: 101,
-      boxShadow: svcShadow(rgb),
+      boxShadow: cardShadow,
     }}>
-      <Gloss />
-      {/* Bubble ikon putih timbul */}
+      {!neu && <Gloss />}
+      {/* Bubble ikon */}
       <div style={{
-        position: 'relative', width: 32, height: 32, borderRadius: 11,
-        background: 'var(--k-surface)',
+        position: 'relative', width: 32, height: 32, borderRadius: neu ? 14 : 11,
+        background: iconBg,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 16, marginBottom: 7,
-        boxShadow: `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`,
+        boxShadow: iconShadow,
       }}>{emoji}</div>
-      <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: fg, marginBottom: 2 }}>{title}</p>
-      <p style={{ position: 'relative', fontSize: 9.5, color: fg, opacity: 0.72, marginBottom: 7, lineHeight: 1.3 }}>{desc}</p>
+      <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: textColor, marginBottom: 2 }}>{title}</p>
+      <p style={{ position: 'relative', fontSize: 9.5, color: descColor, opacity: descOpacity, marginBottom: 7, lineHeight: 1.3 }}>{desc}</p>
       <span style={{
-        position: 'relative', fontSize: 8.5, fontWeight: 700, padding: '2px 7px',
+        position: 'relative', fontSize: 8.5, fontWeight: 700, padding: '2px 8px',
         borderRadius: 100,
-        background: badgeActive ? 'var(--k-primary)' : 'rgba(255,255,255,0.55)',
-        color: badgeActive ? '#fff' : fg,
+        background: badgeBg,
+        color: badgeColor,
         letterSpacing: '0.04em',
       }}>{badge}</span>
     </div>
@@ -100,27 +111,35 @@ function ServiceCard({ to, emoji, title, desc, badge, badgeActive = true, svc, a
 }
 
 /* ── Kartu aksi utama (besar) ── */
-function MainCard({ to, emoji, title, desc, svc }) {
+function MainCard({ to, emoji, title, desc, svc, neu = false }) {
   const { bg, fg, rgb } = svc
+  const cardBg     = neu ? 'var(--k-card)' : bg
+  const cardShadow = neu ? 'var(--k-shadow-lg)' : svcShadow(rgb, true)
+  const iconBg     = neu ? 'linear-gradient(145deg, #232a42, #171c2b)' : 'var(--k-surface)'
+  const iconShadow = neu ? 'var(--k-shadow-sm)' : `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`
+  const textColor  = neu ? 'var(--k-text)' : fg
+  const descColor  = neu ? 'var(--k-sub)' : fg
+  const descOpacity = neu ? 1 : 0.72
+
   return (
     <Link to={to} style={{ textDecoration: 'none', flex: 1 }}>
       <div style={{
-        background: bg,
-        borderRadius: 18, padding: '13px 13px',
+        background: cardBg,
+        borderRadius: neu ? 20 : 18, padding: '13px 13px',
         position: 'relative', overflow: 'hidden',
         transition: 'transform 0.15s',
-        boxShadow: svcShadow(rgb, true),
+        boxShadow: cardShadow,
       }}>
-        <Gloss />
+        {!neu && <Gloss />}
         <div style={{
-          position: 'relative', width: 38, height: 38, borderRadius: 13,
-          background: 'var(--k-surface)',
+          position: 'relative', width: 38, height: 38, borderRadius: neu ? 14 : 13,
+          background: iconBg,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 19,
-          boxShadow: `0 3px 8px rgba(${rgb},0.28), inset 0 1.5px 0 rgba(255,255,255,0.95), inset 0 -3px 5px -3px rgba(${rgb},0.4)`,
+          boxShadow: iconShadow,
         }}>{emoji}</div>
-        <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: fg, marginTop: 8, marginBottom: 3 }}>{title}</p>
-        <p style={{ position: 'relative', fontSize: 9.5, color: fg, opacity: 0.72, lineHeight: 1.3 }}>{desc}</p>
+        <p style={{ position: 'relative', fontSize: 12, fontWeight: 800, color: textColor, marginTop: 8, marginBottom: 3 }}>{title}</p>
+        <p style={{ position: 'relative', fontSize: 9.5, color: descColor, opacity: descOpacity, lineHeight: 1.3 }}>{desc}</p>
       </div>
     </Link>
   )
@@ -141,6 +160,7 @@ export default function DashboardPage() {
   const { isDark, toggle: toggleTheme } = useTheme()
   const { app_logo_url, app_name, features } = useAppInfo()
   const feat = features ?? {}
+  const neu = !isMitra && isDark // dark neumorphic teal — cuma pelanggan + mode gelap
   const greeting = getGreeting()
   const { orders: activeOrders }    = useActiveOrders(!isMitra, feat)
   const { orders: availableOrders } = useMitraAvailableOrders(isMitra, feat)
@@ -192,7 +212,7 @@ export default function DashboardPage() {
   if (user?.role === 'admin') return null
 
   return (
-    <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
+    <div className={neu ? 'zq-neu' : ''} style={{ minHeight: '100dvh', background: 'var(--k-bg)', paddingBottom: 100 }}>
       <style>{`@keyframes dashPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}`}</style>
 
       {/* ── Header ─────────────────────────────────── */}
@@ -269,7 +289,9 @@ export default function DashboardPage() {
           </h1>
           <span style={{
             display: 'inline-block', padding: '4px 12px', borderRadius: 100,
-            background: 'var(--k-zasago-bg)', color: 'var(--k-zasago-fg)',
+            background: neu ? 'transparent' : 'var(--k-zasago-bg)',
+            border: neu ? '1.5px solid var(--k-accent)' : 'none',
+            color: neu ? 'var(--k-accent)' : 'var(--k-zasago-fg)',
             fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
           }}>
             {ROLE_LABELS[user?.role]}
@@ -303,17 +325,17 @@ export default function DashboardPage() {
                 padding: '18px 20px',
                 alignItems: 'center', gap: 14,
                 minHeight: 88,
-                boxShadow: !isCustom && svc ? svcShadow(svc.rgb) : undefined,
+                boxShadow: isCustom ? undefined : (neu ? 'var(--k-shadow)' : (svc ? svcShadow(svc.rgb) : undefined)),
               }}>
                 {(b.image_data_url || b.image_path) ? (
                   <img src={b.image_data_url || `${STORAGE_URL}/${b.image_path}`} alt="" style={{ width: 52, height: 52, borderRadius: 14, objectFit: 'cover', flexShrink: 0 }} />
                 ) : (
                   <div style={{
                     width: 52, height: 52, borderRadius: 16, flexShrink: 0,
-                    background: isCustom ? 'rgba(255,255,255,0.22)' : 'var(--k-surface)',
+                    background: isCustom ? 'rgba(255,255,255,0.22)' : (neu ? 'linear-gradient(145deg, #232a42, #171c2b)' : 'var(--k-surface)'),
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 26,
-                    boxShadow: !isCustom && svc ? `0 3px 8px rgba(${svc.rgb},0.25)` : undefined,
+                    boxShadow: isCustom ? undefined : (neu ? 'var(--k-shadow-sm)' : `0 3px 8px rgba(${svc?.rgb ?? '0,0,0'},0.25)`),
                   }}>{b.emoji ?? '🎉'}</div>
                 )}
                 <div>
@@ -344,7 +366,7 @@ export default function DashboardPage() {
                       width: i === bannerIdx ? 18 : 6, height: 6, borderRadius: 3,
                       background: i === bannerIdx
                         ? (dotDark ? 'var(--k-text)' : '#fff')
-                        : (dotDark ? 'rgba(30,34,51,0.25)' : 'rgba(255,255,255,0.45)'),
+                        : (dotDark ? (neu ? 'rgba(255,255,255,0.18)' : 'rgba(30,34,51,0.25)') : 'rgba(255,255,255,0.45)'),
                       transition: 'width 0.25s ease, background 0.25s',
                       cursor: 'pointer',
                     }}
@@ -365,7 +387,7 @@ export default function DashboardPage() {
           padding: '18px 18px 16px',
           marginBottom: 13,
           position: 'relative', overflow: 'hidden',
-          boxShadow: svcShadow(SVC.wallet.rgb, true),
+          boxShadow: neu ? 'var(--k-shadow-lg)' : svcShadow(SVC.wallet.rgb, true),
         }}>
           <Gloss />
           <div style={{ position: 'relative' }}>
@@ -389,9 +411,12 @@ export default function DashboardPage() {
           <div style={{ display: 'flex', gap: 9, marginTop: 18 }}>
             <Link to="/topup" style={{
               flex: 1, textAlign: 'center', padding: '9px 7px',
-              background: 'var(--k-primary)', borderRadius: 999,
-              color: '#fff', fontWeight: 700, fontSize: 12, textDecoration: 'none',
-              boxShadow: '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+              background: neu ? 'linear-gradient(135deg, #4ECDC4, #3fb6ad)' : 'var(--k-primary)',
+              borderRadius: 999,
+              color: neu ? '#0E2624' : '#fff', fontWeight: 700, fontSize: 12, textDecoration: 'none',
+              boxShadow: neu
+                ? 'var(--k-shadow-sm)'
+                : '0 4px 10px -2px rgba(30,40,55,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>Top Up</Link>
             {isMitra && (
               <Link to="/withdraw" style={{
@@ -403,9 +428,12 @@ export default function DashboardPage() {
             )}
             <Link to="/wallet" style={{
               flex: 1, textAlign: 'center', padding: '9px 7px',
-              background: 'var(--k-surface)', borderRadius: 999,
+              background: neu ? 'var(--k-input)' : 'var(--k-surface)',
+              borderRadius: 999,
               color: 'var(--k-wallet-fg)', fontWeight: 700, fontSize: 12, textDecoration: 'none',
-              boxShadow: '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)',
+              boxShadow: neu
+                ? 'var(--k-shadow-inset)'
+                : '0 3px 8px rgba(122,74,34,0.18), inset 0 1px 0 rgba(255,255,255,0.7)',
             }}>Riwayat</Link>
           </div>
           </div>
@@ -481,6 +509,7 @@ export default function DashboardPage() {
                 title="Kirim Sekarang"
                 desc="Buat order pengiriman baru"
                 svc={SVC.zasago}
+                neu={neu}
               />
               <MainCard
                 to="/orders"
@@ -488,6 +517,7 @@ export default function DashboardPage() {
                 title="Order Saya"
                 desc="Lacak status pengiriman"
                 svc={SVC.zasago}
+                neu={neu}
               />
             </div>
           </>
@@ -510,6 +540,7 @@ export default function DashboardPage() {
                 badge={feat.zasago ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasago !== false}
                 svc={SVC.jastip}
+                neu={neu}
                 active={feat.zasago !== false}
               />
 
@@ -521,6 +552,7 @@ export default function DashboardPage() {
                 badge={feat.zasafood ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasafood !== false}
                 svc={SVC.zasafood}
+                neu={neu}
                 active={feat.zasafood !== false}
               />
 
@@ -532,6 +564,7 @@ export default function DashboardPage() {
                 badge={feat.zasahome ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasahome !== false}
                 svc={SVC.zasahome}
+                neu={neu}
                 active={feat.zasahome !== false}
               />
 
@@ -543,6 +576,7 @@ export default function DashboardPage() {
                 badge={feat.zasamart ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasamart !== false}
                 svc={SVC.zasashop}
+                neu={neu}
                 active={feat.zasamart !== false}
               />
 
@@ -554,6 +588,7 @@ export default function DashboardPage() {
                 badge={feat.zasaride ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasaride === true}
                 svc={SVC.zasaride}
+                neu={neu}
                 active={feat.zasaride === true}
               />
 
@@ -565,6 +600,7 @@ export default function DashboardPage() {
                 badge={feat.zasaserv ? 'AKTIF' : 'SEGERA'}
                 badgeActive={feat.zasaserv === true}
                 svc={SVC.zasaserv}
+                neu={neu}
                 active={feat.zasaserv === true}
               />
             </div>

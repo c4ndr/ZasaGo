@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import useMartCartCount from '../hooks/useMartCartCount'
 import useAppInfo from '../hooks/useAppInfo'
 import useUnreadNotifCount from '../hooks/useUnreadNotifCount'
+import { useTheme } from '../hooks/useTheme'
 
 function parsePreset(preset) {
   if (!preset) return null
@@ -172,11 +173,13 @@ export default function BottomNav() {
   const { count: cartCount } = useMartCartCount()
   const { features } = useAppInfo()
   const notifCount = useUnreadNotifCount()
+  const { isDark } = useTheme()
   const feat = features ?? {}
 
   if (!user || user.role === 'admin' || user.role === 'merchant' || user.role === 'home_provider' || user.role === 'serv_provider' || user.role === 'seller') return null
 
   const isMitra = user.role?.startsWith('mitra')
+  const neu = !isMitra && isDark // dark neumorphic teal — cuma pelanggan + mode gelap
 
   // Filter item berdasarkan feature flags
   const allPelanggan = PELANGGAN_ITEMS(user.name)
@@ -202,11 +205,13 @@ export default function BottomNav() {
       padding: '0 16px calc(14px + env(safe-area-inset-bottom, 0px))',
       pointerEvents: 'none',
     }}>
-      <nav style={{
+      <nav className={neu ? 'zq-neu' : ''} style={{
         pointerEvents: 'auto',
-        background: 'var(--k-primary)',
+        background: neu ? 'var(--k-card)' : 'var(--k-primary)',
         borderRadius: 999,
-        boxShadow: '0 3px 8px rgba(20,28,40,0.3), 0 14px 28px -8px rgba(20,28,40,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
+        boxShadow: neu
+          ? '6px 6px 14px rgba(0,0,0,0.55), -6px -6px 14px rgba(255,255,255,0.03)'
+          : '0 3px 8px rgba(20,28,40,0.3), 0 14px 28px -8px rgba(20,28,40,0.5), inset 0 1px 0 rgba(255,255,255,0.08)',
         display: 'flex', alignItems: 'stretch', height: 64,
         padding: '0 4px',
       }}>
@@ -230,9 +235,15 @@ export default function BottomNav() {
                     position: 'relative',
                     width: 34, height: 34, borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: isActive ? 'var(--k-wallet-bg)' : 'transparent',
-                    color: isActive ? 'var(--k-primary)' : 'rgba(255,255,255,0.55)',
-                    boxShadow: isActive ? '0 3px 8px rgba(0,0,0,0.25)' : 'none',
+                    background: isActive
+                      ? (neu ? 'linear-gradient(135deg, #4ECDC4, #3fb6ad)' : 'var(--k-wallet-bg)')
+                      : 'transparent',
+                    color: isActive
+                      ? (neu ? '#0E2624' : 'var(--k-primary)')
+                      : (neu ? '#8992A8' : 'rgba(255,255,255,0.55)'),
+                    boxShadow: isActive
+                      ? (neu ? '0 3px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(78,205,196,0.3)' : '0 3px 8px rgba(0,0,0,0.25)')
+                      : 'none',
                     transition: 'background 0.18s, color 0.18s',
                   }}>
                     {avatar
@@ -246,13 +257,15 @@ export default function BottomNav() {
                         fontSize: 9, fontWeight: 900,
                         minWidth: 16, height: 16, borderRadius: 8,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        border: '1.5px solid var(--k-primary)', padding: '0 2px', lineHeight: 1,
+                        border: `1.5px solid ${neu ? '#1c2236' : 'var(--k-primary)'}`, padding: '0 2px', lineHeight: 1,
                       }}>{badgeLabel}</span>
                     )}
                   </span>
                   <span style={{
                     fontSize: 9.5, fontWeight: isActive ? 700 : 600,
-                    color: isActive ? '#fff' : 'rgba(255,255,255,0.55)',
+                    color: isActive
+                      ? (neu ? '#F4F6F8' : '#fff')
+                      : (neu ? '#8992A8' : 'rgba(255,255,255,0.55)'),
                     transition: 'color 0.18s', lineHeight: 1,
                   }}>{label}</span>
                 </div>
