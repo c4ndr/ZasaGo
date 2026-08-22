@@ -12,6 +12,9 @@ class OrderController extends Controller
 {
     public function __construct(private OrderService $orderService) {}
     public function available(Request $request): JsonResponse {
+        if (!($request->user()->mitraDetail?->acceptsService('zasago') ?? true)) {
+            return response()->json([]);
+        }
         $vehicleType = str_contains($request->user()->role,'motor') ? 'motor' : 'mobil';
         $orders = Order::where('status','pending')
             ->where('type','master')

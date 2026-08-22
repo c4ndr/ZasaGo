@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\CompressesImage;
+use App\Models\MitraDetail;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
@@ -139,6 +141,9 @@ class AuthController extends Controller
             'vehicle_plate' => ['sometimes', 'nullable', 'string', 'max:20'],
             'vehicle_brand' => ['sometimes', 'nullable', 'string', 'max:50'],
             'vehicle_year'  => ['sometimes', 'nullable', 'integer', 'min:2000', 'max:' . date('Y')],
+            // Preferensi jenis layanan yang diterima mitra
+            'accepted_services'   => ['sometimes', 'array', 'min:1'],
+            'accepted_services.*' => ['string', Rule::in(MitraDetail::ALL_SERVICES)],
         ]);
 
         // Update field user
@@ -148,7 +153,7 @@ class AuthController extends Controller
         }
 
         // Update kendaraan mitra
-        $mitraFields = array_intersect_key($data, array_flip(['vehicle_plate', 'vehicle_brand', 'vehicle_year']));
+        $mitraFields = array_intersect_key($data, array_flip(['vehicle_plate', 'vehicle_brand', 'vehicle_year', 'accepted_services']));
         if (!empty($mitraFields) && $user->isMitra()) {
             $user->mitraDetail()->updateOrCreate(
                 ['user_id' => $user->id],

@@ -17,6 +17,10 @@ class FoodMitraController extends Controller
 
     public function available(Request $request): JsonResponse
     {
+        if (!($request->user()->mitraDetail?->acceptsService('zasafood') ?? true)) {
+            return response()->json(['data' => []]);
+        }
+
         $orders = FoodOrder::where('status', 'ready_for_pickup')
             ->whereNull('mitra_id')
             ->with(['merchant:id,name,address,lat,lng,logo_path', 'items'])

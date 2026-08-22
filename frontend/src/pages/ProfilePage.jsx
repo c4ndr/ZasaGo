@@ -81,6 +81,16 @@ const ROLE_LABEL = {
   mitra_mobil: { label: 'Mitra Mobil', color: '#63B3ED', bg: 'rgba(99,179,237,0.12)'  },
 }
 
+const SERVICE_OPTIONS = [
+  { key: 'zasago',   label: 'ZasaGo',   icon: '📦', desc: 'Antar & titip barang' },
+  { key: 'jastip',   label: 'JastipQu', icon: '🛍️', desc: 'Titip beli belanjaan' },
+  { key: 'zasafood', label: 'ZasaFood', icon: '🍔', desc: 'Antar makanan' },
+  { key: 'zasamart', label: 'ZasaMart', icon: '🛒', desc: 'Antar belanjaan toko' },
+  { key: 'zasaride', label: 'ZasaRide', icon: '🏍️', desc: 'Antar penumpang' },
+  { key: 'zasahome', label: 'ZasaHome', icon: '🏠', desc: 'Antar jasa rumah' },
+  { key: 'zasaserv', label: 'ZasaServ', icon: '🔧', desc: 'Antar jasa servis' },
+]
+
 const AVATAR_EMOJIS = ['😀','😎','🤩','🥳','😇','🤠','😈','👻','🤖','👽','🐱','🐶','🦊','🐼','🦁','🌟','⚡','🔥','💎','🎮']
 const AVATAR_COLORS = ['#16A34A','#2563EB','#7C3AED','#EA580C','#DC2626','#0891B2','#DB2777','#4B5563']
 
@@ -173,6 +183,30 @@ export default function ProfilePage() {
   const roleInfo = ROLE_LABEL[user?.role] ?? { label: user?.role, color: '#A0A0BC', bg: 'rgba(160,160,188,0.1)' }
   const isMitra  = user?.role?.startsWith('mitra')
   const neu = !isMitra && isDark // dark neumorphic teal — cuma pelanggan + mode gelap
+
+  // ── Preferensi jenis layanan mitra ────────────────────────────────────────
+  const [savingService, setSavingService] = useState(null) // key layanan yang sedang diproses
+  const [serviceErr,    setServiceErr]    = useState('')
+  const acceptedServices = user?.mitra_detail?.accepted_services ?? SERVICE_OPTIONS.map(s => s.key)
+
+  async function toggleService(key) {
+    const isOn = acceptedServices.includes(key)
+    if (isOn && acceptedServices.length <= 1) {
+      setServiceErr('Minimal satu layanan harus aktif.')
+      return
+    }
+    const next = isOn ? acceptedServices.filter(k => k !== key) : [...acceptedServices, key]
+    setServiceErr('')
+    setSavingService(key)
+    try {
+      const res = await api.patch('/auth/profile', { accepted_services: next })
+      updateUser(res.data.user)
+    } catch (err) {
+      setServiceErr(err.response?.data?.message ?? 'Gagal menyimpan preferensi layanan.')
+    } finally {
+      setSavingService(null)
+    }
+  }
 
   function openEdit() {
     setEditForm({
@@ -442,6 +476,50 @@ export default function ProfilePage() {
             </form>
           )}
         </div>
+
+        {/* Preferensi Layanan — cuma untuk mitra ojek */}
+        {isMitra && (
+          <div style={{ background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 20, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 18px', background: 'var(--k-card2)', borderBottom: '1px solid var(--k-border)' }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--k-muted)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Jenis Orderan Diterima</p>
+              <p style={{ fontSize: 11, color: 'var(--k-muted)', marginTop: 2 }}>Pilih layanan yang mau Anda terima orderannya</p>
+            </div>
+            {SERVICE_OPTIONS.map(svc => {
+              const on = acceptedServices.includes(svc.key)
+              const busy = savingService === svc.key
+              return (
+                <div key={svc.key} style={{
+                  padding: '13px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  borderBottom: '1px solid var(--k-border)', opacity: busy ? 0.6 : 1,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <span style={{ fontSize: 18 }}>{svc.icon}</span>
+                    <div>
+                      <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--k-text)', marginBottom: 2 }}>{svc.label}</p>
+                      <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>{svc.desc}</p>
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => !busy && toggleService(svc.key)}
+                    style={{
+                      width: 46, height: 26, borderRadius: 13, cursor: busy ? 'default' : 'pointer',
+                      background: on ? 'var(--k-accent)' : 'var(--k-border2)',
+                      position: 'relative', transition: 'background 0.2s', flexShrink: 0,
+                    }}
+                  >
+                    <div style={{
+                      position: 'absolute', top: 2, left: on ? 22 : 2,
+                      width: 22, height: 22, borderRadius: '50%',
+                      background: '#fff', transition: 'left 0.2s',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+                    }} />
+                  </div>
+                </div>
+              )
+            })}
+            {serviceErr && <p style={{ padding: '0 18px 12px', color: 'var(--k-danger)', fontSize: 12 }}>⚠ {serviceErr}</p>}
+          </div>
+        )}
 
         {/* Wallet */}
         <button onClick={() => navigate('/wallet')} style={{

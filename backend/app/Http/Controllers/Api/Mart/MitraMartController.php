@@ -17,6 +17,10 @@ class MitraMartController extends Controller
     // ── Pesanan tersedia (status=packed, belum ada mitra) ─────────────────────
     public function available(Request $request): JsonResponse
     {
+        if (!($request->user()->mitraDetail?->acceptsService('zasamart') ?? true)) {
+            return response()->json([]);
+        }
+
         $orders = MartOrder::with(['seller:id,name,logo_path,address,lat,lng', 'items'])
             ->where('status', 'packed')
             ->whereNull('mitra_id')

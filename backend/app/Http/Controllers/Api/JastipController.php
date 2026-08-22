@@ -20,6 +20,9 @@ class JastipController extends Controller
         if (!$request->user()->isMitra()) {
             return response()->json(['message'=>'Hanya mitra yang bisa membuka sesi JastipQu.'], 403);
         }
+        if (!($request->user()->mitraDetail?->acceptsService('jastip') ?? true)) {
+            return response()->json(['message'=>'Layanan JastipQu tidak aktif di pengaturan profil Anda.'], 403);
+        }
         $data = $request->validate([
             'master_order_id'=>['nullable','exists:orders,id'],
             'origin_lat'=>['required','numeric','between:-90,90'],

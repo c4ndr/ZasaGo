@@ -16,6 +16,10 @@ class MitraController extends Controller
 
     public function available(Request $request): JsonResponse
     {
+        if (!($request->user()->mitraDetail?->acceptsService('zasaserv') ?? true)) {
+            return response()->json([]);
+        }
+
         $orders = ServOrder::where('status', 'pending')
             ->whereNull('mitra_id')
             ->with(['customer', 'provider', 'items'])

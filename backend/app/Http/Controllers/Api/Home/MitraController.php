@@ -15,6 +15,10 @@ class MitraController extends Controller
     // Order pending yang belum di-claim mitra
     public function available(Request $request): JsonResponse
     {
+        if (!($request->user()->mitraDetail?->acceptsService('zasahome') ?? true)) {
+            return response()->json([]);
+        }
+
         $orders = HomeOrder::where('status', 'pending')
             ->whereNull('mitra_id')
             ->with(['customer', 'provider', 'items'])

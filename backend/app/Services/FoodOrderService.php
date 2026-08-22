@@ -695,6 +695,8 @@ class FoodOrderService
             ->get();
 
         foreach ($onlineMitras as $detail) {
+            if (!$detail->acceptsService('zasafood')) continue;
+
             $gpsData = Redis::get("gps:mitra:{$detail->user_id}");
             if (!$gpsData) continue;
 

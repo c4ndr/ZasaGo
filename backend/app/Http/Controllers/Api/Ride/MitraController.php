@@ -23,7 +23,10 @@ class MitraController extends Controller
     // Order tersedia (pending, sesuai vehicle_type mitra)
     public function available(Request $request): JsonResponse
     {
-        $user        = $request->user();
+        $user = $request->user();
+        if (!($user->mitraDetail?->acceptsService('zasaride') ?? true)) {
+            return response()->json([]);
+        }
         $vehicleType = str_contains($user->role, 'mobil') ? 'mobil' : 'motor';
 
         $orders = RideOrder::where('status', 'pending')
