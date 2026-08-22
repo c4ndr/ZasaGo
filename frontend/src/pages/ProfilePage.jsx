@@ -566,6 +566,28 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* Buka Toko / Toko Saya — cuma untuk akun pelanggan biasa */}
+        {user?.role === 'pelanggan' && (
+          <button onClick={() => navigate(user?.mart_seller ? '/seller' : '/seller/buka-toko')} style={{
+            background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16,
+            padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            cursor: 'pointer', textAlign: 'left', width: '100%',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(99,102,241,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏪</div>
+              <div>
+                <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--k-text)', marginBottom: 1 }}>
+                  {user?.mart_seller ? 'Toko Saya' : 'Buka Toko'}
+                </p>
+                <p style={{ fontSize: 12, color: 'var(--k-muted)' }}>
+                  {user?.mart_seller ? 'Kelola produk & pesanan di Seller Centre' : 'Mulai jualan di ZasaShop, gratis'}
+                </p>
+              </div>
+            </div>
+            <span style={{ fontSize: 18, color: 'var(--k-muted)' }}>›</span>
+          </button>
+        )}
+
         {/* Alamat Saya */}
         <button onClick={() => navigate('/addresses')} style={{
           background: 'var(--k-card)', border: '1px solid var(--k-border)', borderRadius: 16,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckMaintenanceMode;
+use App\Http\Middleware\EnsureMartSeller;
 use App\Http\Middleware\EnsureUserActive;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role'        => RoleMiddleware::class,
             'active'      => EnsureUserActive::class,
             'maintenance' => CheckMaintenanceMode::class,
+            'mart.seller' => EnsureMartSeller::class,
         ]);
         $middleware->appendToGroup('api', CheckMaintenanceMode::class);
     })

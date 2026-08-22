@@ -15,6 +15,8 @@ Route::prefix('mart')->middleware('auth:sanctum')->group(function () {
     Route::get('sellers',               [CustomerController::class, 'sellers']);
     Route::get('sellers/{seller}',      [CustomerController::class, 'seller']);
 
+    Route::post('store',                [SellerController::class, 'registerStore']);
+
     Route::get('cart',                  [CustomerController::class, 'cart']);
     Route::post('cart',                 [CustomerController::class, 'addToCart']);
     Route::delete('cart/{id}',          [CustomerController::class, 'removeFromCart']);
@@ -31,7 +33,7 @@ Route::prefix('mart')->middleware('auth:sanctum')->group(function () {
 });
 
 // ── Seller routes ─────────────────────────────────────────────────────────────
-Route::prefix('mart/seller')->middleware(['auth:sanctum', 'role:seller,admin'])->group(function () {
+Route::prefix('mart/seller')->middleware(['auth:sanctum', 'mart.seller'])->group(function () {
     Route::get('profile',                      [SellerController::class, 'profile']);
     Route::patch('profile',                    [SellerController::class, 'updateProfile']);
     Route::post('toggle-open',                 [SellerController::class, 'toggleOpen']);

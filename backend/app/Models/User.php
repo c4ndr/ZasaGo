@@ -160,7 +160,7 @@ class User extends Authenticatable
 
     public function isSeller(): bool
     {
-        return $this->role === 'seller';
+        return $this->martSeller()->exists();
     }
 
     public function isActive(): bool

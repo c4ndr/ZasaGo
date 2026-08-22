@@ -64,7 +64,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrasi berhasil',
-            'user'    => $user->load('wallet', 'mitraDetail'),
+            'user'    => $user->load('wallet', 'mitraDetail', 'martSeller'),
             'token'   => $token,
         ], 201);
     }
@@ -89,7 +89,7 @@ class AuthController extends Controller
             $token = $this->authService->createToken($user);
             return response()->json([
                 'message' => 'Login berhasil. Akun Anda sedang dalam proses verifikasi.',
-                'user'    => $user->load('wallet', 'mitraDetail'),
+                'user'    => $user->load('wallet', 'mitraDetail', 'martSeller'),
                 'token'   => $token,
             ]);
         }
@@ -105,7 +105,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login berhasil',
-            'user'    => $user->load('wallet', 'mitraDetail'),
+            'user'    => $user->load('wallet', 'mitraDetail', 'martSeller'),
             'token'   => $token,
         ]);
     }
@@ -120,7 +120,7 @@ class AuthController extends Controller
     public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'user' => $request->user()->load('wallet', 'mitraDetail'),
+            'user' => $request->user()->load('wallet', 'mitraDetail', 'martSeller'),
         ]);
     }
 
@@ -158,7 +158,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Profil berhasil diperbarui.',
-            'user'    => $user->fresh()->load('wallet', 'mitraDetail'),
+            'user'    => $user->fresh()->load('wallet', 'mitraDetail', 'martSeller'),
         ]);
     }
 

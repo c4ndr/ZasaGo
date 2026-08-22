@@ -158,6 +158,7 @@ const MartSellerPage         = lazy_(() => import('./pages/zasamart/MartSellerPa
 const MitraMartOrdersPage    = lazy_(() => import('./pages/zasamart/MitraMartOrdersPage'))
 
 // Seller
+const SellerOnboardingPage   = lazy_(() => import('./pages/seller/SellerOnboardingPage'))
 const SellerDashboardPage    = lazy_(() => import('./pages/seller/SellerDashboardPage'))
 const SellerOrdersPage       = lazy_(() => import('./pages/seller/SellerOrdersPage'))
 const SellerProductsPage     = lazy_(() => import('./pages/seller/SellerProductsPage'))
@@ -229,7 +230,7 @@ function ServProviderRoute({ children }) {
 function SellerRoute({ children }) {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'seller') return <Navigate to="/dashboard" replace />
+  if (user.role !== 'seller' && !user.mart_seller) return <Navigate to="/dashboard" replace />
   return children
 }
 
@@ -409,6 +410,7 @@ function AppRoutes() {
       <Route path="/mart/sellers/:id/consult" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
 
       {/* ZasaShop — Seller */}
+      <Route path="/seller/buka-toko" element={<PrivateRoute><SellerOnboardingPage /></PrivateRoute>} />
       <Route path="/seller" element={<SellerRoute><SellerDashboardPage /></SellerRoute>} />
       <Route path="/seller/orders" element={<SellerRoute><SellerOrdersPage /></SellerRoute>} />
       <Route path="/seller/products" element={<SellerRoute><SellerProductsPage /></SellerRoute>} />

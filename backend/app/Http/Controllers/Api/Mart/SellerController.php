@@ -25,6 +25,37 @@ class SellerController extends Controller
         return $seller;
     }
 
+    // ── Self-service store onboarding (akun pelanggan buka toko sendiri) ───────
+
+    public function registerStore(Request $request): JsonResponse
+    {
+        abort_if($request->user()->martSeller, 422, 'Anda sudah punya toko.');
+
+        $data = $request->validate([
+            'name'        => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'address'     => ['required', 'string', 'max:500'],
+            'lat'         => ['nullable', 'numeric', 'between:-90,90'],
+            'lng'         => ['nullable', 'numeric', 'between:-180,180'],
+            'phone'       => ['nullable', 'string', 'max:20'],
+        ]);
+
+        $seller = MartSeller::create([
+            'user_id'     => $request->user()->id,
+            'name'        => $data['name'],
+            'slug'        => Str::slug($data['name']) . '-' . Str::random(6),
+            'description' => $data['description'] ?? null,
+            'address'     => $data['address'],
+            'lat'         => $data['lat'] ?? null,
+            'lng'         => $data['lng'] ?? null,
+            'phone'       => $data['phone'] ?? null,
+            'is_open'     => true,
+            'status'      => 'pending',
+        ]);
+
+        return response()->json($seller, 201);
+    }
+
     // ── Store profile ─────────────────────────────────────────────────────────
 
     public function profile(Request $request): JsonResponse

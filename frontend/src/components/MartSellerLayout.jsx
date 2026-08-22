@@ -11,8 +11,9 @@ const NAV = [
 ]
 
 export default function MartSellerLayout({ children, title }) {
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
   const navigate   = useNavigate()
+  const isDualRole = user?.role !== 'seller'
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--k-bg)', display: 'flex', flexDirection: 'column' }}>
@@ -24,7 +25,11 @@ export default function MartSellerLayout({ children, title }) {
         <Gloss />
         <span style={{ position: 'relative', fontSize: 22 }}>🏪</span>
         <p style={{ position: 'relative', color: SVC.zasashop.fg, fontWeight: 800, fontSize: 15, flex: 1 }}>{title || 'ZasaShop Seller'}</p>
-        <button onClick={logout} style={{ position: 'relative', background: 'rgba(255,255,255,0.35)', border: 'none', borderRadius: 8, padding: '6px 12px', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Keluar</button>
+        {isDualRole ? (
+          <button onClick={() => navigate('/dashboard')} style={{ position: 'relative', background: 'rgba(255,255,255,0.35)', border: 'none', borderRadius: 8, padding: '6px 12px', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>🛍️ Mode Pembeli</button>
+        ) : (
+          <button onClick={logout} style={{ position: 'relative', background: 'rgba(255,255,255,0.35)', border: 'none', borderRadius: 8, padding: '6px 12px', color: SVC.zasashop.fg, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Keluar</button>
+        )}
       </div>
 
       {/* Content */}
